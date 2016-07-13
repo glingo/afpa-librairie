@@ -19,32 +19,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO {
-    
+
     private static final String SQL_INSERT = "INSERT INTO Ouvrage"
             + " (titre, sous_titre, resume, idAuteur)"
             + " VALUES (?, ?, ?, ?)";
-    
+
     private static final String SQL_DELETE = "DELETE FROM Ouvrage WHERE idOuvrage = ?";
-    
+
     private static final String SQL_FIND_ALL = "SELECT"
             + " idOuvrage, titre, sous_titre, resume, idAuteur"
             + " FROM Ouvrage ";
-    
+
     private static final String SQL_FIND_BY_TITRE = "SELECT"
             + " idOuvrage, titre, sousTitre, resume, idAuteur"
             + " FROM Ouvrage"
             + " WHERE titre = ?";
-    
+
     private static final String SQL_FIND_BY_SOUSTITRE = "SELECT"
             + " idOuvrage, titre, sousTitre, resume, idAuteur"
             + " FROM Ouvrage"
             + " WHERE sousTitre = ?";
-    
+
     private static final String SQL_FIND_BY_IDAUTEUR = "SELECT"
             + " idOuvrage, titre, sousTitre, resume, idAuteur"
             + " FROM Ouvrage"
             + " WHERE idAuteur = ?";
 
+    /*private static final String SQL_FIND_BY_AUTEUR = "SELECT"
+            + " ou.idOuvrage, ou.idAuteur, ou.titre, ou.sous_titre, ou.resume"
+            + " FROM Ouvrage AS ou"
+            + " JOIN Auteur AS au ON au.idAuteur = ou.idAuteur"
+            + " WHERE au.nom = ?";
+    */
     public OuvrageSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
@@ -92,17 +98,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                     genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
                 }
             });
-//            langue = edition et pas ouvrage 
-//            if (instance.getLangues() == null){
-//                Langue langue = getFactory().getLangueDAO().findByLibelle("CLI");
-//                instance.addLangue(langue);
-//            }
-//            
-//            instance.getLangues().forEach((Langue langue) -> {
-//                if(langue != null && langue.getId() == null){
-//                    langue = getFactory().getLangueDAO().findByLibelle(langue.getLibelle());
-//                }
-//            });
+
             if (instance.getRubriques() == null) {
 
                 Rubrique rubrique = getFactory().getRubriqueDAO().findByLibelle("CLI");
@@ -120,9 +116,9 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 Tag tag = getFactory().getTagDAO().findByLibelle("CLI");
                 instance.addTag(tag);
             }
-            
+
             instance.getTags().forEach((Tag tag) -> {
-                if(tag != null && tag.getId() == null){
+                if (tag != null && tag.getId() == null) {
                     tag = getFactory().getTagDAO().findByLibelle(tag.getLibelle());
                 }
             });
@@ -168,9 +164,8 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             connexion = factory.getConnection();
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
             resultSet = preparedStatement.executeQuery();
-            
+
 //            resultSet.beforeFirst();
-            
             while (resultSet.next()) {
                 ouvrages.add(map(resultSet));
             }
@@ -187,7 +182,25 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
     @Override
 
     public void delete(Ouvrage instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, instance.getId());
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la suppression de l'ouvrage, aucune ligne supprimée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
     }
 
     @Override
@@ -196,57 +209,132 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
     }
 
     @Override
-    public Ouvrage findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Ouvrage findByTitre(String titre) throws DAOException {
+       SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Ouvrage ouvrage = null;
+        
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_TITRE, false, titre);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                ouvrage = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return ouvrage;
+        
     }
 
-    @Override
-    public Ouvrage findByTitre(String titre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public Ouvrage findBySousTitre(String sousTitre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Ouvrage ouvrage = null;
+        
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_SOUSTITRE, false, sousTitre);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                ouvrage = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return ouvrage;
+        
     }
-    
+
     @Override
     protected Ouvrage map(ResultSet result) throws SQLException {
         DAOFactoryInterface factory = getFactory();
-        
+
         Ouvrage ouvrage = new Ouvrage();
-        
+
         Long idOuvrage = result.getLong("idOuvrage");
-        
+
         ouvrage.setId(idOuvrage);
         ouvrage.setTitre(result.getString("titre"));
         ouvrage.setSousTitre(result.getString("sous_titre"));
         ouvrage.setResume(result.getString("resume"));
-        
+
         // on recupere l'auteur depuis la base de données.
         Auteur auteur = factory.getAuteurDAO().findById(result.getLong("idAuteur"));
         // puis on l'assigne à l'ouvrage.
         ouvrage.setAuteur(auteur);
-        
+
         // on recupère les genres attachés à l'ouvrage pour lui assigner
         List<Genre> genres = factory.getGenreDAO().findByOuvrage(idOuvrage);
         ouvrage.setGenres(genres);
-        
+
         List<Rubrique> rubriques = factory.getRubriqueDAO().findByOuvrage(idOuvrage);
         ouvrage.setRubriques(rubriques);
-        
+
         List<Tag> tags = factory.getTagDAO().findByOuvrage(idOuvrage);
         ouvrage.setTags(tags);
-        
+
         List<Theme> themes = factory.getThemeDAO().findByOuvrage(idOuvrage);
         ouvrage.setThemes(themes);
-        
+
         List<Auteur> coAuteurs = factory.getAuteurDAO().findCoAuteursByOuvrage(idOuvrage);
         ouvrage.setCoAuteurs(coAuteurs);
-        
- 
-        
+
         return ouvrage;
+    }
+
+    @Override
+   /* public List<Ouvrage> findByAuteur(String nom) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Ouvrage> ouvrages = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_AUTEUR, false, nom);
+            resultSet = preparedStatement.executeQuery();
+
+//            resultSet.beforeFirst();
+            while (resultSet.next()) {
+                ouvrages.add(map(resultSet));
+            }
+
+            if (resultSet.next()) {
+                ouvrages = new ArrayList<>();
+                ouvrages.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return ouvrages;
+
+    }*/
+
+    
+    public Ouvrage findById(Long id) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

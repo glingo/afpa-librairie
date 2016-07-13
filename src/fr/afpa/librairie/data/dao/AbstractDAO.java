@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class AbstractDAO<T> implements DAOInterface<T> {
 
-    private final DAOFactoryInterface factory;
+    public final DAOFactoryInterface factory;
 
     public AbstractDAO(DAOFactoryInterface factory) {
         this.factory = factory;

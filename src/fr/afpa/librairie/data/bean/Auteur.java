@@ -6,6 +6,8 @@
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,7 +20,9 @@ public class Auteur {
     private String prenom;
     private Date dateNaissance;
     private Date dateDeces;
-
+    
+    private Ouvrage ouvrage;
+    
     public Auteur() {
     }
 
@@ -68,7 +72,32 @@ public class Auteur {
     public void setDateDeces(Date dateDeces) {
         this.dateDeces = dateDeces;
     }
+    
+    public Ouvrage getOuvrage() {
+        return ouvrage;
+    }
+    
+    public void setOuvrage(Ouvrage ouvrage){
+        this.ouvrage = ouvrage;
+    }
+//
+//    public List<Ouvrage> getOuvrages(){
+//        return ouvrages;
+//    }
+//    
+//    public void setOuvrages(List<Ouvrage> ouvrages){
+//        this.ouvrages = ouvrages;
+//    }
+//    
+//    public void addOuvrage(Ouvrage ouvrage){
+//        if(this.ouvrages == null){
+//            this.ouvrages = new ArrayList<>();
+//        }
+//        this.ouvrages.add(ouvrage);
+//    }
+//    
 
+    @Override
     public String toString(){
         return prenom+" "+nom;
     }

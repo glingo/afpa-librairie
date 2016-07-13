@@ -24,6 +24,7 @@ public class Ouvrage {
     private List<Tag> tags;
     private List<Langue> langues;
     
+    
 
     public Ouvrage() {}
 
@@ -84,21 +85,7 @@ public class Ouvrage {
         this.coAuteurs.add(coAuteur);
     }
     
-    public List<Auteur> getAuteurs() {
-        return coAuteurs;
-    }
-
-    public void setAuteurs(List<Auteur> coAuteurs) {
-        this.coAuteurs = coAuteurs;
-    }
-    
-    public void addAuteur(Auteur Auteur) {
-        if(this.coAuteurs == null) {
-            this.coAuteurs = new ArrayList<>();
-        }
-        
-        this.coAuteurs.add(Auteur);
-    }
+ 
     
     public List<Theme> getThemes() {
         return themes;

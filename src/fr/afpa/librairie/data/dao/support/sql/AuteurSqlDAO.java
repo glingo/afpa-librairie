@@ -4,6 +4,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Auteur;
+import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.exception.DAOException;
@@ -18,7 +19,7 @@ import java.util.List;
 public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
 
     private static final String SQL_INSERT = "INSERT INTO Auteur"
-            + " (nom, prenom, date_naissance, date_deces)"
+            + " (nom, prenom, date_naissance, date_deces, titre)"
             + " VALUES (?, ?, ?, ?)";
     
     private static final String SQL_DELETE = "DELETE FROM Auteur WHERE idAuteur = ?";
@@ -65,6 +66,31 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
         ResultSet valeursAutoGenerees = null;
 
         try {
+//            if(instance.getOuvrages() == null) {
+//                // on recupère le Role par default
+//                // le code devrait etre une constante.
+//                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre("A");
+//                instance.addOuvrage(ouvrage);
+//            }
+//            
+//            // On verifie que tout les roles sont enregistré
+//            instance.getOuvrages().forEach((Ouvrage ouvrage) -> {
+//                if(ouvrage != null && ouvrage.getId() == null) {
+//                    ouvrage = getFactory().getOuvrageDAO().findByTitre(ouvrage.getTitre());
+//                }
+//            });
+             if(instance.getOuvrage() == null) {
+                // on recupère le statut par default
+                // le code devrait etre une constante.
+                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre("OK");
+                instance.setOuvrage(ouvrage);
+            }
+            
+            // le statut est forcement different de null.
+            if(instance.getOuvrage().getTitre() == null) {
+                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre(instance.getOuvrage().getTitre());
+                instance.setOuvrage(ouvrage);
+            }
 
             connexion = factory.getConnection();
 
@@ -241,6 +267,9 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
         auteur.setPrenom(resultSet.getString("prenom"));
         auteur.setDateNaissance(resultSet.getDate("date_naissance"));
         auteur.setDateDeces(resultSet.getDate("date_deces"));
+        
+        //Ouvrage ouvrage = factory.getOuvrageDAO().findByTitre(resultSet.getString("titre"));
+        //auteur.setOuvrage(ouvrage);
 
         return auteur;
     }

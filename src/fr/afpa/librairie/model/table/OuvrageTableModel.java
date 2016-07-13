@@ -4,6 +4,8 @@ import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.data.bean.Ouvrage;
+import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.data.bean.Tag;
 import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
@@ -29,6 +31,8 @@ public class OuvrageTableModel extends AbstractTableModel {
             this.columnDisplayNames.put(OuvrageColumn.GENRE, "Genre");
             this.columnDisplayNames.put(OuvrageColumn.THEME, "Theme");
             this.columnDisplayNames.put(OuvrageColumn.RESUME, "Resume");
+            this.columnDisplayNames.put(OuvrageColumn.RUBRIQUE, "Rubrique");
+            this.columnDisplayNames.put(OuvrageColumn.TAG, "Tag");
 
         }
         return this.columnDisplayNames;
@@ -77,9 +81,14 @@ public class OuvrageTableModel extends AbstractTableModel {
             case THEME:
                 columnValue = getThemeObject(ouvrage);
                 break;
-
             case RESUME:
                 columnValue = ouvrage.getResume();
+                break;
+            case RUBRIQUE:
+                columnValue = getRubriqueObject(ouvrage);
+                break;
+            case TAG:
+                columnValue = getTagObject(ouvrage);
                 break;
             default:
 
@@ -89,7 +98,38 @@ public class OuvrageTableModel extends AbstractTableModel {
         return columnValue;
     }
   
+    private String getRubriqueObject(Ouvrage ouvrage){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = ouvrage.getRubriques().size();
+        
+        for(int i = 0; i < len; i++){
+            Rubrique rubrique = ouvrage.getRubriques().get(i);
+            sb.append(rubrique.getLibelle());
+            
+            if(i>len-1){
+                sb.append(",");
+            }
+        }
+        
+        return sb.toString();
+    }
     
+    private String getTagObject(Ouvrage ouvrage){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = ouvrage.getTags().size();
+        for(int i = 0; i<len; i++){
+            Tag tag = ouvrage.getTags().get(i);
+            sb.append(tag.getLibelle());
+            
+            if(i>len-1){
+                sb.append(",");
+            }
+        }
+        
+        return sb.toString();
+    }
     private String getAuteurObject(Ouvrage ouvrage){
         StringBuilder sb = new StringBuilder();
         
