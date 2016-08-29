@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class DAOFactory {
     
-    private static final String FICHIER_PROPERTIES       = "/fr/afpa/librairie/resources/dao.properties";
+    private static final String FICHIER_PROPERTIES       = "fr/afpa/librairie/resources/dao.properties";
     private static final String PROPERTY_URL             = "url";
     private static final String PROPERTY_DRIVER          = "driver";
     private static final String PROPERTY_NOM_UTILISATEUR = "nomutilisateur";
@@ -28,8 +28,8 @@ public class DAOFactory {
     }
     
     /*
-     * Méthode chargée de récupérer les informations de connexion à la base de
-     * données, charger le driver JDBC et retourner une instance de la Factory
+     * Methode chargee de recuperer les informations de connexion a la base de
+     * donnees, charger le driver JDBC et retourner une instance de la Factory
      */
     public static DAOFactory getInstance() throws DAOConfigurationException {
         Properties properties = new Properties();
@@ -69,8 +69,8 @@ public class DAOFactory {
         return instance;
     }
 
-    /* Méthode chargée de fournir une connexion à la base de données */
-    protected Connection getConnection() throws SQLException {
+    /* Methode chargee de fournir une connexion a la base de donnees */
+    public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, username, password);
     }
     
