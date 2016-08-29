@@ -11,9 +11,9 @@ import java.sql.SQLException;
 
 public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 
-    private static final String SQL_INSERT = "INSERT INTO Utilisateur (email, mot_de_passe, nom, date_inscription) VALUES (?, ?, ?, GETDATE())";
+    private static final String SQL_INSERT = "INSERT INTO Utilisateur (nom, prenom, email, mot_de_passe, date_inscription) VALUES (?, ?, ?, ?, GETDATE())";
     private static final String SQL_DELETE = "DELETE FROM Utilisateur WHERE id=?";
-    private static final String SQL_SELECT_PAR_EMAIL = "SELECT id, email, nom, mot_de_passe, date_inscription FROM Utilisateur WHERE email = ?";
+    private static final String SQL_SELECT_PAR_EMAIL = "SELECT id, nom, prenom, email, mot_de_passe, date_inscription FROM Utilisateur WHERE email = ?";
 
     public UtilisateurDAO(DAOFactory factory) {
         super(factory);
@@ -28,7 +28,7 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = getFactory().getConnection();
-            preparedStatement = initialisationRequetePreparee(connexion, SQL_INSERT, true, instance.getEmail(), instance.getMotDePasse(), instance.getNom());
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_INSERT, true, instance.getNom(), instance.getPrenom(), instance.getEmail(), instance.getMotDePasse());
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
@@ -118,9 +118,10 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
     private static Utilisateur map(ResultSet resultSet) throws SQLException {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(resultSet.getLong("id"));
+        utilisateur.setNom(resultSet.getString("nom"));
+        utilisateur.setPrenom(resultSet.getString("prenom"));
         utilisateur.setEmail(resultSet.getString("email"));
         utilisateur.setMotDePasse(resultSet.getString("mot_de_passe"));
-        utilisateur.setNom(resultSet.getString("nom"));
         utilisateur.setDateInscription(resultSet.getDate("date_inscription"));
         return utilisateur;
     }

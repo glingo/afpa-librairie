@@ -1,18 +1,7 @@
-
 import fr.afpa.librairie.model.Utilisateur;
 import fr.afpa.librairie.persistance.DAOFactory;
 import fr.afpa.librairie.persistance.dao.UtilisateurDAO;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author cdi305
- */
 public class TestUtilisateurDAO {
     
     /*** ezarkzejrzkejrzerljkezr*/
@@ -21,7 +10,11 @@ public class TestUtilisateurDAO {
         utilisateur.setNom("Robert");
         utilisateur.setPrenom("Redford");
         utilisateur.setEmail("robert.redford@gmail.com");
+        utilisateur.setMotDePasse("testmdp");
         UtilisateurDAO dao = DAOFactory.getInstance().getUtilisateurDAO();
         dao.creer(utilisateur);
+        
+        Utilisateur user = dao.findByEmail("robert.redford@gmail.com");
+        System.out.println(user.getPrenom());
     }
 }
