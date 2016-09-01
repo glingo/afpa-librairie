@@ -1,7 +1,9 @@
-package fr.afpa.librairie.persistance;
+package fr.afpa.librairie.data;
 
-import fr.afpa.librairie.persistance.dao.UtilisateurDAO;
-import fr.afpa.librairie.persistance.exception.DAOConfigurationException;
+import fr.afpa.librairie.data.dao.RoleDAO;
+import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
+import fr.afpa.librairie.data.dao.UtilisateurDAO;
+import fr.afpa.librairie.data.exception.DAOConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -21,7 +23,7 @@ public class DAOFactory {
     private final String        username;
     private final String        password;
     
-    private DAOFactory( String url, String username, String password ) {
+    private DAOFactory(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;
@@ -61,7 +63,7 @@ public class DAOFactory {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
             String msg = "Le driver est introuvable dans le classpath.";
-            throw new DAOConfigurationException(msg, e );
+            throw new DAOConfigurationException(msg, e);
         }
 
         DAOFactory instance = new DAOFactory(url, nomUtilisateur, motDePasse);
@@ -76,5 +78,13 @@ public class DAOFactory {
     
     public UtilisateurDAO getUtilisateurDAO(){
         return new UtilisateurDAO(this);
+    }
+    
+    public StatutUtilisateurDAO getStatutUtilisateurDAO(){
+        return new StatutUtilisateurDAO(this);
+    }
+    
+    public RoleDAO getRoleDAO(){
+        return new RoleDAO(this);
     }
 }

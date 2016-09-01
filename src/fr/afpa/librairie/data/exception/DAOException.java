@@ -1,4 +1,4 @@
-package fr.afpa.librairie.persistance.exception;
+package fr.afpa.librairie.data.exception;
 
 public class DAOException extends RuntimeException {
 

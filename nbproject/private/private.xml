@@ -2,6 +2,21 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/UtilisateurDAO.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/data/DAOFactory.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/model/list/ListModelHolder.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/Launcher.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/view/MainFrame.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/AbstractDAO.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/data/bean/Utilisateur.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/resources/dao.properties</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/model/table/UtilisateurTableModel.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/model/list/ListModelSelection.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/view/OverviewPanel.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/model/list/ListAdapterListModel.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/model/list/UtilisateurListCellRenderer.java</file>
+            <file>file:/C:/Users/cdi305/Desktop/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/DAOInterface.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -1,4 +1,4 @@
-package fr.afpa.librairie.persistance;
+package fr.afpa.librairie.data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

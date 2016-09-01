@@ -1,5 +1,6 @@
-package fr.afpa.librairie.persistance;
+package fr.afpa.librairie.data.dao;
 
+import fr.afpa.librairie.data.DAOFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,11 +19,13 @@ public abstract class AbstractDAO<T> implements DAOInterface<T> {
         return factory;
     }
     
+    protected abstract T map(ResultSet result) throws SQLException ;
+    
     /*
      * Initialise la requête préparée basée sur la connexion passée en argument,
      * avec la requête SQL et les objets donnés.
      */
-    public PreparedStatement initialisationRequetePreparee(Connection connexion, String sql, boolean returnGeneratedKeys, Object... objets) throws SQLException {
+    public PreparedStatement getPreparedStatement(Connection connexion, String sql, boolean returnGeneratedKeys, Object... objets) throws SQLException {
         PreparedStatement preparedStatement = connexion.prepareStatement(sql, returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
         if(objets != null) {
             for (int i = 0; i < objets.length; i++) {
@@ -33,7 +36,7 @@ public abstract class AbstractDAO<T> implements DAOInterface<T> {
     }
     
     /* Fermeture silencieuse du resultset */
-    public static void fermetureSilencieuse(ResultSet resultSet) {
+    public void close(ResultSet resultSet) {
         if (resultSet != null) {
             try {
                 resultSet.close();
@@ -44,7 +47,7 @@ public abstract class AbstractDAO<T> implements DAOInterface<T> {
     }
 
     /* Fermeture silencieuse du statement */
-    public static void fermetureSilencieuse(Statement statement) {
+    public void close(Statement statement) {
         if (statement != null) {
             try {
                 statement.close();
@@ -55,7 +58,7 @@ public abstract class AbstractDAO<T> implements DAOInterface<T> {
     }
 
     /* Fermeture silencieuse de la connexion */
-    public static void fermetureSilencieuse(Connection connexion) {
+    public void close(Connection connexion) {
         if (connexion != null) {
             try {
                 connexion.close();
@@ -66,16 +69,16 @@ public abstract class AbstractDAO<T> implements DAOInterface<T> {
     }
 
     /* Fermetures silencieuses du statement et de la connexion */
-    public static void fermeturesSilencieuses(Statement statement, Connection connexion) {
-        fermetureSilencieuse(statement);
-        fermetureSilencieuse(connexion);
+    public void close(Statement statement, Connection connexion) {
+        close(statement);
+        close(connexion);
     }
 
     /* Fermetures silencieuses du resultset, du statement et de la connexion */
-    public static void fermeturesSilencieuses(ResultSet resultSet, Statement statement, Connection connexion) {
-        fermetureSilencieuse(resultSet);
-        fermetureSilencieuse(statement);
-        fermetureSilencieuse(connexion);
+    public void close(ResultSet resultSet, Statement statement, Connection connexion) {
+        close(resultSet);
+        close(statement);
+        close(connexion);
     }
 
 }
