@@ -1,0 +1,36 @@
+package fr.afpa.librairie.controller;
+
+import fr.afpa.librairie.data.AbstractDAOFactory;
+import fr.afpa.librairie.data.DAOFactoryInterface;
+import fr.afpa.librairie.data.FactoryType;
+import fr.afpa.librairie.view.MainFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Controller implements ActionListener {
+    
+    protected DAOFactoryInterface daoFactory = AbstractDAOFactory.getFactory(FactoryType.LIST_DAO_FACTORY);
+    
+    protected MainFrame frame;
+    
+    public Controller() {}
+
+    public Controller(MainFrame frame) {
+        this.frame = frame;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        if(frame == null) {
+            this.frame = new MainFrame();
+            this.frame.setVisible(true);
+        }
+        
+    }
+
+    public DAOFactoryInterface getDaoFactory() {
+        return daoFactory;
+    }
+    
+}

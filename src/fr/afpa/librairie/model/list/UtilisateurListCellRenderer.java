@@ -30,6 +30,7 @@ public class UtilisateurListCellRenderer extends JLabel implements ListCellRende
         personToStringBuilder.append(person.getNom());
         personToStringBuilder.append(", ");
         personToStringBuilder.append(person.getPrenom());
+        
 //        Address address = person.getAddress();
 //        if (address != null) {
 //            personToStringBuilder.append(", ");

@@ -56,9 +56,9 @@ public class OverviewPanel extends JPanel {
 
         scrollPane_1.setViewportView(utilisateurList);
 
-        JScrollPane scrollPane_2 = new JScrollPane();
-        scrollPane_2.setBounds(10, 310, 580, 205);
-        add(scrollPane_2);
+//        JScrollPane scrollPane_2 = new JScrollPane();
+//        scrollPane_2.setBounds(10, 310, 580, 205);
+//        add(scrollPane_2);
 
 //        scrollPane_2.setColumnHeaderView(personTree);
     }

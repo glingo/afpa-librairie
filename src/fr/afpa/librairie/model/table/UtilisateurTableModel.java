@@ -1,38 +1,18 @@
 package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Utilisateur;
+import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
+import fr.afpa.librairie.model.table.column.UtilisateurColumn;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ListModel;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
 
 public class UtilisateurTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 1547542546403627396L;
-    
-    private class ListModelChangeListener implements ListDataListener {
-
-        @Override
-        public void intervalAdded(ListDataEvent e) {
-            fireTableDataChanged();
-        }
-
-        @Override
-        public void intervalRemoved(ListDataEvent e) {
-            fireTableDataChanged();
-        }
-
-        @Override
-        public void contentsChanged(ListDataEvent e) {
-            fireTableDataChanged();
-        }
-
-    }
-
     
 //    private Long id;
 //    private String nom;
@@ -40,22 +20,27 @@ public class UtilisateurTableModel extends AbstractTableModel {
 //    private String motDePasse;
 //    private String email;
 //    private Date dateInscription;
-    private enum Column {
-        NOM, PRENOM, EMAIL, DATE_INSCRIPTION
-    }
+//    private enum Column {
+//        NOM, PRENOM, EMAIL, DATE_INSCRIPTION
+//    }
 
     private final ListModelHolder<Utilisateur> utilisateurListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener();
+    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
 
-    private final Map<Column, String> columnDisplayNames = new HashMap<>();
+    private Map<UtilisateurColumn, String> columnDisplayNames;
+
+    public Map<UtilisateurColumn, String> getColumnDisplayNames() {
+        if(this.columnDisplayNames == null) {
+            this.columnDisplayNames = new HashMap<>();
+            this.columnDisplayNames.put(UtilisateurColumn.NOM, "Nom");
+            this.columnDisplayNames.put(UtilisateurColumn.PRENOM, "Prenom");
+            this.columnDisplayNames.put(UtilisateurColumn.EMAIL, "E-mail");
+            this.columnDisplayNames.put(UtilisateurColumn.DATE_INSCRIPTION, "Date d'inscription");
+        }
+        return this.columnDisplayNames;
+    }
 
     public UtilisateurTableModel() {
-        
-        columnDisplayNames.put(Column.NOM, "Nom");
-        columnDisplayNames.put(Column.PRENOM, "Prenom");
-        columnDisplayNames.put(Column.EMAIL, "E-mail");
-        columnDisplayNames.put(Column.DATE_INSCRIPTION, "Date d'inscription");
-
         utilisateurListModelHolder.addListDataListeners(listModelChangeListener);
     }
 
@@ -71,7 +56,7 @@ public class UtilisateurTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return Column.values().length;
+        return UtilisateurColumn.values().length;
     }
 
     @Override
@@ -80,7 +65,7 @@ public class UtilisateurTableModel extends AbstractTableModel {
 
         ListModel<Utilisateur> listModel = utilisateurListModelHolder.getModel();
         Utilisateur utilisateur = listModel.getElementAt(rowIndex);
-        Column column = getColumn(columnIndex);
+        UtilisateurColumn column = getColumn(columnIndex);
 
         switch (column) {
             case NOM:
@@ -97,9 +82,9 @@ public class UtilisateurTableModel extends AbstractTableModel {
         return columnValue;
     }
 
-    private Column getColumn(int columnIndex) {
-        Column[] columns = Column.values();
-        Column column = columns[columnIndex];
+    private UtilisateurColumn getColumn(int columnIndex) {
+        UtilisateurColumn[] columns = UtilisateurColumn.values();
+        UtilisateurColumn column = columns[columnIndex];
         return column;
     }
 //
@@ -134,8 +119,8 @@ public class UtilisateurTableModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int column) {
-        Column columnObj = getColumn(column);
-        String displayName = columnDisplayNames.get(columnObj);
+        UtilisateurColumn columnObj = getColumn(column);
+        String displayName = getColumnDisplayNames().get(columnObj);
         return displayName;
     }
 }

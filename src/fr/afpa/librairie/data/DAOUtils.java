@@ -1,24 +1,50 @@
 package fr.afpa.librairie.data;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import fr.afpa.librairie.data.exception.DAOConfigurationException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 public class DAOUtils {
     
-    /*
-     * Initialise la requête préparée basée sur la connexion passée en argument,
-     * avec la requête SQL et les objets donnés.
-     */
-    public static PreparedStatement initialisationRequetePreparee(Connection connexion, String sql, boolean returnGeneratedKeys, Object... objets) throws SQLException {
-        PreparedStatement preparedStatement = connexion.prepareStatement(sql, returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
-        if(objets != null) {
-            for (int i = 0; i < objets.length; i++) {
-                preparedStatement.setObject(i + 1, objets[i]);
-            }
+    private static final List<String> DRIVER_LOADED = new ArrayList<>();
+    
+    public static void loadDriver(String driver) {
+        
+        if(DAOUtils.DRIVER_LOADED.contains(driver)) {
+            System.out.format("Tentative de chargement du driver %s, avortée.\n", driver);
+            return;
         }
-        return preparedStatement;
+        
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            String msg = "Le driver est introuvable dans le classpath.";
+            throw new DAOConfigurationException(msg, e);
+        }
+    }
+    
+    public static Properties loadProperties(Properties properties, String path){
+//        Properties properties = new Properties();
+        
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream fichierProperties = classLoader.getResourceAsStream(path);
+
+        if (fichierProperties == null) {
+            String msg = String.format("Le fichier properties %s est introuvable.", path);
+            throw new DAOConfigurationException(msg);
+        }
+
+        try {
+            properties.load(fichierProperties);
+        } catch (IOException e) {
+            String msg = String.format("Impossible de charger le fichier properties %s.", path);
+            throw new DAOConfigurationException(msg, e);
+        }
+        
+        return properties;
     }
 
 }

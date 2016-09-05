@@ -1,0 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package fr.afpa.librairie.model.list;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+import javax.swing.ListModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+
+/**
+ *
+ * @author caill
+ */
+public class ListModelListenerAdapter implements PropertyChangeListener {
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            ListModelHolder<?> listModelHolder = (ListModelHolder<?>) evt.getSource();
+            ListModel<?> listModel = listModelHolder.getModel();
+            int size = listModel.getSize();
+
+            ListDataEvent contentsChanged = new ListDataEvent(listModel, ListDataEvent.CONTENTS_CHANGED, 0, size);
+
+            List<ListDataListener> listDataListeners = listModelHolder.getListDataListeners();
+            listDataListeners.stream().forEach((listDataListener) -> {
+                listDataListener.contentsChanged(contentsChanged);
+            });
+
+        }
+    }

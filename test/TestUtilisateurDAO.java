@@ -1,5 +1,7 @@
+import fr.afpa.librairie.data.AbstractDAOFactory;
+import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Utilisateur;
-import fr.afpa.librairie.data.DAOFactory;
+import fr.afpa.librairie.data.FactoryType;
 import fr.afpa.librairie.data.bean.Role;
 import fr.afpa.librairie.data.bean.StatutUtilisateur;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
@@ -13,6 +15,9 @@ public class TestUtilisateurDAO {
      */
     public static void main(String[] args) {
         
+        DAOFactoryInterface factory = AbstractDAOFactory.getFactory(FactoryType.LIST_DAO_FACTORY);
+        UtilisateurDAO dao = factory.getUtilisateurDAO();
+        
         Role admin = new Role();
         admin.setCode("ADM");
         admin.setLibelle("Administrateur");
@@ -25,30 +30,45 @@ public class TestUtilisateurDAO {
         statut.setCode("NEW");
         statut.setLibelle("Nouveau");
         
-        Utilisateur utilisateur = new Utilisateur();
+        // on declare un utilisateur parlant
+        Utilisateur robert = new Utilisateur();
+        robert.setNom("Robert");
+        robert.setPrenom("Redford");
+        robert.setEmail("robert.redford@gmail.com");
+        robert.setMotDePasse("testmdp");
+        robert.setDateNaissance(new Date(0));
+        robert.addRole(user);
+        robert.addRole(admin);
+        robert.setStatut(statut);
+
+        dao.save(robert);
         
-        utilisateur.setNom("Robert");
-        utilisateur.setPrenom("Redford");
-        utilisateur.setEmail("robert.redford@gmail.com");
-        utilisateur.setMotDePasse("testmdp");
+        for (int i = 0; i < 10; i++) {
+            Utilisateur utilisateur = new Utilisateur();
+            
+            utilisateur.setNom("Nom_" + i);
+            utilisateur.setPrenom("Prenom_" + i);
+            utilisateur.setEmail("mail.utilisateur." + i + "@gmail.com");
+            utilisateur.setMotDePasse("mot_de_passe_" + i);
+    //new java.util.Date()
+    //Date.valueOf("yyyy-[m]m-[d]d")
+            utilisateur.setDateNaissance(new Date(0));
+
+            utilisateur.addRole(user);
+            utilisateur.addRole(admin);
+            utilisateur.setStatut(statut);
         
-        utilisateur.setDateNaissance(new Date(1989, 02, 23));
+            dao.save(utilisateur);
+        }
         
-        utilisateur.addRole(user);
-        utilisateur.addRole(admin);
-        utilisateur.setStatut(statut);
-        
-        UtilisateurDAO dao = DAOFactory.getInstance().getUtilisateurDAO();
-        dao.save(utilisateur);
-        
-        Utilisateur robert = dao.findByEmail("robert.redford@gmail.com");
+        robert = dao.findByMail("robert.redford@gmail.com");
         System.out.println(robert.getPrenom());
         
         dao.delete(robert);
         System.out.println(robert.getPrenom());
         
-        robert = dao.findByEmail("robert.redford@gmail.com");
-        System.out.println(robert.getPrenom());
+        robert = dao.findByMail("robert.redford@gmail.com");
+        System.out.format("L'utilisateur %s %s été supprimé.\n", "robert.redford@gmail.com", robert == null ? "a bien" : "n'a pas");
         
     }
 }
