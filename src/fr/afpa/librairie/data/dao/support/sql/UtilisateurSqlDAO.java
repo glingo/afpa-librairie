@@ -47,9 +47,9 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
             }
             
             // le statut est forcement different de null.
-            // si le statut n'est pas enregistré, on le créé.
             if(instance.getStatut().getId() == null) {
-                getFactory().getStatutUtilisateurDAO().save(instance.getStatut());
+                StatutUtilisateur statut = getFactory().getStatutUtilisateurDAO().findByCode(instance.getStatut().getCode());
+                instance.setStatut(statut);
             }
             
             
@@ -63,7 +63,7 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
             // On verifie que tout les roles sont enregistré
             instance.getRoles().forEach((Role role) -> {
                 if(role != null && role.getId() == null) {
-                    getFactory().getRoleDAO().save(role);
+                    role = getFactory().getRoleDAO().findByCode(role.getCode());
                 }
             });
             
@@ -120,7 +120,7 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
 
     }
     
-        @Override
+    @Override
     public List<Utilisateur> findAll() throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -180,7 +180,8 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
         
     }
 
-    public Utilisateur findByEmail(String email) throws DAOException {
+    @Override
+    public Utilisateur findByMail(String email) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -232,10 +233,4 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
         
         return utilisateur;
     }
-
-    @Override
-    public Utilisateur findByMail(String mail) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

@@ -15,7 +15,7 @@ public class TestUtilisateurDAO {
      */
     public static void main(String[] args) {
         
-        DAOFactoryInterface factory = AbstractDAOFactory.getFactory(FactoryType.LIST_DAO_FACTORY);
+        DAOFactoryInterface factory = AbstractDAOFactory.getFactory(FactoryType.DAO_FACTORY);
         UtilisateurDAO dao = factory.getUtilisateurDAO();
         
         Role admin = new Role();
@@ -31,17 +31,17 @@ public class TestUtilisateurDAO {
         statut.setLibelle("Nouveau");
         
         // on declare un utilisateur parlant
-        Utilisateur robert = new Utilisateur();
-        robert.setNom("Robert");
-        robert.setPrenom("Redford");
-        robert.setEmail("robert.redford@gmail.com");
-        robert.setMotDePasse("testmdp");
-        robert.setDateNaissance(new Date(0));
-        robert.addRole(user);
-        robert.addRole(admin);
-        robert.setStatut(statut);
+//        Utilisateur robert = new Utilisateur();
+//        robert.setNom("Robert");
+//        robert.setPrenom("Redford");
+//        robert.setEmail("robert.redford@gmail.com");
+//        robert.setMotDePasse("testmdp");
+//        robert.setDateNaissance(new Date(0));
+//        robert.addRole(user);
+//        robert.addRole(admin);
+//        robert.setStatut(statut);
 
-        dao.save(robert);
+//        dao.save(robert);
         
         for (int i = 0; i < 10; i++) {
             Utilisateur utilisateur = new Utilisateur();
@@ -61,14 +61,14 @@ public class TestUtilisateurDAO {
             dao.save(utilisateur);
         }
         
-        robert = dao.findByMail("robert.redford@gmail.com");
-        System.out.println(robert.getPrenom());
+//        robert = dao.findByMail("robert.redford@gmail.com");
+//        System.out.println(robert.getPrenom());
         
-        dao.delete(robert);
-        System.out.println(robert.getPrenom());
+//        dao.delete(robert);
+//        System.out.println(robert.getPrenom());
         
-        robert = dao.findByMail("robert.redford@gmail.com");
-        System.out.format("L'utilisateur %s %s été supprimé.\n", "robert.redford@gmail.com", robert == null ? "a bien" : "n'a pas");
+//        robert = dao.findByMail("robert.redford@gmail.com");
+//        System.out.format("L'utilisateur %s %s été supprimé.\n", "robert.redford@gmail.com", robert == null ? "a bien" : "n'a pas");
         
     }
 }
