@@ -8,11 +8,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 public class UtilisateurListCellRenderer extends JLabel implements ListCellRenderer<Utilisateur> {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1614367901813214864L;
+    
 
     @Override
     public Component getListCellRendererComponent(JList<? extends Utilisateur> list, Utilisateur value, int index, boolean isSelected, boolean cellHasFocus) {

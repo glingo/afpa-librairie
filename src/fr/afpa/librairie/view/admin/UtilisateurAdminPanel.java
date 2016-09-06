@@ -26,7 +26,7 @@ import javax.swing.ListSelectionModel;
  */
 public class UtilisateurAdminPanel extends JPanel {
     
-    private UtilisateurController controller;
+    private final UtilisateurController controller;
     
     private final ListAdapterListModel<Utilisateur> utilisateurListModel = new ListAdapterListModel<>();
     private final UtilisateurTableModel utilisateurTableModel = new UtilisateurTableModel();

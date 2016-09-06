@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.model.list;
 
 import java.beans.PropertyChangeEvent;
@@ -12,10 +7,6 @@ import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-/**
- *
- * @author caill
- */
 public class ListModelListenerAdapter implements PropertyChangeListener {
 
         @Override

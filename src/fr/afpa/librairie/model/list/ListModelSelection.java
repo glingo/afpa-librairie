@@ -8,24 +8,31 @@ import javax.swing.event.ListSelectionListener;
 
 public class ListModelSelection<E> extends Observable {
 
-    public ListAdapterListModel<E> listAdapterListModel = new ListAdapterListModel<>();
+    public ListAdapterListModel<E> listAdapterListModel;
 
-    private ListSelectionModel listSelectionModel = new DefaultListSelectionModel();
+    private ListSelectionModel listSelectionModel;
 
-    private final ListSelectionAdapter listSelectionAdapter = new ListSelectionAdapter();
+    private final ListSelectionAdapter listSelectionAdapter;
 
     public ListModelSelection() {
+        listAdapterListModel = new ListAdapterListModel<>();
+        listSelectionModel = new DefaultListSelectionModel();
+        listSelectionAdapter = new ListSelectionAdapter();
         listSelectionModel.addListSelectionListener(listSelectionAdapter);
     }
 
     public void setListModels(ListAdapterListModel<E> listAdapterListModel,
             ListSelectionModel listSelectionModel) {
+        
         this.listAdapterListModel = listAdapterListModel;
+        
         if (this.listSelectionModel != null) {
             this.listSelectionModel
                     .removeListSelectionListener(listSelectionAdapter);
         }
+        
         this.listSelectionModel = listSelectionModel;
+        
         if (listSelectionModel != null) {
             listSelectionModel.addListSelectionListener(listSelectionAdapter);
         }
