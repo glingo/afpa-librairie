@@ -1,5 +1,6 @@
 package fr.afpa.librairie.data;
 
+import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
@@ -22,6 +23,9 @@ public abstract class AbstractDAOFactory implements DAOFactoryInterface {
     
     @Override
     public abstract StatutUtilisateurDAO getStatutUtilisateurDAO();
+   
+    @Override
+    public abstract AuteurDAO getAuteurDAO();
 
     public static DAOFactoryInterface getFactory(FactoryType type){
         

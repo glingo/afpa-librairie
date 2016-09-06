@@ -1,6 +1,7 @@
 package fr.afpa.librairie.data.dao.support.list;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
+import fr.afpa.librairie.data.dao.AuteurDAO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +43,11 @@ public class ListDAOFactory extends AbstractDAOFactory {
     @Override
     public StatutUtilisateurListDAO getStatutUtilisateurDAO() {
         return new StatutUtilisateurListDAO(this);
+    }
+
+    @Override
+    public AuteurDAO getAuteurDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

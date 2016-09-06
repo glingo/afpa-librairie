@@ -2,6 +2,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOUtils;
+import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
@@ -108,5 +109,10 @@ public class SqlDAOFactory extends AbstractDAOFactory {
     @Override
     public RoleDAO getRoleDAO(){
         return new RoleSqlDAO(this);
+    }
+    
+    @Override
+    public AuteurDAO getAuteurDAO(){
+        return new AuteurSqlDAO(this);
     }
 }
