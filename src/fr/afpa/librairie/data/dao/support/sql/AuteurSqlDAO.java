@@ -20,7 +20,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
             + " (nom, prenom, date_naissance, date_deces)"
             + " VALUES (?, ?, ?, ?)";
     private static final String SQL_DELETE = "DELETE FROM Auteur WHERE idAuteur = ?";
-    private static final String SQL_FIND_ALL = "SELECT idAuteur, nom, date_naissance, date_deces FROM Auteur ";
+    private static final String SQL_FIND_ALL = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur ";
     private static final String SQL_FIND_BY_DATENAISSANCE = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE date_naissance = ?";
     private static final String SQL_FIND_BY_DATEDECES = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE date_deces = ?";
     private static final String SQL_FIND_BY_ID = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE idAuteur = ?";
@@ -205,7 +205,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
     
     @Override
     protected Auteur map(ResultSet resultSet) throws SQLException {
-        SqlDAOFactory factory = getFactory();
+//        SqlDAOFactory factory = getFactory();
         Auteur auteur = new Auteur();
         
         auteur.setId(resultSet.getLong("idAuteur"));
