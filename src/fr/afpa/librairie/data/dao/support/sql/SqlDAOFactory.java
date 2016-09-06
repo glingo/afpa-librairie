@@ -2,6 +2,9 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOUtils;
+import fr.afpa.librairie.data.dao.RoleDAO;
+import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
+import fr.afpa.librairie.data.dao.UtilisateurDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -93,17 +96,17 @@ public class SqlDAOFactory extends AbstractDAOFactory {
     }
     
     @Override
-    public UtilisateurSqlDAO getUtilisateurDAO(){
+    public UtilisateurDAO getUtilisateurDAO(){
         return new UtilisateurSqlDAO(this);
     }
     
     @Override
-    public StatutUtilisateurSqlDAO getStatutUtilisateurDAO(){
+    public StatutUtilisateurDAO getStatutUtilisateurDAO(){
         return new StatutUtilisateurSqlDAO(this);
     }
     
     @Override
-    public RoleSqlDAO getRoleDAO(){
+    public RoleDAO getRoleDAO(){
         return new RoleSqlDAO(this);
     }
 }

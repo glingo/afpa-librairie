@@ -11,7 +11,7 @@ public class StrictInputVerifier extends InputVerifier {
     public boolean verify(JComponent input) {
         
         if (!(input instanceof JTextComponent)) {
-          return true;
+            return true;
         }
         
         String text = ((JTextComponent) input).getText();

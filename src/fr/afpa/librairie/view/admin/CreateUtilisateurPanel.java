@@ -5,7 +5,9 @@ import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.form.FormPanel;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.text.SimpleDateFormat;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -47,7 +49,18 @@ public class CreateUtilisateurPanel extends JPanel {
             prenomField.setInputVerifier(new StrictInputVerifier());
             this.form.addField("Prenom", prenomField);
             
-            this.form.addField("Mot de passe", new JPasswordField(15));
+            JTextField mailField = new JTextField(15);
+            mailField.setInputVerifier(new StrictInputVerifier());
+            this.form.addField("mail", mailField);
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            JFormattedTextField formatText = new JFormattedTextField(formatter);
+            formatText.setColumns(20);
+            this.form.addField("Date de naissance", formatText);
+            
+            JPasswordField passwordField = new JPasswordField(15);
+            passwordField.setInputVerifier(new StrictInputVerifier());
+            this.form.addField("Mot de passe", passwordField);
             
             this.form.createForm();
         }

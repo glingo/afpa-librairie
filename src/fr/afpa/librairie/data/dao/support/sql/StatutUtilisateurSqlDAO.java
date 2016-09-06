@@ -1,7 +1,6 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
-import fr.afpa.librairie.data.bean.Role;
 import fr.afpa.librairie.data.bean.StatutUtilisateur;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.exception.DAOException;
@@ -148,6 +147,7 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
         
     }
 
+    @Override
     public StatutUtilisateur findByCode(String code) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;

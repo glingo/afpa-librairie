@@ -2,6 +2,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Role;
+import fr.afpa.librairie.data.bean.StatutUtilisateur;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import java.sql.Connection;
@@ -17,9 +18,9 @@ import java.util.List;
 public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
 
     private static final String SQL_INSERT = "INSERT INTO Role (libelle, code) VALUES (?, ?)";
-    private static final String SQL_DELETE = "DELETE FROM Role WHERE id = ?";
+    private static final String SQL_DELETE = "DELETE FROM Role WHERE idRole = ?";
     private static final String SQL_FIND_ALL = "SELECT idRole, libelle, code FROM Role";
-    private static final String SQL_FIND_BY_ID = "SELECT idRole, libelle, code FROM Role WHERE id = ?";
+    private static final String SQL_FIND_BY_ID = "SELECT idRole, libelle, code FROM Role WHERE idRole = ?";
     private static final String SQL_FIND_BY_LIBELLE = "SELECT idRole, libelle, code FROM Role WHERE libelle = ?";
     private static final String SQL_FIND_BY_CODE = "SELECT idRole, libelle, code FROM Role WHERE code = ?";
     private static final String SQL_FIND_BY_UTILISATEUR = "SELECT ro.idRole, ro.libelle, ro.code FROM Role AS ro JOIN Remplit AS r ON r.idRole = ro.idRole WHERE r.idUtilisateur = ?";
@@ -216,10 +217,36 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
     }
 
     @Override
+    public Role findByCode(String code) {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Role role = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_CODE, false, code);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                role = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return role;
+    }
+
+    @Override
     protected Role map(ResultSet resultSet) throws SQLException {
         Role role = new Role();
         
-        role.setId(resultSet.getLong("id"));
+        role.setId(resultSet.getLong("idRole"));
         role.setLibelle(resultSet.getString("libelle"));
         role.setCode(resultSet.getString("code"));
         

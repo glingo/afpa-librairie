@@ -1,34 +1,18 @@
 package fr.afpa.librairie.data.dao.support.xml;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
-import fr.afpa.librairie.data.bean.Role;
-import fr.afpa.librairie.data.dao.AbstractDAO;
-import fr.afpa.librairie.data.exception.DAOException;
+import fr.afpa.librairie.data.bean.Utilisateur;
+import fr.afpa.librairie.data.dao.UtilisateurDAO;
 
-public class UtilisateurXmlDAO extends AbstractXmlDAO<Role> {
+public class UtilisateurXmlDAO extends AbstractXmlDAO<Utilisateur> implements UtilisateurDAO {
 
     public UtilisateurXmlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
 
     @Override
-    public void save(Role instance) throws DAOException {
+    public Utilisateur findByMail(String mail) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void delete(Role instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Role findByExemple(Role instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Role findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

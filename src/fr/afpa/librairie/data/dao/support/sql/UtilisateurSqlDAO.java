@@ -4,6 +4,7 @@ import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.bean.Role;
 import fr.afpa.librairie.data.bean.StatutUtilisateur;
+import fr.afpa.librairie.data.dao.UtilisateurDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +16,11 @@ import java.util.List;
 // DAO = Data Access Object
 // DTO = Data Transfert Object
 
-public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> {
+public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements UtilisateurDAO {
 
-    private static final String SQL_INSERT = "INSERT INTO Utilisateur (nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO Utilisateur"
+            + " (nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur)"
+            + " VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_DELETE = "DELETE FROM Utilisateur WHERE idUtilisateur = ?";
     private static final String SQL_FIND_ALL = "SELECT idUtilisateur, nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur FROM Utilisateur ";
     private static final String SQL_FIND_BY_EMAIL = "SELECT idUtilisateur, nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur FROM Utilisateur WHERE mail = ?";
@@ -36,9 +39,25 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> {
 
         try {
             
+            if(instance.getStatut() == null) {
+                // on recupère le statut par default
+                // le code devrait etre une constante.
+                StatutUtilisateur statut = getFactory().getStatutUtilisateurDAO().findByCode("OK");
+                instance.setStatut(statut);
+            }
+            
+            // le statut est forcement different de null.
             // si le statut n'est pas enregistré, on le créé.
-            if(instance.getStatut() != null && instance.getStatut().getId() == null) {
+            if(instance.getStatut().getId() == null) {
                 getFactory().getStatutUtilisateurDAO().save(instance.getStatut());
+            }
+            
+            
+            if(instance.getRoles() == null) {
+                // on recupère le Role par default
+                // le code devrait etre une constante.
+                Role role = getFactory().getRoleDAO().findByCode("CLI");
+                instance.addRole(role);
             }
             
             // On verifie que tout les roles sont enregistré
@@ -51,8 +70,7 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
             
-            preparedStatement = getPreparedStatement(
-                    connexion, SQL_INSERT, true, 
+            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true, 
                     instance.getNom(), instance.getPrenom(), 
                     instance.getEmail(), instance.getTelephone(),
                     instance.getMotDePasse(), instance.getDateNaissance(), 
@@ -213,6 +231,11 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> {
         utilisateur.setRoles(roles);
         
         return utilisateur;
+    }
+
+    @Override
+    public Utilisateur findByMail(String mail) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,9 +21,9 @@ public final class MainFrame extends JFrame {
     }
     
     private void init(){
-        
         Container contentPane = getContentPane();
-        contentPane.setLayout(new BorderLayout());
+        
+        contentPane.setLayout(new BorderLayout(1, 0));
 
         setContent(new DashBoardPanel());
         
@@ -30,13 +31,16 @@ public final class MainFrame extends JFrame {
         setJMenuBar(jMenuBar);
         
         initMenu(jMenuBar);
-        
-        Dimension dimension = new Dimension(900, 900);
+        Dimension dimension = new Dimension(650, 450);
         setPreferredSize(dimension);
 //        setResizable(false);
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((dim.width - getWidth())/2, (dim.height - getHeight())/2);
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Le hibou qui lit");
-        setLocationRelativeTo(null);
+//        setLocationRelativeTo(null);
         pack();
     }
 
@@ -47,16 +51,9 @@ public final class MainFrame extends JFrame {
             contentPane.remove(currentContent);
         }
         
-//        contentPane.add(component);
         contentPane.add(component, BorderLayout.CENTER);
         currentContent = component;
-//        contentPane.requestFocus();
-//        contentPane.doLayout();
-//        contentPane.repaint();
         pack();
-//        currentContent.doLayout();
-//        currentContent.repaint();
-//        pack();
         repaint();
     }
     
@@ -80,6 +77,11 @@ public final class MainFrame extends JFrame {
         JMenuItem utilisateurAdmin = new JMenuItem("Utilisateurs");
         utilisateurAdmin.addActionListener(new UtilisateurController(this));
         adminMenu.add(utilisateurAdmin);
+        
+        // meme chose pour auteur etc ...
+//        JMenuItem auteursAdmin = new JMenuItem("Auteurs");
+//        auteursAdmin.addActionListener(new AuteurController(this));
+//        adminMenu.add(auteursAdmin);
         
         jMenuBar.add(adminMenu);
     }

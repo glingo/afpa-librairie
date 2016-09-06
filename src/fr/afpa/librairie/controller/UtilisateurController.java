@@ -1,11 +1,15 @@
 package fr.afpa.librairie.controller;
 
 import fr.afpa.librairie.data.bean.Utilisateur;
+import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CreateUtilisateurPanel;
 import fr.afpa.librairie.view.admin.UtilisateurAdminPanel;
 import java.awt.event.ActionEvent;
+import java.util.Date;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class UtilisateurController extends Controller {
@@ -61,29 +65,32 @@ public class UtilisateurController extends Controller {
         
         JTextField fieldNom = this.createPanel.getForm().getField("Nom");
         JTextField fieldPrenom = this.createPanel.getForm().getField("Prenom");
-        JTextField fieldMdp = this.createPanel.getForm().getField("Prenom");
-        
-        
-        if(!fieldNom.getInputVerifier().verify(fieldNom)) {
-            return;
-        }
-        
-        fieldPrenom.requestFocus();
+        JTextField fieldMail = this.createPanel.getForm().getField("mail");
+        JTextField fieldMdp = this.createPanel.getForm().getField("Mot de passe");
+        JFormattedTextField fieldDate = this.createPanel.getForm().getField("Date de naissance");
         
         String nom = fieldNom.getText();
         String prenom = fieldPrenom.getText();
-        
-        this.createPanel.getForm().reset();
-        
-        fieldNom.setText("");
-        fieldPrenom.setText("");
+        String mail = fieldMail.getText();
+        String mdp = fieldMdp.getText();
+        Date date = (Date) fieldDate.getValue();
         
         Utilisateur utilisateur = new Utilisateur();
         
         utilisateur.setNom(nom);
         utilisateur.setPrenom(prenom);
+        utilisateur.setEmail(mail);
+        utilisateur.setMotDePasse(mdp);
+        utilisateur.setDateNaissance(new java.sql.Date(date.getTime()));
         
-        getDaoFactory().getUtilisateurDAO().save(utilisateur);
+        try{
+            getDaoFactory().getUtilisateurDAO().save(utilisateur);
+        } catch(DAOException ex){
+            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        this.createPanel.getForm().reset();
     
         listAction();
     }

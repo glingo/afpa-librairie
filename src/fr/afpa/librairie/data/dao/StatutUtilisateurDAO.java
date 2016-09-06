@@ -4,4 +4,5 @@ import fr.afpa.librairie.data.bean.StatutUtilisateur;
 
 public interface StatutUtilisateurDAO extends DAOInterface<StatutUtilisateur> {
 
+    StatutUtilisateur findByCode(String code);
 }

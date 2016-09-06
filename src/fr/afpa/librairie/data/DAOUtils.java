@@ -21,7 +21,7 @@ public class DAOUtils {
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
-            String msg = "Le driver est introuvable dans le classpath.";
+            String msg = String.format("Le driver est %s introuvable dans le classpath.", driver);
             throw new DAOConfigurationException(msg, e);
         }
     }

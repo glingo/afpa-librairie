@@ -14,16 +14,6 @@ public class UtilisateurTableModel extends AbstractTableModel {
 
     private static final long serialVersionUID = 1547542546403627396L;
     
-//    private Long id;
-//    private String nom;
-//    private String prenom;
-//    private String motDePasse;
-//    private String email;
-//    private Date dateInscription;
-//    private enum Column {
-//        NOM, PRENOM, EMAIL, DATE_INSCRIPTION
-//    }
-
     private final ListModelHolder<Utilisateur> utilisateurListModelHolder = new ListModelHolder<>();
     private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
 
@@ -34,8 +24,8 @@ public class UtilisateurTableModel extends AbstractTableModel {
             this.columnDisplayNames = new HashMap<>();
             this.columnDisplayNames.put(UtilisateurColumn.NOM, "Nom");
             this.columnDisplayNames.put(UtilisateurColumn.PRENOM, "Prenom");
-            this.columnDisplayNames.put(UtilisateurColumn.EMAIL, "E-mail");
-            this.columnDisplayNames.put(UtilisateurColumn.DATE_INSCRIPTION, "Date d'inscription");
+            this.columnDisplayNames.put(UtilisateurColumn.MAIL, "E-mail");
+            this.columnDisplayNames.put(UtilisateurColumn.DATE_NAISSANCE, "Date de naissance");
         }
         return this.columnDisplayNames;
     }
@@ -73,6 +63,12 @@ public class UtilisateurTableModel extends AbstractTableModel {
                 break;
             case PRENOM:
                 columnValue = utilisateur.getPrenom();
+                break;
+            case MAIL:
+                columnValue = utilisateur.getEmail();
+                break;
+            case DATE_NAISSANCE:
+                columnValue = utilisateur.getDateNaissance();
                 break;
             default:
 //                columnValue = getAddressObject(person, column);

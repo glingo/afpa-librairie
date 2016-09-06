@@ -36,6 +36,16 @@ public class RoleXmlDAO extends AbstractXmlDAO<Role> implements RoleDAO {
     public List<Role> findAll() throws DAOException {
         return super.findAll(); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Role findByCode(String code) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Role> findByUtilisateur(Long idUtilisateur) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

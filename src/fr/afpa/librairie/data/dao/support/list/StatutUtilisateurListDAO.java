@@ -18,8 +18,15 @@ public class StatutUtilisateurListDAO extends AbstractListDAO<StatutUtilisateur>
 
     @Override
     public StatutUtilisateur findById(Long id) throws DAOException {
-         return getTable().stream().filter((StatutUtilisateur statut) -> {
+        return getTable().stream().filter((StatutUtilisateur statut) -> {
             return statut.getId().equals(id);
+        }).findFirst().orElse(null);
+    }
+
+    @Override
+    public StatutUtilisateur findByCode(String code) {
+        return getTable().stream().filter((StatutUtilisateur statut) -> {
+            return statut.getCode().equals(code);
         }).findFirst().orElse(null);
     }
 

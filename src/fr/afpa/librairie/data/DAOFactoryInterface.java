@@ -1,12 +1,13 @@
-
 package fr.afpa.librairie.data;
 
-import fr.afpa.librairie.data.dao.DAOInterface;
+import fr.afpa.librairie.data.dao.RoleDAO;
+import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
+import fr.afpa.librairie.data.dao.UtilisateurDAO;
 
 public interface DAOFactoryInterface {
     
-    public <T extends DAOInterface> T getUtilisateurDAO();
-    public <T extends DAOInterface> T getRoleDAO();
-    public <T extends DAOInterface> T getStatutUtilisateurDAO();
+    public UtilisateurDAO getUtilisateurDAO();
+    public RoleDAO getRoleDAO();
+    public StatutUtilisateurDAO getStatutUtilisateurDAO();
     
 }
