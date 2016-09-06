@@ -2,7 +2,11 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.bean.Auteur;
+import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Ouvrage;
+import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.data.bean.Tag;
+import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.ResultSet;
@@ -42,23 +46,61 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 Auteur auteur = getFactory().getAuteurDAO().findByName(instance.getAuteur().getNom());
                 instance.setAuteur(auteur);
             }
-            //themes
-            //rubriques
-            //genres
-            //tags
-            if(instance.getRoles() == null) {
-                // on recupère le Role par default
-                // le code devrait etre une constante.
-                Role role = getFactory().getRoleDAO().findByCode("CLI");
-                instance.addRole(role);
+
+            if(instance.getThemes() == null) {
+
+                Theme theme = getFactory().getThemeDAO().findByLibelle("CLI");
+                instance.addTheme(theme);
             }
             
-            // On verifie que tout les roles sont enregistré
-            instance.getRoles().forEach((Role role) -> {
-                if(role != null && role.getId() == null) {
-                    role = getFactory().getRoleDAO().findByCode(role.getCode());
+
+            instance.getThemes().forEach((Theme theme) -> {
+                if(theme != null && theme.getId() == null) {
+                    theme = getFactory().getThemeDAO().findByLibelle(theme.getLibelle());
+                }
+            }
+            
+            if(instance.getGenres() == null) {
+
+                Genre genre = getFactory().getGenreDAO().findByLibelle("CLI");
+                instance.addGenre(genre);
+            }
+            
+
+            instance.getGenres().forEach((Genre genre) -> {
+                if(genre != null && genre.getId() == null) {
+                    genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
+                }
+            }
+            
+            if(instance.getRubriques() == null) {
+
+                Rubrique rubrique = getFactory().getRubriqueDAO().findByLibelle("CLI");
+                instance.addRubrique(rubrique);
+            }
+            
+
+            instance.getRubriques().forEach((Rubrique rubrique) -> {
+                if(rubrique != null && rubrique.getId() == null) {
+                    rubrique = getFactory().getRubriqueDAO().findByLibelle(rubrique.getLibelle());
+                }
+            }
+            
+            if(instance.getTags() == null) {
+
+                Tag tag = getFactory().getTagDAO().findByLibelle("CLI");
+                instance.addTag(tag);
+            }
+            
+
+            instance.getTags().forEach((Tag tag) -> {
+                if(tag != null && tag.getId() == null) {
+                    tag = getFactory().getTagDAO().findByLibelle(tag.getLibelle());
                 }
             });
+            
+            
+        //***************************************REPRENDRE ICI****************************************
 
         /* Récupération d'une connexion depuis la Factory */
         connexion = factory.getConnection();
