@@ -1,5 +1,7 @@
 package fr.afpa.librairie.view;
 
+import fr.afpa.librairie.controller.AuteurController;
+import fr.afpa.librairie.controller.OuvrageController;
 import fr.afpa.librairie.controller.UtilisateurController;
 import fr.afpa.librairie.view.admin.DashBoardPanel;
 import java.awt.AlphaComposite;
@@ -81,10 +83,14 @@ public final class MainFrame extends JFrame {
         utilisateurAdmin.addActionListener(new UtilisateurController(this));
         adminMenu.add(utilisateurAdmin);
         
-        // meme chose pour auteur etc ...
-//        JMenuItem auteursAdmin = new JMenuItem("Auteurs");
-//        auteursAdmin.addActionListener(new AuteurController(this));
-//        adminMenu.add(auteursAdmin);
+        
+        JMenuItem auteurAdmin = new JMenuItem("Auteurs");
+        auteurAdmin.addActionListener(new AuteurController(this));
+        adminMenu.add(auteurAdmin);
+        
+        JMenuItem ouvrageAdmin = new JMenuItem("Ouvrages");
+        ouvrageAdmin.addActionListener(new OuvrageController(this));
+        adminMenu.add(ouvrageAdmin);
         
         jMenuBar.add(adminMenu);
     }
