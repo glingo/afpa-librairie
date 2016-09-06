@@ -14,6 +14,7 @@ public class Adresse {
     private String numero;
     private String voie;
     private String cp;
+    private String ville;
     private String complement;
 
     public Adresse() {
@@ -50,6 +51,14 @@ public class Adresse {
     public void setCp(String cp) {
         this.cp = cp;
     }
+    
+    public String getVille(){
+        return ville;
+    }
+    
+    public void setVille(String ville){
+        this.ville = ville;
+    }
 
     public String getComplement() {
         return complement;
@@ -61,7 +70,7 @@ public class Adresse {
 
     @Override
     public String toString() {
-        return "Adresse{" + "id=" + id + ", numero=" + numero + ", voie=" + voie + ", cp=" + cp + ", complement=" + complement + '}';
+        return "Adresse{" + "id=" + id + ", numero=" + numero + ", voie=" + voie + ", cp=" + cp + ", ville="+ ville +", complement=" + complement + '}';
     }
     
     
