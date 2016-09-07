@@ -15,18 +15,40 @@ public class NouvelOuvrage extends javax.swing.JFrame {
 
     public NouvelOuvrage() {
         initComponents();
-        initVectorGenre();
-  
+        //initVectorGenre();
+
     }
-    
+
+    private DefaultComboBoxModel initModelAuteur() {//configurer le Model - clic droit - proprietes - Model - Custom code et coller initModelCD()
+        return new DefaultComboBoxModel(initVectorAuteur());//c'est le toString de new Album qui sera affiche dans le ComboBox
+    }
+
+    private Vector initVectorAuteur() {
+
+        VectorGenerator vg = new VectorGenerator();
+        return vg.genererVector("Auteur", "idAuteur", "nom", "prenom");
+
+    }
+
     private DefaultComboBoxModel initModelGenre() {//configurer le Model - clic droit - proprietes - Model - Custom code et coller initModelCD()
         return new DefaultComboBoxModel(initVectorGenre());//c'est le toString de new Album qui sera affiche dans le ComboBox
     }
 
     private Vector initVectorGenre() {
-        
+
         VectorGenerator vg = new VectorGenerator();
         return vg.genererVector("Genre", "idGenre", "libelle");
+
+    }
+
+    private DefaultComboBoxModel initModelTheme() {//configurer le Model - clic droit - proprietes - Model - Custom code et coller initModelCD()
+        return new DefaultComboBoxModel(initVectorTheme());//c'est le toString de new Album qui sera affiche dans le ComboBox
+    }
+
+    private Vector initVectorTheme() {
+
+        VectorGenerator vg = new VectorGenerator();
+        return vg.genererVector("Theme", "idTheme", "libelle");
 
     }
 
@@ -98,7 +120,7 @@ public class NouvelOuvrage extends javax.swing.JFrame {
         jDesktopPane1.add(jLabel7);
         jLabel7.setBounds(36, 324, 97, 16);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(initModelTheme());
         jDesktopPane1.add(jComboBox3);
         jComboBox3.setBounds(212, 324, 200, 26);
 
@@ -126,7 +148,7 @@ public class NouvelOuvrage extends javax.swing.JFrame {
         jDesktopPane2.add(jButton1);
         jButton1.setBounds(470, 60, 159, 32);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(initModelAuteur());
         jDesktopPane2.add(jComboBox1);
         jComboBox1.setBounds(210, 70, 200, 26);
 
@@ -150,7 +172,7 @@ public class NouvelOuvrage extends javax.swing.JFrame {
         jDesktopPane1.add(jLabel9);
         jLabel9.setBounds(480, 250, 130, 16);
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox5.setModel(initModelAuteur());
         jDesktopPane1.add(jComboBox5);
         jComboBox5.setBounds(630, 250, 180, 26);
 

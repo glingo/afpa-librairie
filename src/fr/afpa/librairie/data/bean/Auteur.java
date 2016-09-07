@@ -12,15 +12,23 @@ import java.sql.Date;
  * @author cdi305
  */
 public class Auteur {
-    
+
     private Long id;
     private String nom;
     private String prenom;
     private Date dateNaissance;
     private Date dateDeces;
 
-    public Auteur() {}
-    
+    public Auteur() {
+    }
+
+    public Auteur(Long id, String nom, Date dateNaissance, Date dateDeces) {
+        this.id = id;
+        this.nom = nom;
+        this.dateNaissance = dateNaissance;
+        this.dateDeces = dateDeces;
+    }
+
     public Long getId() {
         return id;
     }
@@ -60,7 +68,9 @@ public class Auteur {
     public void setDateDeces(Date dateDeces) {
         this.dateDeces = dateDeces;
     }
-    
-    
-    
+
+    public String toString(){
+        return prenom+" "+nom;
+    }
+            
 }

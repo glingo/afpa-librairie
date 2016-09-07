@@ -6,9 +6,9 @@ import java.util.*;
 
 public class VectorGenerator {
 
-    public Vector genererVector(String table, String id, String colonneAAfficher) {
+    public Vector genererVector( String table, String id, String colonne1) {
 
-        Vector vGenre = new Vector();
+        Vector v = new Vector();
         MyConnection myConnect = new MyConnection();
 
         Connection connect = myConnect.opening();
@@ -16,11 +16,12 @@ public class VectorGenerator {
         try {//requete
 
             Statement s = connect.createStatement();//initie une saisie
-            String query = "select * from "+table;//saisie de la commande en sql
+            String query = "select * from "+table+" order by "+colonne1;//saisie de la commande en sql
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {
-                vGenre.add(new Genre(rs.getLong(id),
-                        rs.getString(colonneAAfficher)));
+                v.add(new ClasseConstructorPourVector(table,
+                        rs.getLong(id),
+                        rs.getString(colonne1)));
             }
 
             rs.close();
@@ -30,6 +31,37 @@ public class VectorGenerator {
             System.err.println("Oops:SQL :" + ex.getErrorCode() + "/" + ex.getMessage());
         }
         myConnect.closing();
-        return vGenre;
+        return v;
     }
+   
+    
+    public Vector genererVector( String table, String id, String colonne1, String colonne2) {
+
+        Vector v = new Vector();
+        MyConnection myConnect = new MyConnection();
+
+        Connection connect = myConnect.opening();
+
+        try {//requete
+
+            Statement s = connect.createStatement();//initie une saisie
+            String query = "select * from "+table+" order by "+colonne1;//saisie de la commande en sql
+            ResultSet rs = s.executeQuery(query);
+            while (rs.next()) {
+                v.add(new ClasseConstructorPourVector(table,
+                        rs.getLong(id),
+                        rs.getString(colonne1), 
+                        rs.getString(colonne2)));
+            }
+
+            rs.close();
+            s.close();
+
+        } catch (SQLException ex) {
+            System.err.println("Oops:SQL :" + ex.getErrorCode() + "/" + ex.getMessage());
+        }
+        myConnect.closing();
+        return v;
+    }
+      
 }
