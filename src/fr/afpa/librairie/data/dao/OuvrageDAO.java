@@ -7,4 +7,5 @@ public interface OuvrageDAO extends DAOInterface<Ouvrage> {
     
     Ouvrage findByTitre(String titre);
     Ouvrage findBySousTitre(String sousTitre);
+    
 }

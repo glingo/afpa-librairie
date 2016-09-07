@@ -92,6 +92,10 @@ public final class MainFrame extends JFrame {
         ouvrageAdmin.addActionListener(new OuvrageController(this));
         adminMenu.add(ouvrageAdmin);
         
+        JMenuItem rubriqueAdmin = new JMenuItem("Rubrique");
+        rubriqueAdmin.addActionListener(new RubriqueController(this));
+        adminMenu.add(rubriqueAdmin);
+        
         jMenuBar.add(adminMenu);
     }
     

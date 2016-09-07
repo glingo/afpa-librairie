@@ -131,5 +131,10 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public List<Tag> findByOuvrage(Long idOuvrage) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 }

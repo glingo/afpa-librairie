@@ -48,7 +48,8 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 Auteur auteur = getFactory().getAuteurDAO().findByName(instance.getAuteur().getNom());
                 instance.setAuteur(auteur);
             }
-
+            // Je ne comprend pas d'ou vient d'erreur. 
+            //
             if(instance.getThemes() == null) {
 
                 Theme theme = getFactory().getThemeDAO().findByLibelle("CLI");
@@ -93,6 +94,11 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 Tag tag = getFactory().getTagDAO().findByLibelle("CLI");
                 instance.addTag(tag);
             }
+            
+            /*if(instance.getTags().getId() == null) {
+                Tag tag = getFactory().getTagDAO().findByLibelle(instance.getTags().getId());
+                instance.setTags((List<Tag>) tag);
+            }*/
             
 
             instance.getTags().forEach((Tag tag) -> {

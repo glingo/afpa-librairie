@@ -214,6 +214,11 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         return rubrique;
         
     }
+
+    @Override
+    public List<Rubrique> findByOuvrage(Long idOuvrage) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 
 }
