@@ -1,6 +1,7 @@
 package fr.afpa.librairie.data;
 
 import fr.afpa.librairie.data.dao.AuteurDAO;
+import fr.afpa.librairie.data.dao.EditeurDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
@@ -42,6 +43,8 @@ public abstract class AbstractDAOFactory implements DAOFactoryInterface {
     
     @Override
     public abstract GenreDAO getGenreDAO();
+    
+    public abstract EditeurDAO getEditeurDAO();
     
     
     

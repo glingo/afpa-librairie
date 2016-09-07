@@ -2,6 +2,7 @@ package fr.afpa.librairie.view;
 
 import fr.afpa.librairie.controller.AuteurController;
 import fr.afpa.librairie.controller.CommandeController;
+import fr.afpa.librairie.controller.EditeurController;
 import fr.afpa.librairie.controller.OuvrageController;
 import fr.afpa.librairie.controller.RubriqueController;
 import fr.afpa.librairie.controller.UtilisateurController;
@@ -101,6 +102,10 @@ public final class MainFrame extends JFrame {
         JMenuItem commandeAdmin = new JMenuItem("Commandes");
         commandeAdmin.addActionListener(new CommandeController(this));
         adminMenu.add(commandeAdmin);
+        
+        JMenuItem editeurAdmin = new JMenuItem("Editeurs");
+        editeurAdmin.addActionListener(new EditeurController(this));
+        adminMenu.add(editeurAdmin);
         
         jMenuBar.add(adminMenu);
     }

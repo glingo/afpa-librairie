@@ -3,6 +3,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOUtils;
 import fr.afpa.librairie.data.dao.AuteurDAO;
+import fr.afpa.librairie.data.dao.EditeurDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
@@ -141,6 +142,7 @@ public class SqlDAOFactory extends AbstractDAOFactory {
         return new TagSqlDAO(this);
     }
     
+    @Override
     public CommandeSqlDAO getCommandeDAO(){
         return new CommandeSqlDAO(this);
     }
@@ -148,5 +150,9 @@ public class SqlDAOFactory extends AbstractDAOFactory {
     @Override
     public OuvrageDAO getOuvrageDAO() {
         return new OuvrageSqlDAO(this);
+    }
+    
+    public EditeurDAO getEditeurDAO(){
+        return new EditeurSqlDAO(this);
     }
 }

@@ -24,7 +24,7 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
     
     
     
-     public CommandeSqlDAO(DAOFactoryInterface factory) {
+    public CommandeSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
      
