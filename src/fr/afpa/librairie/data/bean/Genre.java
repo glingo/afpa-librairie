@@ -32,4 +32,8 @@ public class Genre {
         this.libelle = libelle;
     }
     
+    public String toString(){
+        return libelle;
+    }
+    
 }
