@@ -1,15 +1,20 @@
 
 package fr.afpa.librairie.controller;
 
+import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CreateRubriquePanel;
 import fr.afpa.librairie.view.admin.RubriqueAdminPanel;
+import java.awt.event.ActionEvent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 
 public class RubriqueController extends Controller {
     
     
     private final RubriqueAdminPanel adminPanel = new RubriqueAdminPanel(this);
-    private final CreateRubriquePanel createPanel = new CreateAdminPanel(this);
+    private final CreateRubriquePanel createPanel = new CreateRubriquePanel(this);
     
     public RubriqueController(MainFrame frame) {
         super(frame);
@@ -40,9 +45,9 @@ public class RubriqueController extends Controller {
     }
 
     public void listAction() {
-        ListAdapterListModel<Utilisateur> utilisateurListModel = new ListAdapterListModel<>();
-        utilisateurListModel.addAll(getDaoFactory().getUtilisateurDAO().findAll());
-        adminPanel.setUtilisateurList(utilisateurListModel);
+        ListAdapterListModel<Rubrique> rubriqueListModel = new ListAdapterListModel<>();
+        rubriqueListModel.addAll(getDaoFactory().getRubriqueDAO().findAll());
+        adminPanel.setUtilisateurList(rubriqueListModel);
         this.frame.setContent(adminPanel);
     }
     
@@ -55,11 +60,11 @@ public class RubriqueController extends Controller {
         
         this.createPanel.getForm().verify();
         
-        JTextField fieldNom = this.createPanel.getForm().getField("Nom");
-        JTextField fieldPrenom = this.createPanel.getForm().getField("Prenom");
-        JTextField fieldMail = this.createPanel.getForm().getField("mail");
-        JTextField fieldMdp = this.createPanel.getForm().getField("Mot de passe");
-        JFormattedTextField fieldDate = this.createPanel.getForm().getField("Date de naissance");
+        JTextField fieldCommentaire = this.createPanel.getForm().getField("Libelle");
+        JFormattedTextField fieldDate = this.createPanel.getForm().getField("Date de début");
+        JFormattedTextField fieldDate = this.createPanel.getForm().getField("Date de fin");
+        JTextField fieldPrenom = this.createPanel.getForm().getField("Commentaire");
+        
         
         String nom = fieldNom.getText();
         String prenom = fieldPrenom.getText();
