@@ -1,13 +1,60 @@
-
 package fr.afpa.librairie.view.maquette;
+
+import java.sql.*;
+import java.util.*;
 
 public class NouvelOuvrage extends javax.swing.JFrame {
 
     public NouvelOuvrage() {
         initComponents();
+        Connection c = null;
+        MyConnection myConnection = null;
+////////////////////////////////////////////////////////////////////////////////     
+        /*        
+         try {//requete
+         Statement stmt = c.createStatement();//initie une saisie
+         String query = "select libelle from Genre ";//saisie de la commande en sql
+         ResultSet rs = stmt.executeQuery(query);
+         while (rs.next()) {
+         System.out.println(rs.getString("libelle"));
+         }
+
+         rs.close();
+         stmt.close();
+
+         stmt.close();
+         } catch (SQLException ex) {
+         System.err.println("Oops:SQL x :" + ex.getErrorCode() + "/" + ex.getMessage());
+         }//*/
+
+        myConnection.closing();
+////////////////////////////////////////////////////////////////////////////////        
     }
 
-    @SuppressWarnings("unchecked")
+    private int initVectorPays() {
+        {//requete
+            myConnection = new MyConnection();
+            c = myConnection.opening();
+            try {
+                Statement stmt = c.createStatement();//initie une saisie
+                String query = "select libelle from Genre ";//saisie de la commande en sql
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()) {
+                    System.out.println(rs.getString("libelle"));
+                }
+
+                rs.close();
+                stmt.close();
+
+                stmt.close();
+            } catch (SQLException ex) {
+                System.err.println("Oops:SQL x :" + ex.getErrorCode() + "/" + ex.getMessage());
+            }
+
+            return 1;
+        }
+
+        @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -136,6 +183,10 @@ public class NouvelOuvrage extends javax.swing.JFrame {
 
         setBounds(0, 0, 846, 638);
     }// </editor-fold>//GEN-END:initComponents
+
+    
+
+    
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
