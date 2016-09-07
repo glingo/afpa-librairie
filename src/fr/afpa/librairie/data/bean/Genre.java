@@ -10,11 +10,17 @@ package fr.afpa.librairie.data.bean;
  * @author cdi305
  */
 public class Genre {
-    
+
     private Long id;
     private String libelle;
 
-    public Genre() {}
+    public Genre() {
+    }
+
+    public Genre(Long id, String libelle) {
+        this.id = id;
+        this.libelle = libelle;
+    }
 
     public Long getId() {
         return id;
@@ -31,9 +37,9 @@ public class Genre {
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
-    
-    public String toString(){
+
+    public String toString() {
         return libelle;
     }
-    
+
 }
