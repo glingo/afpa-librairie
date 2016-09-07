@@ -137,14 +137,55 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
     public Rubrique findById(Long id) throws DAOException {
        SqlDAOFactory factory = getFactory();
        Connection connexion = null;
-       PreparedStatement preparedStratement
+       PreparedStatement preparedStatement = null; 
+       ResultSet resultSet = null; 
+       Rubrique rubrique = null; 
+       
+       try{
+          connexion = factory.getConnection();
+          preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, false, id);
+          resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                rubrique = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return rubrique;
+       
     }
     
     
 
     @Override
     public Rubrique findByLibelle(String libelle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Rubrique rubrique = null;
+        
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_LIBELLE, false, libelle);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                rubrique = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return rubrique; 
+    
     }
 
     @Override
