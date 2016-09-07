@@ -52,6 +52,9 @@ public class VisionnerCommande extends javax.swing.JFrame {
         jTextField15 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel22 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jTextField16 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -67,7 +70,7 @@ public class VisionnerCommande extends javax.swing.JFrame {
 
         jLabel8.setText("Adresse de facturation");
         jDesktopPane1.add(jLabel8);
-        jLabel8.setBounds(90, 20, 130, 16);
+        jLabel8.setBounds(100, 20, 130, 16);
 
         jTextField1.setText("jTextField1");
         jDesktopPane1.add(jTextField1);
@@ -127,10 +130,10 @@ public class VisionnerCommande extends javax.swing.JFrame {
 
         jLabel9.setText("Adresse de livraison");
         jDesktopPane1.add(jLabel9);
-        jLabel9.setBounds(310, 20, 116, 16);
+        jLabel9.setBounds(300, 20, 116, 16);
 
         getContentPane().add(jDesktopPane1);
-        jDesktopPane1.setBounds(330, 60, 450, 280);
+        jDesktopPane1.setBounds(330, 60, 450, 250);
 
         jLabel7.setText("jLabel7");
         jDesktopPane2.add(jLabel7);
@@ -212,17 +215,17 @@ public class VisionnerCommande extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Ouvrage", "ISBN", "Quantité", "Prix Unitaire", "Taxe", "Promo"
+                "Date", "N° Commande", "Ouvrage", "ISBN", "Quantité", "Prix Unitaire", "Promo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Float.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -233,6 +236,18 @@ public class VisionnerCommande extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(20, 440, 780, 150);
+
+        jLabel22.setText("Recherche Commande");
+        getContentPane().add(jLabel22);
+        jLabel22.setBounds(530, 350, 130, 16);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox1);
+        jComboBox1.setBounds(530, 380, 270, 26);
+
+        jTextField16.setText("jTextField16");
+        getContentPane().add(jTextField16);
+        jTextField16.setBounds(720, 350, 80, 24);
 
         setBounds(0, 0, 857, 644);
     }// </editor-fold>//GEN-END:initComponents
@@ -270,6 +285,7 @@ public class VisionnerCommande extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JDesktopPane jDesktopPane3;
@@ -287,6 +303,7 @@ public class VisionnerCommande extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -303,6 +320,7 @@ public class VisionnerCommande extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
+    private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;

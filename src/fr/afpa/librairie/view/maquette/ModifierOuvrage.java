@@ -62,14 +62,10 @@ public class ModifierOuvrage extends javax.swing.JFrame {
         jLabel5.setText("Résumé");
         jDesktopPane1.add(jLabel5);
         jLabel5.setBounds(6, 468, 47, 16);
-
-        jTextField1.setText("jTextField1");
         jDesktopPane1.add(jTextField1);
-        jTextField1.setBounds(182, 185, 73, 24);
-
-        jTextField2.setText("jTextField2");
+        jTextField1.setBounds(182, 185, 460, 24);
         jDesktopPane1.add(jTextField2);
-        jTextField2.setBounds(182, 240, 73, 24);
+        jTextField2.setBounds(182, 240, 460, 24);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);

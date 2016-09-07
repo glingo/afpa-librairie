@@ -43,10 +43,8 @@ public class NouvelleEdition extends javax.swing.JFrame {
         jLabel9.setText("Rechercher un ouvrage par son n°");
         jLayeredPane1.add(jLabel9);
         jLabel9.setBounds(10, 66, 210, 30);
-
-        jTextField8.setText("jTextField8");
         jLayeredPane1.add(jTextField8);
-        jTextField8.setBounds(236, 70, 73, 24);
+        jTextField8.setBounds(220, 70, 73, 24);
 
         getContentPane().add(jLayeredPane1);
         jLayeredPane1.setBounds(0, 0, 350, 110);
@@ -54,10 +52,8 @@ public class NouvelleEdition extends javax.swing.JFrame {
         jLabel1.setText("ISBN");
         jDesktopPane1.add(jLabel1);
         jLabel1.setBounds(40, 50, 27, 16);
-
-        jTextField1.setText("jTextField1");
         jDesktopPane1.add(jTextField1);
-        jTextField1.setBounds(210, 50, 130, 24);
+        jTextField1.setBounds(160, 50, 130, 24);
 
         jLabel2.setText("Langue");
         jDesktopPane1.add(jLabel2);
@@ -65,31 +61,25 @@ public class NouvelleEdition extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jDesktopPane1.add(jComboBox1);
-        jComboBox1.setBounds(210, 90, 130, 26);
+        jComboBox1.setBounds(160, 90, 130, 26);
 
         jLabel3.setText("Date de publication");
         jDesktopPane1.add(jLabel3);
         jLabel3.setBounds(37, 133, 108, 16);
-
-        jTextField2.setText("jTextField2");
         jDesktopPane1.add(jTextField2);
-        jTextField2.setBounds(210, 130, 130, 24);
+        jTextField2.setBounds(160, 130, 130, 24);
 
         jLabel4.setText("Prix HT");
         jDesktopPane1.add(jLabel4);
         jLabel4.setBounds(37, 177, 41, 16);
-
-        jTextField3.setText("jTextField3");
         jDesktopPane1.add(jTextField3);
-        jTextField3.setBounds(213, 176, 130, 24);
+        jTextField3.setBounds(160, 170, 130, 24);
 
         jLabel5.setText("Couverture");
         jDesktopPane1.add(jLabel5);
         jLabel5.setBounds(40, 210, 63, 16);
-
-        jTextField4.setText("jTextField4");
         jDesktopPane1.add(jTextField4);
-        jTextField4.setBounds(213, 212, 130, 24);
+        jTextField4.setBounds(160, 210, 130, 24);
 
         jLabel6.setText("Titre");
         jDesktopPane1.add(jLabel6);
@@ -98,14 +88,10 @@ public class NouvelleEdition extends javax.swing.JFrame {
         jLabel7.setText("Stock");
         jDesktopPane1.add(jLabel7);
         jLabel7.setBounds(40, 290, 33, 16);
-
-        jTextField5.setText("jTextField5");
         jDesktopPane1.add(jTextField5);
-        jTextField5.setBounds(210, 250, 130, 24);
-
-        jTextField6.setText("jTextField6");
+        jTextField5.setBounds(160, 250, 130, 24);
         jDesktopPane1.add(jTextField6);
-        jTextField6.setBounds(210, 290, 130, 24);
+        jTextField6.setBounds(160, 290, 130, 24);
 
         jButton1.setText("Valider");
         jDesktopPane1.add(jButton1);
@@ -117,9 +103,6 @@ public class NouvelleEdition extends javax.swing.JFrame {
         setBounds(0, 0, 368, 519);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

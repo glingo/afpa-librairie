@@ -34,6 +34,8 @@ public class NouvelOuvrage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jComboBox5 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -49,14 +51,10 @@ public class NouvelOuvrage extends javax.swing.JFrame {
         jLabel5.setText("Résumé");
         jDesktopPane1.add(jLabel5);
         jLabel5.setBounds(36, 415, 47, 16);
-
-        jTextField1.setText("jTextField1");
         jDesktopPane1.add(jTextField1);
-        jTextField1.setBounds(212, 132, 73, 24);
-
-        jTextField2.setText("jTextField2");
+        jTextField1.setBounds(212, 132, 420, 24);
         jDesktopPane1.add(jTextField2);
-        jTextField2.setBounds(212, 187, 73, 24);
+        jTextField2.setBounds(212, 187, 420, 24);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -125,6 +123,14 @@ public class NouvelOuvrage extends javax.swing.JFrame {
         jDesktopPane1.add(jButton5);
         jButton5.setBounds(580, 510, 190, 32);
 
+        jLabel9.setText("Ajouter un Co Auteur");
+        jDesktopPane1.add(jLabel9);
+        jLabel9.setBounds(480, 250, 130, 16);
+
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jDesktopPane1.add(jComboBox5);
+        jComboBox5.setBounds(630, 250, 180, 26);
+
         getContentPane().add(jDesktopPane1);
         jDesktopPane1.setBounds(0, 0, 830, 600);
 
@@ -174,6 +180,7 @@ public class NouvelOuvrage extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
+    private javax.swing.JComboBox jComboBox5;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
@@ -184,6 +191,7 @@ public class NouvelOuvrage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
