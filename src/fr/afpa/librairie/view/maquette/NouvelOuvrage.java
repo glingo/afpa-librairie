@@ -1,60 +1,36 @@
 package fr.afpa.librairie.view.maquette;
 
+import fr.afpa.librairie.data.bean.Genre;
+
+// c  variable de connexion
+// s variable de statement
 import java.sql.*;
 import java.util.*;
+import javax.swing.DefaultComboBoxModel;
 
 public class NouvelOuvrage extends javax.swing.JFrame {
 
+    Connection c = null;
+    MyConnection myConnect = new MyConnection();
+
     public NouvelOuvrage() {
         initComponents();
-        Connection c = null;
-        MyConnection myConnection = null;
-////////////////////////////////////////////////////////////////////////////////     
-        /*        
-         try {//requete
-         Statement stmt = c.createStatement();//initie une saisie
-         String query = "select libelle from Genre ";//saisie de la commande en sql
-         ResultSet rs = stmt.executeQuery(query);
-         while (rs.next()) {
-         System.out.println(rs.getString("libelle"));
-         }
-
-         rs.close();
-         stmt.close();
-
-         stmt.close();
-         } catch (SQLException ex) {
-         System.err.println("Oops:SQL x :" + ex.getErrorCode() + "/" + ex.getMessage());
-         }//*/
-
-        myConnection.closing();
-////////////////////////////////////////////////////////////////////////////////        
+        initVectorGenre();
+  
+    }
+    
+    private DefaultComboBoxModel initModelGenre() {//configurer le Model - clic droit - proprietes - Model - Custom code et coller initModelCD()
+        return new DefaultComboBoxModel(initVectorGenre());//c'est le toString de new Album qui sera affiche dans le ComboBox
     }
 
-    private int initVectorPays() {
-        {//requete
-            myConnection = new MyConnection();
-            c = myConnection.opening();
-            try {
-                Statement stmt = c.createStatement();//initie une saisie
-                String query = "select libelle from Genre ";//saisie de la commande en sql
-                ResultSet rs = stmt.executeQuery(query);
-                while (rs.next()) {
-                    System.out.println(rs.getString("libelle"));
-                }
+    private Vector initVectorGenre() {
+        
+        VectorGenerator vg = new VectorGenerator();
+        return vg.genererVector("Genre", "idGenre", "libelle");
 
-                rs.close();
-                stmt.close();
+    }
 
-                stmt.close();
-            } catch (SQLException ex) {
-                System.err.println("Oops:SQL x :" + ex.getErrorCode() + "/" + ex.getMessage());
-            }
-
-            return 1;
-        }
-
-        @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -114,7 +90,7 @@ public class NouvelOuvrage extends javax.swing.JFrame {
         jDesktopPane1.add(jLabel6);
         jLabel6.setBounds(36, 247, 85, 16);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(initModelGenre());
         jDesktopPane1.add(jComboBox2);
         jComboBox2.setBounds(212, 242, 200, 26);
 
@@ -183,10 +159,6 @@ public class NouvelOuvrage extends javax.swing.JFrame {
 
         setBounds(0, 0, 846, 638);
     }// </editor-fold>//GEN-END:initComponents
-
-    
-
-    
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

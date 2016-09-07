@@ -10,11 +10,17 @@ package fr.afpa.librairie.data.bean;
  * @author cdi305
  */
 public class Theme {
-    
+
     private Long id;
     private String libelle;
 
-    public Theme() {}
+    public Theme() {
+    }
+
+    public Theme(Long id, String libelle) {
+        this.id = id;
+        this.libelle = libelle;
+    }
 
     public Long getId() {
         return id;
@@ -30,5 +36,9 @@ public class Theme {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
+    }
+    
+    public String toString(){
+        return libelle;
     }
 }
