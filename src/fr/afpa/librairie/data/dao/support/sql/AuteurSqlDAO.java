@@ -47,7 +47,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la création de l'utilisateur, aucune ligne ajoutée dans la table.");
+                throw new DAOException("Échec de la création de l'auteur, aucune ligne ajoutée dans la table.");
             }
 
             valeursAutoGenerees = preparedStatement.getGeneratedKeys();

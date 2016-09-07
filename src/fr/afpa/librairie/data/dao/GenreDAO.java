@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fr.afpa.librairie.data.dao;
 
-/**
- *
- * @author cdi309
- */
-public interface GenreDAO {
+import fr.afpa.librairie.data.bean.Genre;
+
+public interface GenreDAO extends DAOInterface<Genre> {
+    
+    Genre findByLibelle(String libelle);
     
 }
+

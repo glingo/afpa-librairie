@@ -3,8 +3,11 @@ package fr.afpa.librairie.data.dao.support.sql;
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOUtils;
 import fr.afpa.librairie.data.dao.AuteurDAO;
+import fr.afpa.librairie.data.dao.GenreDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
+import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
+import fr.afpa.librairie.data.dao.ThemeDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -114,5 +117,21 @@ public class SqlDAOFactory extends AbstractDAOFactory {
     @Override
     public AuteurDAO getAuteurDAO(){
         return new AuteurSqlDAO(this);
+    }
+    
+    public ThemeDAO getThemeDAO(){
+        return new ThemeSqlDAO(this);
+    }
+    
+    public RubriqueDAO getRubriqueDAO(){
+        return new RubriqueSqlDAO(this);
+    }
+    
+    public GenreDAO getGenreDAO(){
+        return new GenreSqlDAO(this);
+    }
+    
+    public TagSqlDAO getTagDAO(){
+        return new TagSqlDAO(this);
     }
 }

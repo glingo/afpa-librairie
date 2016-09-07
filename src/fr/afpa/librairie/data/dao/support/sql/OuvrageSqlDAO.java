@@ -9,6 +9,8 @@ import fr.afpa.librairie.data.bean.Tag;
 import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.exception.DAOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
