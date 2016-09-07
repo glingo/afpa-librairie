@@ -1,8 +1,12 @@
 package fr.afpa.librairie.data;
 
 import fr.afpa.librairie.data.dao.AuteurDAO;
+import fr.afpa.librairie.data.dao.GenreDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
+import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
+import fr.afpa.librairie.data.dao.TagDAO;
+import fr.afpa.librairie.data.dao.ThemeDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
 
 public interface DAOFactoryInterface {
@@ -11,4 +15,8 @@ public interface DAOFactoryInterface {
     public RoleDAO getRoleDAO();
     public StatutUtilisateurDAO getStatutUtilisateurDAO();
     public AuteurDAO getAuteurDAO();
+    public GenreDAO getGenreDAO();
+    public ThemeDAO getThemeDAO();
+    public RubriqueDAO getRubriqueDAO();
+    public TagDAO getTagDAO();
 }

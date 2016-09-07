@@ -60,7 +60,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 if(theme != null && theme.getId() == null) {
                     theme = getFactory().getThemeDAO().findByLibelle(theme.getLibelle());
                 }
-            }
+            });
             
             if(instance.getGenres() == null) {
 
@@ -73,7 +73,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 if(genre != null && genre.getId() == null) {
                     genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
                 }
-            }
+            });
             
             if(instance.getRubriques() == null) {
 
@@ -86,7 +86,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 if(rubrique != null && rubrique.getId() == null) {
                     rubrique = getFactory().getRubriqueDAO().findByLibelle(rubrique.getLibelle());
                 }
-            }
+            });
             
             if(instance.getTags() == null) {
 
