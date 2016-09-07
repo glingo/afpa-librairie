@@ -4,9 +4,11 @@ import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOUtils;
 import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
+import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
+import fr.afpa.librairie.data.dao.TagDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
 import java.sql.Connection;
@@ -119,19 +121,32 @@ public class SqlDAOFactory extends AbstractDAOFactory {
         return new AuteurSqlDAO(this);
     }
     
+    @Override
     public ThemeDAO getThemeDAO(){
         return new ThemeSqlDAO(this);
     }
     
+    @Override
     public RubriqueDAO getRubriqueDAO(){
         return new RubriqueSqlDAO(this);
     }
     
+    @Override
     public GenreDAO getGenreDAO(){
         return new GenreSqlDAO(this);
     }
     
-    public TagSqlDAO getTagDAO(){
+    @Override
+    public TagDAO getTagDAO(){
         return new TagSqlDAO(this);
+    }
+    
+    public CommandeSqlDAO getCommandeDAO(){
+        return new CommandeSqlDAO(this);
+    }
+
+    @Override
+    public OuvrageDAO getOuvrageDAO() {
+        return new OuvrageSqlDAO(this);
     }
 }

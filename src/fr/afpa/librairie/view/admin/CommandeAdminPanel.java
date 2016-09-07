@@ -1,11 +1,11 @@
 
 package fr.afpa.librairie.view.admin;
 
-import fr.afpa.librairie.controller.RubriqueController;
-import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.controller.CommandeController;
+import fr.afpa.librairie.data.bean.Commande;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.list.ListModelSelection;
-import fr.afpa.librairie.model.table.RubriqueTableModel;
+import fr.afpa.librairie.model.table.CommandeTableModel;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.DefaultListSelectionModel;
@@ -16,46 +16,43 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-public class RubriqueAdminPanel extends JPanel{
+public class CommandeAdminPanel extends JPanel {
     
-    private final RubriqueController controller;
+     private CommandeController controller;
     
-    private final ListAdapterListModel<Rubrique> rubriqueListModel = new ListAdapterListModel<>();
-    private final RubriqueTableModel rubriqueTableModel = new RubriqueTableModel();
-    private final JTable rubriqueTable = new JTable(rubriqueTableModel);
+    private final ListAdapterListModel<Commande> commandeListModel = new ListAdapterListModel<>();
+    private final CommandeTableModel commandeTableModel = new CommandeTableModel();
+    private final JTable commandeTable = new JTable(commandeTableModel);
     private final ListSelectionModel selectionModel = new DefaultListSelectionModel();
-    private final JList<Rubrique> rubriqueList = new JList<>(rubriqueListModel);
-    private final ListModelSelection<Rubrique> listModelSelection = new ListModelSelection<>();
-    
-    public RubriqueAdminPanel(RubriqueController controller) {
+    private final JList<Commande> commandeList = new JList<>(commandeListModel);
+    private final ListModelSelection<Commande> listModelSelection = new ListModelSelection<>();
+
+    public CommandeAdminPanel(CommandeController controller) {
         this.controller = controller;
         init();
     }
     
-    private void init(){
+     private void init(){
         setLayout(new BorderLayout());
         
-        rubriqueTable.setSelectionModel(selectionModel);
-        rubriqueTable.setSelectionModel(rubriqueList.getSelectionModel());
+        commandeTable.setSelectionModel(selectionModel);
+        commandeTable.setSelectionModel(commandeList.getSelectionModel());
         
         JScrollPane scrollPane = new JScrollPane();
-//        scrollPane.setBounds(10, 11, this.frame, 130);
-        scrollPane.setViewportView(rubriqueTable);
+        scrollPane.setViewportView(commandeTable);
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
         
         repaint();
-        setVisible(true); // Move it to here
+        setVisible(true);
     }
-    
-    
-    public void setRubriqueList(ListAdapterListModel<Rubrique> rubriqueListModel) {
-        rubriqueList.setModel(rubriqueListModel);
-        rubriqueTableModel.setListModel(rubriqueListModel);
-        listModelSelection.setListModels(rubriqueListModel, selectionModel);
+     
+    public void setCommandeList(ListAdapterListModel<Commande> commandeListModel) {
+        commandeList.setModel(commandeListModel);
+        commandeTableModel.setListModel(commandeListModel);
+        listModelSelection.setListModels(commandeListModel, selectionModel);
     }
-    
     
     private Component getFooter() {
         JPanel footer = new JPanel();
@@ -75,5 +72,4 @@ public class RubriqueAdminPanel extends JPanel{
         footer.repaint();
         return footer;
     }
-    
 }

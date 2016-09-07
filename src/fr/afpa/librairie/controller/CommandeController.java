@@ -1,12 +1,12 @@
 
 package fr.afpa.librairie.controller;
 
-import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.data.bean.Commande;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
-import fr.afpa.librairie.view.admin.CreateRubriquePanel;
-import fr.afpa.librairie.view.admin.RubriqueAdminPanel;
+import fr.afpa.librairie.view.admin.CommandeAdminPanel;
+import fr.afpa.librairie.view.admin.CreateCommandePanel;
 import java.awt.event.ActionEvent;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,13 +15,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class RubriqueController extends Controller {
+
+public class CommandeController extends Controller {
+     
+    private final CommandeAdminPanel adminPanel = new CommandeAdminPanel(this);
+    private final CreateCommandePanel createPanel = new CreateCommandePanel(this);
     
-    
-    private final RubriqueAdminPanel adminPanel = new RubriqueAdminPanel(this);
-    private final CreateRubriquePanel createPanel = new CreateRubriquePanel(this);
-    
-    public RubriqueController(MainFrame frame) {
+    public CommandeController(MainFrame frame) {
         super(frame);
     }
     
@@ -50,9 +50,9 @@ public class RubriqueController extends Controller {
     }
 
     public void listAction() {
-        ListAdapterListModel<Rubrique> rubriqueListModel = new ListAdapterListModel<>();
-        rubriqueListModel.addAll(getDaoFactory().getRubriqueDAO().findAll());
-        adminPanel.setRubriqueList(rubriqueListModel);
+        ListAdapterListModel<Commande> commandeListModel = new ListAdapterListModel<>();
+        commandeListModel.addAll(getDaoFactory().getCommandeDAO().findAll());
+        adminPanel.setCommandeList(commandeListModel);
         this.frame.setContent(adminPanel);
     }
     
@@ -65,26 +65,20 @@ public class RubriqueController extends Controller {
         
         this.createPanel.getForm().verify();
         
-        JTextField fieldLibelle = this.createPanel.getForm().getField("Libelle");
-        JFormattedTextField fieldDateDebut = this.createPanel.getForm().getField("Date de début");
-        JFormattedTextField fieldDateFin = this.createPanel.getForm().getField("Date de fin");
-        JTextField fieldCommentaire = this.createPanel.getForm().getField("Commentaire");
+        JTextField fieldNumero = this.createPanel.getForm().getField("Numero");
+        JFormattedTextField fieldDateCommande = this.createPanel.getForm().getField("Date de commande");
         
+        String numero = fieldNumero.getText();
+        Date dateCommande = (Date) fieldDateCommande.getValue();
         
-        String libelle= fieldLibelle.getText();
-        Date dateDebut = (Date) fieldDateDebut.getValue();
-        Date dateFin = (Date) fieldDateFin.getValue();
-        String commentaire = fieldCommentaire.getText();
-        
-        Rubrique rubrique = new Rubrique();
-        
-        rubrique.setLibelle(libelle);
-        rubrique.setDateDebut(new java.sql.Date(dateDebut.getTime()));
-        rubrique.setDateFin(new java.sql.Date(dateFin.getTime()));
-        rubrique.setCommentaire(commentaire);
+        Commande commande = new Commande();
 
+        commande.setNumero(numero);
+        commande.setDateCommande(new java.sql.Date(dateCommande.getTime()));
+
+        
         try{
-            getDaoFactory().getRubriqueDAO().save(rubrique);
+            getDaoFactory().getCommandeDAO().save(commande);
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
@@ -120,9 +114,8 @@ public class RubriqueController extends Controller {
     
     
     public static void main(String[] args) {
-        String value = UtilisateurController.encode("Bonjour");
+        String value = CommandeController.encode("Bonjour");
         
         System.out.println(value);
     }
-    
 }
