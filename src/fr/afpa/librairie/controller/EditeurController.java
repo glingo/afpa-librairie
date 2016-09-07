@@ -1,4 +1,3 @@
-
 package fr.afpa.librairie.controller;
 
 import fr.afpa.librairie.data.bean.Editeur;
