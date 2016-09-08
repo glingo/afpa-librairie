@@ -17,11 +17,27 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
     private static final String SQL_INSERT = "INSERT INTO Rubrique"
             + " (libelle, date_debut, date_fin, commentaire)"
             + " VALUES (?, ?, ?, ?)";
+    
     private static final String SQL_DELETE = "DELETE FROM Rubrique WHERE idRubrique = ?";
-    private static final String SQL_FIND_ALL = "SELECT idRubrique, libelle, date_debut, date_fin, commentaire FROM Rubrique ";
-    private static final String SQL_FIND_BY_DATEDEBUT = "SELECT idRubrique, libelle, date_debut, date_fin, commentaire FROM Rubrique WHERE date_debut = ?";
-    private static final String SQL_FIND_BY_LIBELLE = "SELECT idRubrique, libelle, date_debut, date_fin, commentaire FROM Rubrique WHERE libelle = ?";
-    private static final String SQL_FIND_BY_ID = "SELECT idRubrique, libelle, date_debut, date_fin, commentaire FROM Rubrique WHERE idRubrique = ?";
+    
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idRubrique, libelle, date_debut, date_fin, commentaire"
+            + " FROM Rubrique";
+    
+    private static final String SQL_FIND_BY_DATEDEBUT = "SELECT"
+            + " idRubrique, libelle, date_debut, date_fin, commentaire"
+            + " FROM Rubrique"
+            + " WHERE date_debut = ?";
+    
+    private static final String SQL_FIND_BY_LIBELLE = "SELECT"
+            + " idRubrique, libelle, date_debut, date_fin, commentaire"
+            + " FROM Rubrique"
+            + " WHERE libelle = ?";
+    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idRubrique, libelle, date_debut, date_fin, commentaire"
+            + " FROM Rubrique"
+            + " WHERE idRubrique = ?";
     
     private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
             + " r.idRubrique, r.libelle, r.date_debut, r.date_fin, r.commentaire"

@@ -16,11 +16,26 @@ import java.util.List;
 public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements CommandeDAO{
     
     
-    private static final String SQL_INSERT = "INSERT INTO Commande (numero, dateCommande) VALUES = (?,?)";
-    private static final String SQL_DELETE = "DELETE FROM Commande WHERE idCommande = ?";
-    private static final String SQL_FIND_BY_ALL = "SELECT idCommande, numero, dateCommande FROM Commande";
-    private static final String SQL_FIND_BY_NUMERO = "SELECT idCommande, numero, dateCommande FROM Commande WHERE numero = ?";
-    private static final String SQL_FIND_BY_DATE =  "SELECT idCommande, numero, dateCommande FROM Commande WHERE dateCommande = ?";
+    private static final String SQL_INSERT = "INSERT INTO Commande"
+            + " (numero, dateCommande)"
+            + " VALUES = (?,?)";
+    
+    private static final String SQL_DELETE = "DELETE FROM Commande"
+            + " WHERE idCommande = ?";
+    
+    private static final String SQL_FIND_BY_ALL = "SELECT"
+            + " idCommande, numero, dateCommande"
+            + " FROM Commande";
+    
+    private static final String SQL_FIND_BY_NUMERO = "SELECT"
+            + " idCommande, numero, dateCommande"
+            + " FROM Commande"
+            + " WHERE numero = ?";
+    
+    private static final String SQL_FIND_BY_DATE =  "SELECT"
+            + " idCommande, numero, dateCommande"
+            + " FROM Commande"
+            + " WHERE dateCommande = ?";
     
     
     

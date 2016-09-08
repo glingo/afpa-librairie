@@ -15,10 +15,21 @@ import java.util.List;
 public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO {
     
     
-    private static final String SQL_INSERT = "INSERT INTO Editeur (libelle) VALUES (?)";
-    private static final String SQL_DELETE = "DELETE FROM Editeur WHERE idEditeur = ?";
-    private static final String SQL_FIND_ALL = "SELECT idEditeur, libelle FROM Editeur";
-    private static final String SQL_FIND_BY_LIBELLE = "SELECT idEditeur, libelle FROM Editeur WHERE libelle = ?";
+    private static final String SQL_INSERT = "INSERT INTO Editeur"
+            + " (libelle) VALUES"
+            + " (?)";
+    
+    private static final String SQL_DELETE = "DELETE FROM Editeur"
+            + " WHERE idEditeur = ?";
+    
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idEditeur, libelle"
+            + " FROM Editeur";
+    
+    private static final String SQL_FIND_BY_LIBELLE = "SELECT"
+            + " idEditeur, libelle"
+            + " FROM Editeur"
+            + " WHERE libelle = ?";
             
     
     public EditeurSqlDAO(DAOFactoryInterface factory) {

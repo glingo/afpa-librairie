@@ -19,14 +19,30 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
     private static final String SQL_INSERT = "INSERT INTO StatutUtilisateur (libelle, code) VALUES (?, ?)";
     private static final String SQL_DELETE = "DELETE FROM StatutUtilisateur WHERE id = ?";
     
-    private static final String SQL_FIND_ALL = "SELECT idStatutUtilisateur, libelle, code FROM StatutUtilisateur";
-    private static final String SQL_FIND_BY_ID = "SELECT idStatutUtilisateur, libelle, code FROM StatutUtilisateur WHERE idStatutUtilisateur = ?";
-    private static final String SQL_FIND_BY_CODE = "SELECT idStatutUtilisateur, libelle, code FROM StatutUtilisateur WHERE code = ?";
-    private static final String SQL_FIND_BY_LIBELLE = "SELECT idStatutUtilisateur, libelle, code FROM StatutUtilisateur WHERE libelle = ?";
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idStatutUtilisateur, libelle, code"
+            + " FROM StatutUtilisateur";
+    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idStatutUtilisateur, libelle, code"
+            + " FROM StatutUtilisateur"
+            + " WHERE idStatutUtilisateur = ?";
+    
+    private static final String SQL_FIND_BY_CODE = "SELECT"
+            + " idStatutUtilisateur, libelle, code"
+            + " FROM StatutUtilisateur"
+            + " WHERE code = ?";
+    
+    private static final String SQL_FIND_BY_LIBELLE = "SELECT"
+            + " idStatutUtilisateur, libelle, code"
+            + " FROM StatutUtilisateur"
+            + " WHERE libelle = ?";
 
+    
     public StatutUtilisateurSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
+    
 
     @Override
     public void save(StatutUtilisateur instance) throws DAOException {

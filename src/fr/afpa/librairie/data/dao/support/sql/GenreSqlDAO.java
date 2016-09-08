@@ -14,11 +14,18 @@ import java.util.List;
 
 public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
     
-    public static final String SQL_INSERT = "INSERT INTO Genre (libelle) VALUES (?)";
-    public static final String SQL_DELETE = "DELETE FROM Genre WHERE idGenre = ?";
-    public static final String SQL_FIND_ALL = "SELECT idGenre, libelle FROM Genre ";  
+    public static final String SQL_INSERT = "INSERT INTO Genre"
+            + " (libelle)"
+            + " VALUES (?)";
     
-    public static final String SQL_FIND_BY_OUVRAGE = "SELECT g.idGenre, g.libelle"
+    public static final String SQL_DELETE = "DELETE FROM Genre WHERE idGenre = ?";
+    
+    public static final String SQL_FIND_ALL = "SELECT"
+            + " idGenre, libelle"
+            + " FROM Genre ";  
+    
+    public static final String SQL_FIND_BY_OUVRAGE = "SELECT"
+            + " g.idGenre, g.libelle"
             + " FROM Genre as g"
             + " JOIN IndexGenre AS i on i.idGenre = g.idGenre"
             + " WHERE i.idOuvrage = ?";    
@@ -27,7 +34,6 @@ public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
     public GenreSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
-
 
 
     @Override

@@ -21,10 +21,22 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
     private static final String SQL_INSERT = "INSERT INTO Utilisateur"
             + " (nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur)"
             + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
     private static final String SQL_DELETE = "DELETE FROM Utilisateur WHERE idUtilisateur = ?";
-    private static final String SQL_FIND_ALL = "SELECT idUtilisateur, nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur FROM Utilisateur ";
-    private static final String SQL_FIND_BY_EMAIL = "SELECT idUtilisateur, nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur FROM Utilisateur WHERE mail = ?";
-    private static final String SQL_FIND_BY_ID = "SELECT idUtilisateur, nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur FROM Utilisateur WHERE idUtilisateur = ?";
+    
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idUtilisateur, nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur"
+            + " FROM Utilisateur ";
+    
+    private static final String SQL_FIND_BY_EMAIL = "SELECT"
+            + " idUtilisateur, nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur"
+            + " FROM Utilisateur"
+            + " WHERE mail = ?";
+    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idUtilisateur, nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur"
+            + " FROM Utilisateur"
+            + " WHERE idUtilisateur = ?";
 
     public UtilisateurSqlDAO(AbstractDAOFactory factory) {
         super(factory);

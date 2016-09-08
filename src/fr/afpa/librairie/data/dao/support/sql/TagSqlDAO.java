@@ -16,7 +16,9 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
     private static final String SQL_INSERT = "INSERT INTO Tag"
             + " (libelle)"
             + " VALUES (?)";
+    
     private static final String SQL_DELETE = "DELETE FROM Tag WHERE idTag = ?";
+    
     private static final String SQL_FIND_ALL = "SELECT idTag, libelle FROM Tag ";
     
      private static final String SQL_FIND_BY_OUVRAGE = "SELECT"

@@ -17,12 +17,26 @@ import java.util.List;
 
 public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements PromotionDAO {
     
-    private static final String SQL_INSERT = "INSERT INTO Promotion (numero, dateCommande) VALUES = (?,?)";
-    private static final String SQL_DELETE = "DELETE FROM Promotion WHERE idCommande = ?";
-    private static final String SQL_FIND_BY_ALL = "SELECT idPromotion, numero, dateCommande FROM Commande";
-    private static final String SQL_FIND_BY_NUMERO = "SELECT idPromotion, numero, dateCommande FROM Commande WHERE numero = ?";
-    private static final String SQL_FIND_BY_DATE =  "SELECT idPromotion, numero, dateCommande FROM Commande WHERE dateCommande = ?";
+    private static final String SQL_INSERT = "INSERT INTO Promotion"
+            + " (numero, dateCommande) VALUES"
+            + " (?, ?)";
     
+    private static final String SQL_DELETE = "DELETE FROM Promotion"
+            + " WHERE idCommande = ?";
+    
+    private static final String SQL_FIND_BY_ALL = "SELECT"
+            + " idPromotion, numero, dateCommande"
+            + " FROM Commande";
+    
+    private static final String SQL_FIND_BY_NUMERO = "SELECT"
+            + " idPromotion, numero, dateCommande"
+            + " FROM Commande"
+            + " WHERE numero = ?";
+    
+    private static final String SQL_FIND_BY_DATE =  "SELECT"
+            + " idPromotion, numero, dateCommande"
+            + " FROM Commande"
+            + " WHERE dateCommande = ?";
     
     
     public PromotionSqlDAO(DAOFactoryInterface factory) {
@@ -138,5 +152,4 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-   
 }

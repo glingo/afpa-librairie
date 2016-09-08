@@ -14,10 +14,16 @@ import java.util.List;
 
 public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
     
-    private static final String SQL_INSERT = "INSERT INTO Theme (libelle) VALUES (?)";
-    private static final String SQL_DELETE = "DELETE FROM Theme WHERE idTheme = ?";
-    private static final String SQL_FIND_ALL = "SELECT idTheme, libelle FROM Theme";
+    private static final String SQL_INSERT = "INSERT INTO Theme"
+            + " (libelle)"
+            + " VALUES (?)";
     
+    private static final String SQL_DELETE = "DELETE FROM Theme"
+            + " WHERE idTheme = ?";
+    
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idTheme, libelle"
+            + " FROM Theme";
     
     private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
             + " t.idTheme, t.libelle"
@@ -25,11 +31,9 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
             + " JOIN Thematique AS th on t.idTheme = th.idTheme"
             + " WHERE th.idOuvrage = ?";
     
-    
     public ThemeSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
-    
     
     
     @Override

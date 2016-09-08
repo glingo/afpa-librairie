@@ -17,14 +17,38 @@ import java.util.List;
 
 public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
 
-    private static final String SQL_INSERT = "INSERT INTO Role (libelle, code) VALUES (?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO Role"
+            + " (libelle, code) VALUES"
+            + " (?, ?)";
+    
     private static final String SQL_DELETE = "DELETE FROM Role WHERE idRole = ?";
-    private static final String SQL_FIND_ALL = "SELECT idRole, libelle, code FROM Role";
-    private static final String SQL_FIND_BY_ID = "SELECT idRole, libelle, code FROM Role WHERE idRole = ?";
-    private static final String SQL_FIND_BY_LIBELLE = "SELECT idRole, libelle, code FROM Role WHERE libelle = ?";
-    private static final String SQL_FIND_BY_CODE = "SELECT idRole, libelle, code FROM Role WHERE code = ?";
-    private static final String SQL_FIND_BY_UTILISATEUR = "SELECT ro.idRole, ro.libelle, ro.code FROM Role AS ro JOIN Remplit AS r ON r.idRole = ro.idRole WHERE r.idUtilisateur = ?";
+    
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idRole, libelle, code"
+            + " FROM Role";
+    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idRole, libelle, code"
+            + " FROM Role"
+            + " WHERE idRole = ?";
+    
+    private static final String SQL_FIND_BY_LIBELLE = "SELECT"
+            + " idRole, libelle, code "
+            + "FROM Role "
+            + "WHERE libelle = ?";
+    
+    private static final String SQL_FIND_BY_CODE = "SELECT"
+            + " idRole, libelle, code"
+            + " FROM Role"
+            + " WHERE code = ?";
+    
+    private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
+            + " ro.idRole, ro.libelle, ro.code"
+            + " FROM Role AS ro"
+            + " JOIN Remplit AS r ON r.idRole = ro.idRole"
+            + " WHERE r.idUtilisateur = ?";
 
+    
     public RoleSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }

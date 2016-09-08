@@ -25,10 +25,24 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
     
     private static final String SQL_DELETE = "DELETE FROM Ouvrage WHERE idOuvrage = ?";
     
-    private static final String SQL_FIND_ALL = "SELECT idOuvrage, titre, sous_titre, resume, idAuteur FROM Ouvrage ";
-    private static final String SQL_FIND_BY_TITRE = "SELECT idOuvrage, titre, sousTitre, resume, idAuteur FROM Ouvrage WHERE titre = ?";
-    private static final String SQL_FIND_BY_SOUSTITRE = "SELECT idOuvrage, titre, sousTitre, resume, idAuteur FROM Ouvrage WHERE sousTitre = ?";
-    private static final String SQL_FIND_BY_IDAUTEUR = "SELECT idOuvrage, titre, sousTitre, resume, idAuteur FROM Ouvrage WHERE idAuteur = ?";
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idOuvrage, titre, sous_titre, resume, idAuteur"
+            + " FROM Ouvrage ";
+    
+    private static final String SQL_FIND_BY_TITRE = "SELECT"
+            + " idOuvrage, titre, sousTitre, resume, idAuteur"
+            + " FROM Ouvrage"
+            + " WHERE titre = ?";
+    
+    private static final String SQL_FIND_BY_SOUSTITRE = "SELECT"
+            + " idOuvrage, titre, sousTitre, resume, idAuteur"
+            + " FROM Ouvrage"
+            + " WHERE sousTitre = ?";
+    
+    private static final String SQL_FIND_BY_IDAUTEUR = "SELECT"
+            + " idOuvrage, titre, sousTitre, resume, idAuteur"
+            + " FROM Ouvrage"
+            + " WHERE idAuteur = ?";
 
     public OuvrageSqlDAO(AbstractDAOFactory factory) {
         super(factory);

@@ -22,11 +22,30 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
             + " VALUES (?, ?, ?, ?)";
     
     private static final String SQL_DELETE = "DELETE FROM Auteur WHERE idAuteur = ?";
-    private static final String SQL_FIND_ALL = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur ";
-    private static final String SQL_FIND_BY_DATENAISSANCE = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE date_naissance = ?";
-    private static final String SQL_FIND_BY_DATEDECES = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE date_deces = ?";
-    private static final String SQL_FIND_BY_ID = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE idAuteur = ?";
-    private static final String SQL_FIND_BY_NAME = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE nom = ? ";
+    
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idAuteur, nom, prenom, date_naissance, date_deces"
+            + " FROM Auteur ";
+    
+    private static final String SQL_FIND_BY_DATENAISSANCE = "SELECT"
+            + " idAuteur, nom, prenom, date_naissance, date_deces"
+            + " FROM Auteur"
+            + " WHERE date_naissance = ?";
+    
+    private static final String SQL_FIND_BY_DATEDECES = "SELECT"
+            + " idAuteur, nom, prenom, date_naissance, date_deces"
+            + " FROM Auteur"
+            + " WHERE date_deces = ?";
+    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idAuteur, nom, prenom, date_naissance, date_deces"
+            + " FROM Auteur"
+            + " WHERE idAuteur = ?";
+    
+    private static final String SQL_FIND_BY_NAME = "SELECT"
+            + " idAuteur, nom, prenom, date_naissance, date_deces"
+            + " FROM Auteur"
+            + " WHERE nom = ? ";
 
     private static final String SQL_FIND_CO_AUTEURS_BY_OUVRAGE = "SELECT"
             + " a.idAuteur, a.nom, a.prenom, a.date_naissance, a.date_deces"
