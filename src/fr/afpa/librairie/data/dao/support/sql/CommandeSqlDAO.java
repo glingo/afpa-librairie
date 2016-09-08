@@ -15,7 +15,6 @@ import java.util.List;
 
 public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements CommandeDAO{
     
-    
     private static final String SQL_INSERT = "INSERT INTO Commande"
             + " (numero, dateCommande)"
             + " VALUES = (?,?)";
@@ -27,6 +26,11 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             + " idCommande, numero, dateCommande"
             + " FROM Commande";
     
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idCommande, numero, dateCommande"
+            + " FROM Commande"
+            + " WHERE idCommande = ?";
+    
     private static final String SQL_FIND_BY_NUMERO = "SELECT"
             + " idCommande, numero, dateCommande"
             + " FROM Commande"
@@ -36,7 +40,6 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             + " idCommande, numero, dateCommande"
             + " FROM Commande"
             + " WHERE dateCommande = ?";
-    
     
     
     public CommandeSqlDAO(DAOFactoryInterface factory) {
@@ -203,7 +206,30 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
 
     @Override
     public Commande findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Commande commande = null;
+        
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID,
+                    false, id);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                commande = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return commande;
     }
 
    
