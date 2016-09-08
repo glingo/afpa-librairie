@@ -16,7 +16,8 @@ public class Utilisateur {
     
     private List<Role> roles;
     private StatutUtilisateur statut;
-    private List<Adresse> adresses;
+    private List<Adresse> dernieresLivraisons;
+    private List<Adresse> dernieresFacturations;
 
     public Utilisateur() {}
 
@@ -92,20 +93,36 @@ public class Utilisateur {
         this.roles.add(role);
     }
     
-    public List<Adresse> getAdresses(){
-        return adresses;
+    public List<Adresse> getDernieresLivraisons(){
+        return dernieresLivraisons;
     }
     
-    public void setAdresses(List<Adresse> adresses){
-        this.adresses = adresses;
+    public void setDernieresLivraisons(List<Adresse> adresses){
+        this.dernieresLivraisons = adresses;
     }
     
-    public void addAdresse(Adresse adresse){
-        if(this.adresses == null){
-            this.adresses = new ArrayList<>();
+    public void addDerniereLivraison(Adresse adresse){
+        if(this.dernieresLivraisons == null){
+            this.dernieresLivraisons = new ArrayList<>();
         }
         
-        this.adresses.add(adresse);
+        this.dernieresLivraisons.add(adresse);
+    }
+    
+    public List<Adresse> getDernieresFacturations(){
+        return dernieresFacturations;
+    }
+    
+    public void setDernieresFacturations(List<Adresse> adresses){
+        this.dernieresFacturations = adresses;
+    }
+    
+    public void addDerniereFacturation(Adresse adresse){
+        if(this.dernieresFacturations == null){
+            this.dernieresFacturations = new ArrayList<>();
+        }
+        
+        this.dernieresFacturations.add(adresse);
     }
 
     public String getTelephone() {

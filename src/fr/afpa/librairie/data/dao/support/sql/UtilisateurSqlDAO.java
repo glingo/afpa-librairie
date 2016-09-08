@@ -80,16 +80,18 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
                 }
             });
             
-            if(instance.getAdresses() == null){
-                Adresse adresse = getFactory().getAdresseDAO().findByVille("CLI");
-                instance.addAdresse(adresse);
-            }       
+//            comment cause : adresse changé en dernierslivraisons et derniersfacturations.
             
-            instance.getAdresses().forEach((Adresse adresse) -> {
-                if(adresse != null && adresse.getCp() == null) {
-                    adresse = getFactory().getAdresseDAO().findByCp(adresse.getCp());
-                }
-            });
+//            if(instance.getAdresses() == null){
+//                Adresse adresse = getFactory().getAdresseDAO().findByVille("CLI");
+//                instance.addAdresse(adresse);
+//            }       
+//            
+//            instance.getAdresses().forEach((Adresse adresse) -> {
+//                if(adresse != null && adresse.getCp() == null) {
+//                    adresse = getFactory().getAdresseDAO().findByCp(adresse.getCp());
+//                }
+//            });
             
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();

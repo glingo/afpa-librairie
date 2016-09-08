@@ -66,9 +66,9 @@ public class UtilisateurTableModel extends AbstractTableModel {
             case PRENOM:
                 columnValue = utilisateur.getPrenom();
                 break;
-            case ADRESSE:
-                columnValue = getAdresseObject(utilisateur);
-                break;
+//            case ADRESSE:
+//                columnValue = getAdresseObject(utilisateur);
+//                break;
             case MAIL:
                 columnValue = utilisateur.getEmail();
                 break;
@@ -138,21 +138,21 @@ public class UtilisateurTableModel extends AbstractTableModel {
         
     }
     
-    private String getAdresseObject(Utilisateur utilisateur){
-        StringBuilder sb = new StringBuilder();
-        
-        int len = utilisateur.getAdresses().size();
-        
-        for(int i = 0; i< len; i++){
-            Adresse adresse = utilisateur.getAdresses().get(i);
-            sb.append(adresse.getVille());
-            if(i < len - 1) {
-                sb.append(",");
-            }
-        }
-        
-        return sb.toString();
-    }
+//    private String getAdresseObject(Utilisateur utilisateur){
+//        StringBuilder sb = new StringBuilder();
+//        
+//        int len = utilisateur.getAdresses().size();
+//        
+//        for(int i = 0; i< len; i++){
+//            Adresse adresse = utilisateur.getAdresses().get(i);
+//            sb.append(adresse.getVille());
+//            if(i < len - 1) {
+//                sb.append(",");
+//            }
+//        }
+//        
+//        return sb.toString();
+//    }
     
     private UtilisateurColumn getColumn(int columnIndex) {
         UtilisateurColumn[] columns = UtilisateurColumn.values();
