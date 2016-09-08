@@ -4,6 +4,7 @@ import fr.afpa.librairie.controller.AuteurController;
 import fr.afpa.librairie.controller.CommandeController;
 import fr.afpa.librairie.controller.EditeurController;
 import fr.afpa.librairie.controller.OuvrageController;
+import fr.afpa.librairie.controller.PromotionController;
 import fr.afpa.librairie.controller.RubriqueController;
 import fr.afpa.librairie.controller.UtilisateurController;
 import fr.afpa.librairie.view.admin.DashBoardPanel;

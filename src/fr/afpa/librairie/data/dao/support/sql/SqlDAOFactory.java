@@ -6,6 +6,7 @@ import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.EditeurDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
+import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
@@ -152,7 +153,13 @@ public class SqlDAOFactory extends AbstractDAOFactory {
         return new OuvrageSqlDAO(this);
     }
     
+    @Override
     public EditeurDAO getEditeurDAO(){
         return new EditeurSqlDAO(this);
+    }
+
+    @Override
+    public PromotionDAO getPromotionDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

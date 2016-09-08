@@ -4,6 +4,8 @@ package fr.afpa.librairie.controller;
 import fr.afpa.librairie.data.bean.Promotion;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
+import fr.afpa.librairie.view.admin.CreatePromotionPanel;
+import fr.afpa.librairie.view.admin.PromotionAdminPanel;
 import java.awt.event.ActionEvent;
 import java.sql.Date;
 import javax.swing.JFormattedTextField;
@@ -11,8 +13,8 @@ import javax.swing.JTextField;
 
 public class PromotionController extends Controller {
     
-    private final CommandeAdminPanel adminPanel = new CommandeAdminPanel(this);
-    private final CreateCommandePanel createPanel = new CreateCommandePanel(this);
+    private final PromotionAdminPanel adminPanel = new PromotionAdminPanel(this);
+    private final CreatePromotionPanel createPanel = new CreatePromotionPanel(this);
     
     public PromotionController(MainFrame frame) {
         super(frame);
@@ -78,49 +80,20 @@ public class PromotionController extends Controller {
         Promotion promotion = new Promotion();
         //**********************************REPRISE ICI********************************
 
-        commande.setNumero(numero);
-        commande.setDateCommande(new java.sql.Date(dateCommande.getTime()));
+//        promotion.setNumero(numero);
+//        commande.setDateCommande(new java.sql.Date(dateCommande.getTime()));
 
         
-        try{
-            getDaoFactory().getCommandeDAO().save(commande);
-        } catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
-        }
-        
+//        try{
+//            getDaoFactory().getCommandeDAO().save(commande);
+//        } catch(DAOException ex){
+//            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+//                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+//        }
+//        
         this.createPanel.getForm().reset();
     
         listAction();
     }
     
-    public static String encode(String password) {
-        byte[] uniqueKey = password.getBytes();
-        byte[] hash      = null;
-
-        try {
-            hash = MessageDigest.getInstance("MD5").digest(uniqueKey);
-        } catch (NoSuchAlgorithmException e) {
-            throw new Error("No MD5 support in this VM.");
-        }
-
-        StringBuilder hashString = new StringBuilder();
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(hash[i]);
-            if (hex.length() == 1) {
-                hashString.append('0');
-                hashString.append(hex.charAt(hex.length() - 1));
-            } else {
-                hashString.append(hex.substring(hex.length() - 2));
-            }
-        }
-        return hashString.toString();
-    }
-    
-    
-    public static void main(String[] args) {
-        String value = CommandeController.encode("Bonjour");
-        
-        System.out.println(value);
-    }
 }
