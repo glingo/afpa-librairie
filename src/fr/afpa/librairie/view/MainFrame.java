@@ -114,7 +114,7 @@ public final class MainFrame extends JFrame {
         promotionAdmin.addActionListener(new PromotionController(this));
         adminMenu.add(promotionAdmin);
         
-        JMenuItem editionAdmin = new JMenuItem("Edition");
+        JMenuItem editionAdmin = new JMenuItem("Editions");
         editionAdmin.addActionListener(new EditionController(this));
         adminMenu.add(editionAdmin);
         
