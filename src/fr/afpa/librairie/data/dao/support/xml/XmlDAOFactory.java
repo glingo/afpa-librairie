@@ -4,6 +4,7 @@ import fr.afpa.librairie.data.dao.support.xml.RoleXmlDAO;
 import fr.afpa.librairie.data.dao.support.xml.UtilisateurXmlDAO;
 import fr.afpa.librairie.data.dao.support.xml.StatutUtilisateurXmlDAO;
 import fr.afpa.librairie.data.AbstractDAOFactory;
+import fr.afpa.librairie.data.dao.AdresseDAO;
 import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.CommandeDAO;
 import fr.afpa.librairie.data.dao.EditeurDAO;
@@ -83,6 +84,11 @@ public class XmlDAOFactory extends AbstractDAOFactory {
 
     @Override
     public EditionDAO getEditionDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AdresseDAO getAdresseDAO() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

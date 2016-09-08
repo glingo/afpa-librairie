@@ -1,5 +1,6 @@
 package fr.afpa.librairie.data;
 
+import fr.afpa.librairie.data.dao.AdresseDAO;
 import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.CommandeDAO;
 import fr.afpa.librairie.data.dao.EditeurDAO;
@@ -29,4 +30,5 @@ public interface DAOFactoryInterface {
     public EditeurDAO getEditeurDAO();
     public PromotionDAO getPromotionDAO();
     public EditionDAO getEditionDAO();
+    public AdresseDAO getAdresseDAO();
 }

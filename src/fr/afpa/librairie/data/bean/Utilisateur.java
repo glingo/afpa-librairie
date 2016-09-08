@@ -16,6 +16,7 @@ public class Utilisateur {
     
     private List<Role> roles;
     private StatutUtilisateur statut;
+    private List<Adresse> adresses;
 
     public Utilisateur() {}
 
@@ -89,6 +90,22 @@ public class Utilisateur {
         }
         
         this.roles.add(role);
+    }
+    
+    public List<Adresse> getAdresses(){
+        return adresses;
+    }
+    
+    public void setAdresses(List<Adresse> adresses){
+        this.adresses = adresses;
+    }
+    
+    public void addAdresse(Adresse adresse){
+        if(this.adresses == null){
+            this.adresses = new ArrayList<>();
+        }
+        
+        this.adresses.add(adresse);
     }
 
     public String getTelephone() {

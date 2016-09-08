@@ -1,6 +1,7 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
+import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.bean.Role;
 import fr.afpa.librairie.data.bean.StatutUtilisateur;
@@ -76,6 +77,17 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
             instance.getRoles().forEach((Role role) -> {
                 if(role != null && role.getId() == null) {
                     role = getFactory().getRoleDAO().findByCode(role.getCode());
+                }
+            });
+            
+            if(instance.getAdresses() == null){
+                Adresse adresse = getFactory().getAdresseDAO().findByVille("CLI");
+                instance.addAdresse(adresse);
+            }       
+            
+            instance.getAdresses().forEach((Adresse adresse) -> {
+                if(adresse != null && adresse.getCp() == null) {
+                    adresse = getFactory().getAdresseDAO().findByCp(adresse.getCp());
                 }
             });
             

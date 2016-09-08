@@ -1,5 +1,6 @@
 package fr.afpa.librairie.model.table;
 
+import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Role;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
@@ -65,6 +66,9 @@ public class UtilisateurTableModel extends AbstractTableModel {
             case PRENOM:
                 columnValue = utilisateur.getPrenom();
                 break;
+            case ADRESSE:
+                columnValue = getAdresseObject(utilisateur);
+                break;
             case MAIL:
                 columnValue = utilisateur.getEmail();
                 break;
@@ -73,7 +77,8 @@ public class UtilisateurTableModel extends AbstractTableModel {
                 break;
             case ROLE:
                 columnValue = getRoleObject(utilisateur);
-                
+                break;
+            
             default:
 //                columnValue = getAddressObject(person, column);
                 break;
@@ -108,8 +113,10 @@ public class UtilisateurTableModel extends AbstractTableModel {
 
     private String getRoleObject(Utilisateur user){
         StringBuilder sb = new StringBuilder();
+        //objet string mutable
         
         int len = user.getRoles().size();
+        //len = taille de la liste de role/
         
         for (int i = 0; i < len; i++) {
             Role role = user.getRoles().get(i);
@@ -118,6 +125,10 @@ public class UtilisateurTableModel extends AbstractTableModel {
                 sb.append(",");
             }
         }
+        //parcours de la liste role. 
+        //role = stock le role de l'utilisateur = i
+        //ajoute le libelle du role. 
+        //met une virgule sauf à la fin : permet de serare par une virgule si il y a deux roles.La virgule n'apparait pas à la fin. 
         
 //        user.getRoles().forEach((Role role) -> {
 //            sb.append(role.getLibelle()).append(",");
@@ -126,6 +137,23 @@ public class UtilisateurTableModel extends AbstractTableModel {
         return sb.toString();
         
     }
+    //EN CONSTRUCTION
+    private String getAdresseObject(Utilisateur utilisateur){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = utilisateur.getAdresses().size();
+        
+        for(int i = 0; i< len; i++){
+            Adresse adresse = utilisateur.getAdresses().get(i);
+            sb.append(adresse.getVille());
+            if(i < len - 1) {
+                sb.append(",");
+            }
+        }
+        
+        return sb.toString();
+    }
+    
     private UtilisateurColumn getColumn(int columnIndex) {
         UtilisateurColumn[] columns = UtilisateurColumn.values();
         UtilisateurColumn column = columns[columnIndex];

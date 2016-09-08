@@ -2,6 +2,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOUtils;
+import fr.afpa.librairie.data.dao.AdresseDAO;
 import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.EditeurDAO;
 import fr.afpa.librairie.data.dao.EditionDAO;
@@ -168,4 +169,10 @@ public class SqlDAOFactory extends AbstractDAOFactory {
     public EditionDAO getEditionDAO(){
         return new EditionSqlDAO(this);
     }
+    
+    @Override
+    public AdresseDAO getAdresseDAO(){
+        return new AdresseSqlDAO(this);
+    }
+    
 }
