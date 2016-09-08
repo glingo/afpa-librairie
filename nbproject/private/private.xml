@@ -4,12 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/view/MainFrame.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/UtilisateurDAO.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/RubriqueDAO.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/controller/OuvrageController.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/ThemeDAO.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/support/sql/OuvrageSqlDAO.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/support/sql/UtilisateurSqlDAO.java</file>
+            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/controller/CommandeController.java</file>
+            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/support/xml/XmlDAOFactory.java</file>
+            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/support/list/ListDAOFactory.java</file>
+            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/controller/PromotionController.java</file>
+            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/bean/Promotion.java</file>
         </group>
     </open-files>
 </project-private>
