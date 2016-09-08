@@ -3,6 +3,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Adresse;
+import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.dao.AdresseDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
@@ -40,6 +41,19 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
             + " FROM Adresse"
             + " WHERE ville = ?";
     
+    
+    private static final String SQL_FIND_BY_UTILISATEUR = "SELECT "
+            + "ad.idAdresse, ad.numero, ad.voie, ad.codePostal, ad.ville, ad.complement"
+            + "FROM Adresse AS ad"
+            + "JOIN "
+            
+            
+//            
+//     private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
+//            + " ro.idRole, ro.libelle, ro.code"
+//            + " FROM Role AS ro"
+//            + " JOIN Remplit AS r ON r.idRole = ro.idRole"
+//            + " WHERE r.idUtilisateur = ?";        
     public AdresseSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
@@ -206,6 +220,11 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
 
     @Override
     public Adresse findByExemple(Adresse instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Adresse findByUtilisateur(Utilisateur utilisateur) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
