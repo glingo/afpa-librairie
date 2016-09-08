@@ -137,7 +137,7 @@ public class UtilisateurTableModel extends AbstractTableModel {
         return sb.toString();
         
     }
-    //EN CONSTRUCTION
+    
     private String getAdresseObject(Utilisateur utilisateur){
         StringBuilder sb = new StringBuilder();
         
