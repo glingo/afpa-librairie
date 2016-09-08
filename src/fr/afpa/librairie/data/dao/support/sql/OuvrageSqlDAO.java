@@ -49,137 +49,122 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 instance.setAuteur(auteur);
             }
             // Je ne comprend pas d'ou vient d'erreur. 
-            
-            if(instance.getThemes() == null) {
+
+            if (instance.getThemes() == null) {
 
                 Theme theme = getFactory().getThemeDAO().findByLibelle("CLI");
                 instance.addTheme(theme);
             }
-            
 
             instance.getThemes().forEach((Theme theme) -> {
-                if(theme != null && theme.getId() == null) {
+                if (theme != null && theme.getId() == null) {
                     theme = getFactory().getThemeDAO().findByLibelle(theme.getLibelle());
                 }
             });
-            
-            if(instance.getGenres() == null) {
+
+            if (instance.getGenres() == null) {
 
                 Genre genre = getFactory().getGenreDAO().findByLibelle("CLI");
                 instance.addGenre(genre);
             }
-            
 
             instance.getGenres().forEach((Genre genre) -> {
-                if(genre != null && genre.getId() == null) {
+                if (genre != null && genre.getId() == null) {
                     genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
                 }
             });
-            
-            if(instance.getRubriques() == null) {
+
+            if (instance.getRubriques() == null) {
 
                 Rubrique rubrique = getFactory().getRubriqueDAO().findByLibelle("CLI");
                 instance.addRubrique(rubrique);
             }
-            
 
             instance.getRubriques().forEach((Rubrique rubrique) -> {
-                if(rubrique != null && rubrique.getId() == null) {
+                if (rubrique != null && rubrique.getId() == null) {
                     rubrique = getFactory().getRubriqueDAO().findByLibelle(rubrique.getLibelle());
                 }
             });
-            
-            if(instance.getTags() == null) {
+
+            if (instance.getTags() == null) {
 
                 Tag tag = getFactory().getTagDAO().findByLibelle("CLI");
                 instance.addTag(tag);
             }
-            
-            /*if(instance.getTags().getId() == null) {
-                Tag tag = getFactory().getTagDAO().findByLibelle(instance.getTags().getId());
-                instance.setTags((List<Tag>) tag);
-            }*/
-            
 
+            /*if(instance.getTags().getId() == null) {
+             Tag tag = getFactory().getTagDAO().findByLibelle(instance.getTags().getId());
+             instance.setTags((List<Tag>) tag);
+             }*/
             instance.getTags().forEach((Tag tag) -> {
-                if(tag != null && tag.getId() == null) {
+                if (tag != null && tag.getId() == null) {
                     tag = getFactory().getTagDAO().findByLibelle(tag.getLibelle());
                 }
             });
-            
-            
+
         //***************************************REPRENDRE ICI****************************************
 
-        /* Récupération d'une connexion depuis la Factory */
-        connexion = factory.getConnection();
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
 
-        preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                instance.getTitre(), instance.getSousTitre(),
-                instance.getResume(),
-                instance.getAuteur() == null ? null : instance.getAuteur().getId());
+            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
+                    instance.getTitre(), instance.getSousTitre(),
+                    instance.getResume(),
+                    instance.getAuteur() == null ? null : instance.getAuteur().getId());
 
-        int statut = preparedStatement.executeUpdate();
-        /* Analyse du statut retourné par la requête d'insertion */
-        if (statut == 0) {
-            throw new DAOException("Échec de la création de l'ouvrage, aucune ligne ajoutée dans la table.");
-        }
-        /* Récupération de l'id auto-généré par la requête d'insertion */
-        valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-        if (valeursAutoGenerees.next()) {
-            /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
-            instance.setId(valeursAutoGenerees.getLong(1));
-        } else {
-            throw new DAOException("Échec de la création de l'ouvrage en base, aucun ID auto-généré retourné.");
-        }
-    }
-    catch (SQLException e
-
-    
-        ) {
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de l'ouvrage, aucune ligne ajoutée dans la table.");
+            }
+            /* Récupération de l'id auto-généré par la requête d'insertion */
+            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+            if (valeursAutoGenerees.next()) {
+                /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
+                instance.setId(valeursAutoGenerees.getLong(1));
+            } else {
+                throw new DAOException("Échec de la création de l'ouvrage en base, aucun ID auto-généré retourné.");
+            }
+        } catch (SQLException e) {
             throw new DAOException(e);
-    }
-
-    
-        finally {
+        } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
+        }
     }
-}
 
-@Override
-        protected Ouvrage map(ResultSet result) throws SQLException {
+    @Override
+    protected Ouvrage map(ResultSet result) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public List<Ouvrage> findAll() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-
-    @Override
-    
-        public void delete(Ouvrage instance) throws DAOException {
+    public List<Ouvrage> findAll() throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public Ouvrage findByExemple(Ouvrage instance) throws DAOException {
+
+    public void delete(Ouvrage instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public Ouvrage findById(Long id) throws DAOException {
+    public Ouvrage findByExemple(Ouvrage instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public Ouvrage findByTitre(String titre) {
+    public Ouvrage findById(Long id) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public Ouvrage findBySousTitre(String sousTitre) {
+    public Ouvrage findByTitre(String titre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Ouvrage findBySousTitre(String sousTitre) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
