@@ -83,30 +83,7 @@ public class UtilisateurTableModel extends AbstractTableModel {
         UtilisateurColumn column = columns[columnIndex];
         return column;
     }
-//
-//    private Object getAddressObject(Person person, Column column) {
-//        Object columnValue = null;
-//        Address address = person.getAddress();
-//        if (address != null) {
-//            switch (column) {
-//                case STREET:
-//                    columnValue = address.getStreet();
-//                    break;
-//                case STREET_NR:
-//                    columnValue = address.getStreetNr();
-//                    break;
-//                case CITY:
-//                    columnValue = address.getCity();
-//                    break;
-//                case ZIP_CODE:
-//                    columnValue = address.getZipCode();
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//        return columnValue;
-//    }
+
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
