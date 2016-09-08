@@ -104,4 +104,19 @@ public class Ouvrage {
         this.tags = tags;
     }
     
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+    }
+    
+    public void addRubrique(Rubrique ru) {
+        this.rubriques.add(ru);
+    }
+    
+    public void addGenre(Genre ge) {
+        this.genres.add(ge);
+    }
+    
+    public void addTheme(Theme th) {
+        this.themes.add(th);
+    }
 }
