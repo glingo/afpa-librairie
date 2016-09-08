@@ -105,8 +105,6 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
 
     }
     
-    
-    
     @Override
     protected Commande map(ResultSet resultSet) throws SQLException {
         

@@ -8,8 +8,6 @@ import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CommandeAdminPanel;
 import fr.afpa.librairie.view.admin.CreateCommandePanel;
 import java.awt.event.ActionEvent;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
@@ -32,7 +30,6 @@ public class CommandeController extends Controller {
         switch(e.getActionCommand()) {
             
             case "list":
-                System.out.println("create");
                 listAction();
                 break;
                 

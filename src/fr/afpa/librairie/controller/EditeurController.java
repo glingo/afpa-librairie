@@ -27,13 +27,11 @@ public class EditeurController extends Controller {
         switch (e.getActionCommand()) {
 
             case "list":
-                System.out.println("create");
                 listAction();
                 break;
 
             case "create":
             case "save":
-                System.out.println("save");
                 createAction();
                 break;
 
