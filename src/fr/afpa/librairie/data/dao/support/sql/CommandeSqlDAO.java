@@ -23,7 +23,7 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
     private static final String SQL_DELETE = "DELETE FROM Commande"
             + " WHERE idCommande = ?";
     
-    private static final String SQL_FIND_BY_ALL = "SELECT"
+    private static final String SQL_FIND_ALL = "SELECT"
             + " idCommande, numero, dateCommande"
             + " FROM Commande";
     
@@ -110,8 +110,8 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         Commande commande = new Commande(); 
         
         commande.setId(resultSet.getLong("idCommande"));
-        commande.setNumero(resultSet.getString("Numéros"));
-        commande.setDateCommande(resultSet.getDate("Date de commande"));
+        commande.setNumero(resultSet.getString("numero"));
+        commande.setDateCommande(resultSet.getDate("dateCommande"));
         
         return commande;
     }
@@ -126,7 +126,7 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
 
         try {
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ALL, false);
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
