@@ -80,6 +80,7 @@ public class OuvrageTableModel extends AbstractTableModel {
                 break;
             case LANGUE:
                 columnValue = getLangueObject(ouvrage);
+                //ATTENTION verifier que l'ajout langue est bien fait partout 
                 break;
 
             case RESUME:
