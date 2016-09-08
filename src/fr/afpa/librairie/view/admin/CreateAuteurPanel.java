@@ -78,8 +78,7 @@ public class CreateAuteurPanel extends JPanel{
             this.footer.add(saveButton);
             this.footer.add(abordButton);
             this.footer.repaint();
-        }
-        
+        }        
         return this.footer;
     }
     
