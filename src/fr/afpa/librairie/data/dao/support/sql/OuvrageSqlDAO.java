@@ -249,6 +249,8 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         List<Auteur> coAuteurs = factory.getAuteurDAO().findCoAuteursByOuvrage(idOuvrage);
         ouvrage.setCoAuteurs(coAuteurs);
         
+        // set la langue
+        
         return ouvrage;
     }
 

@@ -143,8 +143,12 @@ public class OuvrageTableModel extends AbstractTableModel {
     }
     
     private String getLangueObject(Ouvrage ouvrage){
-        StringBuilder sb = new StringBuilder();
         
+        if(ouvrage.getLangues() == null) {
+            return "";
+        }
+        
+        StringBuilder sb = new StringBuilder();
         
         int len = ouvrage.getLangues().size();
         for(int i = 0; i<len ; i++){
