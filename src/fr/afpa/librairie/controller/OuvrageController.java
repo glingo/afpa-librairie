@@ -8,8 +8,6 @@ import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CreateOuvragePanel;
 import fr.afpa.librairie.view.admin.OuvrageAdminPanel;
 import java.awt.event.ActionEvent;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 

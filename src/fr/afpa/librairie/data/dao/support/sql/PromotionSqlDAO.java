@@ -2,13 +2,10 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
-import fr.afpa.librairie.data.bean.Commande;
 import fr.afpa.librairie.data.bean.Promotion;
-import fr.afpa.librairie.data.dao.CommandeDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,26 +15,20 @@ import java.util.List;
 public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements PromotionDAO {
     
     private static final String SQL_INSERT = "INSERT INTO Promotion"
-            + " (numero, dateCommande) VALUES"
-            + " (?, ?)";
+            + " (dateDebut, dateFin, reduction, image, description, commentaire) VALUES"
+            + " (?, ?, ?, ?, ?, ?)";
     
     private static final String SQL_DELETE = "DELETE FROM Promotion"
-            + " WHERE idCommande = ?";
+            + " WHERE idPromo = ?";
     
-    private static final String SQL_FIND_BY_ALL = "SELECT"
-            + " idPromotion, numero, dateCommande"
-            + " FROM Commande";
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idPromo, dateDebut, dateFin, reduction, image, description, commentaire"
+            + " FROM Promotion";
     
-    private static final String SQL_FIND_BY_NUMERO = "SELECT"
-            + " idPromotion, numero, dateCommande"
-            + " FROM Commande"
-            + " WHERE numero = ?";
-    
-    private static final String SQL_FIND_BY_DATE =  "SELECT"
-            + " idPromotion, numero, dateCommande"
-            + " FROM Commande"
-            + " WHERE dateCommande = ?";
-    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idPromo, dateDebut, dateFin, reduction, image, description, commentaire"
+            + " FROM Promotion"
+            + " WHERE idPromo = ?";
     
     public PromotionSqlDAO(DAOFactoryInterface factory) {
         super(factory);
@@ -109,9 +100,13 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
         
         Promotion promo = new Promotion(); 
         
-//        promo.setId(resultSet.getLong("idCommande"));
-//        promo.setNumero(resultSet.getString("Numéros"));
-//        promo.setDateCommande(resultSet.getDate("Date de commande"));
+        promo.setId(resultSet.getLong("idPromo"));
+        promo.setCommentaire(resultSet.getString("commentaire"));
+        promo.setDateDebut(resultSet.getDate("dateDebut"));
+        promo.setDateFin(resultSet.getDate("dateFin"));
+        promo.setDescription(resultSet.getString("description"));
+        promo.setImage(resultSet.getString("image"));
+        promo.setReduction(resultSet.getFloat("reduction"));
         
         return promo;
     }
@@ -124,19 +119,19 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
         ResultSet resultSet = null;
         List<Promotion> promotions = new ArrayList<>();
 
-//        try {
-//            connexion = factory.getConnection();
-//            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ALL, false);
-//            resultSet = preparedStatement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                commandes.add(map(resultSet));
-//            }
-//        } catch (SQLException e) {
-//            throw new DAOException(e);
-//        } finally {
-//            close(resultSet, preparedStatement, connexion);
-//        }
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                promotions.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
 
         return promotions;
 
@@ -149,7 +144,28 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
 
     @Override
     public Promotion findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Promotion promotion = null;
+        
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, false, id);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                promotion = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return promotion;
     }
 
 }

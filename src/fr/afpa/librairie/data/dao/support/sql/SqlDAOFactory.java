@@ -160,6 +160,6 @@ public class SqlDAOFactory extends AbstractDAOFactory {
 
     @Override
     public PromotionDAO getPromotionDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new PromotionSqlDAO(this);
     }
 }
