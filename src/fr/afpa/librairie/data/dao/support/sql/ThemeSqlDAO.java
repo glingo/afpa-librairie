@@ -19,6 +19,13 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
     private static final String SQL_FIND_ALL = "SELECT idTheme, libelle FROM Theme";
     
     
+    private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
+            + " t.idTheme, t.libelle"
+            + " FROM Theme AS t"
+            + " JOIN Thematique AS th on t.idTheme = th.idTheme"
+            + " WHERE th.idOuvrage = ?";
+    
+    
     public ThemeSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
@@ -136,10 +143,27 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
 
     @Override
     public List<Theme> findByOuvrage(Long idOuvrage) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null; 
+        ResultSet resultSet = null ;
+        List<Theme> themes = new ArrayList<>();
+        
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_OUVRAGE, false, idOuvrage);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                themes.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+ 
+        return themes;
     }
-
-   
-
     
 }

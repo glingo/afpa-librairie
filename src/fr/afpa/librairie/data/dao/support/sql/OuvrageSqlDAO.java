@@ -1,6 +1,7 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
+import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Ouvrage;
@@ -13,15 +14,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO {
-
+    
     private static final String SQL_INSERT = "INSERT INTO Ouvrage"
-            + " (titre, sousTitre, resume, idAuteur)"
+            + " (titre, sous_titre, resume, idAuteur)"
             + " VALUES (?, ?, ?, ?)";
+    
     private static final String SQL_DELETE = "DELETE FROM Ouvrage WHERE idOuvrage = ?";
-    private static final String SQL_FIND_ALL = "SELECT idOuvrage, titre, sousTitre, resume, idAuteur FROM Ouvrage ";
+    
+    private static final String SQL_FIND_ALL = "SELECT idOuvrage, titre, sous_titre, resume, idAuteur FROM Ouvrage ";
     private static final String SQL_FIND_BY_TITRE = "SELECT idOuvrage, titre, sousTitre, resume, idAuteur FROM Ouvrage WHERE titre = ?";
     private static final String SQL_FIND_BY_SOUSTITRE = "SELECT idOuvrage, titre, sousTitre, resume, idAuteur FROM Ouvrage WHERE sousTitre = ?";
     private static final String SQL_FIND_BY_IDAUTEUR = "SELECT idOuvrage, titre, sousTitre, resume, idAuteur FROM Ouvrage WHERE idAuteur = ?";
@@ -133,13 +137,31 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
     }
 
     @Override
-    protected Ouvrage map(ResultSet result) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public List<Ouvrage> findAll() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Ouvrage> ouvrages = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
+            resultSet = preparedStatement.executeQuery();
+            
+//            resultSet.beforeFirst();
+            
+            while (resultSet.next()) {
+                ouvrages.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return ouvrages;
+
     }
 
     @Override
@@ -166,6 +188,43 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
     @Override
     public Ouvrage findBySousTitre(String sousTitre) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    protected Ouvrage map(ResultSet result) throws SQLException {
+        DAOFactoryInterface factory = getFactory();
+        
+        Ouvrage ouvrage = new Ouvrage();
+        
+        Long idOuvrage = result.getLong("idOuvrage");
+        
+        ouvrage.setId(idOuvrage);
+        ouvrage.setTitre(result.getString("titre"));
+        ouvrage.setSousTitre(result.getString("sous_titre"));
+        ouvrage.setResume(result.getString("resume"));
+        
+        // on recupere l'auteur depuis la base de données.
+        Auteur auteur = factory.getAuteurDAO().findById(result.getLong("idAuteur"));
+        // puis on l'assigne à l'ouvrage.
+        ouvrage.setAuteur(auteur);
+        
+        // on recupère les genres attachés à l'ouvrage pour lui assigner
+        List<Genre> genres = factory.getGenreDAO().findByOuvrage(idOuvrage);
+        ouvrage.setGenres(genres);
+        
+        List<Rubrique> rubriques = factory.getRubriqueDAO().findByOuvrage(idOuvrage);
+        ouvrage.setRubriques(rubriques);
+        
+        List<Tag> tags = factory.getTagDAO().findByOuvrage(idOuvrage);
+        ouvrage.setTags(tags);
+        
+        List<Theme> themes = factory.getThemeDAO().findByOuvrage(idOuvrage);
+        ouvrage.setThemes(themes);
+        
+        List<Auteur> coAuteurs = factory.getAuteurDAO().findCoAuteursByOuvrage(idOuvrage);
+        ouvrage.setCoAuteurs(coAuteurs);
+        
+        return ouvrage;
     }
 
 }

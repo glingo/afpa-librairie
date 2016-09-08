@@ -23,6 +23,14 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
     private static final String SQL_FIND_BY_LIBELLE = "SELECT idRubrique, libelle, date_debut, date_fin, commentaire FROM Rubrique WHERE libelle = ?";
     private static final String SQL_FIND_BY_ID = "SELECT idRubrique, libelle, date_debut, date_fin, commentaire FROM Rubrique WHERE idRubrique = ?";
     
+    private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
+            + " r.idRubrique, r.libelle, r.date_debut, r.date_fin, r.commentaire"
+            + " FROM Rubrique AS r"
+            + " JOIN MiseEnRubrique AS mer on r.idRubrique = mer.idRubrique"
+            + " WHERE mer.idOuvrage = ?";
+    
+    
+    
     public RubriqueSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
@@ -33,9 +41,9 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         Rubrique rubrique = new Rubrique();
 
         rubrique.setId(resultSet.getLong("idRubrique"));
-        rubrique.setLibelle(resultSet.getString("Libelle"));
-        rubrique.setDateDebut(resultSet.getDate("Date de début"));
-        rubrique.setDateFin(resultSet.getDate("Date de fin"));
+        rubrique.setLibelle(resultSet.getString("libelle"));
+        rubrique.setDateDebut(resultSet.getDate("date_debut"));
+        rubrique.setDateFin(resultSet.getDate("date_fin"));
 
         return rubrique;
     }
@@ -217,7 +225,27 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
 
     @Override
     public List<Rubrique> findByOuvrage(Long idOuvrage) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Rubrique> rubriques = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_OUVRAGE, false, idOuvrage);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                rubriques.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return rubriques;
     }
     
 

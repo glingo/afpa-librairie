@@ -18,6 +18,12 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
             + " VALUES (?)";
     private static final String SQL_DELETE = "DELETE FROM Tag WHERE idTag = ?";
     private static final String SQL_FIND_ALL = "SELECT idTag, libelle FROM Tag ";
+    
+     private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
+             + " t.idTag, t.libelle"
+             + " FROM Tag AS t"
+             + " JOIN Referencement AS r on r.idTag = t.idTag"
+             + " WHERE r.idOuvrage = ?";
 
     public TagSqlDAO(AbstractDAOFactory factory) {
         super(factory);
@@ -133,8 +139,26 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
 
     @Override
     public List<Tag> findByOuvrage(Long idOuvrage) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Tag> tags = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_OUVRAGE, false, idOuvrage);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                tags.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return tags;
     }
-
-
 }

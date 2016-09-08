@@ -4,6 +4,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Auteur;
+import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
@@ -19,13 +20,20 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
     private static final String SQL_INSERT = "INSERT INTO Auteur"
             + " (nom, prenom, date_naissance, date_deces)"
             + " VALUES (?, ?, ?, ?)";
+    
     private static final String SQL_DELETE = "DELETE FROM Auteur WHERE idAuteur = ?";
     private static final String SQL_FIND_ALL = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur ";
     private static final String SQL_FIND_BY_DATENAISSANCE = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE date_naissance = ?";
     private static final String SQL_FIND_BY_DATEDECES = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE date_deces = ?";
     private static final String SQL_FIND_BY_ID = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE idAuteur = ?";
     private static final String SQL_FIND_BY_NAME = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE nom = ? ";
-    
+
+    private static final String SQL_FIND_CO_AUTEURS_BY_OUVRAGE = "SELECT"
+            + " a.idAuteur, a.nom, a.prenom, a.date_naissance, a.date_deces"
+            + " FROM Auteur AS a"
+            + " JOIN CoAuteur AS co ON a.idAuteur = co.idAuteur"
+            + " WHERE co.idOuvrage = ?";
+
     public AuteurSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
@@ -118,7 +126,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
     public Auteur findByExemple(Auteur instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public Auteur findByDateNaissance(Date dateNaissance) throws DAOException {
         SqlDAOFactory factory = getFactory();
@@ -126,7 +134,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Auteur auteur = null;
-        
+
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
@@ -143,9 +151,9 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
         }
 
         return auteur;
-        
+
     }
-    
+
     @Override
     public Auteur findByDateDeces(Date dateDeces) throws DAOException {
         SqlDAOFactory factory = getFactory();
@@ -172,9 +180,9 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
         return auteur;
 
     }
-    
+
     @Override
-    public Auteur findByName(String nom) throws DAOException{
+    public Auteur findByName(String nom) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -198,36 +206,77 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
 
         return auteur;
     }
-     /*
+    /*
      * Simple méthode utilitaire permettant de faire la correspondance (le
      * mapping) entre une ligne issue de la table des utilisateurs (un
      * ResultSet) et un bean Utilisateur.
      */
-    
+
     @Override
     protected Auteur map(ResultSet resultSet) throws SQLException {
 //        SqlDAOFactory factory = getFactory();
         Auteur auteur = new Auteur();
-        
+
         auteur.setId(resultSet.getLong("idAuteur"));
         auteur.setNom(resultSet.getString("nom"));
         auteur.setPrenom(resultSet.getString("prenom"));
         auteur.setDateNaissance(resultSet.getDate("date_naissance"));
         auteur.setDateDeces(resultSet.getDate("date_deces"));
-       
-        
+
         return auteur;
     }
 
-
     @Override
     public Auteur findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Auteur auteur = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, false, id);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                auteur = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return auteur;
+
     }
 
     @Override
-    public List<Auteur> findByOuvrage(Long idOuvrage) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Auteur> findCoAuteursByOuvrage(Long idOuvrage) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Auteur> auteurs = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, 
+                    SQL_FIND_CO_AUTEURS_BY_OUVRAGE, false, idOuvrage);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                auteurs.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return auteurs;
     }
 
 

@@ -12,5 +12,7 @@ public interface AuteurDAO extends DAOInterface<Auteur> {
     Auteur findByDateNaissance (Date dateNaissance);
     Auteur findByDateDeces (Date dateDeces);
     
-    List<Auteur> findByOuvrage(Long idOuvrage) throws DAOException;
+//    List<Auteur> findByOuvrage(Long idOuvrage) throws DAOException;
+    
+    List<Auteur> findCoAuteursByOuvrage(Long idOuvrage) throws DAOException;
 }
