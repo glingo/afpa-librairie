@@ -9,6 +9,8 @@ import fr.afpa.librairie.data.bean.Tag;
 import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.exception.DAOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -46,7 +48,8 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 Auteur auteur = getFactory().getAuteurDAO().findByName(instance.getAuteur().getNom());
                 instance.setAuteur(auteur);
             }
-
+            // Je ne comprend pas d'ou vient d'erreur. 
+            
             if(instance.getThemes() == null) {
 
                 Theme theme = getFactory().getThemeDAO().findByLibelle("CLI");
@@ -58,7 +61,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 if(theme != null && theme.getId() == null) {
                     theme = getFactory().getThemeDAO().findByLibelle(theme.getLibelle());
                 }
-            }
+            });
             
             if(instance.getGenres() == null) {
 
@@ -71,7 +74,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 if(genre != null && genre.getId() == null) {
                     genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
                 }
-            }
+            });
             
             if(instance.getRubriques() == null) {
 
@@ -84,13 +87,18 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 if(rubrique != null && rubrique.getId() == null) {
                     rubrique = getFactory().getRubriqueDAO().findByLibelle(rubrique.getLibelle());
                 }
-            }
+            });
             
             if(instance.getTags() == null) {
 
                 Tag tag = getFactory().getTagDAO().findByLibelle("CLI");
                 instance.addTag(tag);
             }
+            
+            /*if(instance.getTags().getId() == null) {
+                Tag tag = getFactory().getTagDAO().findByLibelle(instance.getTags().getId());
+                instance.setTags((List<Tag>) tag);
+            }*/
             
 
             instance.getTags().forEach((Tag tag) -> {
@@ -147,12 +155,10 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-        public void save(Ouvrage instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
     @Override
+    
         public void delete(Ouvrage instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

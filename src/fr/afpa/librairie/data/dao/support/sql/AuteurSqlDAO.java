@@ -25,6 +25,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
     private static final String SQL_FIND_BY_DATEDECES = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE date_deces = ?";
     private static final String SQL_FIND_BY_ID = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE idAuteur = ?";
     private static final String SQL_FIND_BY_NAME = "SELECT idAuteur, nom, prenom, date_naissance, date_deces FROM Auteur WHERE nom = ? ";
+    
     public AuteurSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
@@ -47,7 +48,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la création de l'utilisateur, aucune ligne ajoutée dans la table.");
+                throw new DAOException("Échec de la création de l'auteur, aucune ligne ajoutée dans la table.");
             }
 
             valeursAutoGenerees = preparedStatement.getGeneratedKeys();
@@ -221,6 +222,11 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
 
     @Override
     public Auteur findById(Long id) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Auteur> findByOuvrage(Long idOuvrage) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

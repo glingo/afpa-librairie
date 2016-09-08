@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fr.afpa.librairie.data.bean;
 
-/**
- *
- * @author cdi305
- */
 public class Theme {
 
     private Long id;
@@ -16,12 +8,16 @@ public class Theme {
 
     public Theme() {
     }
+//<<<<<<< HEAD
 
     public Theme(Long id, String libelle) {
         this.id = id;
         this.libelle = libelle;
     }
 
+//=======
+    
+//>>>>>>> dc965b02032f2ade70f7e75f17c34269caeb610b
     public Long getId() {
         return id;
     }
@@ -38,7 +34,8 @@ public class Theme {
         this.libelle = libelle;
     }
     
-    public String toString(){
-        return libelle;
+    @Override
+    public String toString() {
+        return "Theme{" + "id=" + id + ", libelle=" + libelle + '}';
     }
 }

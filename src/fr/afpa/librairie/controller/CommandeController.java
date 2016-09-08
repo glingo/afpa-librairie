@@ -1,24 +1,27 @@
 
 package fr.afpa.librairie.controller;
 
-import fr.afpa.librairie.data.bean.Ouvrage;
+import fr.afpa.librairie.data.bean.Commande;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
-import fr.afpa.librairie.view.admin.CreateOuvragePanel;
-import fr.afpa.librairie.view.admin.OuvrageAdminPanel;
+import fr.afpa.librairie.view.admin.CommandeAdminPanel;
+import fr.afpa.librairie.view.admin.CreateCommandePanel;
 import java.awt.event.ActionEvent;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class OuvrageController extends Controller {
+
+public class CommandeController extends Controller {
+     
+    private final CommandeAdminPanel adminPanel = new CommandeAdminPanel(this);
+    private final CreateCommandePanel createPanel = new CreateCommandePanel(this);
     
-    private final OuvrageAdminPanel adminPanel = new OuvrageAdminPanel(this);
-    private final CreateOuvragePanel createPanel = new CreateOuvragePanel(this);
-    
-    public OuvrageController(MainFrame frame) {
+    public CommandeController(MainFrame frame) {
         super(frame);
     }
     
@@ -47,9 +50,9 @@ public class OuvrageController extends Controller {
     }
 
     public void listAction() {
-        ListAdapterListModel<Ouvrage> ouvrageListModel = new ListAdapterListModel<>();
-        ouvrageListModel.addAll(getDaoFactory().getOuvrageDAO().findAll());
-        adminPanel.setOuvrageList(ouvrageListModel);
+        ListAdapterListModel<Commande> commandeListModel = new ListAdapterListModel<>();
+        commandeListModel.addAll(getDaoFactory().getCommandeDAO().findAll());
+        adminPanel.setCommandeList(commandeListModel);
         this.frame.setContent(adminPanel);
     }
     
@@ -62,26 +65,20 @@ public class OuvrageController extends Controller {
         
         this.createPanel.getForm().verify();
         
-        JTextField fieldTitre = this.createPanel.getForm().getField("Titre");
-        JTextField fieldSousTitre = this.createPanel.getForm().getField("Sous-Titre");
-        JTextField fieldResume = this.createPanel.getForm().getField("Résumé");
- 
+        JTextField fieldNumero = this.createPanel.getForm().getField("Numero");
+        JFormattedTextField fieldDateCommande = this.createPanel.getForm().getField("Date de commande");
         
-        String titre = fieldTitre.getText();
-        String sousTitre = fieldSousTitre.getText();
-        String resume = fieldResume.getText();
+        String numero = fieldNumero.getText();
+        Date dateCommande = (Date) fieldDateCommande.getValue();
+        
+        Commande commande = new Commande();
 
-        
-        Ouvrage ouvrage = new Ouvrage();
-        
-        
-        ouvrage.setTitre(titre);
-        ouvrage.setSousTitre(sousTitre);
-        ouvrage.setResume(resume);
+        commande.setNumero(numero);
+        commande.setDateCommande(new java.sql.Date(dateCommande.getTime()));
 
         
         try{
-            getDaoFactory().getOuvrageDAO().save(ouvrage);
+            getDaoFactory().getCommandeDAO().save(commande);
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
@@ -117,9 +114,8 @@ public class OuvrageController extends Controller {
     
     
     public static void main(String[] args) {
-        String value = OuvrageController.encode("Bonjour");
+        String value = CommandeController.encode("Bonjour");
         
         System.out.println(value);
     }
-    
 }

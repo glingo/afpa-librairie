@@ -3,8 +3,14 @@ package fr.afpa.librairie.data.dao.support.sql;
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOUtils;
 import fr.afpa.librairie.data.dao.AuteurDAO;
+import fr.afpa.librairie.data.dao.EditeurDAO;
+import fr.afpa.librairie.data.dao.GenreDAO;
+import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
+import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
+import fr.afpa.librairie.data.dao.TagDAO;
+import fr.afpa.librairie.data.dao.ThemeDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -114,5 +120,39 @@ public class SqlDAOFactory extends AbstractDAOFactory {
     @Override
     public AuteurDAO getAuteurDAO(){
         return new AuteurSqlDAO(this);
+    }
+    
+    @Override
+    public ThemeDAO getThemeDAO(){
+        return new ThemeSqlDAO(this);
+    }
+    
+    @Override
+    public RubriqueDAO getRubriqueDAO(){
+        return new RubriqueSqlDAO(this);
+    }
+    
+    @Override
+    public GenreDAO getGenreDAO(){
+        return new GenreSqlDAO(this);
+    }
+    
+    @Override
+    public TagDAO getTagDAO(){
+        return new TagSqlDAO(this);
+    }
+    
+    @Override
+    public CommandeSqlDAO getCommandeDAO(){
+        return new CommandeSqlDAO(this);
+    }
+
+    @Override
+    public OuvrageDAO getOuvrageDAO() {
+        return new OuvrageSqlDAO(this);
+    }
+    
+    public EditeurDAO getEditeurDAO(){
+        return new EditeurSqlDAO(this);
     }
 }

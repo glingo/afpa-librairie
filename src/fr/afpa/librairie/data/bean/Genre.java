@@ -38,8 +38,8 @@ public class Genre {
         this.libelle = libelle;
     }
 
+    @Override
     public String toString() {
         return libelle;
     }
-
 }

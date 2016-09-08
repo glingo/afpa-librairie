@@ -2,7 +2,7 @@ package fr.afpa.librairie.view.maquette;
 
 import fr.afpa.librairie.data.bean.Genre;
 
-// c  variable de connexion
+// c variable de connexion
 // s variable de statement
 import java.sql.*;
 import java.util.*;

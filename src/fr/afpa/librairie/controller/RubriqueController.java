@@ -1,24 +1,27 @@
 
 package fr.afpa.librairie.controller;
 
-import fr.afpa.librairie.data.bean.Ouvrage;
+import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
-import fr.afpa.librairie.view.admin.CreateOuvragePanel;
-import fr.afpa.librairie.view.admin.OuvrageAdminPanel;
+import fr.afpa.librairie.view.admin.CreateRubriquePanel;
+import fr.afpa.librairie.view.admin.RubriqueAdminPanel;
 import java.awt.event.ActionEvent;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class OuvrageController extends Controller {
+public class RubriqueController extends Controller {
     
-    private final OuvrageAdminPanel adminPanel = new OuvrageAdminPanel(this);
-    private final CreateOuvragePanel createPanel = new CreateOuvragePanel(this);
     
-    public OuvrageController(MainFrame frame) {
+    private final RubriqueAdminPanel adminPanel = new RubriqueAdminPanel(this);
+    private final CreateRubriquePanel createPanel = new CreateRubriquePanel(this);
+    
+    public RubriqueController(MainFrame frame) {
         super(frame);
     }
     
@@ -47,9 +50,9 @@ public class OuvrageController extends Controller {
     }
 
     public void listAction() {
-        ListAdapterListModel<Ouvrage> ouvrageListModel = new ListAdapterListModel<>();
-        ouvrageListModel.addAll(getDaoFactory().getOuvrageDAO().findAll());
-        adminPanel.setOuvrageList(ouvrageListModel);
+        ListAdapterListModel<Rubrique> rubriqueListModel = new ListAdapterListModel<>();
+        rubriqueListModel.addAll(getDaoFactory().getRubriqueDAO().findAll());
+        adminPanel.setRubriqueList(rubriqueListModel);
         this.frame.setContent(adminPanel);
     }
     
@@ -62,26 +65,26 @@ public class OuvrageController extends Controller {
         
         this.createPanel.getForm().verify();
         
-        JTextField fieldTitre = this.createPanel.getForm().getField("Titre");
-        JTextField fieldSousTitre = this.createPanel.getForm().getField("Sous-Titre");
-        JTextField fieldResume = this.createPanel.getForm().getField("Résumé");
- 
+        JTextField fieldLibelle = this.createPanel.getForm().getField("Libelle");
+        JFormattedTextField fieldDateDebut = this.createPanel.getForm().getField("Date de début");
+        JFormattedTextField fieldDateFin = this.createPanel.getForm().getField("Date de fin");
+        JTextField fieldCommentaire = this.createPanel.getForm().getField("Commentaire");
         
-        String titre = fieldTitre.getText();
-        String sousTitre = fieldSousTitre.getText();
-        String resume = fieldResume.getText();
+        
+        String libelle= fieldLibelle.getText();
+        Date dateDebut = (Date) fieldDateDebut.getValue();
+        Date dateFin = (Date) fieldDateFin.getValue();
+        String commentaire = fieldCommentaire.getText();
+        
+        Rubrique rubrique = new Rubrique();
+        
+        rubrique.setLibelle(libelle);
+        rubrique.setDateDebut(new java.sql.Date(dateDebut.getTime()));
+        rubrique.setDateFin(new java.sql.Date(dateFin.getTime()));
+        rubrique.setCommentaire(commentaire);
 
-        
-        Ouvrage ouvrage = new Ouvrage();
-        
-        
-        ouvrage.setTitre(titre);
-        ouvrage.setSousTitre(sousTitre);
-        ouvrage.setResume(resume);
-
-        
         try{
-            getDaoFactory().getOuvrageDAO().save(ouvrage);
+            getDaoFactory().getRubriqueDAO().save(rubrique);
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
@@ -117,7 +120,7 @@ public class OuvrageController extends Controller {
     
     
     public static void main(String[] args) {
-        String value = OuvrageController.encode("Bonjour");
+        String value = UtilisateurController.encode("Bonjour");
         
         System.out.println(value);
     }

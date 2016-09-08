@@ -32,8 +32,7 @@ public class VectorGenerator {
         }
         myConnect.closing();
         return v;
-    }
-   
+    }   
     
     public Vector genererVector( String table, String id, String colonne1, String colonne2) {
 

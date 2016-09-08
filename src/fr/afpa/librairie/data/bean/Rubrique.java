@@ -9,6 +9,7 @@ public class Rubrique {
     
     private Date dateDebut;
     private Date dateFin;
+    private String commentaire;
 
     public Rubrique() {}
 
@@ -44,5 +45,12 @@ public class Rubrique {
         this.dateFin = dateFin;
     }
     
+    public String getCommentaire(){
+        return commentaire;
+    }
+    
+    public void setCommentaire(String commentaire){
+        this.commentaire = commentaire;
+    }
     
 }
