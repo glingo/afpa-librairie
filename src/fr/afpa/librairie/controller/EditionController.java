@@ -2,13 +2,16 @@
 package fr.afpa.librairie.controller;
 
 import fr.afpa.librairie.data.bean.Edition;
+import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CreateEditionPanel;
 import fr.afpa.librairie.view.admin.EditionAdminPanel;
 import java.awt.event.ActionEvent;
 import java.sql.Date;
+import java.text.NumberFormat;
 import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class EditionController extends Controller {
@@ -73,43 +76,39 @@ public class EditionController extends Controller {
         }
         
         this.createPanel.getForm().verify();
-
+        //
         JTextField fieldIsbn = this.createPanel.getForm().getField("Isbn");
         JFormattedTextField fieldDatePubli = this.createPanel.getForm().getField("Date de publication");
-        JFormattedTextField fieldPrixHt = this.createPanel.getForm().getField("PrixHT");
+        JFormattedTextField fieldPrixHt = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        //controle du format du champs PrixHt
+        fieldPrixHt = this.createPanel.getForm().getField("PrixHt");
         JTextField fieldCouverture = this.createPanel.getForm().getField("Image de couverture");
         JTextField fieldTitre = this.createPanel.getForm().getField("Titre");
-        JFormattedTextField fieldStock = this.createPanel.getForm().getField("Stock");
+        JFormattedTextField fieldStock = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        fieldStock = this.createPanel.getForm().getField("Stock");
+        
         
         
         //recuperation des données que l'utilisateur a mis dans les champs. 
         String isbn = fieldIsbn.getText();
-        Date datePubli =(Date) fieldDatePubli.getValue();
+        Date datePubli = (Date) fieldDatePubli.getValue();
         Float prixHt = (Float) fieldPrixHt.getValue();
         String couverture = fieldCouverture.getText();
         String titre = fieldTitre.getText();
         Integer stock = (Integer) fieldStock.getValue();
         
         Edition edition = new Edition();
-        
+        //modification des champs edition.
         edition.setIsbn(isbn);
         edition.setDatePublication(datePubli);
         edition.setPrixHt(prixHt);
         edition.setCouverture(couverture);
         edition.setTitre(titre);
         edition.setStock(stock);
-        
-
-        Utilisateur utilisateur = new Utilisateur();
-        
-        utilisateur.setNom(nom);
-        utilisateur.setPrenom(prenom);
-        utilisateur.setEmail(mail);
-        utilisateur.setMotDePasse(mdp);
-        utilisateur.setDateNaissance(new java.sql.Date(date.getTime()));
-        
+ 
         try{
-            getDaoFactory().getUtilisateurDAO().save(utilisateur);
+            getDaoFactory().getEditionDAO().save(edition);
+            //appel de la methode EditionDAO. mais surtout appel de la requete SQL save contenu dans EditionDAO.afin de créer une nouvelle edition. 
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
