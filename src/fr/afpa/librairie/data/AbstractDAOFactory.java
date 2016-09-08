@@ -5,6 +5,7 @@ import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.EditeurDAO;
 import fr.afpa.librairie.data.dao.EditionDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
+import fr.afpa.librairie.data.dao.LangueDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
@@ -58,6 +59,9 @@ public abstract class AbstractDAOFactory implements DAOFactoryInterface {
     
     @Override
     public abstract AdresseDAO getAdresseDAO();
+    
+    
+    public abstract LangueDAO getLangueDAO();
     
     public static DAOFactoryInterface getFactory(FactoryType type){
         

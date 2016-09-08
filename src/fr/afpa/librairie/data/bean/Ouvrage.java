@@ -15,11 +15,13 @@ public class Ouvrage {
     
     private Auteur auteur;
     private List<Auteur> coAuteurs;
+    private List<Auteur> Auteurs;
     
     private List<Theme> themes;
     private List<Rubrique> rubriques;
     private List<Genre> genres;
     private List<Tag> tags;
+    private List<Langue> langues;
     
 
     public Ouvrage() {}
@@ -80,7 +82,23 @@ public class Ouvrage {
         
         this.coAuteurs.add(coAuteur);
     }
+    
+    public List<Auteur> getAuteurs() {
+        return coAuteurs;
+    }
 
+    public void setAuteurs(List<Auteur> Auteurs) {
+        this.coAuteurs = coAuteurs;
+    }
+    
+    public void addAuteur(Auteur Auteur) {
+        if(this.coAuteurs == null) {
+            this.coAuteurs = new ArrayList<>();
+        }
+        
+        this.coAuteurs.add(Auteur);
+    }
+    
     public List<Theme> getThemes() {
         return themes;
     }
@@ -95,6 +113,22 @@ public class Ouvrage {
         }
         
         this.themes.add(theme);
+    }
+    
+    public List<Langue> getLangues(){
+        return langues;
+    }
+    
+    public void setLangues(List<Langue> langues){
+        this.langues = langues;
+    }
+    
+    public void addLangue(Langue langue){
+        if(this.langues == null){
+            this.langues = new ArrayList<>();
+        }
+        
+        this.langues.add(langue);
     }
 
     public List<Rubrique> getRubriques() {

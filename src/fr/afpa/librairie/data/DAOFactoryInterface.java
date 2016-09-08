@@ -6,6 +6,7 @@ import fr.afpa.librairie.data.dao.CommandeDAO;
 import fr.afpa.librairie.data.dao.EditeurDAO;
 import fr.afpa.librairie.data.dao.EditionDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
+import fr.afpa.librairie.data.dao.LangueDAO;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
@@ -31,4 +32,5 @@ public interface DAOFactoryInterface {
     public PromotionDAO getPromotionDAO();
     public EditionDAO getEditionDAO();
     public AdresseDAO getAdresseDAO();
+    public LangueDAO getLangueDAO();
 }

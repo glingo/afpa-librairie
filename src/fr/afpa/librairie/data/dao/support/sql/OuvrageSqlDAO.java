@@ -4,6 +4,7 @@ import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Genre;
+import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.bean.Tag;
@@ -91,7 +92,17 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                     genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
                 }
             });
-
+            
+            if (instance.getLangues() == null){
+                Langue langue = getFactory().getLangueDAO().findByLibelle("CLI");
+                instance.addLangue(langue);
+            }
+            
+            instance.getLangues().forEach((Langue langue) -> {
+                if(langue != null && langue.getId() == null){
+                    langue = getFactory().getLangueDAO().findByLibelle(langue.getLibelle());
+                }
+            });
             if (instance.getRubriques() == null) {
 
                 Rubrique rubrique = getFactory().getRubriqueDAO().findByLibelle("CLI");
