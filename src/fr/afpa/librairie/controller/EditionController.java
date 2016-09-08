@@ -39,7 +39,7 @@ public class EditionController extends Controller {
                 System.out.println("create");
                 listAction();
                 break;
-                
+            // les deux case se valent.     
             case "create":
             case "save":
                 System.out.println("save");
