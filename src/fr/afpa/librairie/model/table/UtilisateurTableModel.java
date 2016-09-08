@@ -2,6 +2,7 @@ package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Role;
+import fr.afpa.librairie.data.bean.StatutUtilisateur;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
@@ -28,6 +29,8 @@ public class UtilisateurTableModel extends AbstractTableModel {
             this.columnDisplayNames.put(UtilisateurColumn.PRENOM, "Prenom");
             this.columnDisplayNames.put(UtilisateurColumn.MAIL, "E-mail");
             this.columnDisplayNames.put(UtilisateurColumn.DATE_NAISSANCE, "Date de naissance");
+            this.columnDisplayNames.put(UtilisateurColumn.TELEPHONE, "Numéros de téléphone");
+            this.columnDisplayNames.put(UtilisateurColumn.STATUT_UTILISATEUR, "Statut utilisateur");
         }
         return this.columnDisplayNames;
     }
@@ -66,9 +69,6 @@ public class UtilisateurTableModel extends AbstractTableModel {
             case PRENOM:
                 columnValue = utilisateur.getPrenom();
                 break;
-//            case ADRESSE:
-//                columnValue = getAdresseObject(utilisateur);
-//                break;
             case MAIL:
                 columnValue = utilisateur.getEmail();
                 break;
@@ -77,6 +77,9 @@ public class UtilisateurTableModel extends AbstractTableModel {
                 break;
             case ROLE:
                 columnValue = getRoleObject(utilisateur);
+                break;
+            case STATUT_UTILISATEUR:
+                columnValue = getStatutUtilisateurObject(utilisateur);
                 break;
             
             default:
@@ -87,29 +90,7 @@ public class UtilisateurTableModel extends AbstractTableModel {
         return columnValue;
     }
 
-//    private Object getAddressObject(Person person, Column column) {
-//        Object columnValue = null;
-//        Address address = person.getAddress();
-//        if (address != null) {
-//            switch (column) {
-//                case STREET:
-//                    columnValue = address.getStreet();
-//                    break;
-//                case STREET_NR:
-//                    columnValue = address.getStreetNr();
-//                    break;
-//                case CITY:
-//                    columnValue = address.getCity();
-//                    break;
-//                case ZIP_CODE:
-//                    columnValue = address.getZipCode();
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//        return columnValue;
-//    }
+
 
     private String getRoleObject(Utilisateur user){
         StringBuilder sb = new StringBuilder();
@@ -138,21 +119,22 @@ public class UtilisateurTableModel extends AbstractTableModel {
         
     }
     
-//    private String getAdresseObject(Utilisateur utilisateur){
-//        StringBuilder sb = new StringBuilder();
-//        
-//        int len = utilisateur.getAdresses().size();
-//        
-//        for(int i = 0; i< len; i++){
-//            Adresse adresse = utilisateur.getAdresses().get(i);
-//            sb.append(adresse.getVille());
-//            if(i < len - 1) {
-//                sb.append(",");
-//            }
-//        }
-//        
-//        return sb.toString();
-//    }
+    private String getStatutUtilisateurObject(Utilisateur utilisateur){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = utilisateur.getStatutUtilisateurs().size();
+        
+        for(int i = 0; i < len; i++){
+            StatutUtilisateur statutUtilisateur = utilisateur.getStatutUtilisateurs().get(i);
+            sb.append(statutUtilisateur.getLibelle());
+            
+            if(i>len - 1){
+                sb.append(",");
+            }
+        }
+   
+        return sb.toString();
+    }
     
     private UtilisateurColumn getColumn(int columnIndex) {
         UtilisateurColumn[] columns = UtilisateurColumn.values();
