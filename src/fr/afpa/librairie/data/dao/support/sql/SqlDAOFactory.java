@@ -4,6 +4,7 @@ import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOUtils;
 import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.EditeurDAO;
+import fr.afpa.librairie.data.dao.EditionDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
@@ -161,5 +162,10 @@ public class SqlDAOFactory extends AbstractDAOFactory {
     @Override
     public PromotionDAO getPromotionDAO() {
         return new PromotionSqlDAO(this);
+    }
+    
+    @Override
+    public EditionDAO getEditionDAO(){
+        return new EditionSqlDAO(this);
     }
 }

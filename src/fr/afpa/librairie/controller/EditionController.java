@@ -23,7 +23,7 @@ public class EditionController extends Controller {
     
     
     //contructeur du controller
-    private EditionController(MainFrame frame){
+    public EditionController(MainFrame frame){
         super(frame);
     }
     

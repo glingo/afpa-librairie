@@ -7,6 +7,7 @@ import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.CommandeDAO;
 import fr.afpa.librairie.data.dao.EditeurDAO;
+import fr.afpa.librairie.data.dao.EditionDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
@@ -77,6 +78,11 @@ public class XmlDAOFactory extends AbstractDAOFactory {
 
     @Override
     public PromotionDAO getPromotionDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public EditionDAO getEditionDAO() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

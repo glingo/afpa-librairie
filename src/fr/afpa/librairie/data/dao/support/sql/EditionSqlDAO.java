@@ -218,16 +218,16 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Utilisateur utilisateur = null;
+        Edition edition = null;
         
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, false, id);
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_STOCK, false, stock);
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             if (resultSet.next()) {
-                utilisateur = map(resultSet);
+                edition = map(resultSet);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -235,41 +235,23 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             close(resultSet, preparedStatement, connexion);
         }
 
-        return utilisateur;
+        return edition;
     }
     
-
-    
-    //deroulement de findByStock
-    
-    //deroulement de map
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @Override
-    protected Edition map(ResultSet result) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    protected Edition map(ResultSet resultSet) throws SQLException {
+//        SqlDAOFactory factory = getFactory();
+        Edition edition = new Edition();
+        
+        edition.setIsbn(resultSet.getString("isbn"));
+        edition.setDatePublication(resultSet.getDate("datePubli"));
+        edition.setPrixHt(resultSet.getFloat("prixHt"));
+        edition.setCouverture(resultSet.getString("couverture"));
+        edition.setTitre(resultSet.getString("titre"));
+        edition.setStock(resultSet.getInt("stock"));
+       
 
-    @Override
-    public List<Edition> findAll() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void save(Edition instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void delete(Edition instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return edition;
     }
 
     @Override
@@ -282,24 +264,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Edition findByIsbn(String isbn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Edition findByDatePubli(Date datePubli) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Edition findByTitre(String titre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Edition findByStock(int stock) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
+    
     
 }
