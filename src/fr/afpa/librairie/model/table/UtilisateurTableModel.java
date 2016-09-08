@@ -1,5 +1,6 @@
 package fr.afpa.librairie.model.table;
 
+import fr.afpa.librairie.data.bean.Role;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
@@ -70,6 +71,9 @@ public class UtilisateurTableModel extends AbstractTableModel {
             case DATE_NAISSANCE:
                 columnValue = utilisateur.getDateNaissance();
                 break;
+            case ROLE:
+                columnValue = getRoleObject(utilisateur);
+                
             default:
 //                columnValue = getAddressObject(person, column);
                 break;
@@ -78,6 +82,50 @@ public class UtilisateurTableModel extends AbstractTableModel {
         return columnValue;
     }
 
+//    private Object getAddressObject(Person person, Column column) {
+//        Object columnValue = null;
+//        Address address = person.getAddress();
+//        if (address != null) {
+//            switch (column) {
+//                case STREET:
+//                    columnValue = address.getStreet();
+//                    break;
+//                case STREET_NR:
+//                    columnValue = address.getStreetNr();
+//                    break;
+//                case CITY:
+//                    columnValue = address.getCity();
+//                    break;
+//                case ZIP_CODE:
+//                    columnValue = address.getZipCode();
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//        return columnValue;
+//    }
+
+    private String getRoleObject(Utilisateur user){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = user.getRoles().size();
+        
+        for (int i = 0; i < len; i++) {
+            Role role = user.getRoles().get(i);
+            sb.append(role.getLibelle());
+            if(i < len - 1) {
+                sb.append(",");
+            }
+        }
+        
+//        user.getRoles().forEach((Role role) -> {
+//            sb.append(role.getLibelle()).append(",");
+//        });
+        
+        return sb.toString();
+        
+    }
     private UtilisateurColumn getColumn(int columnIndex) {
         UtilisateurColumn[] columns = UtilisateurColumn.values();
         UtilisateurColumn column = columns[columnIndex];
