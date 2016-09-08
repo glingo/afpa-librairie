@@ -2,7 +2,6 @@ package fr.afpa.librairie.view;
 
 import fr.afpa.librairie.controller.AuteurController;
 import fr.afpa.librairie.controller.CommandeController;
-import fr.afpa.librairie.controller.PromotionController;
 import fr.afpa.librairie.controller.EditeurController;
 import fr.afpa.librairie.controller.EditionController;
 import fr.afpa.librairie.controller.OuvrageController;
@@ -18,7 +17,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
-import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -124,26 +122,21 @@ public final class MainFrame extends JFrame {
     private void initSplashScreen(){
         
         final SplashScreen splash = SplashScreen.getSplashScreen();
-//        
+
         if (splash == null) {
             System.out.println("SplashScreen.getSplashScreen() returned null");
             return;
         }
-//        
+
         Graphics2D g = splash.createGraphics();
         if (g == null) {
             System.out.println("g is null");
             return;
         }
-//        
+
         for(int i=0; i<50; i++) {
             renderSplashFrame(g, i);
             splash.update();
-            try {
-                Thread.sleep(90);
-            }
-            catch(InterruptedException e) {
-            }
         }
         splash.close();
         
