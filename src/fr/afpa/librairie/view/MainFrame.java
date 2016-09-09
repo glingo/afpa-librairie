@@ -8,68 +8,132 @@ import fr.afpa.librairie.controller.OuvrageController;
 import fr.afpa.librairie.controller.PromotionController;
 import fr.afpa.librairie.controller.RubriqueController;
 import fr.afpa.librairie.controller.UtilisateurController;
-import fr.afpa.librairie.view.admin.DashBoardPanel;
+import fr.afpa.librairie.view.accueil.AccueilPanel;
 import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
-import javax.swing.JFrame;
+import java.util.logging.Logger;
+import javax.swing.GroupLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.LayoutStyle;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 
-public final class MainFrame extends JFrame {
+/**
+ *
+ * @author cdi305
+ */
+public class MainFrame extends javax.swing.JFrame {
     
-    private Component currentContent;
-
-    public MainFrame() {
-        init();
+    private static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
+    private static final String NAME = "main";
+    private static final String TITLE = "Le hibou qui lit";
+    
+    /* Set the Nimbus look and feel */
+    static {
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException 
+                | InstantiationException 
+                | IllegalAccessException 
+                | UnsupportedLookAndFeelException ex) {
+            // just log it and stay in default lookandfeel.
+            LOG.log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }
+
+    private HeaderPanel headerPanel;
+    private LeftMenuPanel leftMenuPanel;  
+    private Component currentContent;
     
-    private void init(){
+    private GroupLayout layout;
+    
+    public MainFrame() {
         
+        initComponents();
+    }
+                       
+    private void initComponents() {
         initSplashScreen();
-        
-        Container contentPane = getContentPane();
-        contentPane.setLayout(new BorderLayout(1, 0));
-        setContent(new DashBoardPanel());
         
         JMenuBar jMenuBar = new JMenuBar();
         setJMenuBar(jMenuBar);
         
         initMenu(jMenuBar);
-        
-        Dimension dimension = new Dimension(650, 450);
-        setPreferredSize(dimension);
-//        setResizable(false);
-        
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Le hibou qui lit");
-        setLocationRelativeTo(null);
-        pack();
-    }
 
+        headerPanel = new HeaderPanel();
+        leftMenuPanel = new LeftMenuPanel();
+        currentContent = new AccueilPanel();
+        
+        Dimension size = new Dimension(650, 450);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle(TITLE);
+        setName(NAME);
+        setMinimumSize(size);
+        setSize(size);
+
+        initLayout();
+
+        pack();
+    }    
+    
     public void setContent(Component component) {
         Container contentPane = getContentPane();
         
         if (currentContent != null) {
+            layout.replace(currentContent, component);
             contentPane.remove(currentContent);
         }
         
-        contentPane.add(component, BorderLayout.CENTER);
         currentContent = component;
-        pack();
         repaint();
     }
     
     public Component getContent() {
         return this.currentContent;
     }
-
+    
+    private void initLayout(){
+        
+        layout = new GroupLayout(getContentPane());
+        
+        getContentPane().setLayout(layout);
+        
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(headerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        
+        layout.setVerticalGroup(
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(headerPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }
+    
     private void initMenu(JMenuBar jMenuBar) {
         initFileMenu(jMenuBar);
         initAdministrationMenu(jMenuBar);
@@ -86,7 +150,6 @@ public final class MainFrame extends JFrame {
         JMenuItem utilisateurAdmin = new JMenuItem("Utilisateurs");
         utilisateurAdmin.addActionListener(new UtilisateurController(this));
         adminMenu.add(utilisateurAdmin);
-        
         
         JMenuItem auteurAdmin = new JMenuItem("Auteurs");
         auteurAdmin.addActionListener(new AuteurController(this));
@@ -118,6 +181,7 @@ public final class MainFrame extends JFrame {
         
         jMenuBar.add(adminMenu);
     }
+
     
     private void initSplashScreen(){
         
@@ -150,5 +214,4 @@ public final class MainFrame extends JFrame {
         g.setColor(Color.BLACK);
         g.drawString("Loading "+comps[(frame/5)%3]+"...", 120, 150);
     }
-
 }

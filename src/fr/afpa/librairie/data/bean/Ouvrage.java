@@ -14,6 +14,7 @@ public class Ouvrage {
     private String resume;
     
     private Auteur auteur;
+    
     private List<Auteur> coAuteurs;
     
     
@@ -87,7 +88,7 @@ public class Ouvrage {
         return coAuteurs;
     }
 
-    public void setAuteurs(List<Auteur> Auteurs) {
+    public void setAuteurs(List<Auteur> coAuteurs) {
         this.coAuteurs = coAuteurs;
     }
     

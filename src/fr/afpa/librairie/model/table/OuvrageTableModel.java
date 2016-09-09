@@ -155,6 +155,28 @@ public class OuvrageTableModel extends AbstractTableModel {
 //        return sb.toString();
 //    }
     
+    private String getLangueObject(Ouvrage ouvrage){
+        
+        if(ouvrage.getLangues() == null) {
+            return "";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        int len = ouvrage.getLangues().size();
+        for(int i = 0; i<len ; i++){
+            Langue langue = ouvrage.getLangues().get(i);
+            sb.append(langue.getLibelle());
+            
+            if(i> len - 1){
+                sb.append(",");
+            }
+        }
+        
+        
+        return sb.toString();
+    }
+    
 
 
     private OuvrageColumn getColumn(int columnIndex) {
