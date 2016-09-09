@@ -16,6 +16,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.GroupLayout;
 import javax.swing.JMenu;
@@ -35,6 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
     private static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
     private static final String NAME = "main";
     private static final String TITLE = "Le hibou qui lit";
+    private final String[] LOADING_MSG = {"Remplissage des océans", "bar", "baz"};
     
     /* Set the Nimbus look and feel */
     static {
@@ -50,7 +52,7 @@ public class MainFrame extends javax.swing.JFrame {
                 | IllegalAccessException 
                 | UnsupportedLookAndFeelException ex) {
             // just log it and stay in default lookandfeel.
-            LOG.log(java.util.logging.Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
     }
 
@@ -61,8 +63,16 @@ public class MainFrame extends javax.swing.JFrame {
     private GroupLayout layout;
     
     public MainFrame() {
-        
         initComponents();
+        
+        Dimension size = new Dimension(650, 450);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle(TITLE);
+        setName(NAME);
+        setMinimumSize(size);
+        setSize(size);
+
     }
                        
     private void initComponents() {
@@ -77,14 +87,6 @@ public class MainFrame extends javax.swing.JFrame {
         leftMenuPanel = new LeftMenuPanel();
         currentContent = new AccueilPanel();
         
-        Dimension size = new Dimension(650, 450);
-
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle(TITLE);
-        setName(NAME);
-        setMinimumSize(size);
-        setSize(size);
-
         initLayout();
 
         pack();
@@ -188,13 +190,14 @@ public class MainFrame extends javax.swing.JFrame {
         final SplashScreen splash = SplashScreen.getSplashScreen();
 
         if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
+            LOG.log(Level.INFO, "SplashScreen.getSplashScreen() returned null");
             return;
         }
 
         Graphics2D g = splash.createGraphics();
+        
         if (g == null) {
-            System.out.println("g is null");
+            LOG.log(Level.INFO, "Graphics2D is null");
             return;
         }
 
@@ -202,16 +205,15 @@ public class MainFrame extends javax.swing.JFrame {
             renderSplashFrame(g, i);
             splash.update();
         }
-        splash.close();
         
+        splash.close();
     }
     
     void renderSplashFrame(Graphics2D g, int frame) {
-        final String[] comps = {"foo", "bar", "baz"};
         g.setComposite(AlphaComposite.Clear);
         g.fillRect(120,140,200,40);
         g.setPaintMode();
         g.setColor(Color.BLACK);
-        g.drawString("Loading "+comps[(frame/5)%3]+"...", 120, 150);
+        g.drawString(LOADING_MSG[(frame/5)%3]+" ...", 120, 150);
     }
 }
