@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -42,6 +43,7 @@ public class AuteurAdminPanel extends JPanel {
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
+        add(getForm(), BorderLayout.NORTH);
         
         repaint();
         setVisible(true);
@@ -51,6 +53,17 @@ public class AuteurAdminPanel extends JPanel {
         auteurList.setModel(auteurListModel);
         auteurTableModel.setListModel(auteurListModel);
         listModelSelection.setListModels(auteurListModel, selectionModel);
+    }
+    
+    private Component getForm(){
+        JPanel form = new JPanel();
+        
+        JLabel titreSection = new JLabel("AUTEURS");
+        
+        form.add(titreSection);
+        
+        return form;
+        
     }
     
     private Component getFooter() {
