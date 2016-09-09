@@ -1,13 +1,14 @@
 package fr.afpa.librairie.view.maquette;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-
-public class EssaiNouvelAuteur {
+public class EssaiNouvelAuteur  {
 
     public static void main(String[] args) {
         //fenetre + panel
         JFrame fenetre = new JFrame();
+
         JPanel p = new JPanel();
 
         p.setBackground(Color.darkGray);
@@ -20,17 +21,15 @@ public class EssaiNouvelAuteur {
         fenetre.setTitle("Nouvel Auteur");
         fenetre.setMinimumSize(new Dimension(320, 290));//configure une dimension minimum
         p.setSize(fenetre.getWidth(), fenetre.getHeight());
-        
-        System.out.println(p.getHeight());
 
         fenetre.setLocationRelativeTo(null);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Label Titre
         JLabel monTitre = new JLabel();
-        monTitre.setBounds(70, 10, 175, 25);
-                //monTitre.setBounds(fenetre.getWidth()/8, fenetre.getHeight()/8, 175, 25);
+        monTitre.setBounds((int) (fenetre.getWidth() * .21), 10, 175, 25);
+        //monTitre.setBounds(fenetre.getWidth()/8, fenetre.getHeight()/8, 175, 25);
 
-                monTitre.setText("Nouvel Auteur");
+        monTitre.setText("Nouvel Auteur");
 
         Font fontTitre = new Font("Courier", Font.BOLD, 24);
         monTitre.setForeground(Color.lightGray);
@@ -49,7 +48,7 @@ public class EssaiNouvelAuteur {
 
         //TextField Nom
         JTextField textNom = new JTextField();
-        textNom.setBounds(150, 60, 150, 20);
+        textNom.setBounds(150, 60, (int) (fenetre.getWidth() -150), 20);
         textNom.setFont(new Font("Courier", Font.BOLD, 12));
         textNom.setBackground(Color.gray);
         textNom.setOpaque(true);
@@ -68,7 +67,7 @@ public class EssaiNouvelAuteur {
 
         //TextField Prenom
         JTextField textPrenom = new JTextField();
-        textPrenom.setBounds(150, 85, 150, 20);
+        textPrenom.setBounds(150, 85, (int) (fenetre.getWidth() * .47), 20);
         textPrenom.setFont(new Font("Courier", Font.BOLD, 12));
         textPrenom.setBackground(Color.gray);
         textPrenom.setOpaque(true);
@@ -87,7 +86,7 @@ public class EssaiNouvelAuteur {
 
         //TextField Date de Naissance
         JTextField textNaissance = new JTextField();
-        textNaissance.setBounds(150, 110, 150, 20);
+        textNaissance.setBounds(150, 110, (int) (fenetre.getWidth() * .47), 20);
         textNaissance.setFont(new Font("Courier", Font.BOLD, 12));
         textNaissance.setBackground(Color.gray);
         textNaissance.setOpaque(true);
@@ -106,7 +105,7 @@ public class EssaiNouvelAuteur {
 
         //TextField Date de Deces
         JTextField textDeces = new JTextField();
-        textDeces.setBounds(150, 135, 150, 20);
+        textDeces.setBounds(150, 135, (int) (fenetre.getWidth() * .47), 20);
         textDeces.setFont(new Font("Courier", Font.BOLD, 12));
         textDeces.setBackground(Color.gray);
         textDeces.setOpaque(true);
@@ -121,7 +120,7 @@ public class EssaiNouvelAuteur {
         saveButton.setForeground(Color.darkGray);
 
         p.add(saveButton);
-        
+
         //////////////////////////////////////
         JButton cancelButton = new JButton();
         cancelButton.setBounds(190, 200, 110, 20);
@@ -129,8 +128,17 @@ public class EssaiNouvelAuteur {
         cancelButton.setFont(new Font("Courier", Font.BOLD, 12));
         cancelButton.setForeground(Color.darkGray);
 
-        p.add(cancelButton);        
-        
+        p.add(cancelButton);
+
+        fenetre.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                monTitre.setBounds((int) (fenetre.getWidth() * .21), 10, 175, 25);
+                textNom.setBounds(150, 60, (int) (fenetre.getWidth() -170), 20);
+                textPrenom.setBounds(150, 85, (int) (fenetre.getWidth() * .47), 20);
+                textNaissance.setBounds(150, 110, (int) (fenetre.getWidth() * .47), 20);
+                textDeces.setBounds(150, 135, (int) (fenetre.getWidth() * .47), 20);
+            }
+        });
         fenetre.setVisible(true);
     }
 }
