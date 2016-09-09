@@ -5,6 +5,8 @@ import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Langue;
+import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.EditionColumn;
@@ -163,6 +165,42 @@ public class EditionTableModel extends AbstractTableModel {
         
         return sb.toString();
     }
+    
+    private String getThemeObject(Edition edition){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = edition.getThemes().size();
+        for( int i = 0; i < len; i++){
+            Theme theme = edition.getThemes().get(i);
+            sb.append(theme.getLibelle());
+            
+            if(i > len - 1){
+                sb.append(",");
+            }
+        }
+        
+        return sb.toString();
+    }
+    
+    
+    private String getRubriqueObject(Edition edition){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = edition.getRubriques().size();
+        for(int i = 0; i < len; i++){
+            Rubrique rubrique = edition.getRubriques().get(i);
+            sb.append(rubrique.getLibelle());
+            
+            if(i > len - 1){
+                sb.append(",");
+            }
+        }
+        
+        return sb.toString();
+    }
+    
+
+    
     private EditionColumn getColumn(int columnIndex) {
         EditionColumn[] columns = EditionColumn.values();
         EditionColumn column = columns[columnIndex];

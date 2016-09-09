@@ -208,6 +208,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
 
     }
     
+    @Override
     public List<Role> findByUtilisateur(Long idUtilisateur) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;

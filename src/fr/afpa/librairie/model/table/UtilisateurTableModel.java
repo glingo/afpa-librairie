@@ -121,20 +121,8 @@ public class UtilisateurTableModel extends AbstractTableModel {
     }
     
     private String getStatutUtilisateurObject(Utilisateur utilisateur){
-        StringBuilder sb = new StringBuilder();
-        
-        int len = utilisateur.getStatutUtilisateurs().size();
-        
-        for(int i = 0; i < len; i++){
-            StatutUtilisateur statutUtilisateur = utilisateur.getStatutUtilisateurs().get(i);
-            sb.append(statutUtilisateur.getLibelle());
-            
-            if(i>len - 1){
-                sb.append(",");
-            }
-        }
-   
-        return sb.toString();
+        // le statut ne peut etre null !
+        return utilisateur.getStatut().getLibelle();
     }
     
     private UtilisateurColumn getColumn(int columnIndex) {

@@ -39,6 +39,13 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
             + " WHERE libelle = ?";
 
     
+    private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
+            +" stu.idStatutUtilisateur, stu.libelle, stu.code"
+            +" FROM StatutUtilisateur AS stu"
+            +" JOIN Utilisateur AS ut ON ut.idStatutUtilisateur = stu.idStatutUtilisateur"
+            +" WHERE ut.idUtilisateur =?";
+    
+
     public StatutUtilisateurSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
@@ -162,6 +169,40 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
         return statut;
         
     }
+    
+    @Override
+    public List<StatutUtilisateur> findByUtilisateur(Long idUtilisateur) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<StatutUtilisateur> statutUtilisateurs = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_UTILISATEUR, false, idUtilisateur);
+            resultSet = preparedStatement.executeQuery();
+            
+//            resultSet.beforeFirst();
+            
+            while (resultSet.next()) {
+                statutUtilisateurs.add(map(resultSet));
+            }
+            
+            if (resultSet.next()) {
+                statutUtilisateurs= new ArrayList<>();
+                statutUtilisateurs.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return statutUtilisateurs;
+
+    }
+
 
     @Override
     public StatutUtilisateur findByCode(String code) throws DAOException {
@@ -205,5 +246,7 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
                
         return statut;
     }
+
+
 
 }

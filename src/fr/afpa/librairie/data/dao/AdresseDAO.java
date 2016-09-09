@@ -11,5 +11,5 @@ public interface AdresseDAO extends DAOInterface<Adresse> {
     Adresse findByCp(String cp);
     Adresse findByVille(String ville);
     
-    List<Adresse> findByUtilisateur(Long idUtilisateur) throws DAOException;
+    
 }

@@ -253,8 +253,9 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
         
         StatutUtilisateur statut = factory.getStatutUtilisateurDAO().findById(resultSet.getLong("idStatutUtilisateur"));
         List<Role> roles = factory.getRoleDAO().findByUtilisateur(utilisateur.getId());
-        List<Adresse> dernieresFacturations = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
-        List<Adresse> dernieresLivraisons = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
+        List<StatutUtilisateur> statutUtilisateurs = factory.getStatutUtilisateurDAO().findByUtilisateur(utilisateur.getId());
+//        List<Adresse> dernieresFacturations = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
+//        List<Adresse> dernieresLivraisons = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
         
         
         utilisateur.setStatut(statut);
