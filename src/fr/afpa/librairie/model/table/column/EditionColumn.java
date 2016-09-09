@@ -2,5 +2,5 @@
 package fr.afpa.librairie.model.table.column;
 
 public enum EditionColumn {
-    ISBN, DATEPUBLI, PRIXHT, COUVERTURE, TITRE, STOCK;
+    ISBN, AUTEUR, DATEPUBLI, LANGUE, GENRE, THEME, RUBRIQUE, PRIXHT, COUVERTURE, TITRE, STOCK;
 }

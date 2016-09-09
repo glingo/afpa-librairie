@@ -28,7 +28,6 @@ public class OuvrageTableModel extends AbstractTableModel {
             this.columnDisplayNames.put(OuvrageColumn.AUTEUR, "Auteur");
             this.columnDisplayNames.put(OuvrageColumn.GENRE, "Genre");
             this.columnDisplayNames.put(OuvrageColumn.THEME, "Theme");
-            this.columnDisplayNames.put(OuvrageColumn.LANGUE, "Langue");
             this.columnDisplayNames.put(OuvrageColumn.RESUME, "Resume");
 
         }
@@ -78,10 +77,6 @@ public class OuvrageTableModel extends AbstractTableModel {
             case THEME:
                 columnValue = getThemeObject(ouvrage);
                 break;
-            case LANGUE:
-                columnValue = getLangueObject(ouvrage);
-                //ATTENTION verifier que l'ajout langue est bien fait partout 
-                break;
 
             case RESUME:
                 columnValue = ouvrage.getResume();
@@ -98,9 +93,9 @@ public class OuvrageTableModel extends AbstractTableModel {
     private String getAuteurObject(Ouvrage ouvrage){
         StringBuilder sb = new StringBuilder();
         
-        int len = ouvrage.getAuteurs().size();
+        int len = ouvrage.getCoAuteurs().size();
         for(int i = 0; i<len ; i++){
-            Auteur auteur = ouvrage.getAuteurs().get(i);
+            Auteur auteur = ouvrage.getCoAuteurs().get(i);
             sb.append(auteur.getNom());
             
             if(i>len - 1){
@@ -142,23 +137,23 @@ public class OuvrageTableModel extends AbstractTableModel {
         return sb.toString();
     }
     
-    private String getLangueObject(Ouvrage ouvrage){
-        StringBuilder sb = new StringBuilder();
-        
-        
-        int len = ouvrage.getLangues().size();
-        for(int i = 0; i<len ; i++){
-            Langue langue = ouvrage.getLangues().get(i);
-            sb.append(langue.getLibelle());
-            
-            if(i> len - 1){
-                sb.append(",");
-            }
-        }
-        
-        
-        return sb.toString();
-    }
+//    private String getLangueObject(Ouvrage ouvrage){
+//        StringBuilder sb = new StringBuilder();
+//        
+//        
+//        int len = ouvrage.getLangues().size();
+//        for(int i = 0; i<len ; i++){
+//            Langue langue = ouvrage.getLangues().get(i);
+//            sb.append(langue.getLibelle());
+//            
+//            if(i> len - 1){
+//                sb.append(",");
+//            }
+//        }
+//        
+//        
+//        return sb.toString();
+//    }
     
 
 

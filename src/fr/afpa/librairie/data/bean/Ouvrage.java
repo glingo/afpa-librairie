@@ -15,7 +15,7 @@ public class Ouvrage {
     
     private Auteur auteur;
     private List<Auteur> coAuteurs;
-    private List<Auteur> Auteurs;
+    
     
     private List<Theme> themes;
     private List<Rubrique> rubriques;
@@ -178,5 +178,12 @@ public class Ouvrage {
         
         this.tags.add(tag);
     }
+
+    @Override
+    public String toString() {
+        return "Ouvrage{" + "id=" + id + ", titre=" + titre + ", sousTitre=" + sousTitre + ", resume=" + resume + ", auteur=" + auteur + ", coAuteurs=" + coAuteurs + ", themes=" + themes + ", rubriques=" + rubriques + ", genres=" + genres + ", tags=" + tags + ", langues=" + langues + '}';
+    }
+    
+    
     
 }

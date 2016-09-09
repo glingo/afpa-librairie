@@ -92,17 +92,17 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                     genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
                 }
             });
-            
-            if (instance.getLangues() == null){
-                Langue langue = getFactory().getLangueDAO().findByLibelle("CLI");
-                instance.addLangue(langue);
-            }
-            
-            instance.getLangues().forEach((Langue langue) -> {
-                if(langue != null && langue.getId() == null){
-                    langue = getFactory().getLangueDAO().findByLibelle(langue.getLibelle());
-                }
-            });
+//            langue = edition et pas ouvrage 
+//            if (instance.getLangues() == null){
+//                Langue langue = getFactory().getLangueDAO().findByLibelle("CLI");
+//                instance.addLangue(langue);
+//            }
+//            
+//            instance.getLangues().forEach((Langue langue) -> {
+//                if(langue != null && langue.getId() == null){
+//                    langue = getFactory().getLangueDAO().findByLibelle(langue.getLibelle());
+//                }
+//            });
             if (instance.getRubriques() == null) {
 
                 Rubrique rubrique = getFactory().getRubriqueDAO().findByLibelle("CLI");
@@ -120,18 +120,13 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
                 Tag tag = getFactory().getTagDAO().findByLibelle("CLI");
                 instance.addTag(tag);
             }
-
-            /*if(instance.getTags().getId() == null) {
-             Tag tag = getFactory().getTagDAO().findByLibelle(instance.getTags().getId());
-             instance.setTags((List<Tag>) tag);
-             }*/
+            
             instance.getTags().forEach((Tag tag) -> {
-                if (tag != null && tag.getId() == null) {
+                if(tag != null && tag.getId() == null){
                     tag = getFactory().getTagDAO().findByLibelle(tag.getLibelle());
                 }
             });
 
-        //***************************************REPRENDRE ICI****************************************
 
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
@@ -248,6 +243,8 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         
         List<Auteur> coAuteurs = factory.getAuteurDAO().findCoAuteursByOuvrage(idOuvrage);
         ouvrage.setCoAuteurs(coAuteurs);
+        
+ 
         
         return ouvrage;
     }

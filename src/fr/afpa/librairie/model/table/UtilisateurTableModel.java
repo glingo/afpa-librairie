@@ -30,6 +30,7 @@ public class UtilisateurTableModel extends AbstractTableModel {
             this.columnDisplayNames.put(UtilisateurColumn.MAIL, "E-mail");
             this.columnDisplayNames.put(UtilisateurColumn.DATE_NAISSANCE, "Date de naissance");
             this.columnDisplayNames.put(UtilisateurColumn.TELEPHONE, "Numéros de téléphone");
+            this.columnDisplayNames.put(UtilisateurColumn.ROLE, "Role");
             this.columnDisplayNames.put(UtilisateurColumn.STATUT_UTILISATEUR, "Statut utilisateur");
         }
         return this.columnDisplayNames;

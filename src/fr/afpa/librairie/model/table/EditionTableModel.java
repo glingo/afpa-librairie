@@ -1,7 +1,10 @@
 
 package fr.afpa.librairie.model.table;
 
+import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Edition;
+import fr.afpa.librairie.data.bean.Genre;
+import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.EditionColumn;
@@ -26,7 +29,12 @@ public class EditionTableModel extends AbstractTableModel {
         if(this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
             this.columnDisplayNames.put(EditionColumn.ISBN, "Isbn");
+            this.columnDisplayNames.put(EditionColumn.AUTEUR, "Auteur");
             this.columnDisplayNames.put(EditionColumn.DATEPUBLI, "Date de publication");
+            this.columnDisplayNames.put(EditionColumn.LANGUE, "Langue");
+            this.columnDisplayNames.put(EditionColumn.GENRE, "Genre");
+            this.columnDisplayNames.put(EditionColumn.THEME, "Theme");
+            this.columnDisplayNames.put(EditionColumn.RUBRIQUE, "Rubrique");
             this.columnDisplayNames.put(EditionColumn.PRIXHT, "PrixHT");
             this.columnDisplayNames.put(EditionColumn.COUVERTURE, "Image de couverture");
             this.columnDisplayNames.put(EditionColumn.TITRE, "Titre");
@@ -71,8 +79,23 @@ public class EditionTableModel extends AbstractTableModel {
             case ISBN:
                 columnValue = edition.getIsbn();
                 break;
+            case AUTEUR:
+                columnValue = getAuteurObject(edition);
+                break;
             case DATEPUBLI:
                 columnValue = edition.getDatePublication();
+                break;
+            case LANGUE : 
+                columnValue = getLangueObject(edition);
+                break;
+            case GENRE:
+                columnValue = getGenreObject(edition);
+                break;
+            case THEME:
+                columnValue = getThemeObject(edition);
+                break;
+            case RUBRIQUE:
+                columnValue = getRubriqueObject(edition);
                 break;
             case PRIXHT:
                 columnValue = edition.getPrixHt();
@@ -94,7 +117,52 @@ public class EditionTableModel extends AbstractTableModel {
         return columnValue;
         //retourne la valeur de la colonne selectionnée. 
     }
-
+    
+    private String getAuteurObject(Edition edition){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = edition.getCoAuteurs().size();
+        for(int i = 0; i<len ; i++){
+            Auteur auteur = edition.getCoAuteurs().get(i);
+            sb.append(auteur.getNom());
+            
+            if(i>len - 1){
+                sb.append(",");
+            }
+        }
+        return sb.toString();
+    }
+    
+    private String getLangueObject(Edition edition){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = edition.getLangues().size();
+        for(int i = 0 ; i < len; i++){
+            Langue langue = edition.getLangues().get(i);
+            sb.append(langue.getCode());
+            
+            if(i > len - 1){
+                sb.append(",");
+            }
+        }
+        return sb.toString();
+    }
+    
+    private String getGenreObject(Edition edition){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = edition.getGenres().size();
+        for(int i = 0; i < len; i++){
+            Genre genre = edition.getGenres().get(i);
+            sb.append(genre.getLibelle());
+            
+            if( i > len - 1){
+                sb.append(",");
+            }
+        }
+        
+        return sb.toString();
+    }
     private EditionColumn getColumn(int columnIndex) {
         EditionColumn[] columns = EditionColumn.values();
         EditionColumn column = columns[columnIndex];

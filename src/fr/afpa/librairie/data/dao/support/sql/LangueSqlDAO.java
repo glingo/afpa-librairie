@@ -36,6 +36,8 @@ public class LangueSqlDAO extends AbstractSqlDAO<Langue> implements LangueDAO {
             + " idLangue, libelle, code"
             + " FROM Langue"
             + " WHERE code = ?";
+    
+   
 
     public LangueSqlDAO(AbstractDAOFactory factory) {
         super(factory);
