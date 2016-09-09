@@ -49,12 +49,9 @@ nbproject/build-impl.xml
 nbproject/genfiles.properties
 nbproject/private/private.properties
 nbproject/project.xml
-<<<<<<< HEAD
 /nbproject/private/
-=======
 nbproject/private/config.properties
 nbproject/project.properties
->>>>>>> origin/master
 /build/
 /dist/
 nbproject/project.properties
