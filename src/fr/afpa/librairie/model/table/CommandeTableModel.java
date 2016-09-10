@@ -20,9 +20,12 @@ public class CommandeTableModel extends AbstractTableModel{
     public Map<CommandeColumn, String> getColumnDisplayNames() {
         if(this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
+            this.columnDisplayNames.put(CommandeColumn.UTILISATEUR, "Client commande");
             this.columnDisplayNames.put(CommandeColumn.NUMERO, "Numéro");
             this.columnDisplayNames.put(CommandeColumn.DATE_COMMANDE, "Date de commande");
-            this.columnDisplayNames.put(CommandeColumn.UTILISATEUR, "Utilisateur");
+            this.columnDisplayNames.put(CommandeColumn.ADRESSE_LIVRAISON, "Adresse de livraison");
+            this.columnDisplayNames.put(CommandeColumn.ADRESSE_FACTURATION, "Adresse de facturation");
+            
         }
         return this.columnDisplayNames;
     }
@@ -55,15 +58,21 @@ public class CommandeTableModel extends AbstractTableModel{
         CommandeColumn column = getColumn(columnIndex);
 
         switch (column) {
+            case UTILISATEUR:
+                columnValue = getUtilisateurObject(commande);
+                break;
             case NUMERO:
                 columnValue = commande.getNumero();
                 break;
             case DATE_COMMANDE:
                 columnValue = commande.getDateCommande();
                 break;
-            case UTILISATEUR:
-                columnValue = getUtilisateurObject(commande);
-                break;
+//            case ADRESSE_LIVRAISON:
+//                columnValue = getAdresseLivraisonObject(commande);
+//                break;
+//            case ADRESSE_FACTURATION:
+//                columnValue = getAdresseFacturationObject(commande);
+//                break;
             default:
 //                columnValue = getAddressObject(person, column);
                 break;
@@ -77,6 +86,14 @@ public class CommandeTableModel extends AbstractTableModel{
     private String getUtilisateurObject(Commande commande){
         return commande.getUser().getNom();
     }
+    
+//    private String getAdresseLivraisonObject(Commande commande){
+//        
+//    }
+//    
+//    private String getAdresseFacturationObject(Commande commande){
+//        
+//    }
     
     
     private CommandeColumn getColumn(int columnIndex) {

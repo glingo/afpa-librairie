@@ -25,6 +25,7 @@ public class PromotionTableModel extends AbstractTableModel{
             this.columnDisplayNames.put(PromotionColumn.DATE_FIN, "Date de fin");
             this.columnDisplayNames.put(PromotionColumn.DESCRIPTION, "Description");
             this.columnDisplayNames.put(PromotionColumn.REDUCTION, "Reduction");
+            //probleme a resoudre : a l'affichage seulement 3 colones s'affichent.
         }
         return this.columnDisplayNames;
     }
@@ -63,11 +64,11 @@ public class PromotionTableModel extends AbstractTableModel{
             case DATE_FIN:
                 columnValue = promo.getDateFin();
                 break;
-            case REDUCTION:
-                columnValue = promo.getReduction();
-                break;
             case DESCRIPTION:
                 columnValue = promo.getDescription();
+                break;
+            case REDUCTION:
+                columnValue = promo.getReduction();
                 break;
 
             default:
