@@ -2,6 +2,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOUtils;
+import fr.afpa.librairie.data.bean.StatutCommande;
 import fr.afpa.librairie.data.dao.AdresseDAO;
 import fr.afpa.librairie.data.dao.AuteurDAO;
 import fr.afpa.librairie.data.dao.EditeurDAO;
@@ -12,6 +13,7 @@ import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
+import fr.afpa.librairie.data.dao.StatutCommandeDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
@@ -176,8 +178,15 @@ public class SqlDAOFactory extends AbstractDAOFactory {
         return new AdresseSqlDAO(this);
     }
     
+    @Override
     public LangueDAO getLangueDAO(){
         return new LangueSqlDAO(this);
     }
+
+    @Override
+    public StatutCommandeDAO getStatutCommandeDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
+
 }

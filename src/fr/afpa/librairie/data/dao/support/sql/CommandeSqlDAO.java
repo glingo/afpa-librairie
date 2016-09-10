@@ -3,6 +3,8 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Commande;
+import fr.afpa.librairie.data.bean.StatutCommande;
+import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.dao.CommandeDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
@@ -16,30 +18,34 @@ import java.util.List;
 public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements CommandeDAO{
     
     private static final String SQL_INSERT = "INSERT INTO Commande"
-            + " (numero, dateCommande)"
-            + " VALUES = (?,?)";
+            + " (numero, dateCommande, idUtilisateur)"
+            + " VALUES = (?,?, ?)";
     
     private static final String SQL_DELETE = "DELETE FROM Commande"
             + " WHERE idCommande = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
-            + " idCommande, numero, dateCommande"
+            + " idCommande, numero, dateCommande, idUtilisateur"
             + " FROM Commande";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idCommande, numero, dateCommande"
+            + " idCommande, numero, dateCommande, idUtilisateur"
             + " FROM Commande"
             + " WHERE idCommande = ?";
     
     private static final String SQL_FIND_BY_NUMERO = "SELECT"
-            + " idCommande, numero, dateCommande"
+            + " idCommande, numero, dateCommande, idUtilisateur"
             + " FROM Commande"
             + " WHERE numero = ?";
     
     private static final String SQL_FIND_BY_DATE =  "SELECT"
-            + " idCommande, numero, dateCommande"
+            + " idCommande, numero, dateCommande, idUtilisateur"
             + " FROM Commande"
             + " WHERE dateCommande = ?";
+    private static final String SQL_FIND_BY_NOM = "SELECT"
+            + " idCommande, numero, dateCommande, idUtilisateur"
+            + " FROM Commande"
+            + " WHERE idUtilisateur = ?";
     
     
     public CommandeSqlDAO(DAOFactoryInterface factory) {
@@ -55,11 +61,26 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         ResultSet valeursAutoGenerees = null;
 
         try {
+            
+             if(instance.getUser() == null) {
+                // on recupère le statut par default
+                // le code devrait etre une constante.
+                Utilisateur user = getFactory().getUtilisateurDAO().findByNom("OK");
+                instance.setUser(user);
+            }
+            
+            // le statut est forcement different de null.
+            if(instance.getUser().getId() == null) {
+                Utilisateur user = getFactory().getUtilisateurDAO().findByNom(instance.getUser().getNom());
+                instance.setUser(user);
+            }
+
 
             connexion = factory.getConnection();
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getNumero(), instance.getDateCommande());
+                    instance.getNumero(), instance.getDateCommande(),
+                    instance.getUser() == null ? null : instance.getUser().getNom());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -114,6 +135,14 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         commande.setNumero(resultSet.getString("numero"));
         commande.setDateCommande(resultSet.getDate("dateCommande"));
         
+        
+        Utilisateur user = factory.getUtilisateurDAO().findByNom(resultSet.getString("nom"));
+        
+//        List<Adresse> dernieresFacturations = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
+//        List<Adresse> dernieresLivraisons = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
+        
+        
+        commande.setUser(user);
         return commande;
     }
 
@@ -216,6 +245,32 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             connexion = factory.getConnection();
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID,
                     false, id);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                commande = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return commande;
+    }
+
+    @Override
+    public Commande findByNom(String nom) {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Commande commande = null;
+        
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_NOM, false, nom);
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             if (resultSet.next()) {

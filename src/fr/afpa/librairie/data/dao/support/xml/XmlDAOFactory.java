@@ -14,6 +14,7 @@ import fr.afpa.librairie.data.dao.LangueDAO;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
+import fr.afpa.librairie.data.dao.StatutCommandeDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
 
@@ -95,6 +96,11 @@ public class XmlDAOFactory extends AbstractDAOFactory {
 
     @Override
     public LangueDAO getLangueDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public StatutCommandeDAO getStatutCommandeDAO() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

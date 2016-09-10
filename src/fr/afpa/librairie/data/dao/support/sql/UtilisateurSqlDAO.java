@@ -17,7 +17,7 @@ import java.util.List;
 // DAO = Data Access Object
 // DTO = Data Transfert Object
 
-public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements UtilisateurDAO {
+  public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements UtilisateurDAO {
 
     private static final String SQL_INSERT = "INSERT INTO Utilisateur"
             + " (nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur)"
@@ -262,5 +262,15 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
         utilisateur.setRoles(roles);
         
         return utilisateur;
+    }
+
+    @Override
+    public Utilisateur findByNom(String nom) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Utilisateur> findByCommande(Long idCommande) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

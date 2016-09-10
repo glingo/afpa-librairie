@@ -9,6 +9,7 @@ import fr.afpa.librairie.data.dao.LangueDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
+import fr.afpa.librairie.data.dao.StatutCommandeDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
@@ -61,7 +62,10 @@ public abstract class AbstractDAOFactory implements DAOFactoryInterface {
     public abstract AdresseDAO getAdresseDAO();
     
     
+    @Override
     public abstract LangueDAO getLangueDAO();
+    
+    public abstract StatutCommandeDAO getStatutCommandeDAO();
     
     public static DAOFactoryInterface getFactory(FactoryType type){
         

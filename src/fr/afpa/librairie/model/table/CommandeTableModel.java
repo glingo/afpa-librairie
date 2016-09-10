@@ -22,6 +22,7 @@ public class CommandeTableModel extends AbstractTableModel{
             this.columnDisplayNames = new HashMap<>();
             this.columnDisplayNames.put(CommandeColumn.NUMERO, "Numéro");
             this.columnDisplayNames.put(CommandeColumn.DATE_COMMANDE, "Date de commande");
+            this.columnDisplayNames.put(CommandeColumn.UTILISATEUR, "Utilisateur");
         }
         return this.columnDisplayNames;
     }
@@ -60,7 +61,9 @@ public class CommandeTableModel extends AbstractTableModel{
             case DATE_COMMANDE:
                 columnValue = commande.getDateCommande();
                 break;
-
+            case UTILISATEUR:
+                columnValue = getUtilisateurObject(commande);
+                break;
             default:
 //                columnValue = getAddressObject(person, column);
                 break;
@@ -68,7 +71,14 @@ public class CommandeTableModel extends AbstractTableModel{
 
         return columnValue;
     }
-
+    
+    
+    
+    private String getUtilisateurObject(Commande commande){
+        return commande.getUser().getNom();
+    }
+    
+    
     private CommandeColumn getColumn(int columnIndex) {
         CommandeColumn[] columns = CommandeColumn.values();
         CommandeColumn column = columns[columnIndex];

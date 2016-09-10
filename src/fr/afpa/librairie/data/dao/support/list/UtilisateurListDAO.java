@@ -4,6 +4,7 @@ import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
 import fr.afpa.librairie.data.exception.DAOException;
+import java.util.List;
 
 public class UtilisateurListDAO extends AbstractListDAO<Utilisateur> implements UtilisateurDAO {
 
@@ -28,5 +29,15 @@ public class UtilisateurListDAO extends AbstractListDAO<Utilisateur> implements 
         return getTable().stream().filter((Utilisateur utilisateur) -> {
             return utilisateur.getEmail().equals(mail);
         }).findFirst().orElse(null);
+    }
+
+    @Override
+    public Utilisateur findByNom(String nom) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Utilisateur> findByCommande(Long idCommande) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

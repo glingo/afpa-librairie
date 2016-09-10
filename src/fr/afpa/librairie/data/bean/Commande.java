@@ -15,6 +15,10 @@ public class Commande {
     private long id;
     private String numero;
     private Date dateCommande;
+    
+    private Utilisateur user;
+    private StatutCommande orderStat;
+    
 
     public Commande() {
     }
@@ -42,7 +46,24 @@ public class Commande {
     public void setDateCommande(Date dateCommande) {
         this.dateCommande = dateCommande;
     }
+    
 
+    public Utilisateur getUser(){
+        return user;
+    }
+    
+    public void setUser(Utilisateur user){
+        this.user = user;
+    }
+    
+    public StatutCommande getOrderStat(){
+        return orderStat;
+    }
+    
+    public void setOrderStat(StatutCommande orderStat){
+        this.orderStat = orderStat;
+    }
+    
     @Override
     public String toString() {
         return "Commande{" + "id=" + id + ", numero=" + numero + ", dateCommande=" + dateCommande + '}';
