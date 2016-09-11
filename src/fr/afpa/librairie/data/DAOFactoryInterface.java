@@ -15,6 +15,7 @@ import fr.afpa.librairie.data.dao.StatutCommandeDAO;
 import fr.afpa.librairie.data.dao.StatutEditionDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
+import fr.afpa.librairie.data.dao.TaxeDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
 
@@ -37,4 +38,5 @@ public interface DAOFactoryInterface {
     public LangueDAO getLangueDAO();
     public StatutCommandeDAO getStatutCommandeDAO();
     public StatutEditionDAO getStatutEditionDAO();
+    public TaxeDAO getTaxeDao();
 }

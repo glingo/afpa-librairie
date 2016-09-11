@@ -7,6 +7,7 @@ import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.StatutEdition;
+import fr.afpa.librairie.data.bean.Taxe;
 import fr.afpa.librairie.data.dao.EditionDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
@@ -92,6 +93,17 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             if(instance.getLangue().getLibelle() == null) {
                 Langue langue = getFactory().getLangueDAO().findByCode(instance.getLangue().getCode());
                 instance.setLangue(langue);
+            }
+            
+            if(instance.getTaxe().getValeur() == null){
+                Taxe taxe = getFactory().getTaxeDAO().findByLibelle("");
+                instance.setTaxe(taxe);
+                
+            }
+            
+            if(instance.getTaxe().getValeur() == null){
+                Taxe taxe = getFactory().getTaxeDAO().findByLibelle(instance.getTaxe().getLibelle());
+                instance.setTaxe(taxe);
             }
             
             
@@ -308,7 +320,9 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         edition.setTitre(resultSet.getString("titre"));
         
         edition.setStock(resultSet.getInt("stock"));
-
+        
+        List<Taxe> taxes = factory.getTaxeDao().findByEdition(edition.getIsbn());
+        edition.setTaxe(null);
 
         return edition;
     }

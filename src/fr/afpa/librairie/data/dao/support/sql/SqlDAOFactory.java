@@ -17,6 +17,7 @@ import fr.afpa.librairie.data.dao.StatutCommandeDAO;
 import fr.afpa.librairie.data.dao.StatutEditionDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
+import fr.afpa.librairie.data.dao.TaxeDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
 import java.sql.Connection;
@@ -194,5 +195,17 @@ public class SqlDAOFactory extends AbstractDAOFactory {
         return new StatutEditionSqlDAO(this);
     }
     
+    
+
+
+    @Override
+    public TaxeDAO getTaxeDao() {
+        return new TaxeSqlDAO(this);
+    }
+
+    @Override
+    public TaxeDAO getTaxeDAO() {
+       return new TaxeSqlDAO(this);
+    }
 
 }

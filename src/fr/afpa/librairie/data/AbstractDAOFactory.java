@@ -13,6 +13,7 @@ import fr.afpa.librairie.data.dao.StatutCommandeDAO;
 import fr.afpa.librairie.data.dao.StatutEditionDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
+import fr.afpa.librairie.data.dao.TaxeDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
 import fr.afpa.librairie.data.dao.support.list.ListDAOFactory;
@@ -71,6 +72,8 @@ public abstract class AbstractDAOFactory implements DAOFactoryInterface {
     
     @Override
     public abstract StatutCommandeDAO getStatutCommandeDAO();
+    
+    public abstract TaxeDAO getTaxeDAO();
     
     public static DAOFactoryInterface getFactory(FactoryType type){
         

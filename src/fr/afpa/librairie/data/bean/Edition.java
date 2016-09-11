@@ -17,7 +17,7 @@ public class Edition {
     private StatutEdition statut;
     private Ouvrage titreOuvrage;
     private Langue langue;
-    
+    private Taxe taxe;
 
     
     public Edition() {
@@ -96,14 +96,19 @@ public class Edition {
     public void setLangue(Langue langue){
         this.langue = langue;
     }
+    
+    
+    public Taxe getTaxe(){
+        return taxe;
+    }
+    
+    public void setTaxe(Taxe taxe){
+        this.taxe = taxe;
+    }
 
     @Override
     public String toString() {
-        return "Edition{" + "isbn=" + isbn + ", datePublication=" + datePublication + ", prixHt=" + prixHt + ", couverture=" + couverture + ", titre=" + titre + ", stock=" + stock + ", statut=" + statut + ", titreOuvrage=" + titreOuvrage + ", langue=" + langue + '}';
+        return "Edition{" + "isbn=" + isbn + ", datePublication=" + datePublication + ", prixHt=" + prixHt + ", couverture=" + couverture + ", titre=" + titre + ", stock=" + stock + ", statut=" + statut + ", titreOuvrage=" + titreOuvrage + ", langue=" + langue + ", taxe=" + taxe + '}';
     }
 
-    
-    
-    
-    
 }
