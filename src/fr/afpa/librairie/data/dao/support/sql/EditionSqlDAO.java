@@ -4,6 +4,8 @@ package fr.afpa.librairie.data.dao.support.sql;
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Edition;
+import fr.afpa.librairie.data.bean.Langue;
+import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.StatutEdition;
 import fr.afpa.librairie.data.dao.EditionDAO;
 import fr.afpa.librairie.data.exception.DAOException;
@@ -17,19 +19,19 @@ import java.util.List;
 
 public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO{
     //requete SQL
-    private static final String SQL_INSERT = "INSERT INTO Edition (isbn, datePubli, prixHt, couverture, titre, stock, idStatutEdition) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO Edition (isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     private static final String SQL_DELETE = "DELETE FROM Edition WHERE isbn = ?";
     
-    private static final String SQL_FIND_ALL = "SELECT isbn, datePubli, prixHt, couverture, titre, stock, idStatutEdition FROM Edition";
+    private static final String SQL_FIND_ALL = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition";
     
-    private static final String SQL_FIND_BY_ISBN = "SELECT isbn, datePubli, prixHt, couverture, titre, stock, idStatutEdition FROM Edition WHERE isbn = ?";
+    private static final String SQL_FIND_BY_ISBN = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition WHERE isbn = ?";
     
-    private static final String SQL_FIND_BY_DATEPUBLI = "SELECT isbn, datePubli, prixHt, couverture, titre, stock, idStatutEdition FROM Edition WHERE datePubli = ?";
+    private static final String SQL_FIND_BY_DATEPUBLI = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition WHERE datePubli = ?";
     
-    private static final String SQL_FIND_BY_TITRE = "SELECT isbn, datePubli, prixHt, couverture, titre, stock, idStatutEdition FROM Edition WHERE titre = ?";
+    private static final String SQL_FIND_BY_TITRE = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition WHERE titre = ?";
     
-    private static final String SQL_FIND_BY_STOCK = "SELECT isbn, datePubli, prixHt, couverture, titre, stock, idStatutEdition FROM Edition WHERE stock = ?";
+    private static final String SQL_FIND_BY_STOCK = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition WHERE stock = ?";
     
 //    private static final String SQL_FIND_BY_PROMO = "SELECT"
 //            + " ed.isbn, ed.datePubli, ed.prixHt, ed.couverture, ed.titre, ed.stock "
@@ -59,17 +61,37 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         try {
             
             
-             if(instance.getStatut() == null) {
-                // on recupère le statut par default
-                // le code devrait etre une constante.
+            if(instance.getStatut() == null) {
                 StatutEdition statut = getFactory().getStatutEditionDAO().findByCode("OK");
                 instance.setStatut(statut);
             }
             
-            // le statut est forcement different de null.
+
             if(instance.getStatut().getCode() == null) {
                 StatutEdition statut = getFactory().getStatutEditionDAO().findByCode(instance.getStatut().getCode());
                 instance.setStatut(statut);
+            }
+            
+            if(instance.getTitreOuvrage() == null) {
+
+                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre("OK");
+                instance.setTitreOuvrage(ouvrage);
+            }
+            
+            if(instance.getTitreOuvrage().getTitre() == null) {
+                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre(instance.getTitreOuvrage().getTitre());
+                instance.setTitreOuvrage(ouvrage);
+            }
+            
+            if(instance.getLangue() == null) {
+
+                Langue langue = getFactory().getLangueDAO().findByCode("OK");
+                instance.setLangue(langue);
+            }
+            
+            if(instance.getLangue().getLibelle() == null) {
+                Langue langue = getFactory().getLangueDAO().findByCode(instance.getLangue().getCode());
+                instance.setLangue(langue);
             }
             
             
@@ -80,7 +102,9 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
                     instance.getIsbn(), instance.getDatePublication(),
                     instance.getPrixHt(), instance.getCouverture(),
                     instance.getCouverture(), instance.getTitre(),
-                    instance.getStock(),instance.getStatut() == null ? null : instance.getStatut().getId());
+                    instance.getStock(),instance.getStatut() == null ? null : instance.getStatut().getId(),
+                    instance.getTitreOuvrage() == null ? null : instance.getTitreOuvrage().getId(),
+                    instance.getLangue() == null ? null : instance.getLangue().getId());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -265,12 +289,26 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         Edition edition = new Edition();
         
         edition.setIsbn(resultSet.getString("isbn"));
+        
+        Ouvrage ouvrage = factory.getOuvrageDAO().findById(resultSet.getLong("idOuvrage"));
+        edition.setTitreOuvrage(ouvrage);
+        
+        Langue langue = factory.getLangueDAO().findById(resultSet.getLong("idLangue"));
+        edition.setLangue(langue);
+                
+        StatutEdition statut = factory.getStatutEditionDAO().findById(resultSet.getLong("idStatutEdition"));
+        edition.setStatut(statut);
+        
         edition.setDatePublication(resultSet.getDate("datePubli"));
+        
         edition.setPrixHt(resultSet.getFloat("prixHt"));
+        
         edition.setCouverture(resultSet.getString("couverture"));
+        
         edition.setTitre(resultSet.getString("titre"));
+        
         edition.setStock(resultSet.getInt("stock"));
-       
+
 
         return edition;
     }

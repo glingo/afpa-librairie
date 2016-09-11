@@ -31,8 +31,8 @@ public class EditionTableModel extends AbstractTableModel {
         if(this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
             this.columnDisplayNames.put(EditionColumn.ISBN, "Isbn");
-            //this.columnDisplayNames.put(EditionColumn.OUVRAGE, "Id Ouvrage");
-            //this.columnDisplayNames.put(EditionColumn.LANGUE, "Langue");
+            this.columnDisplayNames.put(EditionColumn.OUVRAGE, "Id Ouvrage");
+            this.columnDisplayNames.put(EditionColumn.LANGUE, "Langue");
             this.columnDisplayNames.put(EditionColumn.STATUT_EDITION, "Statut de l'édition");
             this.columnDisplayNames.put(EditionColumn.DATE_PUBLI, "Date de publication");
             this.columnDisplayNames.put(EditionColumn.PRIX_HT, "PrixHt");
@@ -79,12 +79,12 @@ public class EditionTableModel extends AbstractTableModel {
             case ISBN:
                 columnValue = edition.getIsbn();
                 break;
-//            case OUVRAGE:
-//                columnValue = getOuvrageObject(edition);
-//                break;
-//            case LANGUE:
-//                columnValue = getLangueObject(edition);
-//                break;
+            case OUVRAGE:
+                columnValue = getOuvrageObject(edition);
+                break;
+            case LANGUE:
+                columnValue = getLangueObject(edition);
+                break;
             case STATUT_EDITION:
                 columnValue = getStatutEditionObject(edition);
                 break;
@@ -114,16 +114,16 @@ public class EditionTableModel extends AbstractTableModel {
     }
 
      
-//    private String getOuvrageObject(Edition edition){
-//        return edition.getTitreOuvrage().getTitre();
-//    }
-//    
-//    private String getLangueObject(Edition edition){
-//        return edition.getLangue().getLibelle();
-//    }
-//    
+    private String getOuvrageObject(Edition edition){
+        return edition.getTitreOuvrage().getTitre();
+    }
+    
+    private String getLangueObject(Edition edition){
+        return edition.getLangue().getLibelle();
+    }
+    
     private String getStatutEditionObject(Edition edition){
-        return edition.getStatut().getCode();
+        return edition.getStatut().getLibelle();
     }
     
     private EditionColumn getColumn(int columnIndex) {
@@ -144,10 +144,6 @@ public class EditionTableModel extends AbstractTableModel {
         String displayName = getColumnDisplayNames().get(columnObj);
         return displayName;
     }
-    
 
-    
-    
-    
     
 }

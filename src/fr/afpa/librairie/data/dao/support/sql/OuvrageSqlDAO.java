@@ -21,36 +21,41 @@ import java.util.List;
 public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO {
 
     private static final String SQL_INSERT = "INSERT INTO Ouvrage"
-            + " (titre, sous_titre, resume, idAuteur)"
+            + " (titre, sous_titre, resume)"
             + " VALUES (?, ?, ?, ?)";
 
     private static final String SQL_DELETE = "DELETE FROM Ouvrage WHERE idOuvrage = ?";
 
     private static final String SQL_FIND_ALL = "SELECT"
-            + " idOuvrage, titre, sous_titre, resume, idAuteur"
+            + " idOuvrage, titre, sous_titre, resume"
             + " FROM Ouvrage ";
 
     private static final String SQL_FIND_BY_TITRE = "SELECT"
-            + " idOuvrage, titre, sousTitre, resume, idAuteur"
+            + " idOuvrage, titre, sous_titre, resume"
             + " FROM Ouvrage"
             + " WHERE titre = ?";
 
+    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idOuvrage, titre, sous_titre, resume"
+            + " FROM Ouvrage"
+            + " WHERE idOuvrage = ?";
+        
+        
     private static final String SQL_FIND_BY_SOUSTITRE = "SELECT"
-            + " idOuvrage, titre, sousTitre, resume, idAuteur"
+            + " idOuvrage, titre, sous_titre, resume"
             + " FROM Ouvrage"
             + " WHERE sousTitre = ?";
 
-    private static final String SQL_FIND_BY_IDAUTEUR = "SELECT"
-            + " idOuvrage, titre, sousTitre, resume, idAuteur"
-            + " FROM Ouvrage"
-            + " WHERE idAuteur = ?";
 
-    /*private static final String SQL_FIND_BY_AUTEUR = "SELECT"
-            + " ou.idOuvrage, ou.idAuteur, ou.titre, ou.sous_titre, ou.resume"
-            + " FROM Ouvrage AS ou"
-            + " JOIN Auteur AS au ON au.idAuteur = ou.idAuteur"
-            + " WHERE au.nom = ?";
-    */
+    
+    private static final String SQL_FIND_BY_EDITION = "SELECT"
+            +" o.idOuvrage, o.titre, o.sous_titre, o.resume"
+            +" FROM Ouvrage AS o"
+            +" JOIN Edition AS ed ON ed.idStatutEdition = ste.idStatutEdition"
+            +" WHERE ed.isbn =?";
+    
+    
     public OuvrageSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
@@ -64,15 +69,15 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
 
         try {
 
-            if (instance.getAuteur() == null) {
-                Auteur auteur = getFactory().getAuteurDAO().findByName("OK");
-                instance.setAuteur(auteur);
-            }
-
-            if (instance.getAuteur().getId() == null) {
-                Auteur auteur = getFactory().getAuteurDAO().findByName(instance.getAuteur().getNom());
-                instance.setAuteur(auteur);
-            }
+//            if (instance.getAuteur() == null) {
+//                Auteur auteur = getFactory().getAuteurDAO().findByName("OK");
+//                instance.setAuteur(auteur);
+//            }
+//
+//            if (instance.getAuteur().getId() == null) {
+//                Auteur auteur = getFactory().getAuteurDAO().findByName(instance.getAuteur().getNom());
+//                instance.setAuteur(auteur);
+//            }
             // Je ne comprend pas d'ou vient d'erreur. 
 
             if (instance.getThemes() == null) {
@@ -262,7 +267,41 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         return ouvrage;
         
     }
+    
+    
+    public List<Ouvrage> findByEdition(String isbn) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Ouvrage> ouvrages = new ArrayList<>();
 
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_EDITION, false, isbn);
+            resultSet = preparedStatement.executeQuery();
+            
+            
+            while (resultSet.next()) {
+                ouvrages.add(map(resultSet));
+            }
+            
+            if (resultSet.next()) {
+                ouvrages = new ArrayList<>();
+                ouvrages.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return ouvrages;
+
+    }
+
+    
+    
     @Override
     protected Ouvrage map(ResultSet result) throws SQLException {
         DAOFactoryInterface factory = getFactory();
@@ -277,9 +316,9 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         ouvrage.setResume(result.getString("resume"));
 
         // on recupere l'auteur depuis la base de données.
-        Auteur auteur = factory.getAuteurDAO().findById(result.getLong("idAuteur"));
+       // Auteur auteur = factory.getAuteurDAO().findById(result.getLong("idAuteur"));
         // puis on l'assigne à l'ouvrage.
-        ouvrage.setAuteur(auteur);
+        //ouvrage.setAuteur(auteur);
 
         // on recupère les genres attachés à l'ouvrage pour lui assigner
         List<Genre> genres = factory.getGenreDAO().findByOuvrage(idOuvrage);
@@ -294,8 +333,8 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         List<Theme> themes = factory.getThemeDAO().findByOuvrage(idOuvrage);
         ouvrage.setThemes(themes);
 
-        List<Auteur> coAuteurs = factory.getAuteurDAO().findCoAuteursByOuvrage(idOuvrage);
-        ouvrage.setCoAuteurs(coAuteurs);
+        /*List<Auteur> coAuteurs = factory.getAuteurDAO().findCoAuteursByOuvrage(idOuvrage);
+        ouvrage.setCoAuteurs(coAuteurs);*/
 
         return ouvrage;
     }
@@ -334,7 +373,29 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
 
     
     public Ouvrage findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Ouvrage ouvrage = null;
+        
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, false, id);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                ouvrage = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return ouvrage;
+        
     }
 
 }
