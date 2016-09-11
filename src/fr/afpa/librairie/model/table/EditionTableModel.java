@@ -31,15 +31,13 @@ public class EditionTableModel extends AbstractTableModel {
         if(this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
             this.columnDisplayNames.put(EditionColumn.ISBN, "Isbn");
-            this.columnDisplayNames.put(EditionColumn.AUTEUR, "Auteur");
-            this.columnDisplayNames.put(EditionColumn.DATEPUBLI, "Date de publication");
-            this.columnDisplayNames.put(EditionColumn.LANGUE, "Langue");
-            this.columnDisplayNames.put(EditionColumn.GENRE, "Genre");
-            this.columnDisplayNames.put(EditionColumn.THEME, "Theme");
-            this.columnDisplayNames.put(EditionColumn.RUBRIQUE, "Rubrique");
-            this.columnDisplayNames.put(EditionColumn.PRIXHT, "PrixHT");
-            this.columnDisplayNames.put(EditionColumn.COUVERTURE, "Image de couverture");
-            this.columnDisplayNames.put(EditionColumn.TITRE, "Titre");
+            //this.columnDisplayNames.put(EditionColumn.OUVRAGE, "Id Ouvrage");
+            //this.columnDisplayNames.put(EditionColumn.LANGUE, "Langue");
+            this.columnDisplayNames.put(EditionColumn.STATUT_EDITION, "Statut de l'édition");
+            this.columnDisplayNames.put(EditionColumn.DATE_PUBLI, "Date de publication");
+            this.columnDisplayNames.put(EditionColumn.PRIX_HT, "PrixHt");
+            this.columnDisplayNames.put(EditionColumn.COUVERTURE, "couverture");
+            this.columnDisplayNames.put(EditionColumn.TITRE, "titre");
             this.columnDisplayNames.put(EditionColumn.STOCK, "Stock");
         }
         return this.columnDisplayNames;
@@ -81,36 +79,31 @@ public class EditionTableModel extends AbstractTableModel {
             case ISBN:
                 columnValue = edition.getIsbn();
                 break;
-            case AUTEUR:
-                columnValue = getAuteurObject(edition);
+//            case OUVRAGE:
+//                columnValue = getOuvrageObject(edition);
+//                break;
+//            case LANGUE:
+//                columnValue = getLangueObject(edition);
+//                break;
+            case STATUT_EDITION:
+                columnValue = getStatutEditionObject(edition);
                 break;
-            case DATEPUBLI:
+            case DATE_PUBLI:
                 columnValue = edition.getDatePublication();
                 break;
-            case LANGUE : 
-                columnValue = getLangueObject(edition);
-                break;
-            case GENRE:
-                columnValue = getGenreObject(edition);
-                break;
-            case THEME:
-                columnValue = getThemeObject(edition);
-                break;
-            case RUBRIQUE:
-                columnValue = getRubriqueObject(edition);
-                break;
-            case PRIXHT:
+            case PRIX_HT:
                 columnValue = edition.getPrixHt();
                 break;
             case COUVERTURE:
                 columnValue = edition.getCouverture();
                 break;
-            case TITRE :
+            case TITRE:
                 columnValue = edition.getTitre();
                 break;
             case STOCK:
                 columnValue = edition.getStock();
                 break;
+                
             default:
 
                 break;
@@ -119,87 +112,19 @@ public class EditionTableModel extends AbstractTableModel {
         return columnValue;
         //retourne la valeur de la colonne selectionnée. 
     }
-    
-    private String getAuteurObject(Edition edition){
-        StringBuilder sb = new StringBuilder();
-        
-        int len = edition.getCoAuteurs().size();
-        for(int i = 0; i<len ; i++){
-            Auteur auteur = edition.getCoAuteurs().get(i);
-            sb.append(auteur.getNom());
-            
-            if(i>len - 1){
-                sb.append(",");
-            }
-        }
-        return sb.toString();
-    }
-    
-    private String getLangueObject(Edition edition){
-        StringBuilder sb = new StringBuilder();
-        
-        int len = edition.getLangues().size();
-        for(int i = 0 ; i < len; i++){
-            Langue langue = edition.getLangues().get(i);
-            sb.append(langue.getCode());
-            
-            if(i > len - 1){
-                sb.append(",");
-            }
-        }
-        return sb.toString();
-    }
-    
-    private String getGenreObject(Edition edition){
-        StringBuilder sb = new StringBuilder();
-        
-        int len = edition.getGenres().size();
-        for(int i = 0; i < len; i++){
-            Genre genre = edition.getGenres().get(i);
-            sb.append(genre.getLibelle());
-            
-            if( i > len - 1){
-                sb.append(",");
-            }
-        }
-        
-        return sb.toString();
-    }
-    
-    private String getThemeObject(Edition edition){
-        StringBuilder sb = new StringBuilder();
-        
-        int len = edition.getThemes().size();
-        for( int i = 0; i < len; i++){
-            Theme theme = edition.getThemes().get(i);
-            sb.append(theme.getLibelle());
-            
-            if(i > len - 1){
-                sb.append(",");
-            }
-        }
-        
-        return sb.toString();
-    }
-    
-    
-    private String getRubriqueObject(Edition edition){
-        StringBuilder sb = new StringBuilder();
-        
-        int len = edition.getRubriques().size();
-        for(int i = 0; i < len; i++){
-            Rubrique rubrique = edition.getRubriques().get(i);
-            sb.append(rubrique.getLibelle());
-            
-            if(i > len - 1){
-                sb.append(",");
-            }
-        }
-        
-        return sb.toString();
-    }
-    
 
+     
+//    private String getOuvrageObject(Edition edition){
+//        return edition.getTitreOuvrage().getTitre();
+//    }
+//    
+//    private String getLangueObject(Edition edition){
+//        return edition.getLangue().getLibelle();
+//    }
+//    
+    private String getStatutEditionObject(Edition edition){
+        return edition.getStatut().getCode();
+    }
     
     private EditionColumn getColumn(int columnIndex) {
         EditionColumn[] columns = EditionColumn.values();

@@ -1,10 +1,10 @@
+
 package fr.afpa.librairie.data.dao.support.sql;
 
-import fr.afpa.librairie.data.DAOFactoryInterface;
-import fr.afpa.librairie.data.bean.Role;
-import fr.afpa.librairie.data.bean.StatutUtilisateur;
+import fr.afpa.librairie.data.AbstractDAOFactory;
+import fr.afpa.librairie.data.bean.StatutEdition;
+import fr.afpa.librairie.data.dao.StatutEditionDAO;
 import fr.afpa.librairie.data.exception.DAOException;
-import fr.afpa.librairie.data.dao.RoleDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,80 +12,71 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-// DAO = Data Access Object
-// DTO = Data Transfert Object
-
-public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
-
-    private static final String SQL_INSERT = "INSERT INTO Role"
-            + " (libelle, code) VALUES"
-            + " (?, ?)";
+public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implements StatutEditionDAO {
     
-    private static final String SQL_DELETE = "DELETE FROM Role WHERE idRole = ?";
+    private static final String SQL_INSERT = "INSERT INTO StatutEdition (libelle, code) VALUES (?, ?)";
+    private static final String SQL_DELETE = "DELETE FROM StatutEdition WHERE id = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
-            + " idRole, libelle, code"
-            + " FROM Role";
+            + " idStatutEdition, libelle, code"
+            + " FROM StatutEdition";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idRole, libelle, code"
-            + " FROM Role"
-            + " WHERE idRole = ?";
-    
-    private static final String SQL_FIND_BY_LIBELLE = "SELECT"
-            + " idRole, libelle, code "
-            + "FROM Role "
-            + "WHERE libelle = ?";
+            + " idStatutEdition, libelle, code"
+            + " FROM StatutEdition"
+            + " WHERE idStatutEdition = ?";
     
     private static final String SQL_FIND_BY_CODE = "SELECT"
-            + " idRole, libelle, code"
-            + " FROM Role"
+            + " idStatutEdition, libelle, code"
+            + " FROM StatutEdition"
             + " WHERE code = ?";
     
-    private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
-            + " ro.idRole, ro.libelle, ro.code"
-            + " FROM Role AS ro"
-            + " JOIN Remplit AS r ON r.idRole = ro.idRole"
-            + " WHERE r.idUtilisateur = ?";
+    private static final String SQL_FIND_BY_LIBELLE = "SELECT"
+            + " idStatutEdition, libelle, code"
+            + " FROM StatutEdition"
+            + " WHERE libelle = ?";
 
     
-    public RoleSqlDAO(DAOFactoryInterface factory) {
+    private static final String SQL_FIND_BY_EDITION = "SELECT"
+            +" ste.idStatutEdition, ste.libelle, ste.code"
+            +" FROM StatutEdition AS ste"
+            +" JOIN Edition AS ed ON ed.idStatutEdition = ste.idStatutEdition"
+            +" WHERE ed.isbn =?";
+    
+    
+  public StatutEditionSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
+    
 
     @Override
-    public void save(Role role) throws DAOException {
+    public void save(StatutEdition instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
 
         try {
-            
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
             
             preparedStatement = getPreparedStatement(
                     connexion, SQL_INSERT, true, 
-                    role.getLibelle(), role.getCode());
+                    instance.getLibelle(), instance.getCode());
             
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la création du role de l'utilisateur, aucune ligne ajoutée dans la table.");
+                throw new DAOException("Échec de la création du statut de l'edition, aucune ligne ajoutée dans la table.");
             }
-            
             /* Récupération de l'id auto-généré par la requête d'insertion */
             valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-            
-            
-            if (!valeursAutoGenerees.next()) {
-                throw new DAOException("Échec de la création du role de l'utilisateur en base, aucun ID auto-généré retourné.");
+            if (valeursAutoGenerees.next()) {
+                /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
+                instance.setId(valeursAutoGenerees.getLong(1));
+            } else {
+                throw new DAOException("Échec de la création du statut de l'edition en base, aucun ID auto-généré retourné.");
             }
-                
-            /* Puis initialisation de la propriété id du bean Role avec sa valeur */
-            role.setId(valeursAutoGenerees.getLong(1));
-            
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
@@ -94,7 +85,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
     }
 
     @Override
-    public void delete(Role role) {
+    public void delete(StatutEdition instance) {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -103,11 +94,11 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, role.getId());
+            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, instance.getId());
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la suppression du role de l'utilisateur, aucune ligne supprimée dans la table.");
+                throw new DAOException("Échec de la suppression de l'edition, aucune ligne supprimée dans la table.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -118,12 +109,12 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
     }
     
     @Override
-    public List<Role> findAll() throws DAOException {
+    public List<StatutEdition> findAll() throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Role> roles = new ArrayList<>();
+        List<StatutEdition> statuts = new ArrayList<>();
 
         try {
             connexion = factory.getConnection();
@@ -133,12 +124,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
 //            resultSet.beforeFirst();
             
             while (resultSet.next()) {
-                roles.add(map(resultSet));
-            }
-            
-            if (resultSet.next()) {
-                roles = new ArrayList<>();
-                roles.add(map(resultSet));
+                statuts.add(map(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -146,22 +132,22 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             close(resultSet, preparedStatement, connexion);
         }
 
-        return roles;
+        return statuts;
 
     }
 
     @Override
-    public Role findByExemple(Role instance) throws DAOException {
+    public StatutEdition findByExemple(StatutEdition instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    public Role findById(Long id) throws DAOException {
+    public StatutEdition findById(Long id) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Role role = null;
+        StatutEdition statut = null;
         
         try {
             /* Récupération d'une connexion depuis la Factory */
@@ -170,7 +156,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             if (resultSet.next()) {
-                role = map(resultSet);
+                statut = map(resultSet);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -178,58 +164,31 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             close(resultSet, preparedStatement, connexion);
         }
 
-        return role;
+        return statut;
         
-    }
-
-    public Role findByLibelle(String libelle) throws DAOException {
-        SqlDAOFactory factory = getFactory();
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Role role = null;
-
-        try {
-            /* Récupération d'une connexion depuis la Factory */
-            connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_LIBELLE, false, libelle);
-            resultSet = preparedStatement.executeQuery();
-            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-            if (resultSet.next()) {
-                role = map(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            close(resultSet, preparedStatement, connexion);
-        }
-
-        return role;
-
     }
     
     @Override
-    public List<Role> findByUtilisateur(Long idUtilisateur) throws DAOException {
+    public List<StatutEdition> findByEdition(String isbn) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Role> roles = new ArrayList<>();
+        List<StatutEdition> statutEditions = new ArrayList<>();
 
         try {
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_UTILISATEUR, false, idUtilisateur);
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_EDITION, false, isbn);
             resultSet = preparedStatement.executeQuery();
             
-//            resultSet.beforeFirst();
             
             while (resultSet.next()) {
-                roles.add(map(resultSet));
+                statutEditions.add(map(resultSet));
             }
             
             if (resultSet.next()) {
-                roles = new ArrayList<>();
-                roles.add(map(resultSet));
+                statutEditions= new ArrayList<>();
+                statutEditions.add(map(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -237,17 +196,18 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             close(resultSet, preparedStatement, connexion);
         }
 
-        return roles;
+        return statutEditions;
 
     }
 
+
     @Override
-    public Role findByCode(String code) {
+    public StatutEdition findByCode(String code) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Role role = null;
+        StatutEdition statut = null;
 
         try {
             /* Récupération d'une connexion depuis la Factory */
@@ -256,7 +216,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             if (resultSet.next()) {
-                role = map(resultSet);
+                statut = map(resultSet);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -264,18 +224,20 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             close(resultSet, preparedStatement, connexion);
         }
 
-        return role;
+        return statut;
+
     }
 
+
     @Override
-    protected Role map(ResultSet resultSet) throws SQLException {
-        Role role = new Role();
+    protected StatutEdition map(ResultSet resultSet) throws SQLException {
+        StatutEdition statut = new StatutEdition();
         
-        role.setId(resultSet.getLong("idRole"));
-        role.setLibelle(resultSet.getString("libelle"));
-        role.setCode(resultSet.getString("code"));
-        
-        return role;
+        statut.setId(resultSet.getLong("idStatutEdition"));
+        statut.setLibelle(resultSet.getString("libelle"));
+        statut.setCode(resultSet.getString("code"));
+               
+        return statut;
     }
 
 }

@@ -12,6 +12,7 @@ import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.dao.StatutCommandeDAO;
+import fr.afpa.librairie.data.dao.StatutEditionDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
@@ -35,4 +36,5 @@ public interface DAOFactoryInterface {
     public AdresseDAO getAdresseDAO();
     public LangueDAO getLangueDAO();
     public StatutCommandeDAO getStatutCommandeDAO();
+    public StatutEditionDAO getStatutEditionDAO();
 }

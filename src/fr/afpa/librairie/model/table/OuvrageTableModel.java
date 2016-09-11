@@ -107,7 +107,7 @@ public class OuvrageTableModel extends AbstractTableModel {
             Rubrique rubrique = ouvrage.getRubriques().get(i);
             sb.append(rubrique.getLibelle());
             
-            if(i>len-1){
+            if(i < len-1){
                 sb.append(",");
             }
         }

@@ -14,6 +14,7 @@ import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.dao.StatutCommandeDAO;
+import fr.afpa.librairie.data.dao.StatutEditionDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
@@ -185,7 +186,12 @@ public class SqlDAOFactory extends AbstractDAOFactory {
 
     @Override
     public StatutCommandeDAO getStatutCommandeDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new StatutCommandeSqlDAO(this);
+    }
+    
+    @Override
+    public StatutEditionDAO getStatutEditionDAO(){
+        return new StatutEditionSqlDAO(this);
     }
     
 

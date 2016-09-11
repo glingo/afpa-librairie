@@ -161,7 +161,7 @@ public class Ouvrage {
     
     public void addTag(Tag tag) {
         if(this.tags == null) {
-            this.tags = new ArrayList();
+            this.tags = new ArrayList<>();
         }
         
         this.tags.add(tag);
