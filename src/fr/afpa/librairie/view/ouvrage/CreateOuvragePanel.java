@@ -28,7 +28,15 @@ public class CreateOuvragePanel extends JPanel {
     private final OuvrageController controller;
 
     private JComboBox<Auteur> auteurCB;
+    // ce sera surement un pop up (JCheckboxMenuItem) 
+    // lescombos sont reservées a des valeurs unique.
     private JComboBox<Auteur> coAuteurCB1;
+    
+    // ce sera surement un pop up (JCheckboxMenuItem) 
+    // lescombos sont reservées a des valeurs unique.
+    private JComboBox rubriqueCB1;
+    private JComboBox rubriqueCB2;
+    
 //    private JComboBox coAuteursCB2;
 //    private JComboBox langueCB;
 //    private JLabel langueLB;
@@ -53,8 +61,6 @@ public class CreateOuvragePanel extends JPanel {
     private JLabel nouvelOuvrageLB;
     private JLabel resumeLB;
     private JTextArea resumeTP;
-    private JComboBox rubriqueCB1;
-    private JComboBox rubriqueCB2;
     private JLabel rubriquesLB;
     private JLabel sousTitreLB;
     private JTextField sousTitreTF;
