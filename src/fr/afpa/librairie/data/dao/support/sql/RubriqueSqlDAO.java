@@ -60,6 +60,8 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         rubrique.setLibelle(resultSet.getString("libelle"));
         rubrique.setDateDebut(resultSet.getDate("date_debut"));
         rubrique.setDateFin(resultSet.getDate("date_fin"));
+        
+        rubrique.setCommentaire(resultSet.getString("Commentaire"));
 
         return rubrique;
     }
