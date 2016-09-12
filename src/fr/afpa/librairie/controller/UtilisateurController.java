@@ -44,7 +44,11 @@ public class UtilisateurController extends Controller {
             case "deactivate":
                 deactivateAction(this.adminPanel.getUtilisateurList().getSelectedValue());
                 break;
-            
+                
+            case "activate":
+                activateAction(this.adminPanel.getUtilisateurList().getSelectedValue());
+                break;
+                
             default:
                 if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
                     listAction();
@@ -116,9 +120,7 @@ public class UtilisateurController extends Controller {
             getDaoFactory().getUtilisateurDAO().delete(utilisateur);
             JOptionPane deactiUser = new JOptionPane();
             deactiUser.showMessageDialog(null, "La désactivation a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
-            
-//            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-//                    "La désactivation de l'utilisateur a bien été faite", JOptionPane.INFORMATION_MESSAGE);
+
             
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
@@ -130,6 +132,23 @@ public class UtilisateurController extends Controller {
         listAction();
     }
     
+    public void activateAction(Utilisateur utilisateur){
+        
+//        if(utilisateur == null){
+//            return;
+//        }
+//        try{
+//            getDaoFactory().getUtilisateurDAO().
+//            JOptionPane actiUser = new JOptionPane();
+//            actiUser.showMessageDialog(null, "L'activation a été pris en compte !", "Information", JOptionPane.INFORMATION_MESSAGE);
+//            
+//        }catch(DAOException ex){
+//            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+//                    "Une erreur est survenue !TATAAA", JOptionPane.ERROR_MESSAGE);
+//        }
+        
+        listAction();
+    }
     public void viewAction(Utilisateur utilisateur){
         // un panel de visualisation.
 //        listAction();

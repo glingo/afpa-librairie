@@ -126,7 +126,7 @@ public class EditionController extends Controller {
             return;
         }
         // on verifier si edition = null. Si l'édition est nulle ( donc pas selectionnée ) alors impossible de supprimer.
-
+        
         try {
             getDaoFactory().getEditionDAO().delete(edition);
             JOptionPane deactiEd = new JOptionPane();

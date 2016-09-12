@@ -29,6 +29,10 @@ import java.util.List;
             + " SET idStatutUtilisateur = ?"
             + " WHERE idUtilisateur = ?";
     
+    private static final String SQL_ACTIVATE = "UPDATE Utilisateur"
+            + " SET idStatutUtilisateur = ?"
+            + " WHERE idUtilisateur = ?";
+    
     private static final String SQL_UPDATE = "UPDATE Utilisateur"
             + " SET nom = ?,"
             + " prenom = ?,"
@@ -155,7 +159,7 @@ import java.util.List;
             
             /* Analyse du statut retourné par la requête d'insertion */
             if (preparedStatement.executeUpdate() == 0) {
-                throw new DAOException("Échec de la suppression de l'utilisateur, aucune ligne supprimée dans la table.");
+                throw new DAOException("Échec de la desactivation de l'utilisateur, aucune ligne supprimée dans la table.");
             }
             
         } catch (SQLException e) {
@@ -164,6 +168,30 @@ import java.util.List;
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
 
+    }
+    
+    public void activate(Utilisateur instance){
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement pstmt = null;
+        ResultSet valeursAutoGenerees = null;
+        
+        try{
+            connexion = factory.getConnection();
+            
+            StatutUtilisateur statut = factory.getStatutUtilisateurDAO().findByCode(StatutUtilisateurDAO.CODE_ACTIVE);
+            pstmt = getPreparedStatement(connexion, SQL_ACTIVATE, true,
+                    statut.getId(), instance.getId());
+            
+            if(pstmt.executeUpdate() == 0){
+                throw new DAOException("Échec de l'activation de l'utilisateur, aucune ligne supprimée dans la table.");
+            }
+            
+        }catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, pstmt, connexion);
+        }
     }
     
     @Override

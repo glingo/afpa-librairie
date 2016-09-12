@@ -83,6 +83,7 @@ public class UtilisateurAdminPanel extends JPanel {
         
         JButton createButton = new JButton("Creer");
         JButton deactivateButton = new JButton("Désactiver");
+        JButton activateButton = new JButton("Activer");
         JButton viewButton = new JButton("Voir");
         JButton updateButton = new JButton("Mettre à jour");
         
@@ -92,8 +93,12 @@ public class UtilisateurAdminPanel extends JPanel {
         deactivateButton.setActionCommand("deactivate");
         deactivateButton.addActionListener(controller);
         
+        activateButton.setActionCommand("activate");
+        activateButton.addActionListener(controller);
+        
         footer.add(createButton);
         footer.add(deactivateButton);
+        footer.add(activateButton);
         footer.add(viewButton);
         footer.add(updateButton);
         footer.repaint();
