@@ -25,6 +25,14 @@ public class FooterModel extends javax.swing.JPanel {
             }
         } catch (ClassCastException ex) {
         }
+        
+        try {
+            NouvEdition e = (NouvEdition) this.getParent().getParent().getParent().getParent().getParent();
+            if (this.getParent().getParent().getParent().getParent().getParent() instanceof NouvOuvrage) {
+                e.fillDataBase();
+            }
+        } catch (ClassCastException ex) {
+        }
 
     }
 
@@ -104,6 +112,18 @@ public class FooterModel extends javax.swing.JPanel {
             }
         }catch (ClassCastException exp) {
         }
+        
+        try {
+            NouvEdition e = (NouvEdition) this.getParent().getParent().getParent().getParent().getParent();
+            System.out.println("Annuler");
+            int reply = JOptionPane.showConfirmDialog(null, "Souhaitez-vous vraiment fermer la fenêtre en cours ?", "Attn !", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                e.dispose();
+            }else{
+                e.mesTests();
+            }
+        }catch (ClassCastException exp) {
+        }        
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

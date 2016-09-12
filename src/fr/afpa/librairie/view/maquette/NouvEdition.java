@@ -326,6 +326,19 @@ public class NouvEdition extends javax.swing.JFrame {
 
         return l;
     }
+    
+    
+    public void fillDataBase(){
+        
+        
+       
+    }
+    
+    public void mesTests(){
+        
+        
+        
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
