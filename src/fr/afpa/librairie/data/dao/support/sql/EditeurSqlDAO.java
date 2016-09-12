@@ -130,7 +130,6 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
 
     }
 
-
     @Override
     public Editeur findByExemple(Editeur instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
