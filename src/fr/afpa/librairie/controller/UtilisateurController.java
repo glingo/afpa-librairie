@@ -45,9 +45,9 @@ public class UtilisateurController extends Controller {
                 deactivateAction(this.adminPanel.getUtilisateurList().getSelectedValue());
                 break;
                 
-            case "activate":
-                activateAction(this.adminPanel.getUtilisateurList().getSelectedValue());
-                break;
+//            case "activate":
+//                activateAction(this.adminPanel.getUtilisateurList().getSelectedValue());
+//                break;
                 
             default:
                 if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
@@ -132,13 +132,13 @@ public class UtilisateurController extends Controller {
         listAction();
     }
     
-    public void activateAction(Utilisateur utilisateur){
-        
+//    public void activateAction(Utilisateur utilisateur){
+//        
 //        if(utilisateur == null){
 //            return;
 //        }
 //        try{
-//            getDaoFactory().getUtilisateurDAO().
+//            getDaoFactory().getUtilisateurDAO().activate(utilisateur);
 //            JOptionPane actiUser = new JOptionPane();
 //            actiUser.showMessageDialog(null, "L'activation a été pris en compte !", "Information", JOptionPane.INFORMATION_MESSAGE);
 //            
@@ -146,9 +146,9 @@ public class UtilisateurController extends Controller {
 //            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
 //                    "Une erreur est survenue !TATAAA", JOptionPane.ERROR_MESSAGE);
 //        }
-        
-        listAction();
-    }
+//        
+//        listAction();
+//    }
     public void viewAction(Utilisateur utilisateur){
         // un panel de visualisation.
 //        listAction();

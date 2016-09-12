@@ -32,6 +32,10 @@ public abstract class AbstractListDAO<T> extends AbstractDAO<T> {
     public void delete(T instance) throws DAOException {
         getTable().remove(instance);
     }
+    
+    public void activate(T instance) throws DAOException{
+        getTable().remove(instance);
+    }
 
     @Override
     public abstract T findByExemple(T instance) throws DAOException;

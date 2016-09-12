@@ -59,6 +59,9 @@ public class OuvrageAdminPanel extends JPanel {
         listModelSelection.setListModels(ouvrageListModel, selectionModel);
     }
     
+    public JList<Ouvrage> getOuvrageList(){
+        return this.ouvrageList;
+    }
     
     public Component getForm(){
         JPanel form = new JPanel ();
@@ -81,6 +84,9 @@ public class OuvrageAdminPanel extends JPanel {
         
         createButton.setActionCommand("create");
         createButton.addActionListener(controller);
+        
+        deleteButton.setActionCommand("delete");
+        deleteButton.addActionListener(controller);
         
         footer.add(createButton);
         footer.add(deleteButton);

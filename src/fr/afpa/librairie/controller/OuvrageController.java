@@ -36,7 +36,9 @@ public class OuvrageController extends Controller {
             case "save":
                 createAction();
                 break;
-
+            case "delete":
+                deleteAction(this.adminPanel.getOuvrageList().getSelectedValue());
+                break;
             default:
                 if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
                     listAction();
@@ -74,6 +76,28 @@ public class OuvrageController extends Controller {
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
     
+        listAction();
+    }
+    
+    public void deleteAction(Ouvrage ouvrage){
+       if(ouvrage == null) {
+            // impossible de supprimer si l'utilisateur n'a rien selectionné.
+            return;
+        }
+        
+        // supprimer les references de l'uitlisateur vers roles (Remplit)
+        
+        try {
+            getDaoFactory().getOuvrageDAO().delete(ouvrage);
+            JOptionPane deleteOuv = new JOptionPane();
+            deleteOuv.showMessageDialog(null, "L'ouvrage a bien été archivé !", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+            
+        } catch(DAOException ex){
+            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+        }
+
         listAction();
     }
 }
