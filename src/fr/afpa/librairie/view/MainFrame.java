@@ -32,12 +32,12 @@ import javax.swing.WindowConstants;
  * @author cdi305
  */
 public class MainFrame extends javax.swing.JFrame {
-    
+
     private static final Logger LOG = Logger.getLogger(MainFrame.class.getName());
     private static final String NAME = "main";
     private static final String TITLE = "Le hibou qui lit";
     private final String[] LOADING_MSG = {"Remplissage des océans", "bar", "baz"};
-    
+
     /* Set the Nimbus look and feel */
     static {
         try {
@@ -47,24 +47,21 @@ public class MainFrame extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException 
-                | InstantiationException 
-                | IllegalAccessException 
-                | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             // just log it and stay in default lookandfeel.
             LOG.log(Level.SEVERE, null, ex);
         }
     }
 
     private HeaderPanel headerPanel;
-    private LeftMenuPanel leftMenuPanel;  
+    private LeftMenuPanel leftMenuPanel;
     private Component currentContent;
-    
+
     private GroupLayout layout;
-    
+
     public MainFrame() {
         initComponents();
-        
+
         Dimension size = new Dimension(650, 450);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -74,68 +71,68 @@ public class MainFrame extends javax.swing.JFrame {
         setSize(size);
 
     }
-                       
+
     private void initComponents() {
         initSplashScreen();
-        
+
         JMenuBar jMenuBar = new JMenuBar();
         setJMenuBar(jMenuBar);
-        
+
         initMenu(jMenuBar);
 
         headerPanel = new HeaderPanel();
         leftMenuPanel = new LeftMenuPanel();
         currentContent = new AccueilPanel();
-        
+
         initLayout();
 
         pack();
-    }    
-    
+    }
+
     public void setContent(Component component) {
         Container contentPane = getContentPane();
-        
+
         if (currentContent != null) {
             layout.replace(currentContent, component);
             contentPane.remove(currentContent);
         }
-        
+
         currentContent = component;
         repaint();
     }
-    
+
     public Component getContent() {
         return this.currentContent;
     }
-    
-    private void initLayout(){
-        
+
+    private void initLayout() {
+
         layout = new GroupLayout(getContentPane());
-        
+
         getContentPane().setLayout(layout);
-        
+
         layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(headerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(headerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        
+
         layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(headerPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addComponent(headerPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
-    
+
     private void initMenu(JMenuBar jMenuBar) {
         initFileMenu(jMenuBar);
         initAdministrationMenu(jMenuBar);
@@ -145,48 +142,47 @@ public class MainFrame extends javax.swing.JFrame {
         JMenu fileMenu = new JMenu("Files");
         jMenuBar.add(fileMenu);
     }
-    
+
     private void initAdministrationMenu(JMenuBar jMenuBar) {
         JMenu adminMenu = new JMenu("Administration");
-        
+
         JMenuItem utilisateurAdmin = new JMenuItem("Utilisateurs");
         utilisateurAdmin.addActionListener(new UtilisateurController(this));
         adminMenu.add(utilisateurAdmin);
-        
+
         JMenuItem auteurAdmin = new JMenuItem("Auteurs");
         auteurAdmin.addActionListener(new AuteurController(this));
         adminMenu.add(auteurAdmin);
-        
+
         JMenuItem ouvrageAdmin = new JMenuItem("Ouvrages");
         ouvrageAdmin.addActionListener(new OuvrageController(this));
         adminMenu.add(ouvrageAdmin);
-        
+
         JMenuItem rubriqueAdmin = new JMenuItem("Rubriques");
         rubriqueAdmin.addActionListener(new RubriqueController(this));
         adminMenu.add(rubriqueAdmin);
-        
+
         JMenuItem commandeAdmin = new JMenuItem("Commandes");
         commandeAdmin.addActionListener(new CommandeController(this));
         adminMenu.add(commandeAdmin);
-        
+
         JMenuItem editeurAdmin = new JMenuItem("Editeurs");
         editeurAdmin.addActionListener(new EditeurController(this));
         adminMenu.add(editeurAdmin);
-        
+
         JMenuItem promotionAdmin = new JMenuItem("Promotions");
         promotionAdmin.addActionListener(new PromotionController(this));
         adminMenu.add(promotionAdmin);
-        
+
         JMenuItem editionAdmin = new JMenuItem("Editions");
         editionAdmin.addActionListener(new EditionController(this));
         adminMenu.add(editionAdmin);
-        
+
         jMenuBar.add(adminMenu);
     }
 
-    
-    private void initSplashScreen(){
-        
+    private void initSplashScreen() {
+
         final SplashScreen splash = SplashScreen.getSplashScreen();
 
         if (splash == null) {
@@ -195,25 +191,25 @@ public class MainFrame extends javax.swing.JFrame {
         }
 
         Graphics2D g = splash.createGraphics();
-        
+
         if (g == null) {
             LOG.log(Level.INFO, "Graphics2D is null");
             return;
         }
 
-        for(int i=0; i<50; i++) {
+        for (int i = 0; i < 50; i++) {
             renderSplashFrame(g, i);
             splash.update();
         }
-        
+
         splash.close();
     }
-    
+
     void renderSplashFrame(Graphics2D g, int frame) {
         g.setComposite(AlphaComposite.Clear);
-        g.fillRect(120,140,200,40);
+        g.fillRect(120, 140, 200, 40);
         g.setPaintMode();
         g.setColor(Color.BLACK);
-        g.drawString(LOADING_MSG[(frame/5)%3]+" ...", 120, 150);
+        g.drawString(LOADING_MSG[(frame / 5) % 3] + " ...", 120, 150);
     }
 }
