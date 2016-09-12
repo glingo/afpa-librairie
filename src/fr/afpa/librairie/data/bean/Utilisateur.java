@@ -16,7 +16,6 @@ public class Utilisateur {
     
     private List<Role> roles;
     private StatutUtilisateur statut;
-    private List<StatutUtilisateur> statutUtilisateurs;
     private List<Adresse> dernieresLivraisons;
     private List<Adresse> dernieresFacturations;
 
@@ -76,22 +75,6 @@ public class Utilisateur {
 
     public void setStatut(StatutUtilisateur statut) {
         this.statut = statut;
-    }
-    
-    public List<StatutUtilisateur> getStatutUtilisateurs(){
-        return statutUtilisateurs;
-    }
-    
-    public void setStatutUtilisateurs(List<StatutUtilisateur> statutUtilisateurs){
-        this.statutUtilisateurs = statutUtilisateurs;
-    }
-    
-    public void addStatutUtilisateur(StatutUtilisateur statutUtilisateur){
-        if(this.statutUtilisateurs == null){
-            this.statutUtilisateurs = new ArrayList<>();    
-        }
-        
-        this.statutUtilisateurs.add(statutUtilisateur);
     }
     
     public List<Role> getRoles() {

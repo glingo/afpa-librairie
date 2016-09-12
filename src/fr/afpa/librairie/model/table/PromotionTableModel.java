@@ -1,6 +1,6 @@
-
 package fr.afpa.librairie.model.table;
 
+import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Promotion;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
@@ -11,20 +11,24 @@ import java.util.Map;
 import javax.swing.ListModel;
 import javax.swing.table.AbstractTableModel;
 
-public class PromotionTableModel extends AbstractTableModel{
-    
+public class PromotionTableModel extends AbstractTableModel {
+
     private final ListModelHolder<Promotion> promoListModelHolder = new ListModelHolder<>();
     private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
 
     private Map<PromotionColumn, String> columnDisplayNames;
 
     public Map<PromotionColumn, String> getColumnDisplayNames() {
-        if(this.columnDisplayNames == null) {
+        if (this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
             this.columnDisplayNames.put(PromotionColumn.DATE_DEBUT, "Date de debut");
             this.columnDisplayNames.put(PromotionColumn.DATE_FIN, "Date de fin");
+            this.columnDisplayNames.put(PromotionColumn.REDUCTION, "Réduction ");
             this.columnDisplayNames.put(PromotionColumn.DESCRIPTION, "Description");
-            this.columnDisplayNames.put(PromotionColumn.REDUCTION, "Reduction");
+            this.columnDisplayNames.put(PromotionColumn.IMAGE, "Image");
+            this.columnDisplayNames.put(PromotionColumn.COMMENTAIRE, "Commentaire");
+ 
+
         }
         return this.columnDisplayNames;
     }
@@ -69,6 +73,12 @@ public class PromotionTableModel extends AbstractTableModel{
             case DESCRIPTION:
                 columnValue = promo.getDescription();
                 break;
+            case IMAGE:
+                columnValue = promo.getImage();
+                break;
+            case COMMENTAIRE:
+                columnValue = promo.getCommentaire();
+                break;
 
             default:
 //                columnValue = getAddressObject(person, column);
@@ -78,12 +88,12 @@ public class PromotionTableModel extends AbstractTableModel{
         return columnValue;
     }
 
+
     private PromotionColumn getColumn(int columnIndex) {
         PromotionColumn[] columns = PromotionColumn.values();
         PromotionColumn column = columns[columnIndex];
         return column;
     }
-
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {

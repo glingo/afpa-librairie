@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -52,6 +53,7 @@ public class EditionAdminPanel extends JPanel{
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
+        add(getForm(), BorderLayout.NORTH);
         
         repaint();
         setVisible(true);
@@ -61,6 +63,16 @@ public class EditionAdminPanel extends JPanel{
         editionList.setModel(editionListModel);
         editionTableModel.setListModel(editionListModel);
         listModelSelection.setListModels(editionListModel, selectionModel);
+    }
+    
+    public Component getForm(){
+        JPanel form = new JPanel();
+        
+        JLabel titre = new JLabel("EDITIONS");
+        
+        form.add(titre);
+        
+        return form;
     }
     
     //methode pour dire ce que va comporter le footer/ 

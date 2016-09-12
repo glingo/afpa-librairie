@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -44,6 +45,7 @@ public class RubriqueAdminPanel extends JPanel{
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
+        add(getForm(), BorderLayout.NORTH);
         
         repaint();
         setVisible(true); // Move it to here
@@ -54,6 +56,16 @@ public class RubriqueAdminPanel extends JPanel{
         rubriqueList.setModel(rubriqueListModel);
         rubriqueTableModel.setListModel(rubriqueListModel);
         listModelSelection.setListModels(rubriqueListModel, selectionModel);
+    }
+    
+    private Component getForm(){
+        JPanel form = new JPanel();
+        
+        JLabel titre = new JLabel("RUBRIQUES");
+        
+        form.add(titre);
+        
+        return form;
     }
     
     

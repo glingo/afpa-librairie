@@ -213,10 +213,7 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public List<Adresse> findByUtilisateur(Long idUtilisateur) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
 
 }

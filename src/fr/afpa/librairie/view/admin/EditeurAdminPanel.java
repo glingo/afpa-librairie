@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -43,6 +44,7 @@ public class EditeurAdminPanel extends JPanel {
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
+        add(getForm(), BorderLayout.NORTH);
         
         repaint();
         setVisible(true);
@@ -54,6 +56,15 @@ public class EditeurAdminPanel extends JPanel {
         listModelSelection.setListModels(editeurListModel, selectionModel);
     }
     
+    private Component getForm(){
+        JPanel form = new JPanel();
+        
+        JLabel titre = new JLabel("EDITEURS");
+        
+        form.add(titre);
+        
+        return form;
+    }
     private Component getFooter() {
         JPanel footer = new JPanel();
         

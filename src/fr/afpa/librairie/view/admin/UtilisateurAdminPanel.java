@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,6 +28,8 @@ import javax.swing.ListSelectionModel;
 public class UtilisateurAdminPanel extends JPanel {
     
     private final UtilisateurController controller;
+    
+    
     
     private final ListAdapterListModel<Utilisateur> utilisateurListModel = new ListAdapterListModel<>();
     private final UtilisateurTableModel utilisateurTableModel = new UtilisateurTableModel();
@@ -43,6 +46,8 @@ public class UtilisateurAdminPanel extends JPanel {
     private void init(){
         setLayout(new BorderLayout());
         
+
+        
         utilisateurTable.setSelectionModel(selectionModel);
         utilisateurTable.setSelectionModel(utilisateurList.getSelectionModel());
         
@@ -52,6 +57,7 @@ public class UtilisateurAdminPanel extends JPanel {
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
+        add(getForm(), BorderLayout.NORTH);
         
         repaint();
         setVisible(true); // Move it to here
@@ -62,8 +68,19 @@ public class UtilisateurAdminPanel extends JPanel {
         utilisateurList.setModel(utilisateurListModel);
         utilisateurTableModel.setListModel(utilisateurListModel);
         listModelSelection.setListModels(utilisateurListModel, selectionModel);
+
     }
     
+    private Component getForm(){
+        JPanel form = new JPanel();
+        
+        JLabel titreSection = new JLabel("UTILISATEUR");
+        
+        form.add(titreSection);
+        
+        return form;
+
+    }
     
     private Component getFooter() {
         JPanel footer = new JPanel();

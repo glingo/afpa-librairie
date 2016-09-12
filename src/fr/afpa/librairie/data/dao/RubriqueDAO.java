@@ -12,5 +12,6 @@ public interface RubriqueDAO extends DAOInterface<Rubrique> {
     Rubrique findByDateDebut(Date dateDebut);
     
     List<Rubrique> findByOuvrage(Long idOuvrage) throws DAOException;
+    
 }
 

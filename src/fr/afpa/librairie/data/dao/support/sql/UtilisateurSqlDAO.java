@@ -17,7 +17,7 @@ import java.util.List;
 // DAO = Data Access Object
 // DTO = Data Transfert Object
 
-public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements UtilisateurDAO {
+  public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements UtilisateurDAO {
 
     private static final String SQL_INSERT = "INSERT INTO Utilisateur"
             + " (nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur)"
@@ -253,13 +253,26 @@ public class UtilisateurSqlDAO extends AbstractSqlDAO<Utilisateur> implements Ut
         
         StatutUtilisateur statut = factory.getStatutUtilisateurDAO().findById(resultSet.getLong("idStatutUtilisateur"));
         List<Role> roles = factory.getRoleDAO().findByUtilisateur(utilisateur.getId());
-        List<Adresse> dernieresFacturations = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
-        List<Adresse> dernieresLivraisons = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
+
+//        List<Adresse> dernieresFacturations = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
+//        List<Adresse> dernieresLivraisons = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
         
         
         utilisateur.setStatut(statut);
         utilisateur.setRoles(roles);
         
         return utilisateur;
+    }
+
+    @Override
+    public List<Utilisateur> findByNom(String nom) {
+        
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Utilisateur findByCommande(Long idCommande) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

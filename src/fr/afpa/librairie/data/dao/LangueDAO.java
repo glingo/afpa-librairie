@@ -10,4 +10,6 @@ public interface LangueDAO extends DAOInterface<Langue> {
     Langue findByLibelle(String libelle);
     Langue findByCode(String code);
     
+    List<Langue> findByEdition(String isbn) throws DAOException;
+    
 }

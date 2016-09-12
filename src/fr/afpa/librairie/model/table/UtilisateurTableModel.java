@@ -107,34 +107,14 @@ public class UtilisateurTableModel extends AbstractTableModel {
                 sb.append(",");
             }
         }
-        //parcours de la liste role. 
-        //role = stock le role de l'utilisateur = i
-        //ajoute le libelle du role. 
-        //met une virgule sauf à la fin : permet de serare par une virgule si il y a deux roles.La virgule n'apparait pas à la fin. 
-        
-//        user.getRoles().forEach((Role role) -> {
-//            sb.append(role.getLibelle()).append(",");
-//        });
-        
+
         return sb.toString();
         
     }
     
     private String getStatutUtilisateurObject(Utilisateur utilisateur){
-        StringBuilder sb = new StringBuilder();
-        
-        int len = utilisateur.getStatutUtilisateurs().size();
-        
-        for(int i = 0; i < len; i++){
-            StatutUtilisateur statutUtilisateur = utilisateur.getStatutUtilisateurs().get(i);
-            sb.append(statutUtilisateur.getLibelle());
-            
-            if(i>len - 1){
-                sb.append(",");
-            }
-        }
-   
-        return sb.toString();
+        // le statut ne peut etre null !
+        return utilisateur.getStatut().getLibelle();
     }
     
     private UtilisateurColumn getColumn(int columnIndex) {

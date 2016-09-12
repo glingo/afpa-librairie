@@ -1,8 +1,9 @@
+
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
-import fr.afpa.librairie.data.bean.StatutUtilisateur;
-import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
+import fr.afpa.librairie.data.bean.StatutEdition;
+import fr.afpa.librairie.data.dao.StatutEditionDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,48 +12,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-// DAO = Data Access Object
-// DTO = Data Transfert Object
-
-public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> implements StatutUtilisateurDAO {
-
-    private static final String SQL_INSERT = "INSERT INTO StatutUtilisateur (libelle, code) VALUES (?, ?)";
-    private static final String SQL_DELETE = "DELETE FROM StatutUtilisateur WHERE id = ?";
+public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implements StatutEditionDAO {
+    
+    private static final String SQL_INSERT = "INSERT INTO StatutEdition (libelle, code) VALUES (?, ?)";
+    private static final String SQL_DELETE = "DELETE FROM StatutEdition WHERE id = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
-            + " idStatutUtilisateur, libelle, code"
-            + " FROM StatutUtilisateur";
+            + " idStatutEdition, libelle, code"
+            + " FROM StatutEdition";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idStatutUtilisateur, libelle, code"
-            + " FROM StatutUtilisateur"
-            + " WHERE idStatutUtilisateur = ?";
+            + " idStatutEdition, libelle, code"
+            + " FROM StatutEdition"
+            + " WHERE idStatutEdition = ?";
     
     private static final String SQL_FIND_BY_CODE = "SELECT"
-            + " idStatutUtilisateur, libelle, code"
-            + " FROM StatutUtilisateur"
+            + " idStatutEdition, libelle, code"
+            + " FROM StatutEdition"
             + " WHERE code = ?";
     
     private static final String SQL_FIND_BY_LIBELLE = "SELECT"
-            + " idStatutUtilisateur, libelle, code"
-            + " FROM StatutUtilisateur"
+            + " idStatutEdition, libelle, code"
+            + " FROM StatutEdition"
             + " WHERE libelle = ?";
 
     
-    private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
-            +" stu.idStatutUtilisateur, stu.libelle, stu.code"
-            +" FROM StatutUtilisateur AS stu"
-            +" JOIN Utilisateur AS ut ON ut.idStatutUtilisateur = stu.idStatutUtilisateur"
-            +" WHERE ut.idUtilisateur =?";
+    private static final String SQL_FIND_BY_EDITION = "SELECT"
+            +" ste.idStatutEdition, ste.libelle, ste.code"
+            +" FROM StatutEdition AS ste"
+            +" JOIN Edition AS ed ON ed.idStatutEdition = ste.idStatutEdition"
+            +" WHERE ed.isbn =?";
     
-
-    public StatutUtilisateurSqlDAO(AbstractDAOFactory factory) {
+    
+  public StatutEditionSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
     
 
     @Override
-    public void save(StatutUtilisateur instance) throws DAOException {
+    public void save(StatutEdition instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -69,7 +67,7 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la création du statut de l'utilisateur, aucune ligne ajoutée dans la table.");
+                throw new DAOException("Échec de la création du statut de l'edition, aucune ligne ajoutée dans la table.");
             }
             /* Récupération de l'id auto-généré par la requête d'insertion */
             valeursAutoGenerees = preparedStatement.getGeneratedKeys();
@@ -77,7 +75,7 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
                 /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
                 instance.setId(valeursAutoGenerees.getLong(1));
             } else {
-                throw new DAOException("Échec de la création du statut de l'utilisateur en base, aucun ID auto-généré retourné.");
+                throw new DAOException("Échec de la création du statut de l'edition en base, aucun ID auto-généré retourné.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -87,7 +85,7 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
     }
 
     @Override
-    public void delete(StatutUtilisateur instance) {
+    public void delete(StatutEdition instance) {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -100,7 +98,7 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la suppression de l'utilisateur, aucune ligne supprimée dans la table.");
+                throw new DAOException("Échec de la suppression de l'edition, aucune ligne supprimée dans la table.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -111,12 +109,12 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
     }
     
     @Override
-    public List<StatutUtilisateur> findAll() throws DAOException {
+    public List<StatutEdition> findAll() throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<StatutUtilisateur> statuts = new ArrayList<>();
+        List<StatutEdition> statuts = new ArrayList<>();
 
         try {
             connexion = factory.getConnection();
@@ -139,17 +137,17 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
     }
 
     @Override
-    public StatutUtilisateur findByExemple(StatutUtilisateur instance) throws DAOException {
+    public StatutEdition findByExemple(StatutEdition instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    public StatutUtilisateur findById(Long id) throws DAOException {
+    public StatutEdition findById(Long id) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        StatutUtilisateur statut = null;
+        StatutEdition statut = null;
         
         try {
             /* Récupération d'une connexion depuis la Factory */
@@ -171,27 +169,26 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
     }
     
     @Override
-    public List<StatutUtilisateur> findByUtilisateur(Long idUtilisateur) throws DAOException {
+    public List<StatutEdition> findByEdition(String isbn) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<StatutUtilisateur> statutUtilisateurs = new ArrayList<>();
+        List<StatutEdition> statutEditions = new ArrayList<>();
 
         try {
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_UTILISATEUR, false, idUtilisateur);
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_EDITION, false, isbn);
             resultSet = preparedStatement.executeQuery();
             
-//            resultSet.beforeFirst();
             
             while (resultSet.next()) {
-                statutUtilisateurs.add(map(resultSet));
+                statutEditions.add(map(resultSet));
             }
             
             if (resultSet.next()) {
-                statutUtilisateurs= new ArrayList<>();
-                statutUtilisateurs.add(map(resultSet));
+                statutEditions= new ArrayList<>();
+                statutEditions.add(map(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -199,18 +196,18 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
             close(resultSet, preparedStatement, connexion);
         }
 
-        return statutUtilisateurs;
+        return statutEditions;
 
     }
 
 
     @Override
-    public StatutUtilisateur findByCode(String code) throws DAOException {
+    public StatutEdition findByCode(String code) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        StatutUtilisateur statut = null;
+        StatutEdition statut = null;
 
         try {
             /* Récupération d'une connexion depuis la Factory */
@@ -231,22 +228,16 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
 
     }
 
-    /*
-     * Simple méthode utilitaire permettant de faire la correspondance (le
-     * mapping) entre une ligne issue de la table des utilisateurs (un
-     * ResultSet) et un bean Utilisateur.
-     */
+
     @Override
-    protected StatutUtilisateur map(ResultSet resultSet) throws SQLException {
-        StatutUtilisateur statut = new StatutUtilisateur();
+    protected StatutEdition map(ResultSet resultSet) throws SQLException {
+        StatutEdition statut = new StatutEdition();
         
-        statut.setId(resultSet.getLong("idStatutUtilisateur"));
+        statut.setId(resultSet.getLong("idStatutEdition"));
         statut.setLibelle(resultSet.getString("libelle"));
         statut.setCode(resultSet.getString("code"));
                
         return statut;
     }
-
-
 
 }

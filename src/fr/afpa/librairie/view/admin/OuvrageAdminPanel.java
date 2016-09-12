@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -45,6 +46,7 @@ public class OuvrageAdminPanel extends JPanel {
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
+        add(getForm(), BorderLayout.NORTH);
         
         repaint();
         setVisible(true); // Move it to here
@@ -57,6 +59,17 @@ public class OuvrageAdminPanel extends JPanel {
         listModelSelection.setListModels(ouvrageListModel, selectionModel);
     }
     
+    
+    public Component getForm(){
+        JPanel form = new JPanel ();
+        
+        JLabel titre = new JLabel("OUVRAGES");
+        
+        form.add(titre);
+        
+        
+        return form;
+    }
     
     private Component getFooter() {
         JPanel footer = new JPanel();

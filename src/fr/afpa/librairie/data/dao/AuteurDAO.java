@@ -15,4 +15,5 @@ public interface AuteurDAO extends DAOInterface<Auteur> {
 //    List<Auteur> findByOuvrage(Long idOuvrage) throws DAOException;
     
     List<Auteur> findCoAuteursByOuvrage(Long idOuvrage) throws DAOException;
+    
 }

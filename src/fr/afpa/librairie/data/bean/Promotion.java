@@ -6,6 +6,8 @@
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,10 +21,11 @@ public class Promotion {
     private String image;
     private String description;
     private String commentaire;
+ 
 
     public Promotion() {
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -83,6 +86,8 @@ public class Promotion {
     public String toString() {
         return "Promotion{" + "id=" + id + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", reduction=" + reduction + ", image=" + image + ", description=" + description + ", commentaire=" + commentaire + '}';
     }
+
+    
     
     
     

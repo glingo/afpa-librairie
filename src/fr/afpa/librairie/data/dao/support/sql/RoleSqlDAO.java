@@ -72,7 +72,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la création de l'utilisateur, aucune ligne ajoutée dans la table.");
+                throw new DAOException("Échec de la création du role de l'utilisateur, aucune ligne ajoutée dans la table.");
             }
             
             /* Récupération de l'id auto-généré par la requête d'insertion */
@@ -80,7 +80,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             
             
             if (!valeursAutoGenerees.next()) {
-                throw new DAOException("Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné.");
+                throw new DAOException("Échec de la création du role de l'utilisateur en base, aucun ID auto-généré retourné.");
             }
                 
             /* Puis initialisation de la propriété id du bean Role avec sa valeur */
@@ -107,7 +107,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la suppression de l'utilisateur, aucune ligne supprimée dans la table.");
+                throw new DAOException("Échec de la suppression du role de l'utilisateur, aucune ligne supprimée dans la table.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -208,6 +208,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
 
     }
     
+    @Override
     public List<Role> findByUtilisateur(Long idUtilisateur) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;

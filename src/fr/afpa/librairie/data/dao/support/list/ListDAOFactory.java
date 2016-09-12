@@ -11,7 +11,10 @@ import fr.afpa.librairie.data.dao.LangueDAO;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
+import fr.afpa.librairie.data.dao.StatutCommandeDAO;
+import fr.afpa.librairie.data.dao.StatutEditionDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
+import fr.afpa.librairie.data.dao.TaxeDAO;
 import fr.afpa.librairie.data.dao.ThemeDAO;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,6 +116,26 @@ public class ListDAOFactory extends AbstractDAOFactory {
 
     @Override
     public LangueDAO getLangueDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public StatutCommandeDAO getStatutCommandeDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public StatutEditionDAO getStatutEditionDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TaxeDAO getTaxeDao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TaxeDAO getTaxeDAO() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

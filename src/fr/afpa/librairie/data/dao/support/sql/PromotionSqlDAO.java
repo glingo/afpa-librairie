@@ -2,10 +2,12 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
+import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Promotion;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,33 +40,39 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
     @Override
     public void save(Promotion instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null;
+        Connection connexion = null; 
+        PreparedStatement pstmt = null;
         ResultSet valeursAutoGenerees = null;
 
         try {
+            
 
+            
+            /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
-
-//            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-//                    instance.getNumero(), instance.getDateCommande());
-
-//            int statut = preparedStatement.executeUpdate();
-//            /* Analyse du statut retourné par la requête d'insertion */
-//            if (statut == 0) {
-//                throw new DAOException("Échec de la création de la commande, aucune ligne ajoutée dans la table.");
-//            }
-
-//            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-//            if (valeursAutoGenerees.next()) {
-//                instance.setId(valeursAutoGenerees.getLong(1));
-//            } else {
-//                throw new DAOException("Échec de la création de la commande en base, aucun ID auto-généré retourné.");
-//            }
+            
+            pstmt = getPreparedStatement(connexion, SQL_INSERT, true, 
+                    instance.getDateDebut(), instance.getDateFin(), 
+                    instance.getReduction(), instance.getDescription(),
+                    instance.getImage(), instance.getCommentaire());
+            
+            int statut = pstmt.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de la promotion, aucune ligne ajoutée dans la table.");
+            }
+            /* Récupération de l'id auto-généré par la requête d'insertion */
+            valeursAutoGenerees = pstmt.getGeneratedKeys();
+            if (valeursAutoGenerees.next()) {
+                /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
+                instance.setId(valeursAutoGenerees.getLong(1));
+            } else {
+                throw new DAOException("Échec de la création de la promotion en base, aucun ID auto-généré retourné.");
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            close(valeursAutoGenerees, preparedStatement, connexion);
+            close(valeursAutoGenerees, pstmt, connexion);
         }
     }
 
@@ -73,23 +81,24 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
     public void delete(Promotion instance) {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement pstmt = null;
         ResultSet valeursAutoGenerees = null;
 
-//        try {
+        try {
             /* Récupération d'une connexion depuis la Factory */
-//            connexion = factory.getConnection();
-//            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, instance.getId());
-//            int statut = preparedStatement.executeUpdate();
-//            /* Analyse du statut retourné par la requête d'insertion */
-//            if (statut == 0) {
-//                throw new DAOException("Échec de la suppression de la commande, aucune ligne supprimée dans la table.");
-//            }
-//        } catch (SQLException e) {
-//            throw new DAOException(e);
-//        } finally {
-//            close(valeursAutoGenerees, preparedStatement, connexion);
-//        }
+            connexion = factory.getConnection();
+            pstmt = getPreparedStatement(connexion, SQL_DELETE, true, instance.getId());
+            int statut = pstmt.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la suppression de la promotion, aucune ligne supprimée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, pstmt, connexion);
+        }
+        
 
     }
     
@@ -107,6 +116,7 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
         promo.setDescription(resultSet.getString("description"));
         promo.setImage(resultSet.getString("image"));
         promo.setReduction(resultSet.getFloat("reduction"));
+
         
         return promo;
     }
@@ -167,5 +177,17 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
 
         return promotion;
     }
+
+    @Override
+    public Promotion findByDateDebut(Date dateDebut) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Promotion findByReduction(Float reduction) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 
 }
