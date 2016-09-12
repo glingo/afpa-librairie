@@ -108,7 +108,7 @@ public class OuvrageTableModel extends AbstractTableModel {
             sb.append(rubrique.getLibelle());
             
             if(i < len-1){
-                sb.append(",");
+                sb.append(", ");
             }
         }
         
@@ -123,8 +123,8 @@ public class OuvrageTableModel extends AbstractTableModel {
             Tag tag = ouvrage.getTags().get(i);
             sb.append(tag.getLibelle());
             
-            if(i>len-1){
-                sb.append(",");
+            if(i < len-1){
+                sb.append(", ");
             }
         }
         
@@ -142,8 +142,8 @@ public class OuvrageTableModel extends AbstractTableModel {
             Auteur auteur = ouvrage.getCoAuteurs().get(i);
             sb.append(auteur.getNom());
             
-            if(i>len - 1){
-                sb.append(",");
+            if(i < len - 1){
+                sb.append(", ");
             }
         }
         return sb.toString();
@@ -157,8 +157,8 @@ public class OuvrageTableModel extends AbstractTableModel {
             Genre genre = ouvrage.getGenres().get(i);
             sb.append(genre.getLibelle());
             
-            if(i>len - 1){
-                sb.append(",");
+            if(i < len - 1){
+                sb.append(", ");
             }
         }
         
@@ -173,55 +173,14 @@ public class OuvrageTableModel extends AbstractTableModel {
             Theme theme = ouvrage.getThemes().get(i);
             sb.append(theme.getLibelle());
             
-            if(i>len - 1){
-                sb.append(",");
+            if(i < len - 1){
+                sb.append(", ");
             }
         }
         
         return sb.toString();
     }
     
-//    private String getLangueObject(Ouvrage ouvrage){
-//        StringBuilder sb = new StringBuilder();
-//        
-//        
-//        int len = ouvrage.getLangues().size();
-//        for(int i = 0; i<len ; i++){
-//            Langue langue = ouvrage.getLangues().get(i);
-//            sb.append(langue.getLibelle());
-//            
-//            if(i> len - 1){
-//                sb.append(",");
-//            }
-//        }
-//        
-//        
-//        return sb.toString();
-//    }
-    
-    private String getLangueObject(Ouvrage ouvrage){
-        
-        if(ouvrage.getLangues() == null) {
-            return "";
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        
-        int len = ouvrage.getLangues().size();
-        for(int i = 0; i<len ; i++){
-            Langue langue = ouvrage.getLangues().get(i);
-            sb.append(langue.getLibelle());
-            
-            if(i> len - 1){
-                sb.append(",");
-            }
-        }
-        
-        
-        return sb.toString();
-    }
-    
-
 
     private OuvrageColumn getColumn(int columnIndex) {
         OuvrageColumn[] columns = OuvrageColumn.values();

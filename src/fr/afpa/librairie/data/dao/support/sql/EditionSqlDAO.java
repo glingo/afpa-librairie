@@ -73,15 +73,15 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
                 instance.setStatut(statut);
             }
             
-            if(instance.getTitreOuvrage() == null) {
+            if(instance.getOuvrage() == null) {
 
                 Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre("OK");
-                instance.setTitreOuvrage(ouvrage);
+                instance.setOuvrage(ouvrage);
             }
             
-            if(instance.getTitreOuvrage().getTitre() == null) {
-                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre(instance.getTitreOuvrage().getTitre());
-                instance.setTitreOuvrage(ouvrage);
+            if(instance.getOuvrage().getTitre() == null) {
+                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre(instance.getOuvrage().getTitre());
+                instance.setOuvrage(ouvrage);
             }
             
             if(instance.getLangue() == null) {
@@ -115,7 +115,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
                     instance.getPrixHt(), instance.getCouverture(),
                     instance.getCouverture(), instance.getTitre(),
                     instance.getStock(),instance.getStatut() == null ? null : instance.getStatut().getId(),
-                    instance.getTitreOuvrage() == null ? null : instance.getTitreOuvrage().getId(),
+                    instance.getOuvrage() == null ? null : instance.getOuvrage().getId(),
                     instance.getLangue() == null ? null : instance.getLangue().getId());
 
             int statut = preparedStatement.executeUpdate();
@@ -303,7 +303,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         edition.setIsbn(resultSet.getString("isbn"));
         
         Ouvrage ouvrage = factory.getOuvrageDAO().findById(resultSet.getLong("idOuvrage"));
-        edition.setTitreOuvrage(ouvrage);
+        edition.setOuvrage(ouvrage);
         
         Langue langue = factory.getLangueDAO().findById(resultSet.getLong("idLangue"));
         edition.setLangue(langue);

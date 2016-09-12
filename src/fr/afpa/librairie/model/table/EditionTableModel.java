@@ -3,7 +3,6 @@ package fr.afpa.librairie.model.table;
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Genre;
-import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
@@ -118,11 +117,15 @@ public class EditionTableModel extends AbstractTableModel {
     }
 
     private String getAuteurObject(Edition edition) {
-        StringBuilder sb = new StringBuilder();
 
-        int len = edition.getCoAuteurs().size();
+        if(edition.getOuvrage().getCoAuteurs() == null) {
+            return "";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        int len = edition.getOuvrage().getCoAuteurs().size();
         for (int i = 0; i < len; i++) {
-            Auteur auteur = edition.getCoAuteurs().get(i);
+            Auteur auteur = edition.getOuvrage().getCoAuteurs().get(i);
             sb.append(auteur.getNom());
 
             if (i > len - 1) {
@@ -133,46 +136,36 @@ public class EditionTableModel extends AbstractTableModel {
     }
 
     private String getLangueObject(Edition edition) {
-        StringBuilder sb = new StringBuilder();
-
-        int len = edition.getLangues().size();
-        for (int i = 0; i < len; i++) {
-            Langue langue = edition.getLangues().get(i);
-            sb.append(langue.getCode());
-
-            if (i > len - 1) {
-                sb.append(",");
-            }
-        }
-        return sb.toString();
+        return edition.getLangue().getLibelle();
     }
 
     private String getGenreObject(Edition edition) {
         StringBuilder sb = new StringBuilder();
 
-        int len = edition.getGenres().size();
+        int len = edition.getOuvrage().getGenres().size();
         for (int i = 0; i < len; i++) {
-            Genre genre = edition.getGenres().get(i);
+            Genre genre = edition.getOuvrage().getGenres().get(i);
             sb.append(genre.getLibelle());
 
-            if (i > len - 1) {
-                sb.append(",");
+            if (i < len - 1) {
+                sb.append(", ");
             }
         }
 
         return sb.toString();
     }
+    
 //manquant le 09/09 lors de l'implementation maison, creait une erreur : rajouté par Eric 
     private String getThemeObject(Edition edition) {
         StringBuilder sb = new StringBuilder();
 
-        int len = edition.getThemes().size();
+        int len = edition.getOuvrage().getThemes().size();
         for (int i = 0; i < len; i++) {
-            Theme theme = edition.getThemes().get(i);
+            Theme theme = edition.getOuvrage().getThemes().get(i);
             sb.append(theme.getLibelle());
 
-            if (i > len - 1) {
-                sb.append(",");
+            if (i < len - 1) {
+                sb.append(", ");
             }
         }
 
@@ -182,13 +175,13 @@ public class EditionTableModel extends AbstractTableModel {
     private String getRubriqueObject(Edition edition) {
         StringBuilder sb = new StringBuilder();
 
-        int len = edition.getRubriques().size();
+        int len = edition.getOuvrage().getRubriques().size();
         for (int i = 0; i < len; i++) {
-            Rubrique rubrique = edition.getRubriques().get(i);
+            Rubrique rubrique = edition.getOuvrage().getRubriques().get(i);
             sb.append(rubrique.getLibelle());
 
-            if (i > len - 1) {
-                sb.append(",");
+            if (i < len - 1) {
+                sb.append(", ");
             }
         }
 
