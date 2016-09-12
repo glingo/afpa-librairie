@@ -53,8 +53,4 @@ public class Rubrique {
         this.commentaire = commentaire;
     }
     
-    public String toString(){
-        return libelle;
-    }
-    
 }

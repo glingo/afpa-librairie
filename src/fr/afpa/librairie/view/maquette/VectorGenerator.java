@@ -1,5 +1,6 @@
 package fr.afpa.librairie.view.maquette;
 
+import fr.afpa.librairie.data.bean.Genre;
 import java.sql.*;
 import java.util.*;
 
@@ -60,5 +61,6 @@ public class VectorGenerator {
         }
         myConnect.closing();
         return v;
-    }   
+    }
+      
 }

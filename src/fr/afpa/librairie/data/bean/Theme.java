@@ -8,12 +8,16 @@ public class Theme {
 
     public Theme() {
     }
+//<<<<<<< HEAD
 
     public Theme(Long id, String libelle) {
         this.id = id;
         this.libelle = libelle;
     }
 
+//=======
+    
+//>>>>>>> dc965b02032f2ade70f7e75f17c34269caeb610b
     public Long getId() {
         return id;
     }
@@ -32,7 +36,6 @@ public class Theme {
     
     @Override
     public String toString() {
-//        return "Theme{" + "id=" + id + ", libelle=" + libelle + '}';
-        return libelle;
+        return "Theme{" + "id=" + id + ", libelle=" + libelle + '}';
     }
 }

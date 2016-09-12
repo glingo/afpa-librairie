@@ -43,8 +43,7 @@ public class Langue {
 
     @Override
     public String toString() {
-//        return "Langue{" + "id=" + id + ", libelle=" + libelle + ", code=" + code + '}';
-        return libelle;
+        return "Langue{" + "id=" + id + ", libelle=" + libelle + ", code=" + code + '}';
     }
     
     

@@ -1,11 +1,10 @@
+
 package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Langue;
-import fr.afpa.librairie.data.bean.Theme;
-import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.EditionColumn;
@@ -21,12 +20,13 @@ public class EditionTableModel extends AbstractTableModel {
     //appel de la classe ListModelHolder. chemin Librairie/model/list/
     private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
     //idem que pour le modele de liste précedent.
-
+    
     private Map<EditionColumn, String> columnDisplayNames;
+    
 
     public Map<EditionColumn, String> getColumnDisplayNames() {
         //appel de la classe EditionColumn : on recupere le nom des colonnes propres à la listeEdition. 
-        if (this.columnDisplayNames == null) {
+        if(this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
             this.columnDisplayNames.put(EditionColumn.ISBN, "Isbn");
             this.columnDisplayNames.put(EditionColumn.AUTEUR, "Auteur");
@@ -42,14 +42,15 @@ public class EditionTableModel extends AbstractTableModel {
         }
         return this.columnDisplayNames;
     }
-
+    
     //constructeur
     public EditionTableModel() {
         editionListModelHolder.addListDataListeners(listModelChangeListener);
     }
-
+    
     //setter et getter de EditionTableModel
-    public final void setListModel(ListModel<Edition> listModel) {
+    
+     public final void setListModel(ListModel<Edition> listModel) {
         editionListModelHolder.setModel(listModel);
     }
 
@@ -84,7 +85,7 @@ public class EditionTableModel extends AbstractTableModel {
             case DATEPUBLI:
                 columnValue = edition.getDatePublication();
                 break;
-            case LANGUE:
+            case LANGUE : 
                 columnValue = getLangueObject(edition);
                 break;
             case GENRE:
@@ -102,7 +103,7 @@ public class EditionTableModel extends AbstractTableModel {
             case COUVERTURE:
                 columnValue = edition.getCouverture();
                 break;
-            case TITRE:
+            case TITRE :
                 columnValue = edition.getTitre();
                 break;
             case STOCK:
@@ -116,90 +117,58 @@ public class EditionTableModel extends AbstractTableModel {
         return columnValue;
         //retourne la valeur de la colonne selectionnée. 
     }
-
-    private String getAuteurObject(Edition edition) {
+    
+    private String getAuteurObject(Edition edition){
         StringBuilder sb = new StringBuilder();
-
+        
         int len = edition.getCoAuteurs().size();
-        for (int i = 0; i < len; i++) {
+        for(int i = 0; i<len ; i++){
             Auteur auteur = edition.getCoAuteurs().get(i);
             sb.append(auteur.getNom());
-
-            if (i > len - 1) {
+            
+            if(i>len - 1){
                 sb.append(",");
             }
         }
         return sb.toString();
     }
-
-    private String getLangueObject(Edition edition) {
+    
+    private String getLangueObject(Edition edition){
         StringBuilder sb = new StringBuilder();
-
+        
         int len = edition.getLangues().size();
-        for (int i = 0; i < len; i++) {
+        for(int i = 0 ; i < len; i++){
             Langue langue = edition.getLangues().get(i);
             sb.append(langue.getCode());
-
-            if (i > len - 1) {
+            
+            if(i > len - 1){
                 sb.append(",");
             }
         }
         return sb.toString();
     }
-
-    private String getGenreObject(Edition edition) {
+    
+    private String getGenreObject(Edition edition){
         StringBuilder sb = new StringBuilder();
-
+        
         int len = edition.getGenres().size();
-        for (int i = 0; i < len; i++) {
+        for(int i = 0; i < len; i++){
             Genre genre = edition.getGenres().get(i);
             sb.append(genre.getLibelle());
-
-            if (i > len - 1) {
+            
+            if( i > len - 1){
                 sb.append(",");
             }
         }
-
+        
         return sb.toString();
     }
-//manquant le 09/09 lors de l'implementation maison, creait une erreur : rajouté par Eric 
-    private String getThemeObject(Edition edition) {
-        StringBuilder sb = new StringBuilder();
-
-        int len = edition.getThemes().size();
-        for (int i = 0; i < len; i++) {
-            Theme theme = edition.getThemes().get(i);
-            sb.append(theme.getLibelle());
-
-            if (i > len - 1) {
-                sb.append(",");
-            }
-        }
-
-        return sb.toString();
-    }
-//manquant le 09/09 lors de l'implementation maison, creait une erreur : rajouté par Eric 
-    private String getRubriqueObject(Edition edition) {
-        StringBuilder sb = new StringBuilder();
-
-        int len = edition.getRubriques().size();
-        for (int i = 0; i < len; i++) {
-            Rubrique rubrique = edition.getRubriques().get(i);
-            sb.append(rubrique.getLibelle());
-
-            if (i > len - 1) {
-                sb.append(",");
-            }
-        }
-
-        return sb.toString();
-    }
-
     private EditionColumn getColumn(int columnIndex) {
         EditionColumn[] columns = EditionColumn.values();
         EditionColumn column = columns[columnIndex];
         return column;
     }
+
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
@@ -212,5 +181,10 @@ public class EditionTableModel extends AbstractTableModel {
         String displayName = getColumnDisplayNames().get(columnObj);
         return displayName;
     }
+    
 
+    
+    
+    
+    
 }
