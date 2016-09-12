@@ -42,28 +42,6 @@ public class DeleteUtilisateurPanel extends JPanel {
             idUserField.setInputVerifier(new StrictInputVerifier());
             this.form.addField("IdUtilisateur", idUserField);
 
-            JTextField nomField = new JTextField(15);
-            nomField.setInputVerifier(new StrictInputVerifier());
-            this.form.addField("Nom", nomField);
-            
-            JTextField prenomField = new JTextField(15);
-            prenomField.setInputVerifier(new StrictInputVerifier());
-            this.form.addField("Prenom", prenomField);
-            
-            JTextField mailField = new JTextField(15);
-            mailField.setInputVerifier(new StrictInputVerifier());
-            this.form.addField("mail", mailField);
-            
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            JFormattedTextField formatText = new JFormattedTextField(formatter);
-            formatText.setColumns(20);
-            this.form.addField("Date de naissance", formatText);
-            
-            JPasswordField passwordField = new JPasswordField(15);
-            passwordField.setInputVerifier(new StrictInputVerifier());
-            this.form.addField("Mot de passe", passwordField);
-
-
             this.form.createForm();
         }
 
