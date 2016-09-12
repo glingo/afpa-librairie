@@ -5,6 +5,7 @@ import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.bean.Role;
 import fr.afpa.librairie.data.bean.StatutUtilisateur;
+import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.UtilisateurDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
@@ -23,7 +24,19 @@ import java.util.List;
             + " (nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur)"
             + " VALUES (?, ?, ?, ?, ?, ?, ?)";
     
-    private static final String SQL_DELETE = "DELETE FROM Utilisateur WHERE idUtilisateur = ?";
+//    private static final String SQL_DELETE = "DELETE FROM Utilisateur WHERE idUtilisateur = ?";
+    private static final String SQL_DELETE = "UPDATE Utilisateur"
+            + " SET idStatutUtilisateur = ?"
+            + " WHERE idUtilisateur = ?";
+    
+    private static final String SQL_UPDATE = "UPDATE Utilisateur"
+            + " SET nom = ?,"
+            + " prenom = ?,"
+            + " mail = ?,"
+            + " telephone = ?,"
+            + " date_naissance = ?,"
+            + " idStatutUtilisateur = ?"
+            + " WHERE idUtilisateur = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
             + " idUtilisateur, nom, prenom, mail, telephone, mot_de_passe, date_naissance, idStatutUtilisateur"
@@ -132,12 +145,19 @@ import java.util.List;
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, instance.getId());
-            int statut = preparedStatement.executeUpdate();
+            
+            // on ne supprime pas reelement l'utlisateur, nous allons juste mettre son statut a desactivé.
+            
+            StatutUtilisateur statut = factory.getStatutUtilisateurDAO().findByCode(StatutUtilisateurDAO.CODE_DESACTIVE);
+            
+            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, 
+                    statut.getId(), instance.getId());
+            
             /* Analyse du statut retourné par la requête d'insertion */
-            if (statut == 0) {
+            if (preparedStatement.executeUpdate() == 0) {
                 throw new DAOException("Échec de la suppression de l'utilisateur, aucune ligne supprimée dans la table.");
             }
+            
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {

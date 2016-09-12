@@ -43,7 +43,7 @@ public class AuteurAdminPanel extends JPanel {
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
-        add(getForm(), BorderLayout.NORTH);
+        add(getTitle(), BorderLayout.NORTH);
         
         repaint();
         setVisible(true);
@@ -55,14 +55,18 @@ public class AuteurAdminPanel extends JPanel {
         listModelSelection.setListModels(auteurListModel, selectionModel);
     }
     
-    private Component getForm(){
-        JPanel form = new JPanel();
+    public JList getAuteurList(){
+        return this.auteurList;
+    }
+    
+    private Component getTitle(){
+        JPanel title = new JPanel();
         
         JLabel titreSection = new JLabel("AUTEURS");
         
-        form.add(titreSection);
+        title.add(titreSection);
         
-        return form;
+        return title;
         
     }
     
@@ -76,6 +80,9 @@ public class AuteurAdminPanel extends JPanel {
         
         createButton.setActionCommand("create");
         createButton.addActionListener(controller);
+        
+        deleteButton.setActionCommand("delete");
+        deleteButton.addActionListener(controller);
         
         footer.add(createButton);
         footer.add(deleteButton);

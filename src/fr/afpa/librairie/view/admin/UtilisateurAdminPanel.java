@@ -29,8 +29,6 @@ public class UtilisateurAdminPanel extends JPanel {
     
     private final UtilisateurController controller;
     
-    
-    
     private final ListAdapterListModel<Utilisateur> utilisateurListModel = new ListAdapterListModel<>();
     private final UtilisateurTableModel utilisateurTableModel = new UtilisateurTableModel();
     private final JTable utilisateurTable = new JTable(utilisateurTableModel);
@@ -46,40 +44,38 @@ public class UtilisateurAdminPanel extends JPanel {
     private void init(){
         setLayout(new BorderLayout());
         
-
-        
         utilisateurTable.setSelectionModel(selectionModel);
         utilisateurTable.setSelectionModel(utilisateurList.getSelectionModel());
         
         JScrollPane scrollPane = new JScrollPane();
-//        scrollPane.setBounds(10, 11, this.frame, 130);
         scrollPane.setViewportView(utilisateurTable);
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
-        add(getForm(), BorderLayout.NORTH);
+        add(getTitle(), BorderLayout.NORTH);
         
         repaint();
-        setVisible(true); // Move it to here
+        setVisible(true);
     }
-    
     
     public void setUtilisateurList(ListAdapterListModel<Utilisateur> utilisateurListModel) {
         utilisateurList.setModel(utilisateurListModel);
         utilisateurTableModel.setListModel(utilisateurListModel);
         listModelSelection.setListModels(utilisateurListModel, selectionModel);
-
     }
     
-    private Component getForm(){
-        JPanel form = new JPanel();
+    public JList getUtilisateurList(){
+        return this.utilisateurList;
+    }
+    
+    private Component getTitle(){
+        JPanel title = new JPanel();
         
         JLabel titreSection = new JLabel("UTILISATEUR");
         
-        form.add(titreSection);
+        title.add(titreSection);
         
-        return form;
-
+        return title;
     }
     
     private Component getFooter() {

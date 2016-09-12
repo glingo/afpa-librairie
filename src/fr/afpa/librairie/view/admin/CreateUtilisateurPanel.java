@@ -56,6 +56,7 @@ public class CreateUtilisateurPanel extends JPanel {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             JFormattedTextField formatText = new JFormattedTextField(formatter);
             formatText.setColumns(20);
+            formatText.setInputVerifier(new StrictInputVerifier());
             this.form.addField("Date de naissance", formatText);
             
             JPasswordField passwordField = new JPasswordField(15);

@@ -5,21 +5,19 @@ import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CreateUtilisateurPanel;
-import fr.afpa.librairie.view.admin.DeleteUtilisateurPanel;
 import fr.afpa.librairie.view.admin.UtilisateurAdminPanel;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 import javax.swing.JFormattedTextField;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class UtilisateurController extends Controller {
     
-//    private final ListAdapterListModel<Utilisateur> utilisateurListModel = new ListAdapterListModel<>();
-    
     private final UtilisateurAdminPanel adminPanel = new UtilisateurAdminPanel(this);
     private final CreateUtilisateurPanel createPanel = new CreateUtilisateurPanel(this);
-    private final DeleteUtilisateurPanel deletePanel = new DeleteUtilisateurPanel(this);
+//    private final DeleteUtilisateurPanel deletePanel = new DeleteUtilisateurPanel(this);
     
     public UtilisateurController(MainFrame frame) {
         super(frame);
@@ -39,11 +37,12 @@ public class UtilisateurController extends Controller {
             case "save":
                 createAction();
                 break;
+                
             case "delete":
-                deleteAction();
+                JList<Utilisateur> list = this.adminPanel.getUtilisateurList();
+                deleteAction(list.getSelectedValue());
                 break;
             
-
             default:
                 if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
                     listAction();
@@ -85,7 +84,10 @@ public class UtilisateurController extends Controller {
         utilisateur.setPrenom(prenom);
         utilisateur.setEmail(mail);
         utilisateur.setMotDePasse(mdp);
-        utilisateur.setDateNaissance(new java.sql.Date(date.getTime()));
+        
+        if(date != null) {
+            utilisateur.setDateNaissance(new java.sql.Date(date.getTime()));
+        }
         
         try{
             getDaoFactory().getUtilisateurDAO().save(utilisateur);
@@ -99,38 +101,14 @@ public class UtilisateurController extends Controller {
         listAction();
     }
     
-    public void deleteAction(){
-        if(!this.deletePanel.equals(this.frame.getContent())) {
-            this.frame.setContent(deletePanel);
+    public void deleteAction(Utilisateur utilisateur){
+        
+        if(utilisateur == null) {
+            // impossible de supprimer si l'utilisateur n'a rien selectionné.
             return;
         }
         
-        this.deletePanel.getForm().verify();
-        
-
-        
-//        JTextField fieldNom = this.deletePanel.getForm().getField("Nom");
-//        JTextField fieldPrenom = this.deletePanel.getForm().getField("Prenom");
-//        JTextField fieldMail = this.deletePanel.getForm().getField("mail");
-//        JTextField fieldMdp = this.deletePanel.getForm().getField("Mot de passe");
-//        JFormattedTextField fieldDate = this.deletePanel.getForm().getField("Date de naissance");
-          
-        
- 
-//        String nom = fieldNom.getText();
-//        String prenom = fieldPrenom.getText();
-//        String mail = fieldMail.getText();
-//        String mdp = fieldMdp.getText();
-//        Date date = (Date) fieldDate.getValue();
-        
-        Utilisateur utilisateur = new Utilisateur();
-          
-
-//        utilisateur.setNom(nom);
-//        utilisateur.setPrenom(prenom);
-//        utilisateur.setEmail(mail);
-//        utilisateur.setMotDePasse(mdp);
-//        utilisateur.setDateNaissance(new java.sql.Date(date.getTime()));
+        // supprimer les references de l'uitlisateur vers roles (Remplit)
         
         try{
             getDaoFactory().getUtilisateurDAO().delete(utilisateur);
@@ -139,8 +117,13 @@ public class UtilisateurController extends Controller {
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
         
-        this.deletePanel.getForm().reset();
+        // ajouter un message comme quoi la suppression s'est bien deroulée.
     
         listAction();
+    }
+    
+    public void viewAction(Utilisateur utilisateur){
+        // un panel de visualisation.
+//        listAction();
     }
 }

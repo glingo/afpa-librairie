@@ -9,6 +9,7 @@ import fr.afpa.librairie.view.admin.CreateAuteurPanel;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 import javax.swing.JFormattedTextField;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -36,6 +37,12 @@ public class AuteurController extends Controller {
             case "save":
                 createAction();
                 break;
+                
+            case "delete":
+                JList<Auteur> list = this.adminPanel.getAuteurList();
+                deleteAction(list.getSelectedValue());
+                break;
+            
 
             default:
                 if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
@@ -89,6 +96,27 @@ public class AuteurController extends Controller {
 
         listAction();
 
+    }
+
+    private void deleteAction(Auteur auteur) {
+        if(auteur == null) {
+            // impossible de supprimer si l'utilisateur n'a rien selectionné.
+            return;
+        }
+        
+        // impossible de supprimer un auteur si des ouvrages sont encore relié a lui.
+        
+        try{
+            getDaoFactory().getAuteurDAO().delete(auteur);
+        } catch(DAOException ex){
+            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        // ajouter un message comme quoi la suppression s'est bien deroulée.
+    
+        listAction();
+        
     }
 
 }
