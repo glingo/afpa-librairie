@@ -28,7 +28,7 @@ public class DeleteUtilisateurPanel extends JPanel {
         setLayout((new BorderLayout()));
 
         add(getForm(), BorderLayout.CENTER);
-        add(getFooter(), BorderLayout.NORTH);
+        add(getFooter(), BorderLayout.SOUTH);
 
         repaint();
         setVisible(true);
@@ -37,27 +37,32 @@ public class DeleteUtilisateurPanel extends JPanel {
     public FormPanel getForm() {
         if (this.form == null) {
             this.form = new FormPanel();
+            
+            JTextField idUserField = new JTextField(15);
+            idUserField.setInputVerifier(new StrictInputVerifier());
+            this.form.addField("IdUtilisateur", idUserField);
 
             JTextField nomField = new JTextField(15);
             nomField.setInputVerifier(new StrictInputVerifier());
             this.form.addField("Nom", nomField);
-
+            
             JTextField prenomField = new JTextField(15);
             prenomField.setInputVerifier(new StrictInputVerifier());
             this.form.addField("Prenom", prenomField);
-
+            
             JTextField mailField = new JTextField(15);
             mailField.setInputVerifier(new StrictInputVerifier());
             this.form.addField("mail", mailField);
-
+            
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             JFormattedTextField formatText = new JFormattedTextField(formatter);
             formatText.setColumns(20);
             this.form.addField("Date de naissance", formatText);
-
+            
             JPasswordField passwordField = new JPasswordField(15);
             passwordField.setInputVerifier(new StrictInputVerifier());
             this.form.addField("Mot de passe", passwordField);
+
 
             this.form.createForm();
         }
@@ -75,6 +80,9 @@ public class DeleteUtilisateurPanel extends JPanel {
             
             deleteButton.setActionCommand("delete");
             deleteButton.addActionListener(this.controller);
+            
+            annulerButton.setActionCommand("annuler");
+            annulerButton.addActionListener(this.controller);
             
             this.footer.add(deleteButton);
             this.footer.add(annulerButton);
