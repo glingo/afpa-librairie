@@ -129,6 +129,8 @@ public class EditionController extends Controller {
 
         try {
             getDaoFactory().getEditionDAO().delete(edition);
+            JOptionPane deactiEd = new JOptionPane();
+            deactiEd.showMessageDialog(null, "La désactivation a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
         } catch (DAOException ex) {
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);

@@ -19,7 +19,7 @@ public class UtilisateurController extends Controller {
     
     private final UtilisateurAdminPanel adminPanel = new UtilisateurAdminPanel(this);
     private final CreateUtilisateurPanel createPanel = new CreateUtilisateurPanel(this);
-   // private final UtilisateurDialogPanel dialogPanel = new UtilisateurDialogPanel(this);
+
 
     
     public UtilisateurController(MainFrame frame) {
