@@ -19,7 +19,7 @@ import java.util.List;
 public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements CommandeDAO{
     
     private static final String SQL_INSERT = "INSERT INTO Commande"
-            + " (numero, dateCommande, idUtilisateur,)"
+            + " (idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande)"
             + " VALUES = (?, ?, ?)";
     
     private static final String SQL_DELETE = "UPDATE Commande"
@@ -94,7 +94,8 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
                     instance.getNumero(), instance.getDateCommande(),
-                    instance.getUser() == null ? null : instance.getUser().getNom());
+                    instance.getUser() == null ? null : instance.getUser().getNom(),
+                    instance.getOrderStat() == null ? null : instance.getOrderStat().getId());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -161,8 +162,8 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         Utilisateur user = factory.getUtilisateurDAO().findById(resultSet.getLong("idUtilisateur"));
         
         
-        StatutCommande orderStat = factory.getStatutCommandeDAO().findById(resultSet.getLong("idStatutCommande"));
-        commande.setOrderStat(orderStat);
+        //StatutCommande orderStat = factory.getStatutCommandeDAO().findByCommande(resultSet.getString("idCommande"));
+        //commande.setOrderStat(orderStat);
         
 //        List<Adresse> dernieresFacturations = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
 //        List<Adresse> dernieresLivraisons = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());

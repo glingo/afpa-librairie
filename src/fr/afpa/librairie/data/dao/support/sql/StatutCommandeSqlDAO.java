@@ -41,18 +41,14 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
             + " JOIN HistoriqueStatutCommande AS hsc ON hsc.idStatutCommande = stac.idStatutCommande"
             + " WHERE hsc.idCommande = ?";
 
-//    
-//    private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
-//            +" stu.idStatutUtilisateur, stu.libelle, stu.code"
-//            +" FROM StatutUtilisateur AS stu"
-//            +" JOIN Utilisateur AS ut ON ut.idStatutUtilisateur = stu.idStatutUtilisateur"
-//            +" WHERE ut.idUtilisateur =?";
-//    
+    
+    
+    
     public StatutCommandeSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
     
-    public List<StatutCommande> findByCommande(String isbn) throws DAOException {
+    public List<StatutCommande> findByCommande(String libelle) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -61,7 +57,7 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
 
         try {
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_COMMANDE, false, isbn);
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_COMMANDE, false, libelle);
             resultSet = preparedStatement.executeQuery();
             
 //            resultSet.beforeFirst();
