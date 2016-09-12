@@ -1,4 +1,3 @@
-
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
@@ -6,23 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Edition {
+
     private String isbn;
     private Date datePublication;
     private float prixHt;
     private String couverture;
     private String titre;
     private int stock;
-    
-    
+
     private StatutEdition statut;
-    private Ouvrage titreOuvrage;
+    private Ouvrage ouvrage;
     private Langue langue;
     private List<Taxe> taxes;
 
-    
     public Edition() {
     }
-    
 
     public String getIsbn() {
         return isbn;
@@ -71,44 +68,53 @@ public class Edition {
     public void setStock(int stock) {
         this.stock = stock;
     }
-    
-    public StatutEdition getStatut(){
+
+    public StatutEdition getStatut() {
         return statut;
     }
-    
-    public void setStatut(StatutEdition statut){
+
+    public void setStatut(StatutEdition statut) {
         this.statut = statut;
     }
-    
-    public Ouvrage getTitreOuvrage(){
-        return titreOuvrage;
+
+    public Ouvrage getOuvrage() {
+        return ouvrage;
     }
-    
-    public void setTitreOuvrage(Ouvrage titreOuvrage){
-        this.titreOuvrage = titreOuvrage;
-        
+
+    public void setOuvrage(Ouvrage ouvrage) {
+        this.ouvrage = ouvrage;
+
     }
-    
-    public Langue getLangue(){
+
+    public Langue getLangue() {
         return langue;
     }
-    
-    public void setLangue(Langue langue){
+
+    public void setLangue(Langue langue) {
         this.langue = langue;
     }
-    
-    
-    public List<Taxe> getTaxes(){
+
+    public List<Taxe> getTaxes() {
         return taxes;
     }
-    
-    public void setTaxes(List<Taxe> taxes){
+
+    public void setTaxes(List<Taxe> taxes) {
         this.taxes = taxes;
     }
 
     @Override
     public String toString() {
-        return "Edition{" + "isbn=" + isbn + ", datePublication=" + datePublication + ", prixHt=" + prixHt + ", couverture=" + couverture + ", titre=" + titre + ", stock=" + stock + ", statut=" + statut + ", titreOuvrage=" + titreOuvrage + ", langue=" + langue + ", taxes=" + taxes + '}';
+        return "Edition{"
+                + "isbn=" + isbn
+                + ", datePublication=" + datePublication
+                + ", prixHt=" + prixHt
+                + ", couverture=" + couverture
+                + ", titre=" + titre
+                + ", stock=" + stock
+                + ", statut=" + statut
+                + ", ouvrage=" + ouvrage
+                + ", langue=" + langue
+                + ", taxes=" + taxes + '}';
     }
 
 }
