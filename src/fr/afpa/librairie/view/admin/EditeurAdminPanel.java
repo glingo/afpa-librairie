@@ -44,7 +44,7 @@ public class EditeurAdminPanel extends JPanel {
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
-        add(getForm(), BorderLayout.NORTH);
+        add(getTitle(), BorderLayout.NORTH);
         
         repaint();
         setVisible(true);
@@ -56,14 +56,18 @@ public class EditeurAdminPanel extends JPanel {
         listModelSelection.setListModels(editeurListModel, selectionModel);
     }
     
-    private Component getForm(){
-        JPanel form = new JPanel();
+    public JList<Editeur> getEditeurList(){
+        return this.editeurList;
+    }
+    
+    private Component getTitle(){
+        JPanel title = new JPanel();
         
         JLabel titre = new JLabel("EDITEURS");
         
-        form.add(titre);
+        title.add(titre);
         
-        return form;
+        return title;
     }
     private Component getFooter() {
         JPanel footer = new JPanel();
@@ -75,6 +79,9 @@ public class EditeurAdminPanel extends JPanel {
         
         createButton.setActionCommand("create");
         createButton.addActionListener(controller);
+        
+        deleteButton.setActionCommand("delete");
+        deleteButton.addActionListener(controller);
         
         footer.add(createButton);
         footer.add(deleteButton);

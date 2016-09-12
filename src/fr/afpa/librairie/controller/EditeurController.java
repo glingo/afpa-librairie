@@ -34,6 +34,10 @@ public class EditeurController extends Controller {
             case "save":
                 createAction();
                 break;
+                
+            case "delete":
+                deleteAction(this.adminPanel.getEditeurList().getSelectedValue());
+                break;
 
             default:
                 if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
@@ -41,6 +45,7 @@ public class EditeurController extends Controller {
                 }
         }
     }
+    
 
     public void listAction() {
         ListAdapterListModel<Editeur> EditeurListModel = new ListAdapterListModel<>();
@@ -68,7 +73,6 @@ public class EditeurController extends Controller {
         
         editeur.setLibelle(libelle);
 
-
         try {
             getDaoFactory().getEditeurDAO().save(editeur);
         } catch (DAOException ex) {
@@ -80,6 +84,26 @@ public class EditeurController extends Controller {
 
         listAction();
 
+    }
+
+    private void deleteAction(Editeur editeur) {
+    
+        if(editeur == null) {
+            // impossible de supprimer si l'utilisateur n'a rien selectionné.
+            return;
+        }
+        
+        // les editeurs sont liés a des editions.
+        
+        try {
+            getDaoFactory().getEditeurDAO().delete(editeur);
+        } catch (DAOException ex) {
+            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+        }
+         
+        listAction();
+        
     }
     
     
