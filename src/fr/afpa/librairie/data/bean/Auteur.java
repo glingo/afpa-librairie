@@ -1,18 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- *
- * @author cdi305
- */
 public class Auteur {
 
     private Long id;
@@ -21,10 +10,7 @@ public class Auteur {
     private Date dateNaissance;
     private Date dateDeces;
     
-    private Ouvrage ouvrage;
-    
-    public Auteur() {
-    }
+    public Auteur() { }
 
     public Auteur(Long id, String nom, Date dateNaissance, Date dateDeces) {
         this.id = id;
@@ -73,30 +59,6 @@ public class Auteur {
         this.dateDeces = dateDeces;
     }
     
-    public Ouvrage getOuvrage() {
-        return ouvrage;
-    }
-    
-    public void setOuvrage(Ouvrage ouvrage){
-        this.ouvrage = ouvrage;
-    }
-//
-//    public List<Ouvrage> getOuvrages(){
-//        return ouvrages;
-//    }
-//    
-//    public void setOuvrages(List<Ouvrage> ouvrages){
-//        this.ouvrages = ouvrages;
-//    }
-//    
-//    public void addOuvrage(Ouvrage ouvrage){
-//        if(this.ouvrages == null){
-//            this.ouvrages = new ArrayList<>();
-//        }
-//        this.ouvrages.add(ouvrage);
-//    }
-//    
-
     @Override
     public String toString(){
         return prenom+" "+nom;

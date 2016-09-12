@@ -45,7 +45,6 @@ public class EditeurController extends Controller {
                 }
         }
     }
-    
 
     public void listAction() {
         ListAdapterListModel<Editeur> EditeurListModel = new ListAdapterListModel<>();

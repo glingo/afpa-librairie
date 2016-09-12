@@ -19,7 +19,7 @@ import java.util.List;
 public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
 
     private static final String SQL_INSERT = "INSERT INTO Auteur"
-            + " (nom, prenom, date_naissance, date_deces, titre)"
+            + " (nom, prenom, date_naissance, date_deces)"
             + " VALUES (?, ?, ?, ?)";
     
     private static final String SQL_DELETE = "DELETE FROM Auteur WHERE idAuteur = ?";
@@ -79,19 +79,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
 //                    ouvrage = getFactory().getOuvrageDAO().findByTitre(ouvrage.getTitre());
 //                }
 //            });
-             if(instance.getOuvrage() == null) {
-                // on recupère le statut par default
-                // le code devrait etre une constante.
-                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre("OK");
-                instance.setOuvrage(ouvrage);
-            }
-            
-            // le statut est forcement different de null.
-            if(instance.getOuvrage().getTitre() == null) {
-                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre(instance.getOuvrage().getTitre());
-                instance.setOuvrage(ouvrage);
-            }
-
+             
             connexion = factory.getConnection();
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,

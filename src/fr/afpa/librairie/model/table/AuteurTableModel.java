@@ -1,7 +1,6 @@
 package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Auteur;
-import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.AuteurColumn;
@@ -26,7 +25,6 @@ public class AuteurTableModel extends AbstractTableModel {
             this.columnDisplayNames.put(AuteurColumn.PRENOM, "Prenom");
             this.columnDisplayNames.put(AuteurColumn.DATE_NAISSANCE, "Date de naissance");
             this.columnDisplayNames.put(AuteurColumn.DATE_DECES, "Date de décès");
-            //this.columnDisplayNames.put(AuteurColumn.OUVRAGE, "Ouvrages écrits");
         }
         return this.columnDisplayNames;
     }
@@ -71,20 +69,10 @@ public class AuteurTableModel extends AbstractTableModel {
             case DATE_DECES:
                 columnValue = auteur.getDateDeces();
                 break;
-            //case OUVRAGE : 
-              //  columnValue = getOuvrageObject(auteur);
-            default:
-//                columnValue = getAddressObject(person, column);
-                break;
         }
 
         return columnValue;
     }
-
-    
-    //private String getOuvrageObject(Auteur auteur){
-      //  return auteur.getOuvrage().getTitre();
-    //}
 
 
     private AuteurColumn getColumn(int columnIndex) {
