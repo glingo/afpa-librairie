@@ -5,6 +5,7 @@ import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CreateUtilisateurPanel;
+import fr.afpa.librairie.view.admin.DeleteUtilisateurPanel;
 import fr.afpa.librairie.view.admin.UtilisateurAdminPanel;
 import java.awt.event.ActionEvent;
 import java.util.Date;
@@ -18,6 +19,7 @@ public class UtilisateurController extends Controller {
     
     private final UtilisateurAdminPanel adminPanel = new UtilisateurAdminPanel(this);
     private final CreateUtilisateurPanel createPanel = new CreateUtilisateurPanel(this);
+    private final DeleteUtilisateurPanel deletePanel = new DeleteUtilisateurPanel(this);
     
     public UtilisateurController(MainFrame frame) {
         super(frame);
@@ -37,6 +39,10 @@ public class UtilisateurController extends Controller {
             case "save":
                 createAction();
                 break;
+            case "delete":
+                deleteAction();
+                break;
+            
 
             default:
                 if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
@@ -89,6 +95,46 @@ public class UtilisateurController extends Controller {
         }
         
         this.createPanel.getForm().reset();
+    
+        listAction();
+    }
+    
+    public void deleteAction(){
+        if(!this.deletePanel.equals(this.frame.getContent())) {
+            this.frame.setContent(deletePanel);
+            return;
+        }
+        
+        this.deletePanel.getForm().verify();
+        
+        JTextField fieldNom = this.deletePanel.getForm().getField("Nom");
+        JTextField fieldPrenom = this.deletePanel.getForm().getField("Prenom");
+        JTextField fieldMail = this.deletePanel.getForm().getField("mail");
+        JTextField fieldMdp = this.deletePanel.getForm().getField("Mot de passe");
+        JFormattedTextField fieldDate = this.deletePanel.getForm().getField("Date de naissance");
+        
+        String nom = fieldNom.getText();
+        String prenom = fieldPrenom.getText();
+        String mail = fieldMail.getText();
+        String mdp = fieldMdp.getText();
+        Date date = (Date) fieldDate.getValue();
+        
+        Utilisateur utilisateur = new Utilisateur();
+        
+        utilisateur.setNom(nom);
+        utilisateur.setPrenom(prenom);
+        utilisateur.setEmail(mail);
+        utilisateur.setMotDePasse(mdp);
+        utilisateur.setDateNaissance(new java.sql.Date(date.getTime()));
+        
+        try{
+            getDaoFactory().getUtilisateurDAO().delete(utilisateur);
+        } catch(DAOException ex){
+            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        this.deletePanel.getForm().reset();
     
         listAction();
     }

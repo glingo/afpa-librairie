@@ -77,6 +77,7 @@ public class CommandeAdminPanel extends JPanel {
         
         createButton.setActionCommand("create");
         createButton.addActionListener(controller);
+       
         
         footer.add(createButton);
         footer.add(deleteButton);
