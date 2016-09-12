@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class CreateEditionPanel extends JPanel {
-    //correspon au bouton "create" du panel EditionAdminPanel
+    //correspond au bouton "create" du panel EditionAdminPanel
     
     //appel du contructeur ( = ecoute)
     private final EditionController controller;
@@ -97,6 +97,9 @@ public class CreateEditionPanel extends JPanel {
 
             saveButton.setActionCommand("save");
             saveButton.addActionListener(this.controller);
+            
+            abordButton.setActionCommand("annuler");
+            abordButton.addActionListener(this.controller);
 
             this.footer.add(saveButton);
             this.footer.add(abordButton);

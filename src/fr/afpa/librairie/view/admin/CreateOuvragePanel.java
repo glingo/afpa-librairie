@@ -68,6 +68,9 @@ public class CreateOuvragePanel extends JPanel{
 
             saveButton.setActionCommand("save");
             saveButton.addActionListener(this.controller);
+            
+            abordButton.setActionCommand("annuler");
+            abordButton.addActionListener(this.controller);
 
             this.footer.add(saveButton);
             this.footer.add(abordButton);
