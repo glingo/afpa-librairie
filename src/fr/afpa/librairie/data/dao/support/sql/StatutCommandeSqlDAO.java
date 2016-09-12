@@ -34,6 +34,12 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
             + " idStatutCommande, libelle, code"
             + " FROM StatutCommande"
             + " WHERE libelle = ?";
+    
+    private static final String SQL_FIND_BY_COMMANDE = "SELECT"
+            + " stack.idStatutCommande, stac.libelle, stac.code"
+            + " FROM StatutCommande AS stac"
+            + " JOIN HistoriqueStatutCommande AS hsc ON hsc.idStatutCommande = stac.idStatutCommande"
+            + " WHERE hsc.idCommande = ?";
 
 //    
 //    private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
@@ -45,16 +51,50 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
     public StatutCommandeSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
+    
+    public List<StatutCommande> findByCommande(String isbn) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<StatutCommande> orderStats = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_COMMANDE, false, isbn);
+            resultSet = preparedStatement.executeQuery();
+            
+//            resultSet.beforeFirst();
+            
+            while (resultSet.next()) {
+                orderStats.add(map(resultSet));
+            }
+            
+            if (resultSet.next()) {
+                orderStats = new ArrayList<>();
+                orderStats.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return orderStats;
+
+    }
 
     @Override
     protected StatutCommande map(ResultSet resultSet) throws SQLException {
-        StatutCommande orderStatus = new StatutCommande();
+        StatutCommande orderStat = new StatutCommande();
 
-        orderStatus.setId(resultSet.getLong("idStatutCommande"));
-        orderStatus.setLibelle(resultSet.getString("libelle"));
-        orderStatus.setCode(resultSet.getString("code"));
+        orderStat.setId(resultSet.getLong("idStatutCommande"));
+        orderStat.setLibelle(resultSet.getString("libelle"));
+        orderStat.setCode(resultSet.getString("code"));
+        
+        
 
-        return orderStatus;
+        return orderStat;
 
     }
 

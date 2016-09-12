@@ -9,6 +9,7 @@ import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.StatutEdition;
 import fr.afpa.librairie.data.bean.Taxe;
 import fr.afpa.librairie.data.dao.EditionDAO;
+import fr.afpa.librairie.data.dao.StatutEditionDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -22,7 +23,10 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
     //requete SQL
     private static final String SQL_INSERT = "INSERT INTO Edition (isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
-    private static final String SQL_DELETE = "DELETE FROM Edition WHERE isbn = ?";
+    private static final String SQL_DELETE = "UPDATE Edition "
+            + " SET idStatutEdition = ?"
+            + " WHERE isbn = ?";
+
     
     private static final String SQL_FIND_ALL = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition";
     
@@ -143,24 +147,28 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
     public void delete(Edition instance)throws DAOException{
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement pstmt = null;
         ResultSet valeursAutoGenerees = null;
 
         try {
-            /* Récupération d'une connexion depuis la Factory */
+           
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, instance.getIsbn());
-            int statut = preparedStatement.executeUpdate();
+
+            StatutEdition statut = factory.getStatutEditionDAO().findByCode(StatutEditionDAO.CODE_NON_DISPONIBLE);
+            
+            pstmt = getPreparedStatement(connexion, SQL_DELETE, true, 
+                    statut.getId(), instance.getIsbn());
+            
             /* Analyse du statut retourné par la requête d'insertion */
-            if (statut == 0) {
-                throw new DAOException("Échec de la suppression de l'édition, aucune ligne supprimée dans la table.");
+            if (pstmt.executeUpdate() == 0) {
+                throw new DAOException("Échec de la mise à jour de l'édition, aucune ligne modifiée dans la table.");
             }
+            
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            close(valeursAutoGenerees, preparedStatement, connexion);
+            close(valeursAutoGenerees, pstmt, connexion);
         }
-        
     }
     
     @Override
@@ -323,6 +331,8 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         
         List<Taxe> taxes = factory.getTaxeDao().findByEdition(edition.getIsbn());
         edition.setTaxes(taxes);
+        
+        
 
         return edition;
     }

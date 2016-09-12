@@ -40,9 +40,8 @@ public class UtilisateurController extends Controller {
                 createAction();
                 break;
                 
-            case "delete":
-                JList<Utilisateur> list = this.adminPanel.getUtilisateurList();
-                deleteAction(list.getSelectedValue());
+            case "deactivate":
+                deactivateAction(this.adminPanel.getUtilisateurList().getSelectedValue());
                 break;
             
             default:
@@ -103,7 +102,7 @@ public class UtilisateurController extends Controller {
         listAction();
     }
     
-    public void deleteAction(Utilisateur utilisateur){
+    public void deactivateAction(Utilisateur utilisateur){
         
         if(utilisateur == null) {
             // impossible de supprimer si l'utilisateur n'a rien selectionné.

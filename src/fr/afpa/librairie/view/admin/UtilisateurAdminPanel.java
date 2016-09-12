@@ -82,18 +82,18 @@ public class UtilisateurAdminPanel extends JPanel {
         JPanel footer = new JPanel();
         
         JButton createButton = new JButton("Creer");
-        JButton deleteButton = new JButton("Supprimer");
+        JButton deactivateButton = new JButton("Désactiver");
         JButton viewButton = new JButton("Voir");
         JButton updateButton = new JButton("Mettre à jour");
         
         createButton.setActionCommand("create");
         createButton.addActionListener(controller);
         
-        deleteButton.setActionCommand("delete");
-        deleteButton.addActionListener(controller);
+        deactivateButton.setActionCommand("deactivate");
+        deactivateButton.addActionListener(controller);
         
         footer.add(createButton);
-        footer.add(deleteButton);
+        footer.add(deactivateButton);
         footer.add(viewButton);
         footer.add(updateButton);
         footer.repaint();

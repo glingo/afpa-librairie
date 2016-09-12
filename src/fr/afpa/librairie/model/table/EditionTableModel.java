@@ -38,6 +38,7 @@ public class EditionTableModel extends AbstractTableModel {
             this.columnDisplayNames.put(EditionColumn.COUVERTURE, "Image de couverture");
             this.columnDisplayNames.put(EditionColumn.TITRE, "Titre");
             this.columnDisplayNames.put(EditionColumn.STOCK, "Stock");
+            this.columnDisplayNames.put(EditionColumn.STATUT_EDITION, "Statut edition");
         }
         return this.columnDisplayNames;
     }
@@ -107,6 +108,9 @@ public class EditionTableModel extends AbstractTableModel {
             case STOCK:
                 columnValue = edition.getStock();
                 break;
+            case STATUT_EDITION:
+                columnValue = getStatutEditionObject(edition);
+                break;
             default:
 
                 break;
@@ -114,6 +118,10 @@ public class EditionTableModel extends AbstractTableModel {
 
         return columnValue;
         //retourne la valeur de la colonne selectionnée. 
+    }
+    
+    private String getStatutEditionObject(Edition edition){
+        return edition.getStatut().getLibelle();
     }
 
     private String getAuteurObject(Edition edition) {

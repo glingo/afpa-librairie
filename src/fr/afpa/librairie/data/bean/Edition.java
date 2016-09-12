@@ -17,7 +17,7 @@ public class Edition {
     private Ouvrage ouvrage;
     private Langue langue;
     private List<Taxe> taxes;
-
+    
     public Edition() {
     }
 

@@ -25,6 +25,7 @@ public class CommandeTableModel extends AbstractTableModel{
             this.columnDisplayNames.put(CommandeColumn.DATE_COMMANDE, "Date de commande");
             this.columnDisplayNames.put(CommandeColumn.ADRESSE_LIVRAISON, "Adresse de livraison");
             this.columnDisplayNames.put(CommandeColumn.ADRESSE_FACTURATION, "Adresse de facturation");
+            this.columnDisplayNames.put(CommandeColumn.STATUT_COMMANDE, "Statut de la commande");
             
         }
         return this.columnDisplayNames;
@@ -73,6 +74,10 @@ public class CommandeTableModel extends AbstractTableModel{
 //            case ADRESSE_FACTURATION:
 //                columnValue = getAdresseFacturationObject(commande);
 //                break;
+            case STATUT_COMMANDE:
+                columnValue = getStatutCommandeObject(commande);
+                break;
+                  
             default:
 //                columnValue = getAddressObject(person, column);
                 break;
@@ -81,7 +86,9 @@ public class CommandeTableModel extends AbstractTableModel{
         return columnValue;
     }
     
-    
+    private String getStatutCommandeObject(Commande commande){
+        return commande.getOrderStat().getLibelle();
+    }
     
     private String getUtilisateurObject(Commande commande){
         return commande.getUser().getNom();
