@@ -27,7 +27,8 @@ public class Tag {
 
     @Override
     public String toString() {
-        return "Tag{" + "id=" + id + ", libelle=" + libelle + '}';
+//        return "Tag{" + "id=" + id + ", libelle=" + libelle + '}';
+        return libelle;
     }
     
     

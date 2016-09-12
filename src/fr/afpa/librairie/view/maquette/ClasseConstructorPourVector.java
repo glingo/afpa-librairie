@@ -7,6 +7,10 @@ public class ClasseConstructorPourVector {
     private String colonne1;
     private String colonne2;
 
+    public ClasseConstructorPourVector(){
+        
+    }
+    
     public ClasseConstructorPourVector(String classe, long id, String colonne1) {
         this.classe = classe;
         this.id = id;
