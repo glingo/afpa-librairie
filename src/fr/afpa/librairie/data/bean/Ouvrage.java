@@ -17,15 +17,12 @@ public class Ouvrage {
     
     private List<Auteur> coAuteurs;
     
-    
+//    private Langue langue;
     private List<Theme> themes;
     private List<Rubrique> rubriques;
     private List<Genre> genres;
     private List<Tag> tags;
-    private List<Langue> langues;
     
-    
-
     public Ouvrage() {}
 
     
@@ -103,22 +100,14 @@ public class Ouvrage {
         this.themes.add(theme);
     }
     
-    public List<Langue> getLangues(){
-        return langues;
-    }
+//    public Langue getLangue(){
+//        return langue;
+//    }
+//    
+//    public void setLangue(Langue langue){
+//        this.langue = langue;
+//    }
     
-    public void setLangues(List<Langue> langues){
-        this.langues = langues;
-    }
-    
-    public void addLangue(Langue langue){
-        if(this.langues == null){
-            this.langues = new ArrayList<>();
-        }
-        
-        this.langues.add(langue);
-    }
-
     public List<Rubrique> getRubriques() {
         return rubriques;
     }
@@ -169,7 +158,7 @@ public class Ouvrage {
 
     @Override
     public String toString() {
-        return "Ouvrage{" + "id=" + id + ", titre=" + titre + ", sousTitre=" + sousTitre + ", resume=" + resume + ", auteur=" + auteur + ", coAuteurs=" + coAuteurs + ", themes=" + themes + ", rubriques=" + rubriques + ", genres=" + genres + ", tags=" + tags + ", langues=" + langues + '}';
+        return "Ouvrage{" + "id=" + id + ", titre=" + titre + ", sousTitre=" + sousTitre + ", resume=" + resume + ", auteur=" + auteur + ", coAuteurs=" + coAuteurs + ", themes=" + themes + ", rubriques=" + rubriques + ", genres=" + genres + ", tags=" + tags + '}';
     }
     
     

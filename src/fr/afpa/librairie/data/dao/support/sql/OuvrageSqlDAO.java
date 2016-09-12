@@ -2,9 +2,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOFactoryInterface;
-import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Genre;
-import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.bean.Tag;
@@ -21,7 +19,7 @@ import java.util.List;
 public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO {
 
     private static final String SQL_INSERT = "INSERT INTO Ouvrage"
-            + " (titre, sous_titre, resume)"
+            + " (titre, sous_titre, resume, idAuteur)"
             + " VALUES (?, ?, ?, ?)";
 
     private static final String SQL_DELETE = "DELETE FROM Ouvrage WHERE idOuvrage = ?";
@@ -70,72 +68,71 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
 
         try {
 
-//            if (instance.getAuteur() == null) {
-//                Auteur auteur = getFactory().getAuteurDAO().findByName("OK");
-//                instance.setAuteur(auteur);
+            if (instance.getAuteur() == null) {
+                throw new DAOException("Un ouvrage doit avoir un auteur");
+            }
+            
+            // nous sauvegardons l'auteur si il n'est pas référencé dans la base de données.
+            if (instance.getAuteur().getId() == null) {
+                getFactory().getAuteurDAO().save(instance.getAuteur());
+            }
+            
+            // Je ne comprend pas d'ou vient d'erreur. 
+//            if (instance.getThemes() == null) {
+//
+//                Theme theme = getFactory().getThemeDAO().findByLibelle("CLI");
+//                instance.addTheme(theme);
+//            }
+
+//            instance.getThemes().forEach((Theme theme) -> {
+//                if (theme != null && theme.getId() == null) {
+//                    theme = getFactory().getThemeDAO().findByLibelle(theme.getLibelle());
+//                }
+//            });
+
+//            if (instance.getGenres() == null) {
+//
+//                Genre genre = getFactory().getGenreDAO().findByLibelle("CLI");
+//                instance.addGenre(genre);
+//            }
+
+//            instance.getGenres().forEach((Genre genre) -> {
+//                if (genre != null && genre.getId() == null) {
+//                    genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
+//                }
+//            });
+
+//            if (instance.getRubriques() == null) {
+//
+//                Rubrique rubrique = getFactory().getRubriqueDAO().findByLibelle("CLI");
+//                instance.addRubrique(rubrique);
 //            }
 //
-//            if (instance.getAuteur().getId() == null) {
-//                Auteur auteur = getFactory().getAuteurDAO().findByName(instance.getAuteur().getNom());
-//                instance.setAuteur(auteur);
+//            instance.getRubriques().forEach((Rubrique rubrique) -> {
+//                if (rubrique != null && rubrique.getId() == null) {
+//                    rubrique = getFactory().getRubriqueDAO().findByLibelle(rubrique.getLibelle());
+//                }
+//            });
+//
+//            if (instance.getTags() == null) {
+//
+//                Tag tag = getFactory().getTagDAO().findByLibelle("CLI");
+//                instance.addTag(tag);
 //            }
-            // Je ne comprend pas d'ou vient d'erreur. 
-            if (instance.getThemes() == null) {
-
-                Theme theme = getFactory().getThemeDAO().findByLibelle("CLI");
-                instance.addTheme(theme);
-            }
-
-            instance.getThemes().forEach((Theme theme) -> {
-                if (theme != null && theme.getId() == null) {
-                    theme = getFactory().getThemeDAO().findByLibelle(theme.getLibelle());
-                }
-            });
-
-            if (instance.getGenres() == null) {
-
-                Genre genre = getFactory().getGenreDAO().findByLibelle("CLI");
-                instance.addGenre(genre);
-            }
-
-            instance.getGenres().forEach((Genre genre) -> {
-                if (genre != null && genre.getId() == null) {
-                    genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
-                }
-            });
-
-            if (instance.getRubriques() == null) {
-
-                Rubrique rubrique = getFactory().getRubriqueDAO().findByLibelle("CLI");
-                instance.addRubrique(rubrique);
-            }
-
-            instance.getRubriques().forEach((Rubrique rubrique) -> {
-                if (rubrique != null && rubrique.getId() == null) {
-                    rubrique = getFactory().getRubriqueDAO().findByLibelle(rubrique.getLibelle());
-                }
-            });
-
-            if (instance.getTags() == null) {
-
-                Tag tag = getFactory().getTagDAO().findByLibelle("CLI");
-                instance.addTag(tag);
-            }
-
-            instance.getTags().forEach((Tag tag) -> {
-                if (tag != null && tag.getId() == null) {
-                    tag = getFactory().getTagDAO().findByLibelle(tag.getLibelle());
-                }
-            });
+//
+//            instance.getTags().forEach((Tag tag) -> {
+//                if (tag != null && tag.getId() == null) {
+//                    tag = getFactory().getTagDAO().findByLibelle(tag.getLibelle());
+//                }
+//            });
 
 
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getTitre(), instance.getSousTitre(),
-                    instance.getResume(),
-                    instance.getAuteur() == null ? null : instance.getAuteur().getId());
+                    instance.getTitre(), instance.getSousTitre(), instance.getResume(),
+                    instance.getAuteur().getId());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */

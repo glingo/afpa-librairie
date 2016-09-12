@@ -7,11 +7,6 @@ import javax.swing.AbstractListModel;
 
 public class ListAdapterListModel<E> extends AbstractListModel<E> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3348705533107354297L;
-
     private final List<E> list = new ArrayList<>();
 
     public void setList(List<E> list) {

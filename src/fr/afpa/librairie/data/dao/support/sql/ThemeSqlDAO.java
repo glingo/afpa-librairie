@@ -142,6 +142,7 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
 
     @Override
     public Theme findByLibelle(String libelle) {
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
