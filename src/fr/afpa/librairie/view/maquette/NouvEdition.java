@@ -15,7 +15,7 @@ public class NouvEdition extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.setMinimumSize(new Dimension(600, 700));
         this.setPreferredSize(new Dimension(600, 700));
-        jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
+        nouvelleEditionLB.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
     private DefaultComboBoxModel initModelAuteur() {
@@ -40,237 +40,237 @@ public class NouvEdition extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        ouvragelb = new javax.swing.JLabel();
-        ouvragecb = new javax.swing.JComboBox();
-        ouvrageResultatlb = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        mainPanel = new javax.swing.JPanel();
+        titlePanel = new javax.swing.JPanel();
+        nouvelleEditionLB = new javax.swing.JLabel();
+        bodyPanel = new javax.swing.JPanel();
+        ouvrageLB = new javax.swing.JLabel();
+        ouvrageCB = new javax.swing.JComboBox();
+        ouvrageResLB = new javax.swing.JLabel();
+        langueResLB = new javax.swing.JLabel();
+        langueCB = new javax.swing.JComboBox();
+        langueLB = new javax.swing.JLabel();
+        isbnLB = new javax.swing.JLabel();
+        isbnTF = new javax.swing.JTextField();
+        titreLB = new javax.swing.JLabel();
+        titreTF = new javax.swing.JTextField();
+        dateLB = new javax.swing.JLabel();
+        dateTF = new javax.swing.JTextField();
+        prixLB = new javax.swing.JLabel();
+        prixTF = new javax.swing.JTextField();
+        stockLB = new javax.swing.JLabel();
+        stockTF = new javax.swing.JTextField();
+        couvertureLB = new javax.swing.JLabel();
+        couvertureTF = new javax.swing.JTextField();
         footerModel1 = new fr.afpa.librairie.view.maquette.FooterModel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(java.awt.Color.darkGray);
+        mainPanel.setBackground(java.awt.Color.darkGray);
 
-        jPanel2.setBackground(java.awt.Color.darkGray);
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
+        titlePanel.setBackground(java.awt.Color.darkGray);
+        titlePanel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setForeground(java.awt.Color.lightGray);
-        jLabel1.setText("Nouvelle Edition");
+        nouvelleEditionLB.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        nouvelleEditionLB.setForeground(java.awt.Color.lightGray);
+        nouvelleEditionLB.setText("Nouvelle Edition");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
+        titlePanel.setLayout(titlePanelLayout);
+        titlePanelLayout.setHorizontalGroup(
+            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(titlePanelLayout.createSequentialGroup()
                 .addGap(100, 100, 100)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nouvelleEditionLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(96, 96, 96))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        titlePanelLayout.setVerticalGroup(
+            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(titlePanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jLabel1)
+                .addComponent(nouvelleEditionLB)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(java.awt.Color.darkGray);
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
+        bodyPanel.setBackground(java.awt.Color.darkGray);
+        bodyPanel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
 
-        ouvragelb.setForeground(java.awt.Color.lightGray);
-        ouvragelb.setText("Ouvrage");
+        ouvrageLB.setForeground(java.awt.Color.lightGray);
+        ouvrageLB.setText("Ouvrage");
 
-        ouvragecb.setBackground(java.awt.Color.gray);
-        ouvragecb.setModel(initModelAuteur());
-        ouvragecb.setPreferredSize(new java.awt.Dimension(150, 26));
-        ouvragecb.addMouseListener(new java.awt.event.MouseAdapter() {
+        ouvrageCB.setBackground(java.awt.Color.gray);
+        ouvrageCB.setModel(initModelAuteur());
+        ouvrageCB.setPreferredSize(new java.awt.Dimension(150, 26));
+        ouvrageCB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ouvragecbClic(evt);
+                ouvrageCBClic(evt);
             }
         });
-        ouvragecb.addActionListener(new java.awt.event.ActionListener() {
+        ouvrageCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ouvragecbActionPerformed(evt);
+                ouvrageCBActionPerformed(evt);
             }
         });
 
-        ouvrageResultatlb.setForeground(java.awt.Color.lightGray);
-        ouvrageResultatlb.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
-        ouvrageResultatlb.setPreferredSize(new java.awt.Dimension(150, 20));
+        ouvrageResLB.setForeground(java.awt.Color.lightGray);
+        ouvrageResLB.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
+        ouvrageResLB.setPreferredSize(new java.awt.Dimension(150, 20));
 
-        jLabel4.setForeground(java.awt.Color.lightGray);
-        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
-        jLabel4.setPreferredSize(new java.awt.Dimension(150, 20));
+        langueResLB.setForeground(java.awt.Color.lightGray);
+        langueResLB.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
+        langueResLB.setPreferredSize(new java.awt.Dimension(150, 20));
 
-        jComboBox2.setBackground(java.awt.Color.gray);
-        jComboBox2.setModel(initModelLangue());
-        jComboBox2.setPreferredSize(new java.awt.Dimension(150, 26));
-        jComboBox2.addMouseListener(new java.awt.event.MouseAdapter() {
+        langueCB.setBackground(java.awt.Color.gray);
+        langueCB.setModel(initModelLangue());
+        langueCB.setPreferredSize(new java.awt.Dimension(150, 26));
+        langueCB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBox2Clic(evt);
+                langueCBClic(evt);
             }
         });
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        langueCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                langueCBActionPerformed(evt);
             }
         });
 
-        jLabel5.setForeground(java.awt.Color.lightGray);
-        jLabel5.setText("Langue");
+        langueLB.setForeground(java.awt.Color.lightGray);
+        langueLB.setText("Langue");
 
-        jLabel6.setForeground(java.awt.Color.lightGray);
-        jLabel6.setText("ISBN");
+        isbnLB.setForeground(java.awt.Color.lightGray);
+        isbnLB.setText("ISBN");
 
-        jTextField1.setBackground(java.awt.Color.lightGray);
+        isbnTF.setBackground(java.awt.Color.lightGray);
 
-        jLabel7.setForeground(java.awt.Color.lightGray);
-        jLabel7.setText("Titre");
+        titreLB.setForeground(java.awt.Color.lightGray);
+        titreLB.setText("Titre");
 
-        jTextField2.setBackground(java.awt.Color.lightGray);
+        titreTF.setBackground(java.awt.Color.lightGray);
 
-        jLabel8.setForeground(java.awt.Color.lightGray);
-        jLabel8.setText("Date de publication");
-        jLabel8.setPreferredSize(new java.awt.Dimension(150, 16));
+        dateLB.setForeground(java.awt.Color.lightGray);
+        dateLB.setText("Date de publication");
+        dateLB.setPreferredSize(new java.awt.Dimension(150, 16));
 
-        jTextField3.setBackground(java.awt.Color.lightGray);
+        dateTF.setBackground(java.awt.Color.lightGray);
 
-        jLabel9.setForeground(java.awt.Color.lightGray);
-        jLabel9.setText("Prix HT");
+        prixLB.setForeground(java.awt.Color.lightGray);
+        prixLB.setText("Prix HT");
 
-        jTextField4.setBackground(java.awt.Color.lightGray);
+        prixTF.setBackground(java.awt.Color.lightGray);
 
-        jLabel10.setForeground(java.awt.Color.lightGray);
-        jLabel10.setText("Sotck");
+        stockLB.setForeground(java.awt.Color.lightGray);
+        stockLB.setText("Sotck");
 
-        jTextField5.setBackground(java.awt.Color.lightGray);
+        stockTF.setBackground(java.awt.Color.lightGray);
 
-        jLabel11.setForeground(java.awt.Color.lightGray);
-        jLabel11.setText("Couverture");
+        couvertureLB.setForeground(java.awt.Color.lightGray);
+        couvertureLB.setText("Couverture");
 
-        jTextField6.setBackground(java.awt.Color.lightGray);
+        couvertureTF.setBackground(java.awt.Color.lightGray);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
+        bodyPanel.setLayout(bodyPanelLayout);
+        bodyPanelLayout.setHorizontalGroup(
+            bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bodyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ouvragelb, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(couvertureLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(prixLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(langueLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(titreLB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(isbnLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ouvrageLB, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                    .addComponent(dateLB, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                    .addComponent(stockLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jComboBox2, 0, 140, Short.MAX_VALUE)
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                        .addComponent(langueCB, 0, 1, Short.MAX_VALUE)
                         .addGap(21, 21, 21)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(ouvragecb, 0, 137, Short.MAX_VALUE)
+                        .addComponent(langueResLB, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                        .addComponent(ouvrageCB, 0, 1, Short.MAX_VALUE)
                         .addGap(27, 27, 27)
-                        .addComponent(ouvrageResultatlb, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jTextField5)
+                        .addComponent(ouvrageResLB, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(isbnTF)
+                    .addComponent(titreTF)
+                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(prixTF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(dateTF, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(0, 155, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyPanelLayout.createSequentialGroup()
+                        .addComponent(stockTF)
                         .addGap(161, 161, 161))
-                    .addComponent(jTextField6))
+                    .addComponent(couvertureTF))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        bodyPanelLayout.setVerticalGroup(
+            bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bodyPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ouvrageResultatlb, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(ouvragelb)
-                        .addComponent(ouvragecb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ouvrageResLB, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ouvrageLB)
+                        .addComponent(ouvrageCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(titreLB)
+                    .addComponent(titreTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(isbnLB)
+                    .addComponent(isbnTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(langueResLB, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(langueLB)
+                        .addComponent(langueCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateLB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(prixLB)
+                    .addComponent(prixTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stockLB)
+                    .addComponent(stockTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(couvertureLB)
+                    .addComponent(couvertureTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(footerModel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bodyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(63, 63, 63))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bodyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(footerModel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
@@ -282,36 +282,36 @@ public class NouvEdition extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ouvragecbClic(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ouvragecbClic
+    private void ouvrageCBClic(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ouvrageCBClic
         Auteur a = new Auteur();
-        recupGalLabel(a, ouvragecb, ouvrageResultatlb, idOuvrage);
-    }//GEN-LAST:event_ouvragecbClic
+        recupGalLabel(a, ouvrageCB, ouvrageResLB, idOuvrage);
+    }//GEN-LAST:event_ouvrageCBClic
 
-    private void ouvragecbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ouvragecbActionPerformed
+    private void ouvrageCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ouvrageCBActionPerformed
         Auteur a = new Auteur();
-        recupGalLabel(a, ouvragecb, ouvrageResultatlb, idOuvrage);
-    }//GEN-LAST:event_ouvragecbActionPerformed
+        recupGalLabel(a, ouvrageCB, ouvrageResLB, idOuvrage);
+    }//GEN-LAST:event_ouvrageCBActionPerformed
 
-    private void jComboBox2Clic(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox2Clic
+    private void langueCBClic(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_langueCBClic
         Langue l = new Langue();
-        recupGalLabel(l, jComboBox2, jLabel4, idOuvrage);
-    }//GEN-LAST:event_jComboBox2Clic
+        recupGalLabel(l, langueCB, langueResLB, idOuvrage);
+    }//GEN-LAST:event_langueCBClic
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void langueCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langueCBActionPerformed
         Langue l = new Langue();
-        recupGalLabel(l, jComboBox2, jLabel4, idOuvrage);
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+        recupGalLabel(l, langueCB, langueResLB, idOuvrage);
+    }//GEN-LAST:event_langueCBActionPerformed
    
     public <T> Long recupGalLabel(T t, JComboBox jcb1, JLabel jlb1, Long l) {
         ClasseConstructorPourVector ccpv = (ClasseConstructorPourVector) jcb1.getSelectedItem();
@@ -373,28 +373,28 @@ public class NouvEdition extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bodyPanel;
+    private javax.swing.JLabel couvertureLB;
+    private javax.swing.JTextField couvertureTF;
+    private javax.swing.JLabel dateLB;
+    private javax.swing.JTextField dateTF;
     private fr.afpa.librairie.view.maquette.FooterModel footerModel1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JLabel ouvrageResultatlb;
-    private javax.swing.JComboBox ouvragecb;
-    private javax.swing.JLabel ouvragelb;
+    private javax.swing.JLabel isbnLB;
+    private javax.swing.JTextField isbnTF;
+    private javax.swing.JComboBox langueCB;
+    private javax.swing.JLabel langueLB;
+    private javax.swing.JLabel langueResLB;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel nouvelleEditionLB;
+    private javax.swing.JComboBox ouvrageCB;
+    private javax.swing.JLabel ouvrageLB;
+    private javax.swing.JLabel ouvrageResLB;
+    private javax.swing.JLabel prixLB;
+    private javax.swing.JTextField prixTF;
+    private javax.swing.JLabel stockLB;
+    private javax.swing.JTextField stockTF;
+    private javax.swing.JPanel titlePanel;
+    private javax.swing.JLabel titreLB;
+    private javax.swing.JTextField titreTF;
     // End of variables declaration//GEN-END:variables
 }
