@@ -49,7 +49,10 @@ public class CommandeAdminPanel extends JPanel {
         repaint();
         setVisible(true);
     }
-     
+    
+    public JList<Commande> getCommandeList(){
+        return this.commandeList;
+    }
     public void setCommandeList(ListAdapterListModel<Commande> commandeListModel) {
         commandeList.setModel(commandeListModel);
         commandeTableModel.setListModel(commandeListModel);
@@ -71,16 +74,19 @@ public class CommandeAdminPanel extends JPanel {
         JPanel footer = new JPanel();
         
         JButton createButton = new JButton("Creer");
-        JButton deleteButton = new JButton("Supprimer");
+        JButton deactivateButton = new JButton("Désactiver");
         JButton viewButton = new JButton("Voir");
         JButton updateButton = new JButton("Mettre à jour");
         
         createButton.setActionCommand("create");
         createButton.addActionListener(controller);
+        
+        deactivateButton.setActionCommand("deactivate");
+        deactivateButton.addActionListener(controller);
        
         
         footer.add(createButton);
-        footer.add(deleteButton);
+        footer.add(deactivateButton);
         footer.add(viewButton);
         footer.add(updateButton);
         footer.repaint();

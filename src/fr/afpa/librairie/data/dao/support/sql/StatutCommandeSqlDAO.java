@@ -36,7 +36,7 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
             + " WHERE libelle = ?";
     
     private static final String SQL_FIND_BY_COMMANDE = "SELECT"
-            + " stack.idStatutCommande, stac.libelle, stac.code"
+            + " stac.idStatutCommande, stac.libelle, stac.code"
             + " FROM StatutCommande AS stac"
             + " JOIN HistoriqueStatutCommande AS hsc ON hsc.idStatutCommande = stac.idStatutCommande"
             + " WHERE hsc.idCommande = ?";
