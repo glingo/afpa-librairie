@@ -18,8 +18,8 @@ import java.util.List;
 public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements CommandeDAO{
     
     private static final String SQL_INSERT = "INSERT INTO Commande"
-            + " (numero, dateCommande, idUtilisateur)"
-            + " VALUES = (?,?, ?)";
+            + " (numero, dateCommande, idUtilisateur,)"
+            + " VALUES = (?, ?, ?)";
     
     private static final String SQL_DELETE = "DELETE FROM Commande"
             + " WHERE idCommande = ?";
@@ -62,6 +62,19 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         ResultSet valeursAutoGenerees = null;
 
         try {
+            
+            if(instance.getOrderStat() == null) {
+                // on recupère le statut par default
+                // le code devrait etre une constante.
+                StatutCommande orderStat = getFactory().getStatutCommandeDAO().findByCode("OK");
+                instance.setOrderStat(orderStat);
+            }
+            
+            // le statut est forcement different de null.
+            if(instance.getOrderStat().getCode() == null) {
+                StatutCommande orderStat = getFactory().getStatutCommandeDAO().findByCode(instance.getOrderStat().getCode());
+                instance.setOrderStat(orderStat);
+            }
             // l'utilisateur ne devrait jamais etre null arrivé a cet endroit.
 //             if(instance.getUser() == null) {
 //                // on recupère le statut par default
@@ -136,6 +149,10 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         
         
         Utilisateur user = factory.getUtilisateurDAO().findById(resultSet.getLong("idUtilisateur"));
+        
+        
+        StatutCommande orderStat = factory.getStatutCommandeDAO().findById(resultSet.getLong("idStatutCommande"));
+        commande.setOrderStat(orderStat);
         
 //        List<Adresse> dernieresFacturations = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
 //        List<Adresse> dernieresLivraisons = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());

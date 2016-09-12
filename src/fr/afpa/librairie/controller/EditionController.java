@@ -1,4 +1,3 @@
-
 package fr.afpa.librairie.controller;
 
 import fr.afpa.librairie.data.bean.Edition;
@@ -15,46 +14,45 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class EditionController extends Controller {
-    
-    
+
     private final EditionAdminPanel adminPanel = new EditionAdminPanel(this);
     private final CreateEditionPanel createPanel = new CreateEditionPanel(this);
     //appel methode EditionAdminPanel et CreateEditionPanel present dans librairie/view/admin
-    
-    
+
     //contructeur du controller
-    public EditionController(MainFrame frame){
+    public EditionController(MainFrame frame) {
         super(frame);
     }
-    
-    
+
     //methode actionPerformed : en fonction de ce que fait l'utilisateur ==> le controller effectuera une action particuliere.
     @Override
     public void actionPerformed(ActionEvent e) {
 //        super.actionPerformed(e);
-        
-        switch(e.getActionCommand()) {
-            
+
+        switch (e.getActionCommand()) {
+
             case "list":
                 listAction();
                 break;
-                
+
             // les deux case se valent.     
             case "create":
             case "save":
                 createAction();
                 break;
-            case "delete":
-//                deleteAction();
+            case "deactivate":            
+                deactivateAction(this.adminPanel.getEditionList().getSelectedValue());
                 break;
 
             default:
-                if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
+                if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
                     listAction();
                 }
         }
     }
+
     //quand User = list ==> controller = listAction
+
     public void listAction() {
         ListAdapterListModel<Edition> editionListModel = new ListAdapterListModel<>();
         //appel la listModel de edition
@@ -64,19 +62,21 @@ public class EditionController extends Controller {
         //appel du panel que l'on a crée pour Edition. ( pannel principal)
         this.frame.setContent(adminPanel);
         //rajoute a la frame le panelAdmin 
-        
+
         //donc = quand on utilise "list" le controller utilise la methode listAction qui demande
         // à la vue de se rafraichir et d'afficher le EditionAdminPanel. 
     }
+
     //Si User = "save" alors EditionController ==> createAction
+
     public void createAction() {
-        
-        if(!this.createPanel.equals(this.frame.getContent())) {
+
+        if (!this.createPanel.equals(this.frame.getContent())) {
             this.frame.setContent(createPanel);
             return;
             //si le panel de création d'une edition n'existe pas = on le crée. 
         }
-        
+
         this.createPanel.getForm().verify();
         //
         JTextField fieldIsbn = this.createPanel.getForm().getField("Isbn");
@@ -88,9 +88,7 @@ public class EditionController extends Controller {
         JTextField fieldTitre = this.createPanel.getForm().getField("Titre");
         JFormattedTextField fieldStock = new JFormattedTextField(NumberFormat.getIntegerInstance());
         fieldStock = this.createPanel.getForm().getField("Stock");
-        
-        
-        
+
         //recuperation des données que l'utilisateur a mis dans les champs. 
         String isbn = fieldIsbn.getText();
         Date datePubli = (Date) fieldDatePubli.getValue();
@@ -98,7 +96,7 @@ public class EditionController extends Controller {
         String couverture = fieldCouverture.getText();
         String titre = fieldTitre.getText();
         Integer stock = (Integer) fieldStock.getValue();
-        
+
         Edition edition = new Edition();
         //modification des champs edition.
         edition.setIsbn(isbn);
@@ -107,20 +105,37 @@ public class EditionController extends Controller {
         edition.setCouverture(couverture);
         edition.setTitre(titre);
         edition.setStock(stock);
- 
-        try{
+
+        try {
             getDaoFactory().getEditionDAO().save(edition);
             //appel de la methode EditionDAO. mais surtout appel de la requete SQL save contenu dans EditionDAO.afin de créer une nouvelle edition. 
-        } catch(DAOException ex){
+        } catch (DAOException ex) {
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         this.createPanel.getForm().reset();
-    
+
         listAction();
         //retour au EditionAdminPanel
     }
-    
-    
+
+    private void deactivateAction(Edition edition) {
+
+        if (edition == null) {
+            return;
+        }
+        // on verifier si edition = null. Si l'édition est nulle ( donc pas selectionnée ) alors impossible de supprimer.
+
+        try {
+            getDaoFactory().getEditionDAO().delete(edition);
+        } catch (DAOException ex) {
+            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // ajouter un message comme quoi la suppression s'est bien deroulée.
+        listAction();
+    }
+
 }
