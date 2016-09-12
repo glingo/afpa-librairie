@@ -7,7 +7,9 @@ import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CreateUtilisateurPanel;
 import fr.afpa.librairie.view.admin.UtilisateurAdminPanel;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -22,17 +24,17 @@ public class UtilisateurController extends Controller {
     public UtilisateurController(MainFrame frame) {
         super(frame);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
 //        super.actionPerformed(e);
-        
-        switch(e.getActionCommand()) {
-            
+
+        switch (e.getActionCommand()) {
+
             case "list":
                 listAction();
                 break;
-                
+
             case "create":
             case "save":
                 createAction();
@@ -44,7 +46,7 @@ public class UtilisateurController extends Controller {
                 break;
             
             default:
-                if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
+                if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
                     listAction();
                 }
         }
@@ -56,30 +58,30 @@ public class UtilisateurController extends Controller {
         adminPanel.setUtilisateurList(utilisateurListModel);
         this.frame.setContent(adminPanel);
     }
-    
+
     public void createAction() {
-        
-        if(!this.createPanel.equals(this.frame.getContent())) {
+
+        if (!this.createPanel.equals(this.frame.getContent())) {
             this.frame.setContent(createPanel);
             return;
         }
-        
+
         this.createPanel.getForm().verify();
-        
+
         JTextField fieldNom = this.createPanel.getForm().getField("Nom");
         JTextField fieldPrenom = this.createPanel.getForm().getField("Prenom");
         JTextField fieldMail = this.createPanel.getForm().getField("mail");
         JTextField fieldMdp = this.createPanel.getForm().getField("Mot de passe");
         JFormattedTextField fieldDate = this.createPanel.getForm().getField("Date de naissance");
-        
+
         String nom = fieldNom.getText();
         String prenom = fieldPrenom.getText();
         String mail = fieldMail.getText();
         String mdp = fieldMdp.getText();
         Date date = (Date) fieldDate.getValue();
-        
+
         Utilisateur utilisateur = new Utilisateur();
-        
+
         utilisateur.setNom(nom);
         utilisateur.setPrenom(prenom);
         utilisateur.setEmail(mail);
@@ -91,13 +93,13 @@ public class UtilisateurController extends Controller {
         
         try{
             getDaoFactory().getUtilisateurDAO().save(utilisateur);
-        } catch(DAOException ex){
+        } catch (DAOException ex) {
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         this.createPanel.getForm().reset();
-    
+
         listAction();
     }
     
