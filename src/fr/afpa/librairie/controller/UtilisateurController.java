@@ -19,7 +19,8 @@ public class UtilisateurController extends Controller {
     
     private final UtilisateurAdminPanel adminPanel = new UtilisateurAdminPanel(this);
     private final CreateUtilisateurPanel createPanel = new CreateUtilisateurPanel(this);
-//    private final DeleteUtilisateurPanel deletePanel = new DeleteUtilisateurPanel(this);
+   // private final UtilisateurDialogPanel dialogPanel = new UtilisateurDialogPanel(this);
+
     
     public UtilisateurController(MainFrame frame) {
         super(frame);
@@ -111,8 +112,14 @@ public class UtilisateurController extends Controller {
         
         // supprimer les references de l'uitlisateur vers roles (Remplit)
         
-        try{
+        try {
             getDaoFactory().getUtilisateurDAO().delete(utilisateur);
+            JOptionPane deactiUser = new JOptionPane();
+            deactiUser.showMessageDialog(null, "La désactivation a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            
+//            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+//                    "La désactivation de l'utilisateur a bien été faite", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
