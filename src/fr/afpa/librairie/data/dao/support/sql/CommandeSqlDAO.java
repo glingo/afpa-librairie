@@ -42,7 +42,8 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             + " idCommande, numero, dateCommande, idUtilisateur"
             + " FROM Commande"
             + " WHERE dateCommande = ?";
-    private static final String SQL_FIND_BY_NOM = "SELECT"
+    
+    private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
             + " idCommande, numero, dateCommande, idUtilisateur"
             + " FROM Commande"
             + " WHERE idUtilisateur = ?";
@@ -61,20 +62,18 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         ResultSet valeursAutoGenerees = null;
 
         try {
+            // l'utilisateur ne devrait jamais etre null arrivé a cet endroit.
+//             if(instance.getUser() == null) {
+//                // on recupère le statut par default
+//                // le code devrait etre une constante.
+//                Utilisateur user = getFactory().getUtilisateurDAO().findByNom("OK");
+//                instance.setUser(user);
+//            }
             
-             if(instance.getUser() == null) {
-                // on recupère le statut par default
-                // le code devrait etre une constante.
-                Utilisateur user = getFactory().getUtilisateurDAO().findByNom("OK");
-                instance.setUser(user);
-            }
-            
-            // le statut est forcement different de null.
+            // si l'utilisateur n'est pas encore enregistré.
             if(instance.getUser().getId() == null) {
-                Utilisateur user = getFactory().getUtilisateurDAO().findByNom(instance.getUser().getNom());
-                instance.setUser(user);
+                getFactory().getUtilisateurDAO().save(instance.getUser());
             }
-
 
             connexion = factory.getConnection();
 
@@ -136,7 +135,7 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         commande.setDateCommande(resultSet.getDate("dateCommande"));
         
         
-        Utilisateur user = factory.getUtilisateurDAO().findByNom(resultSet.getString("nom"));
+        Utilisateur user = factory.getUtilisateurDAO().findById(resultSet.getLong("idUtilisateur"));
         
 //        List<Adresse> dernieresFacturations = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
 //        List<Adresse> dernieresLivraisons = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
@@ -260,7 +259,7 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
     }
 
     @Override
-    public Commande findByNom(String nom) {
+    public Commande findByUtilisateur(Long idUtilisateur) {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -270,7 +269,7 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_NOM, false, nom);
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_UTILISATEUR, false, idUtilisateur);
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             if (resultSet.next()) {
@@ -284,6 +283,4 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
 
         return commande;
     }
-
-   
 }

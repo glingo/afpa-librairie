@@ -51,8 +51,8 @@ public class TaxeSqlDAO extends AbstractSqlDAO<Taxe> implements TaxeDAO{
     private static final String SQL_FIND_BY_EDITION = "SELECT"
             +" t.idTaxe, t.libelle, t.valeur"
             +" FROM Taxe AS t"
-            +" JOIN Sapplique AS sa ON sa.idTaxe = t.idTaxe"
-            +" WHERE sa.isbn = ?";
+            +" JOIN ApplicationTaxe AS at ON at.idTaxe = t.idTaxe"
+            +" WHERE at.isbn = ?";
     
     
     public TaxeSqlDAO(AbstractDAOFactory factory) {

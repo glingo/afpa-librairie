@@ -17,7 +17,7 @@ public class Edition {
     private StatutEdition statut;
     private Ouvrage titreOuvrage;
     private Langue langue;
-    private Taxe taxe;
+    private List<Taxe> taxes;
 
     
     public Edition() {
@@ -98,17 +98,17 @@ public class Edition {
     }
     
     
-    public Taxe getTaxe(){
-        return taxe;
+    public List<Taxe> getTaxes(){
+        return taxes;
     }
     
-    public void setTaxe(Taxe taxe){
-        this.taxe = taxe;
+    public void setTaxes(List<Taxe> taxes){
+        this.taxes = taxes;
     }
 
     @Override
     public String toString() {
-        return "Edition{" + "isbn=" + isbn + ", datePublication=" + datePublication + ", prixHt=" + prixHt + ", couverture=" + couverture + ", titre=" + titre + ", stock=" + stock + ", statut=" + statut + ", titreOuvrage=" + titreOuvrage + ", langue=" + langue + ", taxe=" + taxe + '}';
+        return "Edition{" + "isbn=" + isbn + ", datePublication=" + datePublication + ", prixHt=" + prixHt + ", couverture=" + couverture + ", titre=" + titre + ", stock=" + stock + ", statut=" + statut + ", titreOuvrage=" + titreOuvrage + ", langue=" + langue + ", taxes=" + taxes + '}';
     }
 
 }

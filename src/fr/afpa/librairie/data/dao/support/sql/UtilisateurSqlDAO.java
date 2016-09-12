@@ -265,12 +265,14 @@ import java.util.List;
     }
 
     @Override
-    public Utilisateur findByNom(String nom) {
+    public List<Utilisateur> findByNom(String nom) {
+        
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Utilisateur> findByCommande(Long idCommande) throws DAOException {
+    public Utilisateur findByCommande(Long idCommande) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

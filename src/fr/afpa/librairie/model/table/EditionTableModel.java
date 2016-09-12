@@ -1,12 +1,6 @@
-
 package fr.afpa.librairie.model.table;
 
-import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Edition;
-import fr.afpa.librairie.data.bean.Genre;
-import fr.afpa.librairie.data.bean.Langue;
-import fr.afpa.librairie.data.bean.Rubrique;
-import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.model.list.ListModelChangeListener;
 import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.EditionColumn;
@@ -31,7 +25,7 @@ public class EditionTableModel extends AbstractTableModel {
         if(this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
             this.columnDisplayNames.put(EditionColumn.ISBN, "Isbn");
-            this.columnDisplayNames.put(EditionColumn.OUVRAGE, "Id Ouvrage");
+            this.columnDisplayNames.put(EditionColumn.OUVRAGE, "Ouvrage");
             this.columnDisplayNames.put(EditionColumn.LANGUE, "Langue");
             this.columnDisplayNames.put(EditionColumn.STATUT_EDITION, "Statut de l'édition");
             this.columnDisplayNames.put(EditionColumn.DATE_PUBLI, "Date de publication");
@@ -39,7 +33,7 @@ public class EditionTableModel extends AbstractTableModel {
             this.columnDisplayNames.put(EditionColumn.COUVERTURE, "couverture");
             this.columnDisplayNames.put(EditionColumn.TITRE, "titre");
             this.columnDisplayNames.put(EditionColumn.STOCK, "Stock");
-            this.columnDisplayNames.put(EditionColumn.TAXE, "Taxe");
+//            this.columnDisplayNames.put(EditionColumn.TAXE, "Taxe");
         }
         return this.columnDisplayNames;
     }
@@ -104,9 +98,10 @@ public class EditionTableModel extends AbstractTableModel {
             case STOCK:
                 columnValue = edition.getStock();
                 break;
-            case TAXE:
-                columnValue = getTaxeObject(edition);
-                break;
+                // on affichera les taxes uniquement dans le panier et le resumé de la commande.
+//            case TAXE:
+//                columnValue = getTaxeObject(edition);
+//                break;
                 
             default:
 
@@ -117,9 +112,13 @@ public class EditionTableModel extends AbstractTableModel {
         //retourne la valeur de la colonne selectionnée. 
     }
     
-    private Float getTaxeObject(Edition edition){
-        return edition.getTaxe().getValeur();
-    }
+//    private Float getTaxeObject(Edition edition){
+//        if(edition.getTaxes() == null) {
+//            return 0F;
+//        }
+//        
+//        return edition.getTaxes().getValeur();
+//    }
      
     private String getOuvrageObject(Edition edition){
         return edition.getTitreOuvrage().getTitre();

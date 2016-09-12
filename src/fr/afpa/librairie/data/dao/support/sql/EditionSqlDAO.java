@@ -95,16 +95,16 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
                 instance.setLangue(langue);
             }
             
-            if(instance.getTaxe().getValeur() == null){
-                Taxe taxe = getFactory().getTaxeDAO().findByLibelle("");
-                instance.setTaxe(taxe);
-                
-            }
-            
-            if(instance.getTaxe().getValeur() == null){
-                Taxe taxe = getFactory().getTaxeDAO().findByLibelle(instance.getTaxe().getLibelle());
-                instance.setTaxe(taxe);
-            }
+//            if(instance.getTaxe().getValeur() == null){
+//                Taxe taxe = getFactory().getTaxeDAO().findByLibelle("");
+//                instance.setTaxe(taxe);
+//                
+//            }
+//            
+//            if(instance.getTaxe().getValeur() == null){
+//                Taxe taxe = getFactory().getTaxeDAO().findByLibelle(instance.getTaxe().getLibelle());
+//                instance.setTaxe(taxe);
+//            }
             
             
             //recuperation de la connexion depuis la factory
@@ -322,7 +322,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         edition.setStock(resultSet.getInt("stock"));
         
         List<Taxe> taxes = factory.getTaxeDao().findByEdition(edition.getIsbn());
-        edition.setTaxe(null);
+        edition.setTaxes(taxes);
 
         return edition;
     }

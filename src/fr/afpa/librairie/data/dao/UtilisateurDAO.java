@@ -6,10 +6,13 @@ import java.util.List;
 
 public interface UtilisateurDAO extends DAOInterface<Utilisateur> {
 
-    Utilisateur findByMail(String mail);
+    @Override
     Utilisateur findById(Long id);
-    Utilisateur findByNom(String nom);
     
-    List<Utilisateur> findByCommande(Long idCommande) throws DAOException;
+    Utilisateur findByMail(String mail);
+    
+    Utilisateur findByCommande(Long idCommande) throws DAOException;
+    
+    List<Utilisateur> findByNom(String nom);
     
 }

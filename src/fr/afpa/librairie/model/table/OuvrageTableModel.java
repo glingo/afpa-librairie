@@ -131,8 +131,12 @@ public class OuvrageTableModel extends AbstractTableModel {
         return sb.toString();
     }
     private String getAuteurObject(Ouvrage ouvrage){
-        StringBuilder sb = new StringBuilder();
         
+        if(ouvrage.getCoAuteurs() == null) {
+            return "";
+        }
+        
+        StringBuilder sb = new StringBuilder();
         int len = ouvrage.getCoAuteurs().size();
         for(int i = 0; i<len ; i++){
             Auteur auteur = ouvrage.getCoAuteurs().get(i);

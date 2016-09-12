@@ -8,5 +8,5 @@ public interface CommandeDAO extends DAOInterface<Commande> {
     
     Commande findByNumero(String numero);
     Commande findByDate(Date dateCommande);
-    Commande findByNom(String nom);
+    Commande findByUtilisateur(Long idUtilisateur);
 }
