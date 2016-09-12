@@ -106,34 +106,12 @@ public class UtilisateurController extends Controller {
         }
         
         this.deletePanel.getForm().verify();
-        
 
-        
-//        JTextField fieldNom = this.deletePanel.getForm().getField("Nom");
-//        JTextField fieldPrenom = this.deletePanel.getForm().getField("Prenom");
-//        JTextField fieldMail = this.deletePanel.getForm().getField("mail");
-//        JTextField fieldMdp = this.deletePanel.getForm().getField("Mot de passe");
-//        JFormattedTextField fieldDate = this.deletePanel.getForm().getField("Date de naissance");
-          
-        
- 
-//        String nom = fieldNom.getText();
-//        String prenom = fieldPrenom.getText();
-//        String mail = fieldMail.getText();
-//        String mdp = fieldMdp.getText();
-//        Date date = (Date) fieldDate.getValue();
-        
-        Utilisateur utilisateur = new Utilisateur();
-          
-
-//        utilisateur.setNom(nom);
-//        utilisateur.setPrenom(prenom);
-//        utilisateur.setEmail(mail);
-//        utilisateur.setMotDePasse(mdp);
-//        utilisateur.setDateNaissance(new java.sql.Date(date.getTime()));
+        JTextField fieldIdUser = this.deletePanel.getForm().getField("IdUtilisateur");
+        Utilisateur user = new Utilisateur();
         
         try{
-            getDaoFactory().getUtilisateurDAO().delete(utilisateur);
+            getDaoFactory().getUtilisateurDAO().delete(user);
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
