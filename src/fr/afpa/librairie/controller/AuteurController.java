@@ -24,7 +24,7 @@ public class AuteurController extends Controller {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        super.actionPerformed(e);
+//        super.actionPerformed(e);
 
         switch (e.getActionCommand()) {
 

@@ -9,6 +9,7 @@ import fr.afpa.librairie.controller.PromotionController;
 import fr.afpa.librairie.controller.RubriqueController;
 import fr.afpa.librairie.controller.UtilisateurController;
 import fr.afpa.librairie.view.accueil.AccueilPanel;
+import fr.afpa.librairie.view.rubrique.RubriquePanel;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
@@ -19,6 +20,7 @@ import java.awt.SplashScreen;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.GroupLayout;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -26,6 +28,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
+import javax.swing.event.ListSelectionEvent;
 
 /**
  *
@@ -58,11 +61,13 @@ public class MainFrame extends javax.swing.JFrame {
     private Component currentContent;
 
     private GroupLayout layout;
+    
+    private final RubriqueController rubriqueController = new RubriqueController(this);
 
     public MainFrame() {
         initComponents();
 
-        Dimension size = new Dimension(650, 450);
+        Dimension size = new Dimension(800, 650);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(TITLE);
@@ -85,18 +90,16 @@ public class MainFrame extends javax.swing.JFrame {
         currentContent = new AccueilPanel();
 
         initLayout();
+        
+        leftMenuPanel.getRubriques().addListSelectionListener(rubriqueController);
 
         pack();
     }
 
     public void setContent(Component component) {
-        Container contentPane = getContentPane();
-
         if (currentContent != null) {
             layout.replace(currentContent, component);
-            contentPane.remove(currentContent);
         }
-
         currentContent = component;
         repaint();
     }
@@ -159,7 +162,7 @@ public class MainFrame extends javax.swing.JFrame {
         adminMenu.add(ouvrageAdmin);
 
         JMenuItem rubriqueAdmin = new JMenuItem("Rubriques");
-        rubriqueAdmin.addActionListener(new RubriqueController(this));
+        rubriqueAdmin.addActionListener(rubriqueController);
         adminMenu.add(rubriqueAdmin);
 
         JMenuItem commandeAdmin = new JMenuItem("Commandes");
@@ -212,4 +215,13 @@ public class MainFrame extends javax.swing.JFrame {
         g.setColor(Color.BLACK);
         g.drawString(LOADING_MSG[(frame / 5) % 3] + " ...", 120, 150);
     }
+
+    public LeftMenuPanel getLeftMenuPanel() {
+        return leftMenuPanel;
+    }
+
+    public HeaderPanel getHeaderPanel() {
+        return headerPanel;
+    }
+    
 }

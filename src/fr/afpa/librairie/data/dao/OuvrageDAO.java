@@ -12,5 +12,7 @@ public interface OuvrageDAO extends DAOInterface<Ouvrage> {
     
    // List<Ouvrage> findByAuteur(String nom)throws DAOException;
     List<Ouvrage> findByEdition(String isbn) throws DAOException;
+
+    List<Ouvrage> findByRubrique(Long id);
     
 }

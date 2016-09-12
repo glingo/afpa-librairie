@@ -4,10 +4,9 @@ import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.FactoryType;
 import fr.afpa.librairie.view.MainFrame;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Controller implements ActionListener {
+public abstract class Controller implements ActionListener {
     
     // Utilisaer les dao dans le controller n'est pas tres recommandé, 
     // mais en attendant les managers on fera avec.
@@ -26,15 +25,15 @@ public class Controller implements ActionListener {
         this.frame = frame;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        
-        if(frame == null) {
-            this.frame = new MainFrame();
-            this.frame.setVisible(true);
-        }
-        
-    }
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        
+//        if(frame == null) {
+//            this.frame = new MainFrame();
+//            this.frame.setVisible(true);
+//        }
+//        
+//    }
     
     public DAOFactoryInterface getDaoFactory() {
         return daoFactory;

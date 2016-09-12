@@ -14,9 +14,9 @@ import javax.swing.SwingConstants;
 
 public class HeaderPanel extends JPanel {
                 
-    private JButton jButton1;
-    private JLabel jLabel1;
-    private JProgressBar jProgressBar1;
+    private JButton seConnecterButton;
+    private JLabel titre;
+    private JProgressBar progressBar;
     private Canvas logoCanvas;
     
     public HeaderPanel() {
@@ -26,9 +26,9 @@ public class HeaderPanel extends JPanel {
     private void initComponents() {
 
         logoCanvas = new Canvas();
-        jLabel1 = new JLabel();
-        jButton1 = new JButton();
-        jProgressBar1 = new JProgressBar();
+        titre = new JLabel();
+        seConnecterButton = new JButton();
+        progressBar = new JProgressBar();
         Dimension dim = new Dimension(650, 60);
 
         setMinimumSize(dim);
@@ -39,14 +39,14 @@ public class HeaderPanel extends JPanel {
         logoCanvas.setMinimumSize(new Dimension(50, 50));
         logoCanvas.setName(""); // NOI18N
 
-        jLabel1.setFont(new Font("Perpetua Titling MT", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel1.setText("Le hibou qui lit");
-        jLabel1.setMaximumSize(null);
-        jLabel1.setMinimumSize(new Dimension(210, 40));
-        jLabel1.setPreferredSize(new Dimension(210, 40));
+        titre.setFont(new Font("Perpetua Titling MT", 0, 24)); // NOI18N
+        titre.setHorizontalAlignment(SwingConstants.CENTER);
+        titre.setText("Le hibou qui lit");
+        titre.setMaximumSize(null);
+        titre.setMinimumSize(new Dimension(210, 40));
+        titre.setPreferredSize(new Dimension(210, 40));
 
-        jButton1.setText("Se connecter");
+        seConnecterButton.setText("Se connecter");
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -56,10 +56,10 @@ public class HeaderPanel extends JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(logoCanvas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(titre, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
-            .addComponent(jProgressBar1, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+                .addComponent(seConnecterButton))
+            .addComponent(progressBar, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -67,10 +67,10 @@ public class HeaderPanel extends JPanel {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(logoCanvas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(seConnecterButton)
+                        .addComponent(titre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
+                .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>                        
             

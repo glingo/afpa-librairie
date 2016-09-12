@@ -104,7 +104,7 @@ public class UtilisateurTableModel extends AbstractTableModel {
             Role role = user.getRoles().get(i);
             sb.append(role.getLibelle());
             if(i < len - 1) {
-                sb.append(",");
+                sb.append(", ");
             }
         }
 

@@ -31,7 +31,7 @@ public class EditionController extends Controller {
     //methode actionPerformed : en fonction de ce que fait l'utilisateur ==> le controller effectuera une action particuliere.
     @Override
     public void actionPerformed(ActionEvent e) {
-        super.actionPerformed(e);
+//        super.actionPerformed(e);
         
         switch(e.getActionCommand()) {
             

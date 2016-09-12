@@ -8,9 +8,9 @@ import javax.swing.JTextField;
 
 public class AccueilPanel extends JPanel {
     
-    private JButton jButton1;
-    private JPanel jPanel1;
-    private JTextField jTextField1;  
+    private JButton rechercherButton;
+    private JPanel panel;
+    private JTextField rechercheField;  
 
     public AccueilPanel() {
         initComponents();
@@ -18,26 +18,26 @@ public class AccueilPanel extends JPanel {
                         
     private void initComponents() {
 
-        jPanel1 = new JPanel();
-        jTextField1 = new JTextField();
-        jButton1 = new JButton();
+        panel = new JPanel();
+        rechercheField = new JTextField();
+        rechercherButton = new JButton();
 
         setMinimumSize(new Dimension(530, 370));
         setPreferredSize(new Dimension(530, 370));
 
-        jTextField1.setText("jTextField1");
+        rechercheField.setText("");
 
-        jButton1.setText("jButton1");
+        rechercherButton.setText("Rechercher");
 
-        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
+        GroupLayout jPanel1Layout = new GroupLayout(panel);
+        panel.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1)
+                .addComponent(rechercheField)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(rechercherButton)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -45,8 +45,8 @@ public class AccueilPanel extends JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(rechercheField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rechercherButton))
                 .addContainerGap())
         );
 
@@ -56,14 +56,14 @@ public class AccueilPanel extends JPanel {
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }      
