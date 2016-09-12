@@ -64,7 +64,7 @@ public class UtilisateurAdminPanel extends JPanel {
         listModelSelection.setListModels(utilisateurListModel, selectionModel);
     }
     
-    public JList getUtilisateurList(){
+    public JList<Utilisateur> getUtilisateurList(){
         return this.utilisateurList;
     }
     

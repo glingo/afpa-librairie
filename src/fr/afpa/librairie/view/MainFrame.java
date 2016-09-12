@@ -180,6 +180,7 @@ public class MainFrame extends javax.swing.JFrame {
         JMenuItem editionAdmin = new JMenuItem("Editions");
         editionAdmin.addActionListener(new EditionController(this));
         adminMenu.add(editionAdmin);
+        
 
         jMenuBar.add(adminMenu);
     }

@@ -87,6 +87,9 @@ public class EditionAdminPanel extends JPanel{
         createButton.setActionCommand("create");
         createButton.addActionListener(controller);
         
+        deleteButton.setActionCommand("delete");
+        deleteButton.addActionListener(controller);
+        
         footer.add(createButton);
         footer.add(deleteButton);
         footer.add(viewButton);

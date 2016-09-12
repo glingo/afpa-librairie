@@ -45,6 +45,9 @@ public class EditionController extends Controller {
                 System.out.println("save");
                 createAction();
                 break;
+            case "delete":
+//                deleteAction();
+                break;
 
             default:
                 if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
