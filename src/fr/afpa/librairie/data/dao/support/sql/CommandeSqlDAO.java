@@ -6,6 +6,7 @@ import fr.afpa.librairie.data.bean.Commande;
 import fr.afpa.librairie.data.bean.StatutCommande;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.dao.CommandeDAO;
+import fr.afpa.librairie.data.dao.StatutCommandeDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -21,8 +22,9 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             + " (numero, dateCommande, idUtilisateur,)"
             + " VALUES = (?, ?, ?)";
     
-    private static final String SQL_DELETE = "DELETE FROM Commande"
-            + " WHERE idCommande = ?";
+    private static final String SQL_DELETE = "UPDATE Commande"
+            + " SET idStatutCommande = ?"
+            + " WHERE idUtilisateur = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
             + " idCommande, numero, dateCommande, idUtilisateur"
@@ -116,7 +118,7 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
     
     @Override
     public void delete(Commande instance) {
-        SqlDAOFactory factory = getFactory();
+       SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
@@ -124,17 +126,25 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, instance.getId());
-            int statut = preparedStatement.executeUpdate();
+            
+            // on ne supprime pas reelement l'utlisateur, nous allons juste mettre son statut a desactivé.
+            
+            StatutCommande orderStat = factory.getStatutCommandeDAO().findByCode(StatutCommandeDAO.CODE_PAIEMENT_REFUSE);
+            
+            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, 
+                    orderStat.getId(), instance.getId());
+            
             /* Analyse du statut retourné par la requête d'insertion */
-            if (statut == 0) {
-                throw new DAOException("Échec de la suppression de la commande, aucune ligne supprimée dans la table.");
+            if (preparedStatement.executeUpdate() == 0) {
+                throw new DAOException("Échec de la suppression de l'utilisateur, aucune ligne supprimée dans la table.");
             }
+            
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
+
 
     }
     

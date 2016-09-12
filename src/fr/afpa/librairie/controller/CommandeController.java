@@ -38,6 +38,10 @@ public class CommandeController extends Controller {
                 System.out.println("save");
                 createAction();
                 break;
+            case "deactivate":
+            case "delete":
+                deactivateAction(this.adminPanel.getCommandeList().getSelectedValue());
+                break;
 
             default:
                 if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
@@ -84,5 +88,23 @@ public class CommandeController extends Controller {
         this.createPanel.getForm().reset();
     
         listAction();
+    }
+    
+    public void deactivateAction(Commande commande){
+        
+         if(commande == null) {
+            
+            return;
+        }
+
+        try{
+            getDaoFactory().getCommandeDAO().delete(commande);
+        } catch(DAOException ex){
+            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+        }
+
+        listAction();
+    
     }
 }

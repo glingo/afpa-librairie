@@ -15,6 +15,8 @@ public class HistoriqueStatutCommande {
     private long id;
     private Date datePassage;
     private String commentaire;
+    
+    
 
     public HistoriqueStatutCommande() {
     }
