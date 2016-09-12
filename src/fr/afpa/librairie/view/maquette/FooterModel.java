@@ -41,25 +41,25 @@ public class FooterModel extends javax.swing.JPanel {
     private void initComponents() {
 
         jToggleButton1 = new javax.swing.JToggleButton();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        annulerBT = new javax.swing.JButton();
+        validerBT = new javax.swing.JButton();
 
         jToggleButton1.setText("jToggleButton1");
 
         setBackground(java.awt.Color.darkGray);
         setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
 
-        jButton2.setText("Annuler");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        annulerBT.setText("Annuler");
+        annulerBT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                annulerBTActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Valider");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        validerBT.setText("Valider");
+        validerBT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                validerBTActionPerformed(evt);
             }
         });
 
@@ -70,27 +70,27 @@ public class FooterModel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(annulerBT, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(validerBT, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
-                .addComponent(jButton1)
+                .addComponent(validerBT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(annulerBT)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void validerBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerBTActionPerformed
         System.out.println("Valider");
         checkParent();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_validerBTActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void annulerBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerBTActionPerformed
         try {
             NouvAuteur m = (NouvAuteur) this.getParent().getParent().getParent().getParent().getParent();
             System.out.println("Annuler");
@@ -124,12 +124,12 @@ public class FooterModel extends javax.swing.JPanel {
             }
         }catch (ClassCastException exp) {
         }        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_annulerBTActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton annulerBT;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JButton validerBT;
     // End of variables declaration//GEN-END:variables
 }
