@@ -102,7 +102,7 @@ public class PromotionController extends Controller {
 
         this.createPanel.getForm().reset();
         
-        alert("Information", "La promotion a bien été sauvegardé !");
+        alert("Information", "La promotion a bien été sauvegardée !");
         listAction();
         
     }
@@ -124,7 +124,7 @@ public class PromotionController extends Controller {
             return;
         }
 
-        alert("Information", "La promotion a bien été supprimé !");
+        alert("Information", "La promotion a bien été supprimée !");
         listAction();
         
     }
