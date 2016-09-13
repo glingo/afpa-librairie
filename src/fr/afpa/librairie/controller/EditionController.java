@@ -125,7 +125,7 @@ public class EditionController extends Controller {
 
         this.createPanel.getForm().reset();
 
-        alert("Information", "L'édition a bien été sauvegardé !");
+        alert("Information", "L'édition a bien été sauvegardée !");
         listAction();
         //retour au EditionAdminPanel
 
@@ -149,7 +149,7 @@ public class EditionController extends Controller {
 
         }
 
-        alert("Information", "L'édition a bien été désactivé !");
+        alert("Information", "L'édition a bien été désactivée !");
         // ajouter un message comme quoi la suppression s'est bien deroulée.
         listAction();
 
