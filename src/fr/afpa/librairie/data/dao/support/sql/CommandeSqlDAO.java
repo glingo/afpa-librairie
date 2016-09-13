@@ -19,34 +19,35 @@ import java.util.List;
 public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements CommandeDAO{
     
     private static final String SQL_INSERT = "INSERT INTO Commande"
-            + " (idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande)"
-            + " VALUES = (?, ?, ?)";
+            + " (numero, dateCommande)"
+            + " VALUES = (?, ?, ?, ?, ?)";
     
     private static final String SQL_DELETE = "UPDATE Commande"
             + " SET idStatutCommande = ?"
             + " WHERE idUtilisateur = ?";
+    //ce update a bresoind'une jointure. idStatutCommande n'est pas dans commande
     
-    private static final String SQL_FIND_ALL = "SELECT"
-            + " idCommande, numero, dateCommande, idUtilisateur"
-            + " FROM Commande";
+ private static final String SQL_FIND_ALL = "SELECT"
+         + " numero, dateCommande"
+         + " FROM Edition";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idCommande, numero, dateCommande, idUtilisateur"
+            + " idCommande, numero, dateCommande"
             + " FROM Commande"
             + " WHERE idCommande = ?";
     
     private static final String SQL_FIND_BY_NUMERO = "SELECT"
-            + " idCommande, numero, dateCommande, idUtilisateur"
+            + " idCommande, numero, dateCommande"
             + " FROM Commande"
             + " WHERE numero = ?";
     
     private static final String SQL_FIND_BY_DATE =  "SELECT"
-            + " idCommande, numero, dateCommande, idUtilisateur"
+            + " idCommande, numero, dateCommande"
             + " FROM Commande"
             + " WHERE dateCommande = ?";
     
     private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
-            + " idCommande, numero, dateCommande, idUtilisateur"
+            + " idCommande, numero, dateCommande"
             + " FROM Commande"
             + " WHERE idUtilisateur = ?";
     
@@ -66,13 +67,10 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         try {
             
             if(instance.getOrderStat() == null) {
-                // on recupère le statut par default
-                // le code devrait etre une constante.
                 StatutCommande orderStat = getFactory().getStatutCommandeDAO().findByCode("OK");
                 instance.setOrderStat(orderStat);
             }
-            
-            // le statut est forcement different de null.
+
             if(instance.getOrderStat().getCode() == null) {
                 StatutCommande orderStat = getFactory().getStatutCommandeDAO().findByCode(instance.getOrderStat().getCode());
                 instance.setOrderStat(orderStat);
@@ -119,7 +117,8 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
     
     @Override
     public void delete(Commande instance) {
-       SqlDAOFactory factory = getFactory();
+        
+        SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
@@ -128,16 +127,13 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
             
-            // on ne supprime pas reelement l'utlisateur, nous allons juste mettre son statut a desactivé.
-            
-            StatutCommande orderStat = factory.getStatutCommandeDAO().findByCode(StatutCommandeDAO.CODE_PAIEMENT_REFUSE);
-            
-            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, 
-                    orderStat.getId(), instance.getId());
-            
-            /* Analyse du statut retourné par la requête d'insertion */
+//            StatutCommande orderStat = factory.getStatutCommandeDAO().findByCommande(StatutCommandeDAO().CODE_PAIEMENT_REFUSE);
+//            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true,
+//                    orderStat.getId(), instance.getId());
+
+ 
             if (preparedStatement.executeUpdate() == 0) {
-                throw new DAOException("Échec de la suppression de l'utilisateur, aucune ligne supprimée dans la table.");
+                throw new DAOException("Échec de la desactivation de l'utilisateur, aucune ligne supprimée dans la table.");
             }
             
         } catch (SQLException e) {
@@ -148,6 +144,7 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
 
 
     }
+   
     
     @Override
     protected Commande map(ResultSet resultSet) throws SQLException {
@@ -160,45 +157,21 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         
         
         Utilisateur user = factory.getUtilisateurDAO().findById(resultSet.getLong("idUtilisateur"));
+        commande.setUser(user);
         
+        StatutCommande orderStat = factory.getStatutCommandeDAO().findById(resultSet.getLong("idStatutCommande"));
+        commande.setOrderStat(orderStat);
         
-        //StatutCommande orderStat = factory.getStatutCommandeDAO().findByCommande(resultSet.getString("idCommande"));
-        //commande.setOrderStat(orderStat);
+
         
 //        List<Adresse> dernieresFacturations = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
 //        List<Adresse> dernieresLivraisons = factory.getAdresseDAO().findByUtilisateur(utilisateur.getId());
         
         
-        commande.setUser(user);
+        
         return commande;
     }
 
-    @Override
-    public List<Commande> findAll() throws DAOException {
-        SqlDAOFactory factory = getFactory();
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        List<Commande> commandes = new ArrayList<>();
-
-        try {
-            connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                commandes.add(map(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            close(resultSet, preparedStatement, connexion);
-        }
-
-        return commandes;
-
-    }
-    
     @Override
     public Commande findByNumero(String numero) throws DAOException{
         SqlDAOFactory factory = getFactory();
@@ -310,5 +283,30 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         }
 
         return commande;
+    }
+
+    @Override
+    public List<Commande> findAll() throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Commande> commandes = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                commandes.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return commandes;
     }
 }

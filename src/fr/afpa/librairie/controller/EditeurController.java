@@ -8,6 +8,7 @@ import fr.afpa.librairie.view.admin.CreateEditeurPanel;
 import fr.afpa.librairie.view.admin.EditeurAdminPanel;
 import java.awt.event.ActionEvent;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class EditeurController extends Controller {
@@ -73,6 +74,7 @@ public class EditeurController extends Controller {
 
         try {
             getDaoFactory().getEditeurDAO().save(editeur);
+            
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
@@ -80,8 +82,9 @@ public class EditeurController extends Controller {
         }
 
         this.createPanel.getForm().reset();
-
+        alert("Information", "L'éditeur a bien été sauvegardé !");
         listAction();
+        
 
     }
 
@@ -101,7 +104,7 @@ public class EditeurController extends Controller {
             danger("Une erreur est survenue !", 
                     "Impossible de réaliser la suppression de l'éditeur.");
         }
-         
+        alert("Information", "L'éditeur a bien été supprimé !");
         listAction();
         
     }

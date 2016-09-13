@@ -38,8 +38,8 @@ public class CommandeController extends Controller {
                 System.out.println("save");
                 createAction();
                 break;
+                
             case "deactivate":
-            case "delete":
                 deactivateAction(this.adminPanel.getCommandeList().getSelectedValue());
                 break;
 
@@ -85,8 +85,9 @@ public class CommandeController extends Controller {
         }
         
         this.createPanel.getForm().reset();
-    
+        alert("Information", "La commande a bien été sauvegardé !");
         listAction();
+        
     }
     
     public void deactivateAction(Commande commande){
@@ -97,11 +98,13 @@ public class CommandeController extends Controller {
 
         try{
             getDaoFactory().getCommandeDAO().delete(commande);
+            
         } catch(DAOException ex){
             danger("Une erreur est survenue !", ex.getMessage());
         }
-
+        alert("Information", "La commande a bien été désactivé !");
         listAction();
+        
     
     }
 }

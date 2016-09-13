@@ -89,14 +89,17 @@ public class PromotionController extends Controller {
 
         try {
             getDaoFactory().getPromotionDAO().save(promotion);
+           
         } catch (DAOException ex) {
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
 
         this.createPanel.getForm().reset();
-
+        
+        alert("Information", "La promotion a bien été sauvegardé !");
         listAction();
+        
     }
 
     public void deleteAction(Promotion promotion) {
@@ -107,16 +110,16 @@ public class PromotionController extends Controller {
 
         try {
             getDaoFactory().getPromotionDAO().delete(promotion);
-            JOptionPane deletePromo = new JOptionPane();
-            deletePromo.showMessageDialog(null, "La suppression a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            
 
         } catch (DAOException ex) {
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
 
-
+        alert("Information", "La promotion a bien été supprimé !");
         listAction();
+        
     }
 
 }
