@@ -170,7 +170,6 @@ import java.util.List;
 
     }
     
-    
     public void activate(Utilisateur instance){
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;

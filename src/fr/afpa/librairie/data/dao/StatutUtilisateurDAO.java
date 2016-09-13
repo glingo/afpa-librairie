@@ -8,7 +8,7 @@ public interface StatutUtilisateurDAO extends DAOInterface<StatutUtilisateur> {
     
     static final String CODE_ACTIVE = "OK";
     static final String CODE_DESACTIVE = "NOK";
-    
+
 
     StatutUtilisateur findByCode(String code) throws DAOException;
     
