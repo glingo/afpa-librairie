@@ -20,16 +20,18 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
     
     private static final String SQL_INSERT = "INSERT INTO Commande"
             + " (numero, dateCommande)"
-            + " VALUES = (?, ?, ?, ?, ?)";
+            + " VALUES = (?, ?)";
     
-    private static final String SQL_DELETE = "UPDATE Commande"
-            + " SET idStatutCommande = ?"
-            + " WHERE idUtilisateur = ?";
-    //ce update a bresoind'une jointure. idStatutCommande n'est pas dans commande
+    private static final String SQL_DELETE = " UPDATE Commande" 
+         + " SET idStatutCommande = ?"
+         + " WHERE idUtilisateur = ?";
+            
     
  private static final String SQL_FIND_ALL = "SELECT"
-         + " numero, dateCommande"
-         + " FROM Edition";
+         + " c.idCommande, idUtilisateur, sc.idStatutCommande, numero, dateCommande"
+         + " FROM Commande AS c"
+         + " JOIN historiqueStatutCommande AS hsc ON c.idCommande = hsc.idCommande" 
+         + " JOIN statutCommande AS sc ON hsc.idStatutCommande = sc.idStatutCommande";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
             + " idCommande, numero, dateCommande"
@@ -127,9 +129,9 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
             
-//            StatutCommande orderStat = factory.getStatutCommandeDAO().findByCommande(StatutCommandeDAO().CODE_PAIEMENT_REFUSE);
-//            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true,
-//                    orderStat.getId(), instance.getId());
+            StatutCommande orderStat = factory.getStatutCommandeDAO().findByCode(StatutCommandeDAO.CODE_PAIEMENT_REFUSE);
+            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true,
+                    orderStat.getId(), instance.getId());
 
  
             if (preparedStatement.executeUpdate() == 0) {
@@ -155,10 +157,10 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         commande.setNumero(resultSet.getString("numero"));
         commande.setDateCommande(resultSet.getDate("dateCommande"));
         
-        
+                
         Utilisateur user = factory.getUtilisateurDAO().findById(resultSet.getLong("idUtilisateur"));
         commande.setUser(user);
-        
+
         StatutCommande orderStat = factory.getStatutCommandeDAO().findById(resultSet.getLong("idStatutCommande"));
         commande.setOrderStat(orderStat);
         

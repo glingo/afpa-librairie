@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 
 public class CommandeController extends Controller {
+    
     private static final Logger LOG = Logger.getLogger(CommandeController.class.getName());
      
     private final CommandeAdminPanel adminPanel = new CommandeAdminPanel(this);
@@ -85,10 +86,12 @@ public class CommandeController extends Controller {
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", " Impossible de sauvegarder cette commande");
+            
+            return;
         }
         
         this.createPanel.getForm().reset();
-        alert("Information", "La commande a bien été sauvegardé !");
+        alert("Information", "La commande a bien été sauvegardée !");
         listAction();
         
     }
@@ -104,10 +107,12 @@ public class CommandeController extends Controller {
             
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
-            danger("Une erreur est survenue !", "Impossible de déactiver cette commande");
+            danger("Une erreur est survenue !", "Impossible de désactiver cette commande");
+            
+            return;
         }
         
-        alert("Information", "La commande a bien été désactivé !");
+        alert("Information", "La commande a bien été désactivée !");
         listAction();
         
     

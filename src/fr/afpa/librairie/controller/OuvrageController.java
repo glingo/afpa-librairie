@@ -10,10 +10,13 @@ import fr.afpa.librairie.view.admin.OuvrageAdminPanel;
 import fr.afpa.librairie.view.ouvrage.CreateOuvragePanel;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class OuvrageController extends Controller {
     
+    private static final Logger LOG = Logger.getLogger(OuvrageController.class.getName());
+
     private final OuvrageAdminPanel adminPanel = new OuvrageAdminPanel(this);
 //    private final CreateOuvragePanel createPanel = new CreateOuvragePanel(this);
     private final CreateOuvragePanel createPanel = new CreateOuvragePanel(this);
@@ -73,8 +76,11 @@ public class OuvrageController extends Controller {
             getDaoFactory().getOuvrageDAO().save(ouvrage);
             
         } catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", "Impossible de sauvegarder cet ouvrage");
+            
+            return;
+            
         }
         
         alert("Information", "L'ouvrage a bien été sauvegardé !");
@@ -96,8 +102,8 @@ public class OuvrageController extends Controller {
 
             
         } catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", "Impossible de supprimer cet ouvrage");
             return;
         }
         

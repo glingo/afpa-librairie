@@ -1,6 +1,7 @@
 package fr.afpa.librairie.controller;
 
 import fr.afpa.librairie.data.bean.Auteur;
+import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
@@ -72,7 +73,7 @@ public class AuteurController extends Controller {
             danger("Une erreur est survenue !", 
                     "Impossible de sauvegarder cet auteur.");
         }
-        alert("Information", "L'auteur a bien été sauvegardé!");
+        alert("Information", "L'auteur a bien été sauvegardé !");
         listAction();
         
     }
@@ -86,6 +87,7 @@ public class AuteurController extends Controller {
         // impossible de supprimer un auteur si des ouvrages sont encore relié a lui.
         
         try{
+            
             // on regarde si l'auteur est encore relié a des ouvrages 
             // si oui on demande a l'utilisateur si il veut tous les supprimer.
             // on recup la liste des  ouvrages

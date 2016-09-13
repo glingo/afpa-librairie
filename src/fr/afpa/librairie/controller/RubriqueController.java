@@ -114,11 +114,13 @@ public class RubriqueController extends Controller implements ListSelectionListe
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de supprimer cette rubrique.");
+            
+            return;
         }
         
         // ajouter un message comme quoi la suppression s'est bien deroulée.
         listAction();
-        alert("Information", "La suppression a bien été effectué !");
+        alert("Information", "La suppression a bien été effectuée !");
     }
     
     public void viewAction(Rubrique rubrique) {

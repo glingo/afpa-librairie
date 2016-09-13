@@ -149,7 +149,7 @@ public class UtilisateurController extends Controller {
         }
         
         listAction();
-        alert("Information", "L'activation a été pris en compte !");
+        alert("Information", "L'activation a été prise en compte !");
     }
     
     public void viewAction(Utilisateur utilisateur){
