@@ -40,10 +40,9 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
             + " stac.idStatutCommande, stac.libelle, stac.code"
             + " FROM StatutCommande AS stac"
             + " JOIN HistoriqueStatutCommande AS hsc ON hsc.idStatutCommande = stac.idStatutCommande"
+            + " JOIN Commande AS co ON co.idCommande = hsc.idCommande"
             + " WHERE hsc.idCommande = ?";
 
-    
-    
     
     public StatutCommandeSqlDAO(AbstractDAOFactory factory) {
         super(factory);

@@ -19,8 +19,8 @@ import java.util.List;
 public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements CommandeDAO{
     
     private static final String SQL_INSERT = "INSERT INTO Commande"
-           // + " (idAdresseLivraison, numero, dateCommande)"
-            + " VALUES = (?, ?, ?, ?, ?)";
+            + " (numero, dateCommande)"
+            + " VALUES = (?, ?)";
     
     private static final String SQL_DELETE = "UPDATE Commande"
             + " SET idStatutCommande = ?"
@@ -155,10 +155,10 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         commande.setNumero(resultSet.getString("numero"));
         commande.setDateCommande(resultSet.getDate("dateCommande"));
         
-        
+                
         Utilisateur user = factory.getUtilisateurDAO().findById(resultSet.getLong("idUtilisateur"));
         commande.setUser(user);
-        
+
         StatutCommande orderStat = factory.getStatutCommandeDAO().findById(resultSet.getLong("idStatutCommande"));
         commande.setOrderStat(orderStat);
         
