@@ -89,6 +89,7 @@ public class PromotionController extends Controller {
 
         try {
             getDaoFactory().getPromotionDAO().save(promotion);
+           
         } catch (DAOException ex) {
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);

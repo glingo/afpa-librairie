@@ -19,7 +19,7 @@ import java.util.List;
 public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements CommandeDAO{
     
     private static final String SQL_INSERT = "INSERT INTO Commande"
-            + " (idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande)"
+            + " (numero, dateCommande)"
             + " VALUES = (?, ?, ?, ?, ?)";
     
     private static final String SQL_DELETE = "UPDATE Commande"
@@ -28,26 +28,26 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
     //ce update a bresoind'une jointure. idStatutCommande n'est pas dans commande
     
  private static final String SQL_FIND_ALL = "SELECT"
-         + " idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande"
+         + " numero, dateCommande"
          + " FROM Edition";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idCommande, idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande"
+            + " idCommande, numero, dateCommande"
             + " FROM Commande"
             + " WHERE idCommande = ?";
     
     private static final String SQL_FIND_BY_NUMERO = "SELECT"
-            + " idCommande,idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande"
+            + " idCommande, numero, dateCommande"
             + " FROM Commande"
             + " WHERE numero = ?";
     
     private static final String SQL_FIND_BY_DATE =  "SELECT"
-            + " idCommande,idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande"
+            + " idCommande, numero, dateCommande"
             + " FROM Commande"
             + " WHERE dateCommande = ?";
     
     private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
-            + " idCommande,idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande"
+            + " idCommande, numero, dateCommande"
             + " FROM Commande"
             + " WHERE idUtilisateur = ?";
     

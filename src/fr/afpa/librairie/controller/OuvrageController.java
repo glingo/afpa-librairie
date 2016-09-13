@@ -71,6 +71,7 @@ public class OuvrageController extends Controller {
         
         try{
             getDaoFactory().getOuvrageDAO().save(ouvrage);
+            
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);

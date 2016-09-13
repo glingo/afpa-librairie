@@ -108,7 +108,8 @@ public class EditionController extends Controller {
 
         try {
             getDaoFactory().getEditionDAO().save(edition);
-            //appel de la methode EditionDAO. mais surtout appel de la requete SQL save contenu dans EditionDAO.afin de créer une nouvelle edition. 
+            //appel de la methode EditionDAO. mais surtout appel de la requete SQL save contenu dans EditionDAO.afin de créer une nouvelle edition.
+           
         } catch (DAOException ex) {
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);

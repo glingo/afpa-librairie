@@ -66,6 +66,7 @@ public class AuteurController extends Controller {
         
         try {
             getDaoFactory().getAuteurDAO().save(auteur);
+            alert("Information", "L'auteur a bien été crée !");
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 

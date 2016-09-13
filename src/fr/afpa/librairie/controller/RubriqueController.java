@@ -79,6 +79,7 @@ public class RubriqueController extends Controller implements ListSelectionListe
         
         try{
             getDaoFactory().getRubriqueDAO().save(rubrique);
+           
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
