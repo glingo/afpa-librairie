@@ -116,9 +116,11 @@ public class EditionController extends Controller {
         }
 
         this.createPanel.getForm().reset();
-
+        
+        alert("Information", "L'édition a bien été sauvegardé !");
         listAction();
         //retour au EditionAdminPanel
+        
     }
 
     private void deactivateAction(Edition edition) {
@@ -130,15 +132,16 @@ public class EditionController extends Controller {
         
         try {
             getDaoFactory().getEditionDAO().delete(edition);
-            JOptionPane deactiEd = new JOptionPane();
-            deactiEd.showMessageDialog(null, "La désactivation a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch (DAOException ex) {
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
-
+        
+        alert("Information", "L'édition a bien été désactivé !");
         // ajouter un message comme quoi la suppression s'est bien deroulée.
         listAction();
+        
     }
 
 }

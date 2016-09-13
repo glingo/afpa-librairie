@@ -85,8 +85,9 @@ public class CommandeController extends Controller {
         }
         
         this.createPanel.getForm().reset();
-    
+        alert("Information", "La commande a bien été sauvegardé !");
         listAction();
+        
     }
     
     public void deactivateAction(Commande commande){
@@ -97,13 +98,13 @@ public class CommandeController extends Controller {
 
         try{
             getDaoFactory().getCommandeDAO().delete(commande);
-            JOptionPane deactiEd = new JOptionPane();
-            deactiEd.showMessageDialog(null, "La désactivation a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch(DAOException ex){
             danger("Une erreur est survenue !", ex.getMessage());
         }
-
+        alert("Information", "La commande a bien été désactivé !");
         listAction();
+        
     
     }
 }

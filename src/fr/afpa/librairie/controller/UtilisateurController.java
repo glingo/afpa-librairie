@@ -99,12 +99,12 @@ public class UtilisateurController extends Controller {
             getDaoFactory().getUtilisateurDAO().save(utilisateur);
             
         } catch (DAOException ex) {
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            
         }
 
         this.createPanel.getForm().reset();
-
+        
+        alert("Information", "L'utilisateur a bien été sauvegardé !");
         listAction();
     }
     
@@ -119,9 +119,7 @@ public class UtilisateurController extends Controller {
         
         try {
             getDaoFactory().getUtilisateurDAO().delete(utilisateur);
-            JOptionPane deactiUser = new JOptionPane();
-            deactiUser.showMessageDialog(null, "La désactivation a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
-
+           
             
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
@@ -129,7 +127,7 @@ public class UtilisateurController extends Controller {
         }
         
         // ajouter un message comme quoi la suppression s'est bien deroulée.
-    
+        alert("Information", "L'utilisateur a bien été désactivé !");
         listAction();
     }
     

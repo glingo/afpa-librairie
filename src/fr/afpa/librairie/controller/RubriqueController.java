@@ -84,8 +84,10 @@ public class RubriqueController extends Controller implements ListSelectionListe
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
-    
+        
+        alert("Information", "La rubrique a bien été sauvegardé !");
         listAction();
+       
     }
     
     public void deleteAction(Rubrique rubrique){
@@ -96,8 +98,7 @@ public class RubriqueController extends Controller implements ListSelectionListe
 
         try {
             getDaoFactory().getRubriqueDAO().delete(rubrique);
-            JOptionPane deleteRub = new JOptionPane();
-            deleteRub.showMessageDialog(null, "La suppression a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
+           
 
             
         } catch(DAOException ex){
@@ -106,7 +107,7 @@ public class RubriqueController extends Controller implements ListSelectionListe
         }
         
         // ajouter un message comme quoi la suppression s'est bien deroulée.
-    
+        alert("Information", "La rubrique a bien été supprimé !");
         listAction();
     }
     

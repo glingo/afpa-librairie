@@ -76,8 +76,10 @@ public class OuvrageController extends Controller {
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
-    
+        
+        alert("Information", "L'ouvrage a bien été sauvegardé !");
         listAction();
+        
     }
     
     public void deleteAction(Ouvrage ouvrage){
@@ -90,15 +92,16 @@ public class OuvrageController extends Controller {
         
         try {
             getDaoFactory().getOuvrageDAO().delete(ouvrage);
-            JOptionPane deleteOuv = new JOptionPane();
-            deleteOuv.showMessageDialog(null, "L'ouvrage a bien été supprimé !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            
 
             
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
         }
-
+        
+        alert("Information", "L'ouvrage a bien été supprimé !");
         listAction();
+        
     }
 }
