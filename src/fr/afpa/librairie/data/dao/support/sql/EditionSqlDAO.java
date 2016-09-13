@@ -27,7 +27,9 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             + " SET idStatutEdition = ?"
             + " WHERE isbn = ?";
 
-
+    private static final String SQL_ACTIVATE = "UPDATE Edition"
+            + " SET idStatutEdition = ?"
+            + " WHERE isbn = ?";
 
     private static final String SQL_FIND_ALL = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition";
 
@@ -333,6 +335,31 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
     @Override
     public Edition findById(Long id) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void activate(Edition instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement pstmt = null;
+        ResultSet valeursAutoGenerees = null;
+        
+        try{
+            connexion = factory.getConnection();
+            
+            StatutEdition statut = factory.getStatutEditionDAO().findByCode(StatutEditionDAO.CODE_DISPONIBLE);
+            pstmt = getPreparedStatement(connexion, SQL_ACTIVATE, true,
+                    statut.getId(), instance.getIsbn());
+            
+            if(pstmt.executeUpdate() == 0){
+                throw new DAOException("Échec de l'activation de l'édition, aucune ligne supprimée dans la table.");
+            }
+            
+        }catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, pstmt, connexion);
+        }
     }
 
 }

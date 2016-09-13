@@ -28,8 +28,8 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
     //ce update a bresoind'une jointure. idStatutCommande n'est pas dans commande
     
  private static final String SQL_FIND_ALL = "SELECT"
-         + " numero, dateCommande"
-         + " FROM Edition";
+         + " idCommande, numero, dateCommande"
+         + " FROM Commande";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
             + " idCommande, numero, dateCommande"

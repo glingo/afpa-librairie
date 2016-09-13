@@ -47,7 +47,9 @@ public class EditionController extends Controller {
                 deactivateAction(this.adminPanel.getEditionList().getSelectedValue());
                 break;
 
- 
+            case "activate":
+                activateAction(this.adminPanel.getEditionList().getSelectedValue());
+                break;
 
             default:
                 if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
@@ -152,7 +154,26 @@ public class EditionController extends Controller {
         listAction();
 
     }
-
+    
+    private void activateAction(Edition edition){
+        
+        if(edition == null){
+            return;
+        }
+        
+        try{
+            getDaoFactory().getEditionDAO().activate(edition);
+            
+        }catch(DAOException ex){
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", 
+                    "Impossible d'activer cette édition.");
+            return;
+        }
+        
+        listAction();
+        alert("Information", "L'activation a été pris en compte !");
+    }
    
     
 }

@@ -13,5 +13,6 @@ public interface EditionDAO extends DAOInterface<Edition> {
     Edition findByTitre(String titre);
     Edition findByStock(int stock);
     
+    void activate(Edition edition) throws DAOException;
    
 }
