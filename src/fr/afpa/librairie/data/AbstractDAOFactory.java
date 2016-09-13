@@ -63,7 +63,6 @@ public abstract class AbstractDAOFactory implements DAOFactoryInterface {
     @Override
     public abstract AdresseDAO getAdresseDAO();
     
-    
     @Override
     public abstract LangueDAO getLangueDAO();
     
@@ -99,31 +98,5 @@ public abstract class AbstractDAOFactory implements DAOFactoryInterface {
         
         return this.properties;
     }
-    
-//    private void loadProperties(){
-//        this.properties = new Properties();
-//        
-//        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-//        InputStream is = classLoader.getResourceAsStream(PROPERTIES_PATH);
-//
-//        if (is == null) {
-//            String msg = String.format("Le fichier properties %s est introuvable.", PROPERTIES_PATH);
-//            throw new DAOConfigurationException(msg);
-//        }
-//        
-//        try {
-//            this.properties.load(is);
-//        } catch (IOException e) {
-//            String msg = String.format("Impossible de charger le fichier properties %s.", PROPERTIES_PATH);
-//            throw new DAOConfigurationException(msg, e);
-//        } finally {
-//            try {
-//                is.close();
-//            } catch (IOException ex) {
-//                String msg = String.format("Impossible de clore le stream sur %s.", PROPERTIES_PATH);
-//                throw new DAOConfigurationException(msg, ex);
-//            }
-//        }
-//    }
     
 }

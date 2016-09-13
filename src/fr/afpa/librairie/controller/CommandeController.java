@@ -81,8 +81,7 @@ public class CommandeController extends Controller {
         try{
             getDaoFactory().getCommandeDAO().save(commande);
         } catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            danger("Une erreur est survenue !", ex.getMessage());
         }
         
         this.createPanel.getForm().reset();
@@ -93,15 +92,13 @@ public class CommandeController extends Controller {
     public void deactivateAction(Commande commande){
         
          if(commande == null) {
-            
             return;
         }
 
         try{
             getDaoFactory().getCommandeDAO().delete(commande);
         } catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            danger("Une erreur est survenue !", ex.getMessage());
         }
 
         listAction();

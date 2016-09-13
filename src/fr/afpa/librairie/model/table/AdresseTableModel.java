@@ -1,4 +1,3 @@
-
 package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Adresse;

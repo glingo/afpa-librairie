@@ -65,8 +65,7 @@ public class AuteurController extends Controller {
         try {
             getDaoFactory().getAuteurDAO().save(auteur);
         } catch (DAOException ex) {
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            danger("Une erreur est survenue !", ex.getMessage());
         }
         
         listAction();
@@ -83,8 +82,7 @@ public class AuteurController extends Controller {
         try{
             getDaoFactory().getAuteurDAO().delete(auteur);
         } catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            danger("Une erreur est survenue !", ex.getMessage());
             return;
         }
         

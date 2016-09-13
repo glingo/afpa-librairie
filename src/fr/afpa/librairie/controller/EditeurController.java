@@ -7,14 +7,15 @@ import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CreateEditeurPanel;
 import fr.afpa.librairie.view.admin.EditeurAdminPanel;
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
+import java.util.logging.Logger;
 import javax.swing.JTextField;
 
 public class EditeurController extends Controller {
     
+    private static final Logger LOG = Logger.getLogger(EditeurController.class.getName());
+    
     private final EditeurAdminPanel adminPanel = new EditeurAdminPanel(this);
     private final CreateEditeurPanel createPanel = new CreateEditeurPanel(this);
-    
     
     public EditeurController(MainFrame frame){
         super(frame);
@@ -73,8 +74,9 @@ public class EditeurController extends Controller {
         try {
             getDaoFactory().getEditeurDAO().save(editeur);
         } catch (DAOException ex) {
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", 
+                    "Impossible de réaliser la sauvegarde de l'éditeur.");
         }
 
         this.createPanel.getForm().reset();
@@ -95,8 +97,9 @@ public class EditeurController extends Controller {
         try {
             getDaoFactory().getEditeurDAO().delete(editeur);
         } catch (DAOException ex) {
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", 
+                    "Impossible de réaliser la suppression de l'éditeur.");
         }
          
         listAction();

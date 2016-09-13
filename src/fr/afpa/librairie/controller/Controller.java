@@ -5,10 +5,11 @@ import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.FactoryType;
 import fr.afpa.librairie.view.MainFrame;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 public abstract class Controller implements ActionListener {
     
-    // Utilisaer les dao dans le controller n'est pas tres recommandé, 
+    // Utiliser les dao dans le controller n'est pas tres recommandé, 
     // mais en attendant les managers on fera avec.
     protected DAOFactoryInterface daoFactory;
     
@@ -29,4 +30,11 @@ public abstract class Controller implements ActionListener {
         return daoFactory;
     }
     
+    protected void alert(String title, String message){
+        JOptionPane.showMessageDialog(frame, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    protected void danger(String title, String message){
+        JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
+    }
 }
