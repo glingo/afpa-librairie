@@ -9,12 +9,17 @@ import fr.afpa.librairie.view.admin.EditionAdminPanel;
 import java.awt.event.ActionEvent;
 import java.sql.Date;
 import java.text.NumberFormat;
+import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class EditionController extends Controller {
-
+    
+    private static final Logger LOG = Logger.getLogger(EditionController.class.getName());
+    
+    
+    
     private final EditionAdminPanel adminPanel = new EditionAdminPanel(this);
     private final CreateEditionPanel createPanel = new CreateEditionPanel(this);
     //appel methode EditionAdminPanel et CreateEditionPanel present dans librairie/view/admin
@@ -111,8 +116,9 @@ public class EditionController extends Controller {
             //appel de la methode EditionDAO. mais surtout appel de la requete SQL save contenu dans EditionDAO.afin de créer une nouvelle edition.
            
         } catch (DAOException ex) {
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", "Impossible de sauvegarder l'édition");
+            
         }
 
         this.createPanel.getForm().reset();
@@ -134,8 +140,9 @@ public class EditionController extends Controller {
             getDaoFactory().getEditionDAO().delete(edition);
             
         } catch (DAOException ex) {
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", "Impossible de désactiver l'édition");
+            
         }
         
         alert("Information", "L'édition a bien été désactivé !");

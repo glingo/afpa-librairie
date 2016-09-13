@@ -9,11 +9,14 @@ import fr.afpa.librairie.view.admin.PromotionAdminPanel;
 import java.awt.event.ActionEvent;
 import java.sql.Date;
 import java.text.NumberFormat;
+import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class PromotionController extends Controller {
+    
+    private static final Logger LOG = Logger.getLogger(PromotionController.class.getName());
 
     private final PromotionAdminPanel adminPanel = new PromotionAdminPanel(this);
     private final CreatePromotionPanel createPanel = new CreatePromotionPanel(this);
@@ -91,8 +94,8 @@ public class PromotionController extends Controller {
             getDaoFactory().getPromotionDAO().save(promotion);
            
         } catch (DAOException ex) {
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", "Impossible de sauvegarder cette promotion. ");
         }
 
         this.createPanel.getForm().reset();
@@ -113,8 +116,8 @@ public class PromotionController extends Controller {
             
 
         } catch (DAOException ex) {
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", "Impossible de supprimer cette promotion. ");
         }
 
         alert("Information", "La promotion a bien été supprimé !");
