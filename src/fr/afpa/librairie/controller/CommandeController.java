@@ -85,6 +85,8 @@ public class CommandeController extends Controller {
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", " Impossible de sauvegarder cette commande");
+            
+            return;
         }
         
         this.createPanel.getForm().reset();
@@ -105,6 +107,8 @@ public class CommandeController extends Controller {
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de déactiver cette commande");
+            
+            return;
         }
         
         alert("Information", "La commande a bien été désactivé !");

@@ -79,6 +79,8 @@ public class EditeurController extends Controller {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de réaliser la sauvegarde de l'éditeur.");
+            
+            return;
         }
 
         this.createPanel.getForm().reset();
@@ -103,6 +105,8 @@ public class EditeurController extends Controller {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de réaliser la suppression de l'éditeur.");
+            
+            return;
         }
         alert("Information", "L'éditeur a bien été supprimé !");
         listAction();

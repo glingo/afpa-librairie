@@ -96,6 +96,8 @@ public class PromotionController extends Controller {
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder cette promotion. ");
+            
+            return;
         }
 
         this.createPanel.getForm().reset();
@@ -118,6 +120,8 @@ public class PromotionController extends Controller {
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de supprimer cette promotion. ");
+            
+            return;
         }
 
         alert("Information", "La promotion a bien été supprimé !");

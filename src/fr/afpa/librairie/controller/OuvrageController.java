@@ -79,6 +79,8 @@ public class OuvrageController extends Controller {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder cet ouvrage");
             
+            return;
+            
         }
         
         alert("Information", "L'ouvrage a bien été sauvegardé !");

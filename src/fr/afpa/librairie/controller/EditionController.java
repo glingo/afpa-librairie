@@ -15,11 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class EditionController extends Controller {
-    
+
     private static final Logger LOG = Logger.getLogger(EditionController.class.getName());
-    
-    
-    
+
     private final EditionAdminPanel adminPanel = new EditionAdminPanel(this);
     private final CreateEditionPanel createPanel = new CreateEditionPanel(this);
     //appel methode EditionAdminPanel et CreateEditionPanel present dans librairie/view/admin
@@ -45,9 +43,11 @@ public class EditionController extends Controller {
             case "save":
                 createAction();
                 break;
-            case "deactivate":            
+            case "deactivate":
                 deactivateAction(this.adminPanel.getEditionList().getSelectedValue());
                 break;
+
+ 
 
             default:
                 if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
@@ -57,7 +57,6 @@ public class EditionController extends Controller {
     }
 
     //quand User = list ==> controller = listAction
-
     public void listAction() {
         ListAdapterListModel<Edition> editionListModel = new ListAdapterListModel<>();
         //appel la listModel de edition
@@ -73,7 +72,6 @@ public class EditionController extends Controller {
     }
 
     //Si User = "save" alors EditionController ==> createAction
-
     public void createAction() {
 
         if (!this.createPanel.equals(this.frame.getContent())) {
@@ -114,19 +112,21 @@ public class EditionController extends Controller {
         try {
             getDaoFactory().getEditionDAO().save(edition);
             //appel de la methode EditionDAO. mais surtout appel de la requete SQL save contenu dans EditionDAO.afin de créer une nouvelle edition.
-           
+
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder l'édition");
-            
+
+            return;
+
         }
 
         this.createPanel.getForm().reset();
-        
+
         alert("Information", "L'édition a bien été sauvegardé !");
         listAction();
         //retour au EditionAdminPanel
-        
+
     }
 
     private void deactivateAction(Edition edition) {
@@ -135,20 +135,24 @@ public class EditionController extends Controller {
             return;
         }
         // on verifier si edition = null. Si l'édition est nulle ( donc pas selectionnée ) alors impossible de supprimer.
-        
+
         try {
             getDaoFactory().getEditionDAO().delete(edition);
-            
+
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de désactiver l'édition");
-            
+
+            return;
+
         }
-        
+
         alert("Information", "L'édition a bien été désactivé !");
         // ajouter un message comme quoi la suppression s'est bien deroulée.
         listAction();
-        
+
     }
 
+   
+    
 }

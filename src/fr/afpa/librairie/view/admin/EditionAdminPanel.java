@@ -59,6 +59,7 @@ public class EditionAdminPanel extends JPanel{
         setVisible(true);
     }
     
+    
     public void setEditionList(ListAdapterListModel<Edition> editionListModel) {
         editionList.setModel(editionListModel);
         editionTableModel.setListModel(editionListModel);
@@ -86,6 +87,7 @@ public class EditionAdminPanel extends JPanel{
         
         JButton createButton = new JButton("Creer");
         JButton deactivateButton = new JButton("Désactiver");
+      
         JButton viewButton = new JButton("Voir");
         JButton updateButton = new JButton("Mettre à jour");
         
@@ -95,8 +97,11 @@ public class EditionAdminPanel extends JPanel{
         deactivateButton.setActionCommand("deactivate");
         deactivateButton.addActionListener(controller);
         
+
+        
         footer.add(createButton);
         footer.add(deactivateButton);
+
         footer.add(viewButton);
         footer.add(updateButton);
         footer.repaint();
