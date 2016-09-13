@@ -1,4 +1,4 @@
-package fr.afpa.librairie.view;
+package fr.afpa.librairie.view.panel.footer;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -8,13 +8,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
 
-public class FooterCreatePanel extends JPanel {
+public class FooterEditorPanel extends JPanel {
     
     private final ActionListener controller;                    
     private JButton annulerBT;
     private JButton validerBT;
     
-    public FooterCreatePanel(ActionListener controller) {
+    public FooterEditorPanel(ActionListener controller) {
         this.controller = controller;
         initComponents();
     }
@@ -34,14 +34,19 @@ public class FooterCreatePanel extends JPanel {
         validerBT.setText("Valider");
         validerBT.setActionCommand("save");
         validerBT.addActionListener(this.controller);
-
+        
+        initLayout();
+    }     
+    
+    private void initLayout(){
         GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
+        setLayout(layout);
+        
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(annulerBT, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
                     .addComponent(validerBT, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -55,6 +60,6 @@ public class FooterCreatePanel extends JPanel {
                 .addComponent(annulerBT)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
-    }                     
+    }
                                     
 }

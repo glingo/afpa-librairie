@@ -18,6 +18,13 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
             + " (libelle, date_debut, date_fin, commentaire)"
             + " VALUES (?, ?, ?, ?)";
     
+    private static final String SQL_UPDATE = "UPDATE Rubrique SET"
+            + " libelle = ?,"
+            + " date_debut = ?,"
+            + " date_fin = ?,"
+            + " commentaire = ?"
+            + " WHERE idRubrique = ?";
+    
     private static final String SQL_DELETE = "DELETE FROM Rubrique WHERE idRubrique = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
@@ -75,10 +82,28 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         try {
 
             connexion = factory.getConnection();
-
-            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getLibelle(), instance.getDateDebut(),
-                    instance.getDateFin(), instance.getCommentaire());
+            
+            if(instance.getId() != null) { // update
+                
+                preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+                        instance.getLibelle(), instance.getDateDebut(),
+                        instance.getDateFin(), instance.getCommentaire(),
+                        instance.getId());
+                
+            } else { // insert
+                
+                preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
+                        instance.getLibelle(), instance.getDateDebut(),
+                        instance.getDateFin(), instance.getCommentaire());
+                
+                valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+                
+                if (valeursAutoGenerees.next()) {
+                    instance.setId(valeursAutoGenerees.getLong(1));
+                } else {
+                    throw new DAOException("Échec de la création de la rubrique en base, aucun ID auto-généré retourné.");
+                }
+            }
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -86,12 +111,6 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
                 throw new DAOException("Échec de la création de la rubrique, aucune ligne ajoutée dans la table.");
             }
 
-            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-            if (valeursAutoGenerees.next()) {
-                instance.setId(valeursAutoGenerees.getLong(1));
-            } else {
-                throw new DAOException("Échec de la création de la rubrique en base, aucun ID auto-généré retourné.");
-            }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
