@@ -48,7 +48,7 @@ public class UtilisateurController extends Controller {
 //            case "activate":
 //                activateAction(this.adminPanel.getUtilisateurList().getSelectedValue());
 //                break;
-                
+//                
             default:
                 if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
                     listAction();
