@@ -11,12 +11,14 @@ import fr.afpa.librairie.view.rubrique.CreateRubriquePanel;
 import fr.afpa.librairie.view.rubrique.RubriqueViewPanel;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class RubriqueController extends Controller implements ListSelectionListener {
+    private static final Logger LOG = Logger.getLogger(RubriqueController.class.getName());
     
     private final RubriqueAdminPanel adminPanel = new RubriqueAdminPanel(this);
 //    private final CreateRubriquePanel createPanel = new CreateRubriquePanel(this);
@@ -32,7 +34,6 @@ public class RubriqueController extends Controller implements ListSelectionListe
         if(!e.getValueIsAdjusting()) {
             JList list = (JList) e.getSource();
             Rubrique rubrique = (Rubrique)list.getSelectedValue();
-            System.out.println("rubrique : " + rubrique);
             viewAction(rubrique);
         }
     }
@@ -80,8 +81,9 @@ public class RubriqueController extends Controller implements ListSelectionListe
         try{
             getDaoFactory().getRubriqueDAO().save(rubrique);
         } catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", 
+                    "Impossible de sauvegarder cette rubrique.");
         }
     
         listAction();
@@ -95,13 +97,11 @@ public class RubriqueController extends Controller implements ListSelectionListe
 
         try {
             getDaoFactory().getRubriqueDAO().delete(rubrique);
-            JOptionPane deleteRub = new JOptionPane();
-            deleteRub.showMessageDialog(null, "La suppression a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
-
-            
+            alert("Information", "La suppression a bien été effectué !");
         } catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", 
+                    "Impossible de supprimer cette rubrique.");
         }
         
         // ajouter un message comme quoi la suppression s'est bien deroulée.
