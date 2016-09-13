@@ -66,19 +66,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
         ResultSet valeursAutoGenerees = null;
 
         try {
-//            if(instance.getOuvrages() == null) {
-//                // on recupère le Role par default
-//                // le code devrait etre une constante.
-//                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre("A");
-//                instance.addOuvrage(ouvrage);
-//            }
-//            
-//            // On verifie que tout les roles sont enregistré
-//            instance.getOuvrages().forEach((Ouvrage ouvrage) -> {
-//                if(ouvrage != null && ouvrage.getId() == null) {
-//                    ouvrage = getFactory().getOuvrageDAO().findByTitre(ouvrage.getTitre());
-//                }
-//            });
+
              
             connexion = factory.getConnection();
 

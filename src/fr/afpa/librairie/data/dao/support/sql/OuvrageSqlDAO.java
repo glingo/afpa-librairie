@@ -22,10 +22,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             + " (titre, sous_titre, resume, idAuteur)"
             + " VALUES (?, ?, ?, ?)";
 
-    private static final String SQL_DELETE = "INSERT INTO HistoAction"
-            + " (libelle, dateArchive)"
-            + " VALUES ('Archive d''un ouvrage', ?);"
-            + " DELETE FROM Ouvrage"
+    private static final String SQL_DELETE = "DELETE FROM Ouvrage"
             + " WHERE idOuvrage = ?";
 
     private static final String SQL_FIND_ALL = "SELECT"

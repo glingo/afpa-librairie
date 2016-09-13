@@ -82,6 +82,7 @@ public class AuteurController extends Controller {
         
         try{
             getDaoFactory().getAuteurDAO().delete(auteur);
+            
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
