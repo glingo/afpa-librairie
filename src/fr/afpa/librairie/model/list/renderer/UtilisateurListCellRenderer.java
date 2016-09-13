@@ -1,4 +1,4 @@
-package fr.afpa.librairie.model.list;
+package fr.afpa.librairie.model.list.renderer;
 
 import fr.afpa.librairie.data.bean.Utilisateur;
 import java.awt.Component;

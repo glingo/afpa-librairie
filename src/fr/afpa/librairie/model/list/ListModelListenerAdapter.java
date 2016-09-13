@@ -9,18 +9,18 @@ import javax.swing.event.ListDataListener;
 
 public class ListModelListenerAdapter implements PropertyChangeListener {
 
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            ListModelHolder<?> listModelHolder = (ListModelHolder<?>) evt.getSource();
-            ListModel<?> listModel = listModelHolder.getModel();
-            int size = listModel.getSize();
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        ListModelHolder<?> listModelHolder = (ListModelHolder<?>) evt.getSource();
+        ListModel<?> listModel = listModelHolder.getModel();
+        int size = listModel.getSize();
 
-            ListDataEvent contentsChanged = new ListDataEvent(listModel, ListDataEvent.CONTENTS_CHANGED, 0, size);
+        ListDataEvent contentsChanged = new ListDataEvent(listModel, ListDataEvent.CONTENTS_CHANGED, 0, size);
 
-            List<ListDataListener> listDataListeners = listModelHolder.getListDataListeners();
-            listDataListeners.stream().forEach((listDataListener) -> {
-                listDataListener.contentsChanged(contentsChanged);
-            });
+        List<ListDataListener> listDataListeners = listModelHolder.getListDataListeners();
+        listDataListeners.stream().forEach((listDataListener) -> {
+            listDataListener.contentsChanged(contentsChanged);
+        });
 
-        }
     }
+}

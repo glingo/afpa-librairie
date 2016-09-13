@@ -14,9 +14,7 @@ import javax.swing.JOptionPane;
 public class AuteurController extends Controller {
 
     private final AuteurAdminPanel adminPanel = new AuteurAdminPanel(this);
-//    private final CreateAuteurPanel createPanel = new CreateAuteurPanel(this);
     private final CreateAuteurPanel createPanel = new CreateAuteurPanel(this);
-    //creation auteruadmin
 
     public AuteurController(MainFrame frame) {
         super(frame);
@@ -24,8 +22,6 @@ public class AuteurController extends Controller {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        super.actionPerformed(e);
-
         switch (e.getActionCommand()) {
 
             case "list":

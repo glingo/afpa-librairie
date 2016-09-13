@@ -1,6 +1,5 @@
-package fr.afpa.librairie.model.list;
+package fr.afpa.librairie.model.list.renderer;
 
-import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
 import java.awt.Component;
 
@@ -8,16 +7,16 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-public class OuvrageListCellRenderer extends JLabel implements ListCellRenderer<Ouvrage> {
+public class RubriqueListCellRenderer extends JLabel implements ListCellRenderer<Rubrique> {
 
-    public OuvrageListCellRenderer() {
+    public RubriqueListCellRenderer() {
 //        setOpaque(true);
         setHorizontalAlignment(CENTER);
         setVerticalAlignment(CENTER);
     }
     
     @Override
-    public Component getListCellRendererComponent(JList<? extends Ouvrage> list, Ouvrage value, int index, boolean isSelected, boolean cellHasFocus) {
+    public Component getListCellRendererComponent(JList<? extends Rubrique> list, Rubrique value, int index, boolean isSelected, boolean cellHasFocus) {
 
 //        if (isSelected) {
 //            System.out.println("selected " + index);
@@ -33,16 +32,16 @@ public class OuvrageListCellRenderer extends JLabel implements ListCellRenderer<
         return this;
     }
 
-    private String toString(Ouvrage ouvrage) {
-        if (ouvrage == null) {
+    private String toString(Rubrique rubrique) {
+        if (rubrique == null) {
             return "";
         }
         
-        StringBuilder sb = new StringBuilder();
+        StringBuilder personToStringBuilder = new StringBuilder();
 
-        sb.append(ouvrage.getTitre());
+        personToStringBuilder.append(rubrique.getLibelle());
         
-        return sb.toString();
+        return personToStringBuilder.toString();
     }
 
 }

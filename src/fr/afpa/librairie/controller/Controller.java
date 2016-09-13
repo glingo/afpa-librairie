@@ -25,16 +25,6 @@ public abstract class Controller implements ActionListener {
         this.frame = frame;
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        
-//        if(frame == null) {
-//            this.frame = new MainFrame();
-//            this.frame.setVisible(true);
-//        }
-//        
-//    }
-    
     public DAOFactoryInterface getDaoFactory() {
         return daoFactory;
     }

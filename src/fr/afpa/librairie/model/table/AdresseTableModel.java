@@ -10,7 +10,7 @@ import java.util.Map;
 import javax.swing.ListModel;
 import javax.swing.table.AbstractTableModel;
 
-public class AdresseTableModel extends AbstractTableModel{
+public class AdresseTableModel extends AbstractTableModel {
     
     private final ListModelHolder<Adresse> adresseListModelHolder = new ListModelHolder<>();
     private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);

@@ -4,7 +4,7 @@ import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.list.ListModelSelection;
-import fr.afpa.librairie.model.list.RubriqueListCellRenderer;
+import fr.afpa.librairie.model.list.renderer.RubriqueListCellRenderer;
 import java.awt.Dimension;
 import java.util.List;
 import javax.swing.DefaultListSelectionModel;

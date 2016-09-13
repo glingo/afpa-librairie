@@ -3,7 +3,7 @@ package fr.afpa.librairie.view.rubrique;
 import fr.afpa.librairie.controller.RubriqueController;
 import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
-import fr.afpa.librairie.model.list.OuvrageListCellRenderer;
+import fr.afpa.librairie.model.list.renderer.OuvrageListCellRenderer;
 import java.util.List;
 import javax.swing.JPanel;
 

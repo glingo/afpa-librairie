@@ -1,5 +1,5 @@
 
-package fr.afpa.librairie.model.list;
+package fr.afpa.librairie.model.list.renderer;
 
 import fr.afpa.librairie.data.bean.Auteur;
 import java.awt.Component;

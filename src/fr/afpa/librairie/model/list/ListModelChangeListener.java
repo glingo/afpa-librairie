@@ -6,25 +6,25 @@ import javax.swing.table.AbstractTableModel;
 
 public class ListModelChangeListener implements ListDataListener {
 
-        private final AbstractTableModel model;
-        
-        public ListModelChangeListener(AbstractTableModel model) {
-            this.model = model;
-        }
-    
-        @Override
-        public void intervalAdded(ListDataEvent e) {
-            model.fireTableDataChanged();
-        }
+    private final AbstractTableModel model;
 
-        @Override
-        public void intervalRemoved(ListDataEvent e) {
-            model.fireTableDataChanged();
-        }
-
-        @Override
-        public void contentsChanged(ListDataEvent e) {
-            model.fireTableDataChanged();
-        }
-
+    public ListModelChangeListener(AbstractTableModel model) {
+        this.model = model;
     }
+
+    @Override
+    public void intervalAdded(ListDataEvent e) {
+        model.fireTableDataChanged();
+    }
+
+    @Override
+    public void intervalRemoved(ListDataEvent e) {
+        model.fireTableDataChanged();
+    }
+
+    @Override
+    public void contentsChanged(ListDataEvent e) {
+        model.fireTableDataChanged();
+    }
+
+}

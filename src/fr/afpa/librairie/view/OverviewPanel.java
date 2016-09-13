@@ -3,7 +3,7 @@ package fr.afpa.librairie.view;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.list.ListModelSelection;
-import fr.afpa.librairie.model.list.UtilisateurListCellRenderer;
+import fr.afpa.librairie.model.list.renderer.UtilisateurListCellRenderer;
 import fr.afpa.librairie.model.table.UtilisateurTableModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
