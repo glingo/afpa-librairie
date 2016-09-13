@@ -6,10 +6,14 @@ import fr.afpa.librairie.view.FooterCreatePanel;
 import fr.afpa.librairie.view.field.JDateField;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -44,6 +48,7 @@ public class CreateRubriquePanel extends JPanel {
     }
                       
     private void initComponents() {
+        
         
         footer = new FooterCreatePanel(controller);
         

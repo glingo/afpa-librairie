@@ -84,9 +84,13 @@ public class RubriqueController extends Controller implements ListSelectionListe
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de sauvegarder cette rubrique.");
+            
+            // on souhaite rester sur l'ecran de creation et ne pas retourner vers la liste.
+            return;
         }
     
         listAction();
+        alert("Information", "La sauvegarde a bien été effectué !");
     }
     
     public void deleteAction(Rubrique rubrique){
@@ -97,7 +101,6 @@ public class RubriqueController extends Controller implements ListSelectionListe
 
         try {
             getDaoFactory().getRubriqueDAO().delete(rubrique);
-            alert("Information", "La suppression a bien été effectué !");
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
@@ -107,6 +110,7 @@ public class RubriqueController extends Controller implements ListSelectionListe
         // ajouter un message comme quoi la suppression s'est bien deroulée.
     
         listAction();
+        alert("Information", "La suppression a bien été effectué !");
     }
     
     

@@ -130,22 +130,24 @@ public class OuvrageTableModel extends AbstractTableModel {
         
         return sb.toString();
     }
+    
     private String getAuteurObject(Ouvrage ouvrage){
-        
-        if(ouvrage.getCoAuteurs() == null) {
-            return "";
-        }
-        
         StringBuilder sb = new StringBuilder();
-        int len = ouvrage.getCoAuteurs().size();
-        for(int i = 0; i<len ; i++){
-            Auteur auteur = ouvrage.getCoAuteurs().get(i);
-            sb.append(auteur.getNom());
-            
-            if(i < len - 1){
-                sb.append(", ");
+        
+        sb.append(ouvrage.getAuteur().getNom()).append(", ");
+        
+        if(ouvrage.getCoAuteurs() != null) {
+            int len = ouvrage.getCoAuteurs().size();
+            for(int i = 0; i<len ; i++){
+                Auteur auteur = ouvrage.getCoAuteurs().get(i);
+                sb.append(auteur.getNom());
+
+                if(i < len - 1){
+                    sb.append(", ");
+                }
             }
         }
+        
         return sb.toString();
     }
     

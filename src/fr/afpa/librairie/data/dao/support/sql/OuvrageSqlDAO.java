@@ -2,6 +2,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOFactoryInterface;
+import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
@@ -26,32 +27,32 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             + " WHERE idOuvrage = ?";
 
     private static final String SQL_FIND_ALL = "SELECT"
-            + " idOuvrage, titre, sous_titre, resume"
+            + " idOuvrage, idAuteur, titre, sous_titre, resume"
             + " FROM Ouvrage ";
 
     private static final String SQL_FIND_BY_TITRE = "SELECT"
-            + " idOuvrage, titre, sous_titre, resume"
+            + " idOuvrage, idAuteur, titre, sous_titre, resume"
             + " FROM Ouvrage"
             + " WHERE titre = ?";
 
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idOuvrage, titre, sous_titre, resume"
+            + " idOuvrage, idAuteur, titre, sous_titre, resume"
             + " FROM Ouvrage"
             + " WHERE idOuvrage = ?";
 
     private static final String SQL_FIND_BY_SOUSTITRE = "SELECT"
-            + " idOuvrage, titre, sous_titre, resume"
+            + " idOuvrage, idAuteur, titre, sous_titre, resume"
             + " FROM Ouvrage"
             + " WHERE sousTitre = ?";
 
     private static final String SQL_FIND_BY_EDITION = "SELECT"
-            + " o.idOuvrage, o.titre, o.sous_titre, o.resume"
+            + " o.idOuvrage, o.idAuteur, o.titre, o.sous_titre, o.resume"
             + " FROM Ouvrage AS o"
             + " JOIN Edition AS ed ON ed.idStatutEdition = ste.idStatutEdition"
             + " WHERE ed.isbn =?";
 
     private static final String SQL_FIND_BY_RUBRIQUE = "SELECT"
-            + " o.idOuvrage, o.titre, o.sous_titre, o.resume"
+            + " o.idOuvrage, o.idAuteur, o.titre, o.sous_titre, o.resume"
             + " FROM Ouvrage AS o"
             + " JOIN MiseEnRubrique AS mer ON mer.idOuvrage = o.idOuvrage"
             + " WHERE mer.idRubrique =?";
@@ -319,7 +320,10 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
 
         List<Theme> themes = factory.getThemeDAO().findByOuvrage(idOuvrage);
         ouvrage.setThemes(themes);
-
+        
+        Auteur auteur = factory.getAuteurDAO().findById(result.getLong("idAuteur"));
+        ouvrage.setAuteur(auteur);
+        
         /*List<Auteur> coAuteurs = factory.getAuteurDAO().findCoAuteursByOuvrage(idOuvrage);
          ouvrage.setCoAuteurs(coAuteurs);*/
         return ouvrage;

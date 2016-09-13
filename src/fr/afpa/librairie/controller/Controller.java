@@ -18,6 +18,7 @@ public abstract class Controller implements ActionListener {
     
     public Controller() {
 //        this.daoFactory = AbstractDAOFactory.getFactory(FactoryType.LIST_DAO_FACTORY);
+//        this.daoFactory = AbstractDAOFactory.getFactory(FactoryType.XML_DAO_FACTORY);
         this.daoFactory = AbstractDAOFactory.getFactory(FactoryType.DAO_FACTORY);
     }
 

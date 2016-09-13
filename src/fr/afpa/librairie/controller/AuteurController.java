@@ -84,6 +84,13 @@ public class AuteurController extends Controller {
         // impossible de supprimer un auteur si des ouvrages sont encore relié a lui.
         
         try{
+            // on regarde si l'auteur est encore relié a des ouvrages 
+            // si oui on demande a l'utilisateur si il veut tous les supprimer.
+            // on recup la liste des  ouvrages
+            // on les supprime
+            
+            // on continue la suppression de l'auteur.
+            
             getDaoFactory().getAuteurDAO().delete(auteur);
             alert("Information", "L'auteur a bien été supprimé !");
         } catch(DAOException ex){

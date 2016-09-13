@@ -46,9 +46,9 @@ public class EditeurController extends Controller {
     }
 
     public void listAction() {
-        ListAdapterListModel<Editeur> EditeurListModel = new ListAdapterListModel<>();
-        EditeurListModel.addAll(getDaoFactory().getEditeurDAO().findAll());
-        adminPanel.setAuteurList(EditeurListModel);
+        ListAdapterListModel<Editeur> editeurListModel = new ListAdapterListModel<>();
+        editeurListModel.addAll(getDaoFactory().getEditeurDAO().findAll());
+        adminPanel.setAuteurList(editeurListModel);
         this.frame.setContent(adminPanel);
 
     }
