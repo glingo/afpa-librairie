@@ -20,11 +20,11 @@ public class CommandeTableModel extends AbstractTableModel{
     public Map<CommandeColumn, String> getColumnDisplayNames() {
         if(this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
-            this.columnDisplayNames.put(CommandeColumn.UTILISATEUR, "Client commande");
-            this.columnDisplayNames.put(CommandeColumn.NUMERO, "Numéro");
-            this.columnDisplayNames.put(CommandeColumn.DATE_COMMANDE, "Date de commande");
             this.columnDisplayNames.put(CommandeColumn.ADRESSE_LIVRAISON, "Adresse de livraison");
             this.columnDisplayNames.put(CommandeColumn.ADRESSE_FACTURATION, "Adresse de facturation");
+            this.columnDisplayNames.put(CommandeColumn.UTILISATEUR, "Client de la commande");
+            this.columnDisplayNames.put(CommandeColumn.NUMERO, "Numéro de la commande");
+            this.columnDisplayNames.put(CommandeColumn.DATE_COMMANDE, "Date de la commande");
             this.columnDisplayNames.put(CommandeColumn.STATUT_COMMANDE, "Statut de la commande");
             
         }
@@ -59,6 +59,12 @@ public class CommandeTableModel extends AbstractTableModel{
         CommandeColumn column = getColumn(columnIndex);
 
         switch (column) {
+//            case ADRESSE_LIVRAISON:
+//                columnValue = getAdresseLivraisonObject(commande);
+//                break;
+//            case ADRESSE_FACTURATION:
+//                columnValue = getAdresseFacturationObject(commande);
+//                break;
             case UTILISATEUR:
                 columnValue = getUtilisateurObject(commande);
                 break;
@@ -68,12 +74,6 @@ public class CommandeTableModel extends AbstractTableModel{
             case DATE_COMMANDE:
                 columnValue = commande.getDateCommande();
                 break;
-//            case ADRESSE_LIVRAISON:
-//                columnValue = getAdresseLivraisonObject(commande);
-//                break;
-//            case ADRESSE_FACTURATION:
-//                columnValue = getAdresseFacturationObject(commande);
-//                break;
             case STATUT_COMMANDE:
                 columnValue = getStatutCommandeObject(commande);
                 break;

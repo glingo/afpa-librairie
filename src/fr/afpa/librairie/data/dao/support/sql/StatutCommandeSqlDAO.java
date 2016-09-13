@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> implements StatutCommandeDAO {
 
     private static final String SQL_INSERT = "INSERT INTO StatutCommande (libelle, code) VALUES (?, ?)";
@@ -48,37 +49,6 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
         super(factory);
     }
     
-    public List<StatutCommande> findByCommande(String libelle) throws DAOException {
-        SqlDAOFactory factory = getFactory();
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        List<StatutCommande> orderStats = new ArrayList<>();
-
-        try {
-            connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_COMMANDE, false, libelle);
-            resultSet = preparedStatement.executeQuery();
-            
-//            resultSet.beforeFirst();
-            
-            while (resultSet.next()) {
-                orderStats.add(map(resultSet));
-            }
-            
-            if (resultSet.next()) {
-                orderStats = new ArrayList<>();
-                orderStats.add(map(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            close(resultSet, preparedStatement, connexion);
-        }
-
-        return orderStats;
-
-    }
 
     @Override
     protected StatutCommande map(ResultSet resultSet) throws SQLException {
@@ -244,7 +214,7 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        StatutCommande orderStatus = null;
+        StatutCommande orderStat = null;
 
         try {
             /* Récupération d'une connexion depuis la Factory */
@@ -253,7 +223,39 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             if (resultSet.next()) {
-                orderStatus = map(resultSet);
+                orderStat = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return orderStat;
+    }
+
+    @Override
+    public List<StatutCommande> findByCommande(Long idCommande) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<StatutCommande> orderStatus = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_COMMANDE, false, idCommande);
+            resultSet = preparedStatement.executeQuery();
+            
+//            resultSet.beforeFirst();
+            
+            while (resultSet.next()) {
+                orderStatus.add(map(resultSet));
+            }
+            
+            if (resultSet.next()) {
+                orderStatus = new ArrayList<>();
+                orderStatus.add(map(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
