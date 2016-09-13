@@ -7,15 +7,13 @@ import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.CreateUtilisateurPanel;
 import fr.afpa.librairie.view.admin.UtilisateurAdminPanel;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class UtilisateurController extends Controller {
+    private static final Logger LOG = Logger.getLogger(UtilisateurController.class.getName());
     
     private final UtilisateurAdminPanel adminPanel = new UtilisateurAdminPanel(this);
     private final CreateUtilisateurPanel createPanel = new CreateUtilisateurPanel(this);
@@ -99,13 +97,16 @@ public class UtilisateurController extends Controller {
             getDaoFactory().getUtilisateurDAO().save(utilisateur);
             
         } catch (DAOException ex) {
-            
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", 
+                    "Impossible de sauvegarder cet utilisateur.");
+            return;
         }
 
         this.createPanel.getForm().reset();
         
-        alert("Information", "L'utilisateur a bien été sauvegardé !");
         listAction();
+        alert("Information", "L'utilisateur a bien été sauvegardé !");
     }
     
     public void deactivateAction(Utilisateur utilisateur){
@@ -120,15 +121,16 @@ public class UtilisateurController extends Controller {
         try {
             getDaoFactory().getUtilisateurDAO().delete(utilisateur);
            
-            
         } catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", 
+                    "Impossible de desactiver cet utilisateur.");
+            return;
         }
         
+        listAction();
         // ajouter un message comme quoi la suppression s'est bien deroulée.
         alert("Information", "L'utilisateur a bien été désactivé !");
-        listAction();
     }
     
     public void activateAction(Utilisateur utilisateur){
@@ -136,17 +138,18 @@ public class UtilisateurController extends Controller {
         if(utilisateur == null){
             return;
         }
+        
         try{
             getDaoFactory().getUtilisateurDAO().activate(utilisateur);
-            JOptionPane actiUser = new JOptionPane();
-            actiUser.showMessageDialog(null, "L'activation a été pris en compte !", "Information", JOptionPane.INFORMATION_MESSAGE);
-            
         }catch(DAOException ex){
-            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
-                    "Une erreur est survenue !TATAAA", JOptionPane.ERROR_MESSAGE);
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", 
+                    "Impossible d'activer cet utilisateur.");
+            return;
         }
         
         listAction();
+        alert("Information", "L'activation a été pris en compte !");
     }
     
     public void viewAction(Utilisateur utilisateur){

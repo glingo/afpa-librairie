@@ -170,7 +170,6 @@ import java.util.List;
 
     }
     
-    
     public void activate(Utilisateur instance){
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -324,4 +323,5 @@ import java.util.List;
     public Utilisateur findByCommande(Long idCommande) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

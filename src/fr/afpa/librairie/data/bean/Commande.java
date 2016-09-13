@@ -19,7 +19,6 @@ public class Commande {
     private Utilisateur user;
     private StatutCommande orderStat;
     
-
     public Commande() {
     }
 

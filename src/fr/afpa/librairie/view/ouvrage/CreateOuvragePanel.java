@@ -6,12 +6,15 @@ import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.view.FooterCreatePanel;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -122,6 +125,7 @@ public class CreateOuvragePanel extends JPanel {
         rubriqueCB1 = new JComboBox();
         rubriqueCB2 = new JComboBox();
         footer = new FooterCreatePanel(controller);
+        
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -350,6 +354,13 @@ public class CreateOuvragePanel extends JPanel {
 
         rubriqueCB2.setBackground(Color.gray);
         rubriqueCB2.setForeground(Color.black);
+        
+        JButton button = new JButton("add rubrique");
+        button.addActionListener((ActionEvent e) -> {
+            int showConfirmDialog = JOptionPane.showConfirmDialog(auteurPanel, coAuteurCB1);
+            System.out.println(showConfirmDialog);
+        });
+        
 
         GroupLayout bodyPanel2Layout = new GroupLayout(bodyPanel2);
         bodyPanel2.setLayout(bodyPanel2Layout);
@@ -371,7 +382,10 @@ public class CreateOuvragePanel extends JPanel {
                                 .addComponent(coAuteurCB1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 //                                .addComponent(langueCB, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(tagCB1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(rubriqueCB1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+//                                .addComponent(rubriqueCB1, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(button, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                
+                                
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(bodyPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(tagCB2, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -415,7 +429,8 @@ public class CreateOuvragePanel extends JPanel {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(bodyPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(rubriquesLB)
-                                .addComponent(rubriqueCB1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+//                                .addComponent(rubriqueCB1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(button, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(rubriqueCB2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(18, Short.MAX_VALUE))
         );
