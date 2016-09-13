@@ -82,7 +82,8 @@ public class AuteurController extends Controller {
         
         try{
             getDaoFactory().getAuteurDAO().delete(auteur);
-            
+            JOptionPane deleteAuteur = new JOptionPane();
+            deleteAuteur.showMessageDialog(null, "L'auteur a bien été supprimé !", "Information", JOptionPane.INFORMATION_MESSAGE);
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
