@@ -51,7 +51,9 @@ public class RubriqueAdminPanel extends JPanel{
         setVisible(true); // Move it to here
     }
     
-    
+    public JList<Rubrique> getRubriqueList(){
+        return this.rubriqueList;
+    }
     public void setRubriqueList(ListAdapterListModel<Rubrique> rubriqueListModel) {
         rubriqueList.setModel(rubriqueListModel);
         rubriqueTableModel.setListModel(rubriqueListModel);
@@ -79,6 +81,9 @@ public class RubriqueAdminPanel extends JPanel{
         
         createButton.setActionCommand("create");
         createButton.addActionListener(controller);
+        
+        deleteButton.setActionCommand("delete");
+        deleteButton.addActionListener(controller);
         
         footer.add(createButton);
         footer.add(deleteButton);

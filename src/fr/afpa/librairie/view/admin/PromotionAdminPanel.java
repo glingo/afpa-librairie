@@ -26,7 +26,7 @@ public class PromotionAdminPanel extends JPanel {
     
     private final ListAdapterListModel<Promotion> promoListModel = new ListAdapterListModel<>();
     private final PromotionTableModel promoTableModel = new PromotionTableModel();
-    private final JTable commandeTable = new JTable(promoTableModel);
+    private final JTable promoTable = new JTable(promoTableModel);
     private final ListSelectionModel selectionModel = new DefaultListSelectionModel();
     private final JList<Promotion> promoList = new JList<>(promoListModel);
     private final ListModelSelection<Promotion> listModelSelection = new ListModelSelection<>();
@@ -39,11 +39,11 @@ public class PromotionAdminPanel extends JPanel {
      private void init(){
         setLayout(new BorderLayout());
         
-        commandeTable.setSelectionModel(selectionModel);
-        commandeTable.setSelectionModel(promoList.getSelectionModel());
+        promoTable.setSelectionModel(selectionModel);
+        promoTable.setSelectionModel(promoList.getSelectionModel());
         
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setViewportView(commandeTable);
+        scrollPane.setViewportView(promoTable);
         
         add(scrollPane, BorderLayout.CENTER);
         add(getFooter(), BorderLayout.SOUTH);
@@ -57,6 +57,10 @@ public class PromotionAdminPanel extends JPanel {
         promoList.setModel(promoListModel);
         promoTableModel.setListModel(promoListModel);
         listModelSelection.setListModels(promoListModel, selectionModel);
+    }
+    
+    public JList<Promotion> getPromoList(){
+        return this.promoList;
     }
     
     private Component getForm(){
@@ -78,6 +82,9 @@ public class PromotionAdminPanel extends JPanel {
         
         createButton.setActionCommand("create");
         createButton.addActionListener(controller);
+        
+        deleteButton.setActionCommand("delete");
+        deleteButton.addActionListener(controller);
         
         footer.add(createButton);
         footer.add(deleteButton);

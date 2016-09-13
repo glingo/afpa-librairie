@@ -90,7 +90,7 @@ public class OuvrageController extends Controller {
         try {
             getDaoFactory().getOuvrageDAO().delete(ouvrage);
             JOptionPane deleteOuv = new JOptionPane();
-            deleteOuv.showMessageDialog(null, "L'ouvrage a bien été archivé !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            deleteOuv.showMessageDialog(null, "L'ouvrage a bien été supprimé !", "Information", JOptionPane.INFORMATION_MESSAGE);
 
             
         } catch(DAOException ex){

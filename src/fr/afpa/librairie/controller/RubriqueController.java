@@ -50,6 +50,9 @@ public class RubriqueController extends Controller implements ListSelectionListe
             case "save":
                 createAction();
                 break;
+                
+            case"delete":
+                deleteAction(this.adminPanel.getRubriqueList().getSelectedValue());
 
             default:
                 if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
@@ -83,6 +86,29 @@ public class RubriqueController extends Controller implements ListSelectionListe
     
         listAction();
     }
+    
+    public void deleteAction(Rubrique rubrique){
+        if(rubrique == null) {
+
+            return;
+        }
+
+        try {
+            getDaoFactory().getRubriqueDAO().delete(rubrique);
+            JOptionPane deleteRub = new JOptionPane();
+            deleteRub.showMessageDialog(null, "La suppression a bien été effectué !", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+            
+        } catch(DAOException ex){
+            JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
+                    "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        // ajouter un message comme quoi la suppression s'est bien deroulée.
+    
+        listAction();
+    }
+    
     
     public void viewAction(Rubrique rubrique) {
         List<Ouvrage> ouvrages = getDaoFactory().getOuvrageDAO().findByRubrique(rubrique.getId());
