@@ -72,7 +72,7 @@ public class AuteurController extends Controller {
             danger("Une erreur est survenue !", 
                     "Impossible de sauvegarder cet auteur.");
         }
-        alert("Information", "L'auteur a bien été sauvegardé!");
+        alert("Information", "L'auteur a bien été sauvegardé !");
         listAction();
         
     }
