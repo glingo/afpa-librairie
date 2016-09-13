@@ -67,7 +67,9 @@ public class AuteurController extends Controller {
         try {
             getDaoFactory().getAuteurDAO().save(auteur);
         } catch (DAOException ex) {
-            danger("Une erreur est survenue !", ex.getMessage());
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", 
+                    "Impossible de sauvegarder cet auteur.");
         }
         
         listAction();
@@ -86,7 +88,8 @@ public class AuteurController extends Controller {
             alert("Information", "L'auteur a bien été supprimé !");
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
-            danger("Une erreur est survenue !", "Impossible de supprimer cet auteur.");
+            danger("Une erreur est survenue !", 
+                    "Impossible de supprimer cet auteur.");
             return;
         }
         
