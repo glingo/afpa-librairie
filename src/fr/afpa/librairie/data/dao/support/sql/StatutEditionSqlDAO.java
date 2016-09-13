@@ -46,8 +46,10 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
     
   public StatutEditionSqlDAO(AbstractDAOFactory factory) {
         super(factory);
+
     }
     
+  
 
     @Override
     public void save(StatutEdition instance) throws DAOException {

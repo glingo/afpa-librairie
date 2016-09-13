@@ -20,4 +20,6 @@ public interface StatutCommandeDAO extends DAOInterface<StatutCommande> {
     StatutCommande findByCode(String code);
     
     List<StatutCommande> findByCommande(Long idCommande) throws DAOException;
+    
+    
 }
