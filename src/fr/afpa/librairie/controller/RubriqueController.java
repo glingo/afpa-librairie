@@ -91,7 +91,7 @@ public class RubriqueController extends Controller implements ListSelectionListe
         }
         
         listAction();
-        alert("Information", "La sauvegarde a bien été effectué !");
+        alert("Information", "La sauvegarde a bien été effectuée !");
     }
     
     public void deleteAction(Rubrique rubrique){
@@ -112,7 +112,7 @@ public class RubriqueController extends Controller implements ListSelectionListe
         
         // ajouter un message comme quoi la suppression s'est bien deroulée.
         listAction();
-        alert("Information", "La suppression a bien été effectué !");
+        alert("Information", "La suppression a bien été effectuée !");
     }
     
     
