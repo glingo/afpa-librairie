@@ -9,12 +9,14 @@ import fr.afpa.librairie.view.admin.CommandeAdminPanel;
 import fr.afpa.librairie.view.admin.CreateCommandePanel;
 import java.awt.event.ActionEvent;
 import java.sql.Date;
+import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 
 public class CommandeController extends Controller {
+    private static final Logger LOG = Logger.getLogger(CommandeController.class.getName());
      
     private final CommandeAdminPanel adminPanel = new CommandeAdminPanel(this);
     private final CreateCommandePanel createPanel = new CreateCommandePanel(this);
@@ -81,7 +83,8 @@ public class CommandeController extends Controller {
         try{
             getDaoFactory().getCommandeDAO().save(commande);
         } catch(DAOException ex){
-            danger("Une erreur est survenue !", ex.getMessage());
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", " Impossible de sauvegarder cette commande");
         }
         
         this.createPanel.getForm().reset();
@@ -100,8 +103,10 @@ public class CommandeController extends Controller {
             getDaoFactory().getCommandeDAO().delete(commande);
             
         } catch(DAOException ex){
-            danger("Une erreur est survenue !", ex.getMessage());
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", "Impossible de déactiver cette commande");
         }
+        
         alert("Information", "La commande a bien été désactivé !");
         listAction();
         

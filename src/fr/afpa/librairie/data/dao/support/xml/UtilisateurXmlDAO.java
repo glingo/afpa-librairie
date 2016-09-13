@@ -27,4 +27,9 @@ public class UtilisateurXmlDAO extends AbstractXmlDAO<Utilisateur> implements Ut
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void activate(Utilisateur utilisateur) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

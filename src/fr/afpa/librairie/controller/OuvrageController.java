@@ -98,6 +98,7 @@ public class OuvrageController extends Controller {
         } catch(DAOException ex){
             JOptionPane.showMessageDialog(this.frame, ex.getMessage(),
                     "Une erreur est survenue !", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         
         alert("Information", "L'ouvrage a bien été supprimé !");

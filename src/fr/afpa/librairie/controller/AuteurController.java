@@ -92,6 +92,7 @@ public class AuteurController extends Controller {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de supprimer cet auteur.");
+            //ici on met l'instruction permettant de supprimé l'auteur. 
             return;
         }
         
