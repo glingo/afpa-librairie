@@ -8,11 +8,13 @@ import fr.afpa.librairie.view.admin.AuteurAdminPanel;
 import fr.afpa.librairie.view.auteur.CreateAuteurPanel;
 //import fr.afpa.librairie.view.admin.CreateAuteurPanel;
 import java.awt.event.ActionEvent;
+import java.util.logging.Logger;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 public class AuteurController extends Controller {
-
+    private static final Logger LOG = Logger.getLogger(AuteurController.class.getName());
+    
     private final AuteurAdminPanel adminPanel = new AuteurAdminPanel(this);
     private final CreateAuteurPanel createPanel = new CreateAuteurPanel(this);
 
@@ -81,10 +83,10 @@ public class AuteurController extends Controller {
         
         try{
             getDaoFactory().getAuteurDAO().delete(auteur);
-            JOptionPane deleteAuteur = new JOptionPane();
-            deleteAuteur.showMessageDialog(null, "L'auteur a bien été supprimé !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            alert("Information", "L'auteur a bien été supprimé !");
         } catch(DAOException ex){
-            danger("Une erreur est survenue !", ex.getMessage());
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !", "Impossible de supprimer cet auteur.");
             return;
         }
         

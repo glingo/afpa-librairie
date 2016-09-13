@@ -2,7 +2,6 @@ package fr.afpa.librairie.view.ouvrage;
 
 import fr.afpa.librairie.controller.OuvrageController;
 import fr.afpa.librairie.data.bean.Auteur;
-import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.view.FooterCreatePanel;
 import java.awt.Color;
