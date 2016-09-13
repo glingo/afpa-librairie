@@ -20,9 +20,9 @@ public class AdresseTableModel extends AbstractTableModel {
     public Map<AdresseColumn, String> getColumnDisplayNames() {
         if (this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
-            this.columnDisplayNames.put(AdresseColumn.NUMERO, "Nom");
-            this.columnDisplayNames.put(AdresseColumn.VOIE, "Prenom");
-            this.columnDisplayNames.put(AdresseColumn.CODEPOSTAL, "Date de naissance");
+            this.columnDisplayNames.put(AdresseColumn.NUMERO, "Numero");
+            this.columnDisplayNames.put(AdresseColumn.VOIE, "Voie");
+            this.columnDisplayNames.put(AdresseColumn.CODEPOSTAL, "Code postal");
             this.columnDisplayNames.put(AdresseColumn.VILLE, "Ville");
             this.columnDisplayNames.put(AdresseColumn.COMPLEMENT, "Complement");
         }
