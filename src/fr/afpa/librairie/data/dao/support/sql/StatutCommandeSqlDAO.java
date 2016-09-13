@@ -38,10 +38,10 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
     
     private static final String SQL_FIND_BY_COMMANDE = "SELECT"
             + " stac.idStatutCommande, stac.libelle, stac.code"
-            + " FROM StatutCommande AS stac"
-            + " JOIN HistoriqueStatutCommande AS hsc ON hsc.idStatutCommande = stac.idStatutCommande"
-            + " JOIN Commande AS co ON co.idCommande = hsc.idCommande"
-            + " WHERE hsc.idCommande = ?";
+            + " FROM Commande AS c"
+            + " JOIN historiqueStatutCommande AS hsc ON c.idCommande = hsc.idCommande"
+            + " JOIN statutCommande AS sc ON hsc.idStatutCommande = sc.idStatutCommande"
+            + " WHERE c.idCommande = ?";
 
     
     public StatutCommandeSqlDAO(AbstractDAOFactory factory) {
