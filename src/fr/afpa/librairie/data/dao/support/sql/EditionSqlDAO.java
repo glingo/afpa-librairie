@@ -21,7 +21,23 @@ import java.util.List;
 public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO {
 
     //requete SQL
-    private static final String SQL_INSERT = "INSERT INTO Edition (isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO Edition"
+            + " (isbn, idOuvrage, idLangue,"
+            + " idStatutEdition, datePubli, prixHt,"
+            + " couverture, titre, stock)"
+            + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String SQL_UPDATE = "UPDATE Edition"
+            + " SET isbn = ?"
+            + " idOuvrage = ?,"
+            + " idLangue = ?,"
+            + " idStatutEdition = ?,"
+            + " datePubli = ?,"
+            + " prixHt = ?,"
+            + " couverture = ?,"
+            + " titre = ?,"
+            + " stock = ?"
+            + " WHERE idEdition = ?";
 
     private static final String SQL_DELETE = "UPDATE Edition "
             + " SET idStatutEdition = ?"
@@ -31,15 +47,32 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             + " SET idStatutEdition = ?"
             + " WHERE isbn = ?";
 
-    private static final String SQL_FIND_ALL = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition";
+    private static final String SQL_FIND_ALL = "SELECT"
+            + " idEdition, isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock"
+            + " FROM Edition";
 
-    private static final String SQL_FIND_BY_ISBN = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition WHERE isbn = ?";
+    private static final String SQL_FIND_BY_ISBN = "SELECT"
+            + " idEdition, isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition"
+            + " WHERE isbn = ?";
+    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idEdition, isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition"
+            + " WHERE idEdition = ?";
 
-    private static final String SQL_FIND_BY_DATEPUBLI = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition WHERE datePubli = ?";
+    private static final String SQL_FIND_BY_DATEPUBLI = "SELECT"
+            + " idEdition, isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock"
+            + " FROM Edition"
+            + " WHERE datePubli = ?";
 
-    private static final String SQL_FIND_BY_TITRE = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition WHERE titre = ?";
+    private static final String SQL_FIND_BY_TITRE = "SELECT"
+            + " idEdition, isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock"
+            + " FROM Edition"
+            + " WHERE titre = ?";
 
-    private static final String SQL_FIND_BY_STOCK = "SELECT isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock FROM Edition WHERE stock = ?";
+    private static final String SQL_FIND_BY_STOCK = "SELECT"
+            + " idEdition, isbn, idOuvrage, idLangue, idStatutEdition, datePubli, prixHt, couverture, titre, stock"
+            + " FROM Edition"
+            + " WHERE stock = ?";
 
 
     //constructeur
@@ -48,9 +81,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
     }
 
     @Override
-    //requete save : pour créer une nouvelle edition. 
-    public void save(Edition instance) throws DAOException {
-
+    public void create(Edition instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -108,12 +139,11 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             connexion = factory.getConnection();
             //requete prepare avec des conditions particulières.
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getIsbn(), instance.getDatePublication(),
-                    instance.getPrixHt(), instance.getCouverture(),
+                    instance.getIsbn(), instance.getOuvrage().getId(),
+                    instance.getLangue().getId(), instance.getStatut().getId(),
+                    instance.getDatePublication(), instance.getPrixHt(), 
                     instance.getCouverture(), instance.getTitre(),
-                    instance.getStock(), instance.getStatut() == null ? null : instance.getStatut().getId(),
-                    instance.getOuvrage() == null ? null : instance.getOuvrage().getId(),
-                    instance.getLangue() == null ? null : instance.getLangue().getId());
+                    instance.getStock());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -134,6 +164,47 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
 
+    }
+
+    @Override
+    public void update(Edition instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+                    instance.getIsbn(), 
+                    instance.getOuvrage().getId(), instance.getLangue().getId(), 
+                    instance.getStatut().getId(), instance.getDatePublication(), 
+                    instance.getPrixHt(), instance.getCouverture(), 
+                    instance.getTitre(), instance.getStock());
+
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            //nbr de ligne 
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de l'édition, aucune ligne ajoutée dans la table.");
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+
+    }
+
+    @Override
+    //requete save : pour créer une nouvelle edition. 
+    public void save(Edition instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
+        }
     }
 
     @Override
@@ -300,6 +371,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
 //        SqlDAOFactory factory = getFactory();
         Edition edition = new Edition();
 
+        edition.setId(resultSet.getLong("idEdition"));
         edition.setIsbn(resultSet.getString("isbn"));
 
         Ouvrage ouvrage = factory.getOuvrageDAO().findById(resultSet.getLong("idOuvrage"));
@@ -321,20 +393,36 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
 
         edition.setStock(resultSet.getInt("stock"));
 
-        List<Taxe> taxes = factory.getTaxeDao().findByEdition(edition.getIsbn());
+        List<Taxe> taxes = factory.getTaxeDao().findByEdition(edition.getId());
         edition.setTaxes(taxes);
 
         return edition;
     }
 
     @Override
-    public Edition findByExemple(Edition instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Edition findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Edition edition = null;
+
+        try {
+
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, false, id);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                edition = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return edition;
     }
 
     @Override

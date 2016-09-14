@@ -19,8 +19,15 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
             + " (numero, voie, codePostal, ville, complement)"
             + " VALUES (?, ?, ?, ?)";
     
-    private static final String SQL_DELETE = "DELETE FROM Adresse WHERE idAdresse = ?";
+    private static final String SQL_UPDATE = "UPDATE Adresse"
+            + " SET numero = ?,"
+            + " voie = ?,"
+            + " codePostal = ?,"
+            + " ville = ?,"
+            + " complement = ?"
+            + " WHERE idAdresse = ?";
     
+    private static final String SQL_DELETE = "DELETE FROM Adresse WHERE idAdresse = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
             + " idAdresse, numero, voie, codePostal, ville, complement"
@@ -49,7 +56,7 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
     }
 
     @Override
-    public void save(Adresse instance) throws DAOException {
+    public void create(Adresse instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -60,8 +67,10 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
             connexion = factory.getConnection();
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getNumero(), instance.getVoie(),
-                    instance.getCp(), instance.getComplement());
+                    instance.getNumero(), 
+                    instance.getVoie(),
+                    instance.getCp(), 
+                    instance.getComplement());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -79,6 +88,45 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void update(Adresse instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
+                    instance.getNumero(), 
+                    instance.getVoie(),
+                    instance.getCp(), 
+                    instance.getComplement(),
+                    instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de l'adresse, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void save(Adresse instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
         }
     }
 
@@ -207,13 +255,5 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
     public Adresse findByCp(String cp) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public Adresse findByExemple(Adresse instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-
 
 }

@@ -17,6 +17,6 @@ public interface TaxeDAO extends DAOInterface<Taxe> {
     Taxe findByLibelle (String libelle);
     Taxe findByValeur (Float valeur);
     
-    List<Taxe> findByEdition(String isbn) throws DAOException;
+    List<Taxe> findByEdition(Long id) throws DAOException;
     
 }

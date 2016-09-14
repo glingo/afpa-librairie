@@ -1,8 +1,8 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
-import fr.afpa.librairie.data.bean.StatutUtilisateur;
-import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
+import fr.afpa.librairie.data.bean.StatutEntreprise;
+import fr.afpa.librairie.data.dao.StatutEntrepriseDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,84 +14,45 @@ import java.util.List;
 // DAO = Data Access Object
 // DTO = Data Transfert Object
 
-public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> implements StatutUtilisateurDAO {
+public class StatutEntrepriseSqlDAO extends AbstractSqlDAO<StatutEntreprise> implements StatutEntrepriseDAO {
 
-    private static final String SQL_INSERT = "INSERT INTO StatutUtilisateur (libelle, code) VALUES (?, ?)";
-    private static final String SQL_DELETE = "DELETE FROM StatutUtilisateur WHERE id = ?";
-    
-    private static final String SQL_UPDATE = "UPDATE StatutUtilisateur"
-            + " SET libelle = ?,"
-            + " code = ?"
-            + " WHERE idStatuUtilisateur = ?";
+    private static final String SQL_INSERT = "INSERT INTO StatutEntreprise (libelle, code) VALUES (?, ?)";
+    private static final String SQL_DELETE = "DELETE FROM StatutEntreprise WHERE id = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
-            + " idStatutUtilisateur, libelle, code"
-            + " FROM StatutUtilisateur";
+            + " idStatutEntreprise, libelle, code"
+            + " FROM StatutEntreprise";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idStatutUtilisateur, libelle, code"
-            + " FROM StatutUtilisateur"
-            + " WHERE idStatutUtilisateur = ?";
+            + " idStatutEntreprise, libelle, code"
+            + " FROM StatutEntreprise"
+            + " WHERE idStatutEntreprise = ?";
     
     private static final String SQL_FIND_BY_CODE = "SELECT"
-            + " idStatutUtilisateur, libelle, code"
-            + " FROM StatutUtilisateur"
+            + " idStatutEntreprise, libelle, code"
+            + " FROM StatutEntreprise"
             + " WHERE code = ?";
     
     private static final String SQL_FIND_BY_LIBELLE = "SELECT"
-            + " idStatutUtilisateur, libelle, code"
-            + " FROM StatutUtilisateur"
+            + " idStatutEntreprise, libelle, code"
+            + " FROM StatutEntreprise"
             + " WHERE libelle = ?";
 
     
     private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
-            +" stu.idStatutUtilisateur, stu.libelle, stu.code"
-            +" FROM StatutUtilisateur AS stu"
-            +" JOIN Utilisateur AS ut ON ut.idStatutUtilisateur = stu.idStatutUtilisateur"
-            +" WHERE ut.idUtilisateur =?";
+            +" ste.idStatutEntreprise, ste.libelle, ste.code"
+            +" FROM StatutEntreprise AS ste"
+            +" JOIN Entreprise AS ut ON ut.idStatutEntreprise = ste.idStatutEntreprise"
+            +" WHERE ut.idEntreprise =?";
     
 
-    public StatutUtilisateurSqlDAO(AbstractDAOFactory factory) {
+    public StatutEntrepriseSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
+    
 
     @Override
-    public void update(StatutUtilisateur instance) throws DAOException {
-        SqlDAOFactory factory = getFactory();
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet valeursAutoGenerees = null;
-
-        try {
-            /* Récupération d'une connexion depuis la Factory */
-            connexion = factory.getConnection();
-            
-            preparedStatement = getPreparedStatement(
-                    connexion, SQL_UPDATE, false, 
-                    instance.getLibelle(), instance.getCode(), instance.getId());
-            
-            int statut = preparedStatement.executeUpdate();
-            /* Analyse du statut retourné par la requête d'insertion */
-            if (statut == 0) {
-                throw new DAOException("Échec de la création du statut de l'utilisateur, aucune ligne ajoutée dans la table.");
-            }
-            /* Récupération de l'id auto-généré par la requête d'insertion */
-            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-            if (valeursAutoGenerees.next()) {
-                /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
-                instance.setId(valeursAutoGenerees.getLong(1));
-            } else {
-                throw new DAOException("Échec de la création du statut de l'utilisateur en base, aucun ID auto-généré retourné.");
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            close(valeursAutoGenerees, preparedStatement, connexion);
-        }
-    }
-
-    @Override
-    public void create(StatutUtilisateur instance) throws DAOException {
+    public void save(StatutEntreprise instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -108,15 +69,15 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la création du statut de l'utilisateur, aucune ligne ajoutée dans la table.");
+                throw new DAOException("Échec de la création du statut de l'entreprise, aucune ligne ajoutée dans la table.");
             }
             /* Récupération de l'id auto-généré par la requête d'insertion */
             valeursAutoGenerees = preparedStatement.getGeneratedKeys();
             if (valeursAutoGenerees.next()) {
-                /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
+                /* Puis initialisation de la propriété id du bean Entreprise avec sa valeur */
                 instance.setId(valeursAutoGenerees.getLong(1));
             } else {
-                throw new DAOException("Échec de la création du statut de l'utilisateur en base, aucun ID auto-généré retourné.");
+                throw new DAOException("Échec de la création du statut de l'entreprise en base, aucun ID auto-généré retourné.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -126,16 +87,7 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
     }
 
     @Override
-    public void save(StatutUtilisateur instance) throws DAOException {
-        if(instance.getId() != null) {
-            update(instance);
-        } else {
-            create(instance);
-        }
-    }
-
-    @Override
-    public void delete(StatutUtilisateur instance) {
+    public void delete(StatutEntreprise instance) {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -148,7 +100,7 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la suppression de l'utilisateur, aucune ligne supprimée dans la table.");
+                throw new DAOException("Échec de la suppression de l'entreprise, aucune ligne supprimée dans la table.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -159,12 +111,12 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
     }
     
     @Override
-    public List<StatutUtilisateur> findAll() throws DAOException {
+    public List<StatutEntreprise> findAll() throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<StatutUtilisateur> statuts = new ArrayList<>();
+        List<StatutEntreprise> statuts = new ArrayList<>();
 
         try {
             connexion = factory.getConnection();
@@ -185,14 +137,19 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
         return statuts;
 
     }
+
+    @Override
+    public StatutEntreprise findByExemple(StatutEntreprise instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     @Override
-    public StatutUtilisateur findById(Long id) throws DAOException {
+    public StatutEntreprise findById(Long id) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        StatutUtilisateur statut = null;
+        StatutEntreprise statut = null;
         
         try {
             /* Récupération d'une connexion depuis la Factory */
@@ -214,27 +171,27 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
     }
     
     @Override
-    public List<StatutUtilisateur> findByUtilisateur(Long idUtilisateur) throws DAOException {
+    public List<StatutEntreprise> findByEntreprise(Long idEntreprise) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<StatutUtilisateur> statutUtilisateurs = new ArrayList<>();
+        List<StatutEntreprise> statutEntreprises = new ArrayList<>();
 
         try {
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_UTILISATEUR, false, idUtilisateur);
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_UTILISATEUR, false, idEntreprise);
             resultSet = preparedStatement.executeQuery();
             
 //            resultSet.beforeFirst();
             
             while (resultSet.next()) {
-                statutUtilisateurs.add(map(resultSet));
+                statutEntreprises.add(map(resultSet));
             }
             
             if (resultSet.next()) {
-                statutUtilisateurs= new ArrayList<>();
-                statutUtilisateurs.add(map(resultSet));
+                statutEntreprises= new ArrayList<>();
+                statutEntreprises.add(map(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -242,18 +199,18 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
             close(resultSet, preparedStatement, connexion);
         }
 
-        return statutUtilisateurs;
+        return statutEntreprises;
 
     }
 
 
     @Override
-    public StatutUtilisateur findByCode(String code) throws DAOException {
+    public StatutEntreprise findByCode(String code) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        StatutUtilisateur statut = null;
+        StatutEntreprise statut = null;
 
         try {
             /* Récupération d'une connexion depuis la Factory */
@@ -277,13 +234,13 @@ public class StatutUtilisateurSqlDAO extends AbstractSqlDAO<StatutUtilisateur> i
     /*
      * Simple méthode utilitaire permettant de faire la correspondance (le
      * mapping) entre une ligne issue de la table des utilisateurs (un
-     * ResultSet) et un bean Utilisateur.
+     * ResultSet) et un bean Entreprise.
      */
     @Override
-    protected StatutUtilisateur map(ResultSet resultSet) throws SQLException {
-        StatutUtilisateur statut = new StatutUtilisateur();
+    protected StatutEntreprise map(ResultSet resultSet) throws SQLException {
+        StatutEntreprise statut = new StatutEntreprise();
         
-        statut.setId(resultSet.getLong("idStatutUtilisateur"));
+        statut.setId(resultSet.getLong("idStatutEntreprise"));
         statut.setLibelle(resultSet.getString("libelle"));
         statut.setCode(resultSet.getString("code"));
                

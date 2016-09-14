@@ -18,8 +18,22 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
             + " (libelle)"
             + " VALUES (?)";
     
+    private static final String SQL_UPDATE = "UPDATE Theme"
+            + " SET libelle = ?"
+            + " WHERE idTheme = ?";
+    
     private static final String SQL_DELETE = "DELETE FROM Theme"
             + " WHERE idTheme = ?";
+    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idTheme, libelle"
+            + " FROM Theme"
+            + " WHERE idTheme = ?";
+    
+    private static final String SQL_FIND_BY_LIBELLE = "SELECT"
+            + " idTheme, libelle"
+            + " FROM Theme"
+            + " WHERE libelle = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
             + " idTheme, libelle"
@@ -46,34 +60,8 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
         return theme;
     }
     
-
     @Override
-    public List<Theme> findAll() throws DAOException {
-        SqlDAOFactory factory = getFactory();
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null; 
-        ResultSet resultSet = null ;
-        List<Theme> themes = new ArrayList<>();
-        
-        try {
-            connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                themes.add(map(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            close(resultSet, preparedStatement, connexion);
-        }
- 
-        return themes;
-    }
-
-    @Override
-    public void save(Theme instance) throws DAOException {
+    public void create(Theme instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -107,6 +95,68 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
     }
 
     @Override
+    public void update(Theme instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+                    instance.getLibelle(), instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du theme, aucune ligne ajoutée dans la table.");
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+    
+    @Override
+    public void save(Theme instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
+        }
+    }
+
+    
+    @Override
+    public List<Theme> findAll() throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null; 
+        ResultSet resultSet = null ;
+        List<Theme> themes = new ArrayList<>();
+        
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                themes.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+ 
+        return themes;
+    }
+
+    @Override
     public void delete(Theme instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -131,19 +181,51 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
     }
 
     @Override
-    public Theme findByExemple(Theme instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Theme findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null; 
+        ResultSet resultSet = null ;
+        Theme theme = null;
+        
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, 
+                    false, id);
+            resultSet = preparedStatement.executeQuery();
+
+            theme = map(resultSet);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+ 
+        return theme;
     }
 
     @Override
     public Theme findByLibelle(String libelle) {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null; 
+        ResultSet resultSet = null ;
+        Theme theme = null;
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_LIBELLE, 
+                    false, libelle);
+            resultSet = preparedStatement.executeQuery();
+
+            theme = map(resultSet);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+ 
+        return theme;
     }
 
     @Override
@@ -170,5 +252,4 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
  
         return themes;
     }
-    
 }

@@ -16,6 +16,11 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
 
     private static final String SQL_INSERT = "INSERT INTO StatutCommande (libelle, code) VALUES (?, ?)";
     private static final String SQL_DELETE = "DELETE FROM StatutCommande WHERE id = ?";
+    
+    private static final String SQL_UPDATE = "UPDATE StatutCommande"
+            + " SET libelle = ?,"
+            + " code = ?"
+            + " WHERE idStatutCommande = ?";
 
     private static final String SQL_FIND_ALL = "SELECT"
             + " idStatutCommande, libelle, code"
@@ -90,7 +95,7 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
     }
 
     @Override
-    public void save(StatutCommande instance) throws DAOException {
+    public void create(StatutCommande instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -125,6 +130,42 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
     }
 
     @Override
+    public void update(StatutCommande instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(
+                    connexion, SQL_UPDATE, true,
+                    instance.getLibelle(), instance.getCode(), instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du statut de la commande, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        } 
+    }
+    
+    @Override
+    public void save(StatutCommande instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
+        }
+    }
+
+    @Override
     public void delete(StatutCommande instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -145,11 +186,6 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
-    }
-
-    @Override
-    public StatutCommande findByExemple(StatutCommande instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -62,7 +62,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
     }
 
     @Override
-    public void save(Ouvrage instance) throws DAOException {
+    public void create(Ouvrage instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -157,6 +157,43 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
     }
 
     @Override
+    public void update(Ouvrage instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
+                    instance.getTitre(), instance.getSousTitre(), instance.getResume(),
+                    instance.getAuteur().getId(), instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de l'ouvrage, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void save(Ouvrage instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
+        }
+    }
+
+    @Override
     public List<Ouvrage> findAll() throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -205,11 +242,6 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
-    }
-
-    @Override
-    public Ouvrage findByExemple(Ouvrage instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

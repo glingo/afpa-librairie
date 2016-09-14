@@ -58,6 +58,11 @@ public class ListDAOFactory extends AbstractDAOFactory {
     public StatutUtilisateurListDAO getStatutUtilisateurDAO() {
         return new StatutUtilisateurListDAO(this);
     }
+    
+        //@Override
+    public StatutEntrepriseListDAO getStatutEntrepriseDAO() {
+        return new StatutEntrepriseListDAO(this);
+    }
 
     @Override
     public AuteurDAO getAuteurDAO() {

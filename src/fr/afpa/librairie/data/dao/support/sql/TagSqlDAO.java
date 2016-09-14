@@ -17,9 +17,23 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
             + " (libelle)"
             + " VALUES (?)";
     
+    private static final String SQL_UPDATE = "UPDATE Tag"
+            + " SET libelle = ?"
+            + " WHERE idTag = ?";
+    
     private static final String SQL_DELETE = "DELETE FROM Tag WHERE idTag = ?";
     
     private static final String SQL_FIND_ALL = "SELECT idTag, libelle FROM Tag ";
+    
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idTag, libelle"
+            + " FROM Tag"
+            + " WHERE idTag = ?";
+    
+    private static final String SQL_FIND_BY_LIBELLE = "SELECT"
+            + " idTag, libelle"
+            + " FROM Tag"
+            + " WHERE libelle = ?";
     
      private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
              + " t.idTag, t.libelle"
@@ -30,9 +44,11 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
     public TagSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
+    
+    
 
     @Override
-    public void save(Tag instance) throws DAOException {
+    public void create(Tag instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -62,6 +78,39 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
+    }
+
+    @Override
+    public void update(Tag instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+                    instance.getLibelle(), instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du Tag, aucune ligne ajoutée dans la table.");
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    
+    }
+
+    @Override
+    public void save(Tag instance) throws DAOException {
+        
     }
 
     @Override
@@ -122,21 +171,55 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
         return tag;
        
     }
-     
-
-    @Override
-    public Tag findByExemple(Tag instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public Tag findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Tag tag = null;
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, 
+                    false, id);
+            resultSet = preparedStatement.executeQuery();
+
+            tag = map(resultSet);
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return tag;
     }
 
     @Override
-    public Tag findByLibelle(String libelle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Tag findByLibelle(String libelle) { 
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Tag tag = null;
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_LIBELLE, 
+                    false, libelle);
+            resultSet = preparedStatement.executeQuery();
+
+            tag = map(resultSet);
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return tag;
     }
 
     @Override

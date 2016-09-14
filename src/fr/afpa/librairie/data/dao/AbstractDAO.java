@@ -3,7 +3,6 @@ package fr.afpa.librairie.data.dao;
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.exception.DAOException;
-import java.util.List;
 
 public abstract class AbstractDAO<T> implements DAOInterface<T> {
 
@@ -17,7 +16,7 @@ public abstract class AbstractDAO<T> implements DAOInterface<T> {
         return (F) factory;
     }
 
-    @Override
-    public abstract List<T> findAll() throws DAOException;
+    public abstract void create(T instance) throws DAOException;
+    public abstract void update(T instance) throws DAOException;
     
 }
