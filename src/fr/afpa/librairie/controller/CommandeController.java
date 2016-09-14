@@ -5,6 +5,8 @@ import fr.afpa.librairie.data.bean.Commande;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
+import fr.afpa.librairie.view.commande.CommandeAdminPanel;
+import fr.afpa.librairie.view.commande.CommandeEditorPanel;
 import java.util.logging.Logger;
 
 
@@ -14,6 +16,8 @@ public class CommandeController extends CRUDController<Commande> {
      
     public CommandeController(MainFrame frame) {
         super(frame);
+        setAdminPanel(new CommandeAdminPanel(this));
+        setEditorPanel(new CommandeEditorPanel(this));
     }
     
     @Override
