@@ -1,52 +1,106 @@
-
 package fr.afpa.librairie.data.bean;
 
 /**
- * Création d'un objet Commentaire contenant :
- * 
- * - l'id (correspond au séquentiel automatiquement généré par la BDD et typé long
- * - titre : correspond au titre de l'ouvrage commenté
- * - contenu : commentaire laissé par l'utilisateur sur l'ouvrage
- * - note : note donnée par l'utilisateur à l'ouvrage
- * 
+ * Enregistre les commentaires rédigés par les Clients à propose d'une édition
+ * d'un ouvrage.
  */
 public class Commentaire {
+
+    /**
+     * Séquentiel de la table Commentaire automatiquement généré par la BDD.
+     */
     private long id;
+    /**
+     * Edition commentée.
+     */
     private String titre;
+    /**
+     * Commentaire rédigé par le client.
+     */
     private String contenu;
+    /**
+     * Note (entier typé int) attribuée par le client à l'édition
+     */
     private int note;
 
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public Commentaire() {
     }
 
+    /**
+     * Retourne l'id (généré par la BDD).
+     *
+     * @param id
+     * @return L'id (généré par la BDD) sous la forme d'un entier (typé long).
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Met à jour l'id (généré par la BDD).
+     *
+     * @param id Nouvel id de l'adresse.
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * Retourne le titre de l'édition commentée.
+     *
+     * @param titre
+     * @return Titre de l'édition commentée.
+     */
     public String getTitre() {
         return titre;
     }
 
+    /**
+     * Met à jour le titre de l'édition commentée.
+     *
+     * @param titre Nouveau titre de l'édition.
+     */
     public void setTitre(String titre) {
         this.titre = titre;
     }
 
+    /**
+     * Retourne le contenu du commentaire.
+     *
+     * @param titre
+     * @return Commentaire client.
+     */
     public String getContenu() {
         return contenu;
     }
 
+    /**
+     * Met à jour le commentaire.
+     *
+     * @param contenu Ajoute/modifie le commentaire d'un client.
+     */
     public void setContenu(String contenu) {
         this.contenu = contenu;
     }
 
+    /**
+     * Retourne la note laissée par un client sur un ouvrage.
+     *
+     * @param note
+     * @return Note Utilisateur (typée int).
+     */
     public int getNote() {
         return note;
     }
 
+    /**
+     * Met à jour la note de l'ouvrage laissée par le client.
+     *
+     * @param contenu Modifie la note (typée int) d'un Utilisateur.
+     */
     public void setNote(int note) {
         this.note = note;
     }
@@ -55,6 +109,5 @@ public class Commentaire {
     public String toString() {
         return "Commentaire{" + "id=" + id + ", titre=" + titre + ", contenu=" + contenu + ", note=" + note + '}';
     }
-    
-    
+
 }

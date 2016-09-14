@@ -1,77 +1,150 @@
-
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
 
 /**
- * Création d'un objet Commande contenant :
- * 
- * - l'id (correspond au séquentiel automatiquement généré par la BDD et typé long
- * - numero : de commande (String car ne fera pas l'objet de calculs)
- * - date 
- * - Client (Utilisateur user) : Classe contenant toutes les infos relatives au client 
- * - Statut de la Commande (StatutCommande orderStat) : Classe contenant toutes les infos relatives à l'état de la commande
- * (StatutCommandeDAO)
- * - complement : infos complémentaires optionnelles concernant l'adresse
- * 
- *  nb : le pays est un objet à part
+ * Enregistre les différetes info. relatives à la commande d'un ouvrage.
+ *
+ * @see Ouvrage
  */
 public class Commande {
+
+    /**
+     * Séquentiel de la table Commande automatiquement généré par la BDD.
+     */
     private long id;
+    /**
+     * Numero de commande(String car ne fera pas l'objet de calculs).
+     */
     private String numero;
+    /**
+     * Date de commande
+     */
     private Date dateCommande;
-    
+    /**
+     * Informations relatives au client effectuant la commande.
+     *
+     * @see Utilisateur
+     */
     private Utilisateur user;
+    /**
+     * Informations relatives au statut d'une commande.
+     *
+     * @see StatutCommande
+     * @see StatutCommandeDAO
+     */
     private StatutCommande orderStat;
-    
+
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public Commande() {
     }
 
+    /**
+     * Retourne l'id (généré par la BDD) de la commande.
+     *
+     * @param id
+     * @return L'id (généré par la BDD) de la commande sous la forme de nombre
+     * d'un entier (typé long).
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Met à jour l'id (généré par la BDD).
+     *
+     * @param id Nouvel id de l'adresse.
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * Retourne le numéro de commande.
+     *
+     * @param numero
+     * @return Le numero de commande (typée String).
+     */
     public String getNumero() {
         return numero;
     }
 
+    /**
+     * Met à jour le numéro de commande.
+     *
+     * @param numero Nouveau numéro de commande.
+     */
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
+    /**
+     * Retourne la date de commande.
+     *
+     * @param dateCommande
+     * @return La date de commande (typée Date).
+     */
     public Date getDateCommande() {
         return dateCommande;
     }
 
+    /**
+     * Met à jour la date de commande.
+     *
+     * @param dateCommande Nouvelle date de commande.
+     */
     public void setDateCommande(Date dateCommande) {
         this.dateCommande = dateCommande;
     }
-    
 
-    public Utilisateur getUser(){
+    /**
+     * Retourne les infos relatives au client.
+     *
+     * @param user
+     * @see Utilisateur
+     * @return Les paramètres Utilisateur (client).
+     */
+    public Utilisateur getUser() {
         return user;
     }
-    
-    public void setUser(Utilisateur user){
+
+    /**
+     * Met à jour les paramètres du client.
+     *
+     * @param user Nouveaux paramètres Utilisateur (Client).
+     */
+    public void setUser(Utilisateur user) {
         this.user = user;
     }
-    
-    public StatutCommande getOrderStat(){
+
+    /**
+     * Retourne l'état de la commande.
+     *
+     * @param orderStat
+     * @see StatutCommande
+     * @StatutCommandeDAO
+     * @return L'état de la commande.
+     */
+    public StatutCommande getOrderStat() {
         return orderStat;
     }
-    
-    public void setOrderStat(StatutCommande orderStat){
+
+        /**
+     * Met à jour l'état de la commande.
+     *
+     * @param orderStat
+     * @see StatutCommande
+     * @StatutCommandeDAO
+     */
+    public void setOrderStat(StatutCommande orderStat) {
         this.orderStat = orderStat;
     }
-    
+
     @Override
     public String toString() {
         return "Commande{" + "id=" + id + ", numero=" + numero + ", dateCommande=" + dateCommande + '}';
     }
-    
-    
+
 }
