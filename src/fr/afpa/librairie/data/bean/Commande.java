@@ -55,7 +55,7 @@ public class Commande {
     /**
      * Met à jour l'id (généré par la BDD).
      *
-     * @param id Nouvel id de l'adresse.
+     * @param id Nouvel id de la commande.
      */
     public void setId(long id) {
         this.id = id;

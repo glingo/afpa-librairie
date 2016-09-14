@@ -42,7 +42,7 @@ public class Commentaire {
     /**
      * Met à jour l'id (généré par la BDD).
      *
-     * @param id Nouvel id de l'adresse.
+     * @param id Nouvel id du commentaire.
      */
     public void setId(long id) {
         this.id = id;

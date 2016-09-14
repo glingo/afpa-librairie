@@ -66,7 +66,7 @@ public class Auteur {
      /**
      * Met à jour l'id (généré par la BDD).
      *
-     * @param id Nouvel id de l'adresse.
+     * @param id Nouvel id de l'Auteur.
      */
     public void setId(Long id) {
         this.id = id;
@@ -76,7 +76,7 @@ public class Auteur {
      * Retourne le nom de l'auteur.
      *
      * @param nom
-     * @return Le nom de l'auteur.
+     * @return Nom de l'auteur.
      */
     public String getNom() {
         return nom;
@@ -85,8 +85,7 @@ public class Auteur {
     /**
      * Met à jour le nom de l'auteur.
      *
-     * @param nom 
-     * Nouveau nom de l'auteur.
+     * @param nom Nouveau nom de l'auteur.
      */
     public void setNom(String nom) {
         this.nom = nom;
@@ -105,8 +104,7 @@ public class Auteur {
     /**
      * Met à jour le prenom de l'auteur.
      *
-     * @param prenom 
-     * Nouveau prénom de l'auteur.
+     * @param prenom Nouveau prénom de l'auteur.
      */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
@@ -125,8 +123,7 @@ public class Auteur {
     /**
      * Met à jour la date de naissance de l'auteur.
      *
-     * @param dateNaissance 
-     * Nouvelle date de naissance de l'auteur.
+     * @param dateNaissance Nouvelle date de naissance de l'auteur.
      */
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
@@ -145,8 +142,7 @@ public class Auteur {
     /**
      * Met à jour la date de décès de l'auteur.
      *
-     * @param dateDeces 
-     * Nouvelle date de décès de l'auteur.
+     * @param dateDeces Nouvelle date de décès de l'auteur.
      */
     public void setDateDeces(Date dateDeces) {
         this.dateDeces = dateDeces;
