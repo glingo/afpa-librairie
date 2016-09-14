@@ -13,11 +13,6 @@ public class StatutEntrepriseListDAO extends AbstractListDAO<StatutEntreprise> i
     }
 
     @Override
-    public StatutEntreprise findByExemple(StatutEntreprise instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public StatutEntreprise findById(Long id) throws DAOException {
         return getTable().stream().filter((StatutEntreprise statut) -> {
             return statut.getId().equals(id);
@@ -33,6 +28,16 @@ public class StatutEntrepriseListDAO extends AbstractListDAO<StatutEntreprise> i
 
     @Override
     public List<StatutEntreprise> findByEntreprise(Long idEntreprise) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void create(StatutEntreprise instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(StatutEntreprise instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
