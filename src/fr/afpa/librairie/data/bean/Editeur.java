@@ -22,8 +22,7 @@ public class Editeur {
     /**
      * Retourne l'id (généré par la BDD).
      *
-     * @param id
-     * @return L'id (généré par la BDD) sous la forme d'un entier (typé long).
+     * @return Id (généré par la BDD) sous la forme d'un entier (typé long).
      */
     public Long getId() {
         return id;
@@ -41,7 +40,6 @@ public class Editeur {
     /**
      * Retourne le nom de l'éditeur.
      *
-     * @param libelle
      * @return Nom de l'éditeur.
      */
     public String getLibelle() {

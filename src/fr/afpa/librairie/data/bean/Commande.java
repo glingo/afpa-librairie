@@ -109,7 +109,7 @@ public class Commande {
     /**
      * Met à jour les paramètres du client.
      *
-     * @param user Nouveaux paramètres client (Utilisateur).
+     * @param user Nouveaux paramètres client.
      */
     public void setUser(Utilisateur user) {
         this.user = user;

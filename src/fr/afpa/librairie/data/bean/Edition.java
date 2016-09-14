@@ -75,10 +75,9 @@ public class Edition {
     }
 
     /**
-     * Retourne l'ISBN de l'édition.
+     * Retourne l'ISBN.
      *
-     * @param isbn
-     * @return Numéro d'ISBN.
+     * @return Numéro d'ISBN (String).
      */
     public String getIsbn() {
         return isbn;
@@ -96,8 +95,7 @@ public class Edition {
     /**
      * Retourne la date de publication.
      *
-     * @param datePublication
-     * @return La date de publication (typée Date) de l'auteur.
+     * @return Date de publication (Date).
      */
     public Date getDatePublication() {
         return datePublication;
@@ -106,17 +104,16 @@ public class Edition {
     /**
      * Met à jour la date de publication.
      *
-     * @param datePublication Nouvelle date de publication (typée Date).
+     * @param datePublication Nouvelle date de publication.
      */
     public void setDatePublication(Date datePublication) {
         this.datePublication = datePublication;
     }
 
     /**
-     * Retourne le pirx hors taxes.
+     * Retourne le prix hors taxes.
      *
-     * @param prixHt
-     * @return Prix hors taxes.
+     * @return Prix hors taxes (float).
      */
     public float getPrixHt() {
         return prixHt;
@@ -125,7 +122,7 @@ public class Edition {
     /**
      * Met à jour le prix hors taxes.
      *
-     * @param prixHt Nouveau prix hors taxes (typé float).
+     * @param prixHt Nouveau prix hors taxes.
      */
     public void setPrixHt(float prixHt) {
         this.prixHt = prixHt;
@@ -134,8 +131,7 @@ public class Edition {
     /**
      * Retourne le chemin d'accès à l'image de couverture.
      *
-     * @param isbn
-     * @return Chemin d'accès à l'image de couverture.
+     * @return Chemin d'accès à l'image de couverture (String).
      */
     public String getCouverture() {
         return couverture;
@@ -145,8 +141,7 @@ public class Edition {
      * Met à jour le chemin spécifiant le chemin d'accès à l'image de
      * couverture.
      *
-     * @param couverture Nouveau chemin d'accès à l'image de couverture (typé
-     * String).
+     * @param couverture Nouveau chemin d'accès à l'image de couverture.
      */
     public void setCouverture(String couverture) {
         this.couverture = couverture;
@@ -155,7 +150,6 @@ public class Edition {
     /**
      * Retourne le titre.
      *
-     * @param titre
      * @return Titre de l'édition.
      */
     public String getTitre() {
@@ -165,7 +159,7 @@ public class Edition {
     /**
      * Met à jour le titre.
      *
-     * @param titre Nouveau Titre.
+     * @param titre Nouveau titre.
      */
     public void setTitre(String titre) {
         this.titre = titre;
@@ -174,8 +168,7 @@ public class Edition {
     /**
      * Retourne le stock disponible.
      *
-     * @param stock
-     * @return Stock disponible.
+     * @return Stock disponible (int).
      */
     public int getStock() {
         return stock;
@@ -194,12 +187,10 @@ public class Edition {
      * Retourne le statut de l'édition.
      *
      * @return Statut de l'édition.
-     * 
-     * @param statut
-     * 
+     *
      * @see StatutEdition
      * @see StatutEditionDAO
-     * 
+     *
      */
     public StatutEdition getStatut() {
         return statut;
@@ -212,35 +203,78 @@ public class Edition {
      *
      * @see StatutEdition
      * @see StatutEditionDAO
-     * 
-     * @return Statut de l'édition.
-     *
      */
     public void setStatut(StatutEdition statut) {
         this.statut = statut;
     }
 
+    /**
+     * Retourne l'ouvrage auquel se réfère l'édition.
+     *
+     * @return Ouvrage de référence.
+     *
+     * @see Ouvrage
+     *
+     */
     public Ouvrage getOuvrage() {
         return ouvrage;
     }
 
+    /**
+     * Met à jour l'ouvrage auquel se réfère l'édition.
+     *
+     * @param ouvrage Nouvel ouvrage de référence.
+     *
+     * @see Ouvrage
+     */
     public void setOuvrage(Ouvrage ouvrage) {
         this.ouvrage = ouvrage;
 
     }
 
+    /**
+     * Retourne la langue d'écriture de l'édition.
+     *
+     * @return Langue d'édition.
+     *
+     * @see Langue
+     *
+     */
     public Langue getLangue() {
         return langue;
     }
 
+    /**
+     * Met à jour la langue de l'édition.
+     *
+     * @param langue Nouvelle langue d'édition.
+     *
+     * @see Langue
+     */
     public void setLangue(Langue langue) {
         this.langue = langue;
     }
 
+    /**
+     * Retourne la/les taxe(s).
+     *
+     * @return Montant de la/des Taxe(s).
+     *
+     * @see Taxe
+     *
+     */
     public List<Taxe> getTaxes() {
         return taxes;
     }
 
+    /**
+     * Met à jour la/les taxe(s).
+     *Utilisation d'une collection pour enregistrer toutes les taxes affectées
+     * à une édition.
+     * @param taxes Nouveau montant de taxe.
+     *
+     * @see Taxe
+     */
     public void setTaxes(List<Taxe> taxes) {
         this.taxes = taxes;
     }

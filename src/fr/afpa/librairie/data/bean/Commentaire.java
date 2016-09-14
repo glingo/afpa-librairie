@@ -86,16 +86,16 @@ public class Commentaire {
     /**
      * Retourne la note laissée par un client sur un ouvrage.
      *
-     * @return Note Utilisateur (typée int).
+     * @return Note Utilisateur (int).
      */
     public int getNote() {
         return note;
     }
 
     /**
-     * Met à jour la note de l'ouvrage laissée par le client.
+     * Met à jour la note de l'édition laissée par le client.
      *
-     * @param note Modifie la note (typée int) d'un Utilisateur.
+     * @param note Modifie la note laissée par un Utilisateur.
      */
     public void setNote(int note) {
         this.note = note;
