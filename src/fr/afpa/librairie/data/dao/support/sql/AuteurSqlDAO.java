@@ -22,6 +22,13 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
             + " (nom, prenom, date_naissance, date_deces)"
             + " VALUES (?, ?, ?, ?)";
     
+    private static final String SQL_UPDATE = "UPDATE Auteur"
+            + " SET nom = ?,"
+            + " prenom = ?,"
+            + " date_naissance = ?,"
+            + " date_deces = ?"
+            + " WHERE idAuteur = ?";
+    
     private static final String SQL_DELETE = "DELETE FROM Auteur WHERE idAuteur = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
@@ -59,15 +66,13 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
     }
 
     @Override
-    public void save(Auteur instance) throws DAOException {
+    public void create(Auteur instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
 
         try {
-
-             
             connexion = factory.getConnection();
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
@@ -91,6 +96,44 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
+    }
+
+    @Override
+    public void update(Auteur instance) throws DAOException {
+         SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, false,
+                    instance.getNom(), 
+                    instance.getPrenom(),
+                    instance.getDateNaissance(), 
+                    instance.getDateDeces(),
+                    instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de l'auteur, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+    
+    @Override
+    public void save(Auteur instance) throws DAOException {
+       if(instance.getId() != null) {
+           update(instance);
+       } else {
+           create(instance);
+       }
     }
 
     @Override
@@ -142,12 +185,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
         return auteurs;
 
     }
-
-    @Override
-    public Auteur findByExemple(Auteur instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public Auteur findByDateNaissance(Date dateNaissance) throws DAOException {
         SqlDAOFactory factory = getFactory();

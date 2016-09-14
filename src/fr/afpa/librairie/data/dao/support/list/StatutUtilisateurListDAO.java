@@ -13,11 +13,6 @@ public class StatutUtilisateurListDAO extends AbstractListDAO<StatutUtilisateur>
     }
 
     @Override
-    public StatutUtilisateur findByExemple(StatutUtilisateur instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public StatutUtilisateur findById(Long id) throws DAOException {
         return getTable().stream().filter((StatutUtilisateur statut) -> {
             return statut.getId().equals(id);
@@ -33,6 +28,16 @@ public class StatutUtilisateurListDAO extends AbstractListDAO<StatutUtilisateur>
 
     @Override
     public List<StatutUtilisateur> findByUtilisateur(Long idUtilisateur) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void create(StatutUtilisateur instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(StatutUtilisateur instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

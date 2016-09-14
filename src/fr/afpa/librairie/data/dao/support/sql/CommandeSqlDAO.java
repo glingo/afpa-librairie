@@ -19,37 +19,44 @@ import java.util.List;
 public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements CommandeDAO{
     
     private static final String SQL_INSERT = "INSERT INTO Commande"
-            + " (numero, dateCommande)"
-            + " VALUES = (?, ?)";
+            + " (idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande)"
+            + " VALUES (?, ?, ?, ?, ?)";
     
-    private static final String SQL_DELETE = " UPDATE Commande" 
+    private static final String SQL_UPDATE = "INSERT INTO Commande"
+            + " idAdresseLivraison = ?,"
+            + " idAdresseFacturation = ?,"
+            + " idUtilisateur = ?,"
+            + " numero = ?,"
+            + " dateCommande = ?"
+            + " WHERE idCommande = ?";
+    
+    private static final String SQL_DELETE = "UPDATE Commande" 
          + " SET idStatutCommande = ?"
          + " WHERE idUtilisateur = ?";
             
-    
- private static final String SQL_FIND_ALL = "SELECT"
+    private static final String SQL_FIND_ALL = "SELECT"
          + " c.idCommande, idUtilisateur, sc.idStatutCommande, numero, dateCommande"
          + " FROM Commande AS c"
          + " JOIN historiqueStatutCommande AS hsc ON c.idCommande = hsc.idCommande" 
          + " JOIN statutCommande AS sc ON hsc.idStatutCommande = sc.idStatutCommande";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idCommande, numero, dateCommande"
+            + " idCommande, idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande"
             + " FROM Commande"
             + " WHERE idCommande = ?";
     
     private static final String SQL_FIND_BY_NUMERO = "SELECT"
-            + " idCommande, numero, dateCommande"
+            + " idCommande, idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande"
             + " FROM Commande"
             + " WHERE numero = ?";
     
     private static final String SQL_FIND_BY_DATE =  "SELECT"
-            + " idCommande, numero, dateCommande"
+            + " idCommande, idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande"
             + " FROM Commande"
             + " WHERE dateCommande = ?";
     
     private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
-            + " idCommande, numero, dateCommande"
+            + " idCommande, idAdresseLivraison, idAdresseFacturation, idUtilisateur, numero, dateCommande"
             + " FROM Commande"
             + " WHERE idUtilisateur = ?";
     
@@ -57,10 +64,9 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
     public CommandeSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
-     
-     
+    
     @Override
-    public void save(Commande instance) throws DAOException {
+    public void create(Commande instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -93,9 +99,11 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             connexion = factory.getConnection();
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getNumero(), instance.getDateCommande(),
-                    instance.getUser() == null ? null : instance.getUser().getNom(),
-                    instance.getOrderStat() == null ? null : instance.getOrderStat().getId());
+                    instance.getAdresseLivraison().getId(), 
+                    instance.getAdresseFacturation().getId(),
+                    instance.getUser().getId(),
+                    instance.getNumero(), 
+                    instance.getDateCommande());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -114,6 +122,43 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
+    }
+
+    @Override
+    public void update(Commande instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, false,
+                    instance.getAdresseLivraison().getId(), 
+                    instance.getAdresseFacturation().getId(),
+                    instance.getUser().getId(),
+                    instance.getNumero(),
+                    instance.getDateCommande());
+
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de la commande, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+    
+    @Override
+    public void save(Commande instance) throws DAOException {
+       if(instance.getId() != null) {
+           update(instance);
+       } else {
+           create(instance);
+       }
     }
 
     
@@ -226,11 +271,6 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
 
         return commande;
         
-    }
-
-    @Override
-    public Commande findByExemple(Commande instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -1,7 +1,6 @@
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +10,8 @@ import java.util.List;
  */
 public class Edition {
 
+    private Long id;
+    
     /**
      * Isbn : numero unique identifiant l'édition d'un ouvrage. (chaque édition
      * différente d'un même ouvrage aura un isbn différent) l'isbn est composé
@@ -72,6 +73,14 @@ public class Edition {
      * Constructeur de la classe; accès sans utiliser de paramètres.
      */
     public Edition() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /**

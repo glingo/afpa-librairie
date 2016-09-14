@@ -22,10 +22,14 @@ import java.util.List;
  */
 public class TaxeSqlDAO extends AbstractSqlDAO<Taxe> implements TaxeDAO{
     
-    
     private static final String SQL_INSERT = "INSERT INTO Taxe"
             + " (libelle, valeur) VALUES"
             + " (?, ?)";
+    
+    private static final String SQL_UPDATE = "UPDATE Taxe"
+            + " SET libelle = ?"
+            + " valeur = ?"
+            + " WHERE idTaxe = ?";
     
     private static final String SQL_DELETE = "DELETE FROM Taxe WHERE idTaxe = ?";
     
@@ -52,7 +56,7 @@ public class TaxeSqlDAO extends AbstractSqlDAO<Taxe> implements TaxeDAO{
             +" t.idTaxe, t.libelle, t.valeur"
             +" FROM Taxe AS t"
             +" JOIN ApplicationTaxe AS at ON at.idTaxe = t.idTaxe"
-            +" WHERE at.isbn = ?";
+            +" WHERE at.idEdition = ?";
     
     
     public TaxeSqlDAO(AbstractDAOFactory factory) {
@@ -70,35 +74,11 @@ public class TaxeSqlDAO extends AbstractSqlDAO<Taxe> implements TaxeDAO{
 
         return taxe;
     }
+    
+    
 
     @Override
-    public List<Taxe> findAll() throws DAOException {
-       SqlDAOFactory factory = getFactory();
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        List<Taxe> taxes = new ArrayList<>();
-
-        try {
-            connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
-            resultSet = preparedStatement.executeQuery();
-
-//            resultSet.beforeFirst();
-            while (resultSet.next()) {
-                taxes.add(map(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            close(resultSet, preparedStatement, connexion);
-        }
-
-        return taxes;
-    }
-
-    @Override
-    public void save(Taxe instance) throws DAOException {
+    public void create(Taxe instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -131,6 +111,38 @@ public class TaxeSqlDAO extends AbstractSqlDAO<Taxe> implements TaxeDAO{
     }
 
     @Override
+    public void update(Taxe instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+                    instance.getLibelle(), instance.getValeur(), instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de la taxe, aucune ligne ajoutée dans la table.");
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        } 
+    }
+
+    @Override
+    public void save(Taxe instance) throws DAOException {
+        
+    }
+
+    @Override
     public void delete(Taxe instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -153,15 +165,57 @@ public class TaxeSqlDAO extends AbstractSqlDAO<Taxe> implements TaxeDAO{
         }
 
     }
-
+    
     @Override
-    public Taxe findByExemple(Taxe instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Taxe> findAll() throws DAOException {
+       SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Taxe> taxes = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                taxes.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return taxes;
     }
 
     @Override
     public Taxe findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Taxe taxe = null;
+
+        try {
+
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, 
+                    false, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                taxe = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return taxe;
     }
 
     @Override
@@ -217,8 +271,8 @@ public class TaxeSqlDAO extends AbstractSqlDAO<Taxe> implements TaxeDAO{
     }
 
     @Override
-    public List<Taxe> findByEdition(String isbn) throws DAOException {
-       SqlDAOFactory factory = getFactory();
+    public List<Taxe> findByEdition(Long id) throws DAOException {
+        SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -226,17 +280,14 @@ public class TaxeSqlDAO extends AbstractSqlDAO<Taxe> implements TaxeDAO{
 
         try {
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_EDITION, false, isbn);
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_EDITION, false,
+                    id);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 taxes.add(map(resultSet));
             }
 
-            if (resultSet.next()) {
-                taxes = new ArrayList<>();
-                taxes.add(map(resultSet));
-            }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {

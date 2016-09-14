@@ -23,11 +23,6 @@ public class RoleXmlDAO extends AbstractXmlDAO<Role> implements RoleDAO {
     }
 
     @Override
-    public Role findByExemple(Role instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Role findById(Long id) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

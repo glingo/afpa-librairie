@@ -27,6 +27,7 @@ public class Commande {
      * @see Utilisateur
      */
     private Utilisateur user;
+    
     /**
      * Informations relatives au statut d'une commande.
      *
@@ -34,6 +35,10 @@ public class Commande {
      * @see StatutCommandeDAO
      */
     private StatutCommande orderStat;
+    
+    private Adresse adresseLivraison;
+    
+    private Adresse adresseFacturation;
 
     /**
      * Constructeur de la classe; accès sans utiliser de paramètres.
@@ -135,6 +140,22 @@ public class Commande {
      */
     public void setOrderStat(StatutCommande orderStat) {
         this.orderStat = orderStat;
+    }
+
+    public Adresse getAdresseFacturation() {
+        return adresseFacturation;
+    }
+
+    public Adresse getAdresseLivraison() {
+        return adresseLivraison;
+    }
+
+    public void setAdresseFacturation(Adresse adresseFacturation) {
+        this.adresseFacturation = adresseFacturation;
+    }
+
+    public void setAdresseLivraison(Adresse adresseLivraison) {
+        this.adresseLivraison = adresseLivraison;
     }
 
     @Override

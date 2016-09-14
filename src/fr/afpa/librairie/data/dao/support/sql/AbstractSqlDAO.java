@@ -5,6 +5,7 @@ import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.dao.AbstractDAO;
 import fr.afpa.librairie.data.dao.DAOInterface;
 import fr.afpa.librairie.data.dao.RoleDAO;
+import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +19,12 @@ public abstract class AbstractSqlDAO<T> extends AbstractDAO<T> {
     }
 
     protected abstract T map(ResultSet result) throws SQLException;
+    
+    
+    @Override
+    public abstract void create(T instance) throws DAOException;
+    @Override
+    public abstract void update(T instance) throws DAOException;
     
     /*
      * Initialise la requête préparée basée sur la connexion passée en argument,

@@ -1,4 +1,3 @@
-
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
@@ -13,46 +12,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implements StatutEditionDAO {
-    
+
     private static final String SQL_INSERT = "INSERT INTO StatutEdition (libelle, code) VALUES (?, ?)";
     private static final String SQL_DELETE = "DELETE FROM StatutEdition WHERE id = ?";
     
+    private static final String SQL_UPDATE = "UPDATE StatutEdition"
+            + " SET libelle = ?,"
+            + " code = ?"
+            + " WHERE idStatutEdition = ?";
+
     private static final String SQL_FIND_ALL = "SELECT"
             + " idStatutEdition, libelle, code"
             + " FROM StatutEdition";
-    
+
     private static final String SQL_FIND_BY_ID = "SELECT"
             + " idStatutEdition, libelle, code"
             + " FROM StatutEdition"
             + " WHERE idStatutEdition = ?";
-    
+
     private static final String SQL_FIND_BY_CODE = "SELECT"
             + " idStatutEdition, libelle, code"
             + " FROM StatutEdition"
             + " WHERE code = ?";
-    
+
     private static final String SQL_FIND_BY_LIBELLE = "SELECT"
             + " idStatutEdition, libelle, code"
             + " FROM StatutEdition"
             + " WHERE libelle = ?";
 
-    
     private static final String SQL_FIND_BY_EDITION = "SELECT"
-            +" ste.idStatutEdition, ste.libelle, ste.code"
-            +" FROM StatutEdition AS ste"
-            +" JOIN Edition AS ed ON ed.idStatutEdition = ste.idStatutEdition"
-            +" WHERE ed.isbn =?";
-    
-    
-  public StatutEditionSqlDAO(AbstractDAOFactory factory) {
+            + " ste.idStatutEdition, ste.libelle, ste.code"
+            + " FROM StatutEdition AS ste"
+            + " JOIN Edition AS ed ON ed.idStatutEdition = ste.idStatutEdition"
+            + " WHERE ed.isbn =?";
+
+    public StatutEditionSqlDAO(AbstractDAOFactory factory) {
         super(factory);
 
     }
-    
-  
 
     @Override
-    public void save(StatutEdition instance) throws DAOException {
+    public void create(StatutEdition instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -61,11 +61,11 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
-            
+
             preparedStatement = getPreparedStatement(
-                    connexion, SQL_INSERT, true, 
+                    connexion, SQL_INSERT, true,
                     instance.getLibelle(), instance.getCode());
-            
+
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
@@ -83,6 +83,42 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void update(StatutEdition instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(
+                    connexion, SQL_UPDATE, true,
+                    instance.getLibelle(), instance.getCode(), instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du statut de l'edition, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void save(StatutEdition instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
         }
     }
 
@@ -109,7 +145,7 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
         }
 
     }
-    
+
     @Override
     public List<StatutEdition> findAll() throws DAOException {
         SqlDAOFactory factory = getFactory();
@@ -122,9 +158,8 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
             connexion = factory.getConnection();
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
             resultSet = preparedStatement.executeQuery();
-            
+
 //            resultSet.beforeFirst();
-            
             while (resultSet.next()) {
                 statuts.add(map(resultSet));
             }
@@ -139,18 +174,13 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
     }
 
     @Override
-    public StatutEdition findByExemple(StatutEdition instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
     public StatutEdition findById(Long id) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         StatutEdition statut = null;
-        
+
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
@@ -167,9 +197,9 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
         }
 
         return statut;
-        
+
     }
-    
+
     @Override
     public List<StatutEdition> findByEdition(String isbn) throws DAOException {
         SqlDAOFactory factory = getFactory();
@@ -182,14 +212,13 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
             connexion = factory.getConnection();
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_EDITION, false, isbn);
             resultSet = preparedStatement.executeQuery();
-            
-            
+
             while (resultSet.next()) {
                 statutEditions.add(map(resultSet));
             }
-            
+
             if (resultSet.next()) {
-                statutEditions= new ArrayList<>();
+                statutEditions = new ArrayList<>();
                 statutEditions.add(map(resultSet));
             }
         } catch (SQLException e) {
@@ -201,7 +230,6 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
         return statutEditions;
 
     }
-
 
     @Override
     public StatutEdition findByCode(String code) throws DAOException {
@@ -230,15 +258,14 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
 
     }
 
-
     @Override
     protected StatutEdition map(ResultSet resultSet) throws SQLException {
         StatutEdition statut = new StatutEdition();
-        
+
         statut.setId(resultSet.getLong("idStatutEdition"));
         statut.setLibelle(resultSet.getString("libelle"));
         statut.setCode(resultSet.getString("code"));
-               
+
         return statut;
     }
 

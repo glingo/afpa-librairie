@@ -18,6 +18,11 @@ public class LangueSqlDAO extends AbstractSqlDAO<Langue> implements LangueDAO {
     private static final String SQL_INSERT = "INSERT INTO Langue"
             + " (libelle, code)"
             + " VALUES (?, ?)";
+    
+    private static final String SQL_UPDATE = "UPDATE Langue"
+            + " SET libelle = ?,"
+            + " code = ?"
+            + " WHERE idLangue = ?";
 
     private static final String SQL_DELETE = "DELETE FROM Langue WHERE idLangue = ?";
 
@@ -50,7 +55,7 @@ public class LangueSqlDAO extends AbstractSqlDAO<Langue> implements LangueDAO {
     }
 
     @Override
-    public void save(Langue instance) throws DAOException {
+    public void create(Langue instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -61,7 +66,7 @@ public class LangueSqlDAO extends AbstractSqlDAO<Langue> implements LangueDAO {
             connexion = factory.getConnection();
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getLibelle());
+                    instance.getLibelle(), instance.getCode());
 
             int statut = preparedStatement.executeUpdate();
 
@@ -80,6 +85,42 @@ public class LangueSqlDAO extends AbstractSqlDAO<Langue> implements LangueDAO {
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
+    }
+
+    @Override
+    public void update(Langue instance) throws DAOException {
+         SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+                    instance.getLibelle(), instance.getCode(), instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de la langue, aucune ligne ajoutée dans la table.");
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+    
+    @Override
+    public void save(Langue instance) throws DAOException {
+       if(instance.getId() != null) {
+           update(instance);
+       } else {
+           create(instance);
+       }
     }
 
     @Override
@@ -257,10 +298,5 @@ public class LangueSqlDAO extends AbstractSqlDAO<Langue> implements LangueDAO {
         }
 
         return langue;
-    }
-
-    @Override
-    public Langue findByExemple(Langue instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
