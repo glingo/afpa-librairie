@@ -1,5 +1,6 @@
 package fr.afpa.librairie.view.panel.footer;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.view.panel.FooterPanel;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -33,6 +34,6 @@ public class FooterEditorPanel extends FooterPanel {
         validerBT = new JButton("Valider");
         
         annulerBT.setActionCommand("annuler");
-        validerBT.setActionCommand("save");
+        validerBT.setActionCommand(CRUDController.SAVE_ACTION);
     }
 }

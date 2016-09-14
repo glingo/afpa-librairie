@@ -1,7 +1,6 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
-import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.data.bean.Role;
 import fr.afpa.librairie.data.bean.StatutUtilisateur;
@@ -60,14 +59,44 @@ import java.util.List;
     public UtilisateurSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
-
-    @Override
-    public void save(Utilisateur instance) throws DAOException {
+    
+    public void update(Utilisateur instance){
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
+        
+        try {
 
+            connexion = factory.getConnection();
+            
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true, 
+                instance.getNom(), instance.getPrenom(), 
+                instance.getEmail(), instance.getTelephone(),
+                instance.getDateNaissance(), instance.getMotDePasse(),
+                instance.getStatut().getId(), instance.getId());
+            
+            int statut = preparedStatement.executeUpdate();
+            
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de la rubrique, aucune ligne ajoutée dans la table.");
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+        
+    }
+    
+    public void create(Utilisateur instance){
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+        
         try {
             
             if(instance.getStatut() == null) {
@@ -97,6 +126,7 @@ import java.util.List;
                     role = getFactory().getRoleDAO().findByCode(role.getCode());
                 }
             });
+
             
 //            comment cause : adresse changé en dernierslivraisons et derniersfacturations.
             
@@ -111,43 +141,46 @@ import java.util.List;
 //                }
 //            });
             
-            /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
             
-            if(instance.getId() != null) {
-                 preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true, 
-                    instance.getNom(), instance.getPrenom(), 
-                    instance.getEmail(), instance.getTelephone(),
-                    instance.getDateNaissance(), instance.getMotDePasse(),
-                    instance.getStatut().getId(), instance.getId());
-            } else {
-                preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true, 
+            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true, 
                     instance.getNom(), instance.getPrenom(), 
                     instance.getEmail(), instance.getTelephone(),
                     instance.getMotDePasse(), instance.getDateNaissance(), 
                     instance.getStatut().getId());
-                
-                /* Récupération de l'id auto-généré par la requête d'insertion */
-                valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-                if (valeursAutoGenerees.next()) {
-                    /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
-                    instance.setId(valeursAutoGenerees.getLong(1));
-                } else {
-                    throw new DAOException("Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné.");
-                }
-            }
             
             int statut = preparedStatement.executeUpdate();
+            
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la création de l'utilisateur, aucune ligne ajoutée dans la table.");
+                throw new DAOException("Échec de la création de la rubrique, aucune ligne ajoutée dans la table.");
             }
             
+            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+
+            if (valeursAutoGenerees.next()) {
+                instance.setId(valeursAutoGenerees.getLong(1));
+            } else {
+                throw new DAOException("Échec de la création de la rubrique en base, aucun ID auto-généré retourné.");
+            }
+
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
+        
+    }
+
+    @Override
+    public void save(Utilisateur instance) throws DAOException {
+        
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
+        }
+            
     }
 
     @Override

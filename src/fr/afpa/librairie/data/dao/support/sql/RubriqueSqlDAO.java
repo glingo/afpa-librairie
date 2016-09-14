@@ -71,50 +71,80 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
 
         return rubrique;
     }
-
-    @Override
-    public void save(Rubrique instance) throws DAOException {
+    
+    public void update(Rubrique instance){
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
-
+        
         try {
 
             connexion = factory.getConnection();
             
-            if(instance.getId() != null) { // update
-                
-                preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
-                        instance.getLibelle(), instance.getDateDebut(),
-                        instance.getDateFin(), instance.getCommentaire(),
-                        instance.getId());
-                
-            } else { // insert
-                
-                preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                        instance.getLibelle(), instance.getDateDebut(),
-                        instance.getDateFin(), instance.getCommentaire());
-                
-                valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-                
-                if (valeursAutoGenerees.next()) {
-                    instance.setId(valeursAutoGenerees.getLong(1));
-                } else {
-                    throw new DAOException("Échec de la création de la rubrique en base, aucun ID auto-généré retourné.");
-                }
-            }
-
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+                    instance.getLibelle(), instance.getDateDebut(),
+                    instance.getDateFin(), instance.getCommentaire(),
+                    instance.getId());
+            
             int statut = preparedStatement.executeUpdate();
+            
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
                 throw new DAOException("Échec de la création de la rubrique, aucune ligne ajoutée dans la table.");
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+        
+    }
+    
+    public void create(Rubrique instance){
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+        
+        try {
+
+            connexion = factory.getConnection();
+            
+            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
+                    instance.getLibelle(), instance.getDateDebut(),
+                    instance.getDateFin(), instance.getCommentaire());
+            
+            int statut = preparedStatement.executeUpdate();
+            
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de la rubrique, aucune ligne ajoutée dans la table.");
+            }
+            
+            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+
+            if (valeursAutoGenerees.next()) {
+                instance.setId(valeursAutoGenerees.getLong(1));
+            } else {
+                throw new DAOException("Échec de la création de la rubrique en base, aucun ID auto-généré retourné.");
             }
 
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+        
+    }
+
+    @Override
+    public void save(Rubrique instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
         }
     }
     
