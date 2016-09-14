@@ -22,7 +22,7 @@ public class Editeur {
     /**
      * Retourne l'id (généré par la BDD).
      *
-     * @return Id (généré par la BDD) sous la forme d'un entier (typé long).
+     * @return Id (généré par la BDD) sous la forme d'un entier (long).
      */
     public Long getId() {
         return id;
@@ -31,7 +31,7 @@ public class Editeur {
      /**
      * Met à jour l'id (généré par la BDD).
      *
-     * @param id Nouvel id de l'éditeur.
+     * @param id Nouvel id.
      */
     public void setId(Long id) {
         this.id = id;
