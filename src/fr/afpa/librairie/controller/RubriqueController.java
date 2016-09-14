@@ -5,7 +5,6 @@ import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.table.RubriqueTableModel;
-import fr.afpa.librairie.model.table.TableModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.RubriqueAdminPanel;
 import fr.afpa.librairie.view.rubrique.RubriqueEditorPanel;

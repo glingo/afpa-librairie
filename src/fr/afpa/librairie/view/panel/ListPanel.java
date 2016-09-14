@@ -3,10 +3,9 @@ package fr.afpa.librairie.view.panel;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.list.ListModelSelection;
 import fr.afpa.librairie.model.table.TableModel;
-import java.awt.BorderLayout;
+
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;

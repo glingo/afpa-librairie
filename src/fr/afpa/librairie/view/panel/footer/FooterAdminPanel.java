@@ -1,45 +1,46 @@
 package fr.afpa.librairie.view.panel.footer;
 
+import fr.afpa.librairie.view.panel.FooterPanel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
-public class FooterAdminPanel extends JPanel {
+public class FooterAdminPanel extends FooterPanel {
 
-    private final ActionListener controller;
-    
     private JButton createButton;
     private JButton deleteButton;
     private JButton viewButton;
     private JButton updateButton;
 
     public FooterAdminPanel(ActionListener controller) {
-        this.controller = controller;
-        initComponents();
+        super(controller);
     }
     
-    private void initComponents(){
+    @Override
+    protected List<AbstractButton> getButtons() {
+        List<AbstractButton> buttons = new ArrayList<>();
+        
+        buttons.add(createButton);
+        buttons.add(deleteButton);
+        buttons.add(viewButton);
+        buttons.add(updateButton);
+       
+        return buttons;
+    }
+    
+    @Override
+    protected void initButtons() {
         createButton = new JButton("Creer");
         deleteButton = new JButton("Supprimer");
-        viewButton = new JButton("Voir");
+        viewButton   = new JButton("Voir");
         updateButton = new JButton("Mettre à jour");
         
         createButton.setActionCommand("create");
-        createButton.addActionListener(controller);
-        
         deleteButton.setActionCommand("delete");
-        deleteButton.addActionListener(controller);
-        
         viewButton.setActionCommand("view");
-        viewButton.addActionListener(controller);
-        
         updateButton.setActionCommand("edit");
-        updateButton.addActionListener(controller);
-        
-        add(createButton);
-        add(deleteButton);
-        add(viewButton);
-        add(updateButton);
     }
 
 }

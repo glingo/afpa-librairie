@@ -10,13 +10,8 @@ public abstract class EditorPanel<T> extends JPanel {
     private Controller controller;
     private T bean;
     
-//    private JPanel titlePanel;
-//    private JLabel title;
-    
     private TitlePanel title;
-    
     private JPanel body;
-    
     private FooterEditorPanel footer;
     
     public EditorPanel(T bean, Controller controller) {

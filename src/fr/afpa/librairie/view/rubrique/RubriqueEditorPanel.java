@@ -4,7 +4,6 @@ import fr.afpa.librairie.controller.Controller;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.sql.Date;
 import javax.swing.GroupLayout;
