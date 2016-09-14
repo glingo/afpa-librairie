@@ -12,7 +12,8 @@ import java.sql.Date;
  * @author cdi309
  */
 public class Transaction {
-    private long id;
+    
+    private Long id;
     private Date dateTransaction;
 
     public Transaction() {

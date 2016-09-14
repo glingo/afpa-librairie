@@ -1,10 +1,10 @@
 package fr.afpa.librairie.view.rubrique;
 
-import fr.afpa.librairie.controller.Controller;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.panel.EditorPanel;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -28,11 +28,11 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
     private JDateField dateDebutTF;
     private JDateField dateFinTF;
     
-    public RubriqueEditorPanel(Controller controller) {
+    public RubriqueEditorPanel(ActionListener controller) {
         super(new Rubrique(), controller);
     }
 
-    public RubriqueEditorPanel(Rubrique bean, Controller controller) {
+    public RubriqueEditorPanel(Rubrique bean, ActionListener controller) {
         super(bean, controller);
     }
 
@@ -73,27 +73,16 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
         dateFinTF = new JDateField(false);
         commentaireTF = new JTextArea();
 
-//        libelleLB.setForeground(Color.lightGray);
         libelleLB.setText("* Libelle");
 
-//        libelleTF.setBackground(Color.lightGray);
-
-//        dateDebutLB.setForeground(Color.lightGray);
         dateDebutLB.setText("* Date de début");
 
-//        dateDebutTF.setBackground(Color.lightGray);
 
-//        commentaireLB.setForeground(java.awt.Color.lightGray);
         commentaireLB.setText("commentaire");
 
-        champObligLB.setFont(new Font("Dialog", 0, 10)); // NOI18N
-//        champObligLB.setForeground(Color.lightGray);
+        champObligLB.setFont(new Font("Dialog", 0, 10));
         champObligLB.setText("* Champ obligagoire");
-
-//        dateFinLB.setForeground(Color.lightGray);
         dateFinLB.setText("Date de fin");
-
-//        dateFinTF.setBackground(Color.lightGray);
 
         commentaireTF.setColumns(20);
         commentaireTF.setRows(5);
@@ -172,7 +161,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
     }
 
     @Override
-    public Rubrique contructBean() {
+    public Rubrique constructBean() {
         Rubrique rubrique = getBean();
         
         rubrique.setLibelle(libelleTF.getText().trim());

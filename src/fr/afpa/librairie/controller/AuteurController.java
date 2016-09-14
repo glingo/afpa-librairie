@@ -1,69 +1,42 @@
 package fr.afpa.librairie.controller;
 
 import fr.afpa.librairie.data.bean.Auteur;
-import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
-import fr.afpa.librairie.view.admin.AuteurAdminPanel;
-import fr.afpa.librairie.view.auteur.CreateAuteurPanel;
+import fr.afpa.librairie.view.auteur.AuteurAdminPanel;
+import fr.afpa.librairie.view.auteur.AuteurEditorPanel;
 //import fr.afpa.librairie.view.admin.CreateAuteurPanel;
-import java.awt.event.ActionEvent;
 import java.util.logging.Logger;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 
-public class AuteurController extends Controller {
+public class AuteurController extends CRUDController<Auteur> {
+    
     private static final Logger LOG = Logger.getLogger(AuteurController.class.getName());
     
-    private final AuteurAdminPanel adminPanel = new AuteurAdminPanel(this);
-    private final CreateAuteurPanel createPanel = new CreateAuteurPanel(this);
-
     public AuteurController(MainFrame frame) {
         super(frame);
+        setAdminPanel(new AuteurAdminPanel(this));
+        setEditorPanel(new AuteurEditorPanel(this));
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-
-            case "list":
-                listAction();
-                break;
-
-            case "create":
-            case "save":
-                createAction();
-                break;
-                
-            case "delete":
-                JList<Auteur> list = this.adminPanel.getAuteurList();
-                deleteAction(list.getSelectedValue());
-                break;
-
-            default:
-                if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
-                    listAction();
-                }
-        }
-    }
-
     public void listAction() {
-        ListAdapterListModel<Auteur> AuteurListModel = new ListAdapterListModel<>();
-        AuteurListModel.addAll(getDaoFactory().getAuteurDAO().findAll());
-        adminPanel.setAuteurList(AuteurListModel);
-        this.frame.setContent(adminPanel);
-
+        ListAdapterListModel<Auteur> auteurListModel = new ListAdapterListModel<>();
+        auteurListModel.addAll(getDaoFactory().getAuteurDAO().findAll());
+        getAdminPanel().setList(auteurListModel);
+        getFrame().setContent(getAdminPanel());
     }
 
+    @Override
     public void createAction() {
 
-        if (!this.createPanel.equals(this.frame.getContent())) {
-            this.frame.setContent(createPanel);
+        if (!getEditorPanel().equals(getFrame().getContent())) {
+            getEditorPanel().setBean(new Auteur());
+            getFrame().setContent(getEditorPanel());
             return;
         }
         
-        Auteur auteur = this.createPanel.getAuteur();
+        Auteur auteur = getEditorPanel().constructBean();
         
         try {
             getDaoFactory().getAuteurDAO().save(auteur);
@@ -73,12 +46,14 @@ public class AuteurController extends Controller {
             danger("Une erreur est survenue !", 
                     "Impossible de sauvegarder cet auteur.");
         }
-        alert("Information", "L'auteur a bien été sauvegardé !");
-        listAction();
         
+        listAction();
+        getEditorPanel().reset();
+        alert("Information", "L'auteur a bien été sauvegardé !");
     }
 
-    private void deleteAction(Auteur auteur) {
+    @Override
+    public void deleteAction(Auteur auteur) {
         if(auteur == null) {
             // impossible de supprimer si l'utilisateur n'a rien selectionné.
             return;
@@ -105,10 +80,15 @@ public class AuteurController extends Controller {
             return;
         }
         
-        // ajouter un message comme quoi la suppression s'est bien deroulée.
-        alert("Information", "L'auteur a bien été supprimé !");
         listAction();
+        // ajouter un message comme quoi la suppression s'est bien deroulée.
+        alert("Information", "L'auteur a bien été supprimée !");
         
+    }
+
+    @Override
+    public void viewAction(Auteur value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

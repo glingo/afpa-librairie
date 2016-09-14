@@ -1,20 +1,12 @@
 package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Auteur;
-import fr.afpa.librairie.model.list.ListModelChangeListener;
-import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.AuteurColumn;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class AuteurTableModel extends AbstractTableModel {
-
-    private static final long serialVersionUID = 1547542546403627396L;
-
-    private final ListModelHolder<Auteur> auteurListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
+public class AuteurTableModel extends TableModel<Auteur> {
 
     private Map<AuteurColumn, String> columnDisplayNames;
 
@@ -29,20 +21,6 @@ public class AuteurTableModel extends AbstractTableModel {
         return this.columnDisplayNames;
     }
 
-    public AuteurTableModel() {
-        auteurListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    public final void setListModel(ListModel<Auteur> listModel) {
-        auteurListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        ListModel<Auteur> listModel = auteurListModelHolder.getModel();
-        return listModel.getSize();
-    }
-
     @Override
     public int getColumnCount() {
         return AuteurColumn.values().length;
@@ -52,7 +30,7 @@ public class AuteurTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Auteur> listModel = auteurListModelHolder.getModel();
+        ListModel<Auteur> listModel = getListModelHolder().getModel();
         Auteur auteur = listModel.getElementAt(rowIndex);
         AuteurColumn column = getColumn(columnIndex);
 

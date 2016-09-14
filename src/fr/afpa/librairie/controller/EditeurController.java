@@ -4,63 +4,38 @@ import fr.afpa.librairie.data.bean.Editeur;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
-import fr.afpa.librairie.view.admin.CreateEditeurPanel;
-import fr.afpa.librairie.view.admin.EditeurAdminPanel;
-import java.awt.event.ActionEvent;
+import fr.afpa.librairie.view.editeur.EditeurAdminPanel;
+import fr.afpa.librairie.view.editeur.EditeurEditorPanel;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
-public class EditeurController extends Controller {
+public class EditeurController extends CRUDController<Editeur> {
     
     private static final Logger LOG = Logger.getLogger(EditeurController.class.getName());
-    
-    private final EditeurAdminPanel adminPanel = new EditeurAdminPanel(this);
-    private final CreateEditeurPanel createPanel = new CreateEditeurPanel(this);
-    
-    public EditeurController(MainFrame frame){
+
+    public EditeurController(MainFrame frame) {
         super(frame);
+        setAdminPanel(new EditeurAdminPanel(this));
+        setEditorPanel(new EditeurEditorPanel(this));
     }
     
     @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-
-            case "list":
-                listAction();
-                break;
-
-            case "create":
-            case "save":
-                createAction();
-                break;
-                
-            case "delete":
-                deleteAction(this.adminPanel.getEditeurList().getSelectedValue());
-                break;
-
-            default:
-                if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
-                    listAction();
-                }
-        }
-    }
-
     public void listAction() {
         ListAdapterListModel<Editeur> editeurListModel = new ListAdapterListModel<>();
         editeurListModel.addAll(getDaoFactory().getEditeurDAO().findAll());
-        adminPanel.setAuteurList(editeurListModel);
-        this.frame.setContent(adminPanel);
-
+        getAdminPanel().setList(editeurListModel);
+        getFrame().setContent(getAdminPanel());
     }
 
+    @Override
     public void createAction() {
 
-        if (!this.createPanel.equals(this.frame.getContent())) {
-            this.frame.setContent(createPanel);
+        if (!getEditorPanel().equals(getFrame().getContent())) {
+            getEditorPanel().setBean(new Editeur());
+            getFrame().setContent(getEditorPanel());
             return;
         }
-
+        
+/*
         this.createPanel.getForm().verify();
 
         JTextField fieldLibelle = this.createPanel.getForm().getField("Libelle");
@@ -71,7 +46,10 @@ public class EditeurController extends Controller {
         Editeur editeur = new Editeur();
         
         editeur.setLibelle(libelle);
-
+*/
+        
+        Editeur editeur = getEditorPanel().constructBean();
+        
         try {
             getDaoFactory().getEditeurDAO().save(editeur);
             
@@ -83,14 +61,15 @@ public class EditeurController extends Controller {
             return;
         }
 
-        this.createPanel.getForm().reset();
-        alert("Information", "L'éditeur a bien été sauvegardé !");
+//        this.createPanel.getForm().reset();
         listAction();
-        
+        getEditorPanel().reset();
+        alert("Information", "L'éditeur a bien été sauvegardé !");
 
     }
 
-    private void deleteAction(Editeur editeur) {
+    @Override
+    public void deleteAction(Editeur editeur) {
     
         if(editeur == null) {
             // impossible de supprimer si l'utilisateur n'a rien selectionné.
@@ -108,9 +87,14 @@ public class EditeurController extends Controller {
             
             return;
         }
-        alert("Information", "L'éditeur a bien été supprimé !");
-        listAction();
         
+        listAction();
+        alert("Information", "L'éditeur a bien été supprimé !");
+    }
+
+    @Override
+    public void viewAction(Editeur value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

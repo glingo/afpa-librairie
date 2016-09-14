@@ -14,7 +14,8 @@ import java.util.List;
  * @author cdi309
  */
 public class Promotion {
-    private long id;
+    
+    private Long id;
     private Date dateDebut;
     private Date dateFin;
     private float reduction;

@@ -17,7 +17,8 @@ import java.sql.Date;
  *  nb : le pays est un objet à part
  */
 public class Commande {
-    private long id;
+    
+    private Long id;
     private String numero;
     private Date dateCommande;
     

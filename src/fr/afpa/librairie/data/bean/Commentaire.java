@@ -11,7 +11,8 @@ package fr.afpa.librairie.data.bean;
  * 
  */
 public class Commentaire {
-    private long id;
+    
+    private Long id;
     private String titre;
     private String contenu;
     private int note;

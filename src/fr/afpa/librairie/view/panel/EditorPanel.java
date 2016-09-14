@@ -1,20 +1,20 @@
 package fr.afpa.librairie.view.panel;
 
-import fr.afpa.librairie.controller.Controller;
 import fr.afpa.librairie.view.panel.footer.FooterEditorPanel;
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 public abstract class EditorPanel<T> extends JPanel {
     
-    private Controller controller;
+    private ActionListener controller;
     private T bean;
     
     private TitlePanel title;
     private JPanel body;
     private FooterEditorPanel footer;
     
-    public EditorPanel(T bean, Controller controller) {
+    public EditorPanel(T bean, ActionListener controller) {
         this.bean = bean;
         this.controller = controller;
         initComponents();
@@ -42,7 +42,7 @@ public abstract class EditorPanel<T> extends JPanel {
     
     public abstract void bindValues();
     
-    public abstract T contructBean();
+    public abstract T constructBean();
     
     public abstract void reset();
     
@@ -56,11 +56,11 @@ public abstract class EditorPanel<T> extends JPanel {
         this.title.setText(getTitleText());
     }
 
-    public Controller getController() {
+    public ActionListener getController() {
         return controller;
     }
 
-    public void setController(Controller controller) {
+    public void setController(ActionListener controller) {
         this.controller = controller;
     }
     

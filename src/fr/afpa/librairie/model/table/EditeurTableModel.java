@@ -2,18 +2,13 @@
 package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Editeur;
-import fr.afpa.librairie.model.list.ListModelChangeListener;
-import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.EditeurColumn;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class EditeurTableModel extends AbstractTableModel {
-     private final ListModelHolder<Editeur> genreListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
-
+public class EditeurTableModel extends TableModel<Editeur> {
+    
     private Map<EditeurColumn, String> columnDisplayNames;
 
     public Map<EditeurColumn, String> getColumnDisplayNames() {
@@ -25,20 +20,6 @@ public class EditeurTableModel extends AbstractTableModel {
         return this.columnDisplayNames;
     }
 
-    public EditeurTableModel() {
-        genreListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    public final void setListModel(ListModel<Editeur> listModel) {
-        genreListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        ListModel<Editeur> listModel = genreListModelHolder.getModel();
-        return listModel.getSize();
-    }
-
     @Override
     public int getColumnCount() {
         return EditeurColumn.values().length;
@@ -48,7 +29,7 @@ public class EditeurTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Editeur> listModel = genreListModelHolder.getModel();
+        ListModel<Editeur> listModel = getListModelHolder().getModel();
         Editeur editeur = listModel.getElementAt(rowIndex);
         EditeurColumn column = getColumn(columnIndex);
 

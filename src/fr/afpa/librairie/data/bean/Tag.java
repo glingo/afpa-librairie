@@ -3,7 +3,7 @@ package fr.afpa.librairie.data.bean;
 
 public class Tag {
     
-    private long id;
+    private Long id;
     private String libelle;
 
     public Tag() {

@@ -39,6 +39,7 @@ import java.util.List;
             + " mail = ?,"
             + " telephone = ?,"
             + " date_naissance = ?,"
+            + " mot_de_passe = ?,"
             + " idStatutUtilisateur = ?"
             + " WHERE idUtilisateur = ?";
     
@@ -113,25 +114,35 @@ import java.util.List;
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
             
-            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true, 
+            if(instance.getId() != null) {
+                 preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true, 
+                    instance.getNom(), instance.getPrenom(), 
+                    instance.getEmail(), instance.getTelephone(),
+                    instance.getDateNaissance(), instance.getMotDePasse(),
+                    instance.getStatut().getId(), instance.getId());
+            } else {
+                preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true, 
                     instance.getNom(), instance.getPrenom(), 
                     instance.getEmail(), instance.getTelephone(),
                     instance.getMotDePasse(), instance.getDateNaissance(), 
-                    instance.getStatut() == null ? null : instance.getStatut().getId());
+                    instance.getStatut().getId());
+                
+                /* Récupération de l'id auto-généré par la requête d'insertion */
+                valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+                if (valeursAutoGenerees.next()) {
+                    /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
+                    instance.setId(valeursAutoGenerees.getLong(1));
+                } else {
+                    throw new DAOException("Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné.");
+                }
+            }
             
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
                 throw new DAOException("Échec de la création de l'utilisateur, aucune ligne ajoutée dans la table.");
             }
-            /* Récupération de l'id auto-généré par la requête d'insertion */
-            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-            if (valeursAutoGenerees.next()) {
-                /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
-                instance.setId(valeursAutoGenerees.getLong(1));
-            } else {
-                throw new DAOException("Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné.");
-            }
+            
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {

@@ -10,7 +10,8 @@ package fr.afpa.librairie.data.bean;
  * @author cdi309
  */
 public class StatutAdresse {
-    private long id;
+    
+    private Long id;
     private String libelle;
     private String code;
 

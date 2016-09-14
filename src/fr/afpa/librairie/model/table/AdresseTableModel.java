@@ -1,19 +1,13 @@
 package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Adresse;
-import fr.afpa.librairie.model.list.ListModelChangeListener;
-import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.AdresseColumn;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class AdresseTableModel extends AbstractTableModel {
+public class AdresseTableModel extends TableModel<Adresse> {
     
-    private final ListModelHolder<Adresse> adresseListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
-
     private Map<AdresseColumn, String> columnDisplayNames;
 
     public Map<AdresseColumn, String> getColumnDisplayNames() {
@@ -28,20 +22,6 @@ public class AdresseTableModel extends AbstractTableModel {
         return this.columnDisplayNames;
     }
 
-    public AdresseTableModel() {
-        adresseListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    public final void setListModel(ListModel<Adresse> listModel) {
-        adresseListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        ListModel<Adresse> listModel = adresseListModelHolder.getModel();
-        return listModel.getSize();
-    }
-
     @Override
     public int getColumnCount() {
         return AdresseColumn.values().length;
@@ -51,7 +31,7 @@ public class AdresseTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Adresse> listModel = adresseListModelHolder.getModel();
+        ListModel<Adresse> listModel = getListModelHolder().getModel();
         Adresse adresse = listModel.getElementAt(rowIndex);
         AdresseColumn column = getColumn(columnIndex);
 

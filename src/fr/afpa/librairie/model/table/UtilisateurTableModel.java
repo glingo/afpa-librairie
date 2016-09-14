@@ -1,24 +1,14 @@
 package fr.afpa.librairie.model.table;
 
-import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Role;
-import fr.afpa.librairie.data.bean.StatutUtilisateur;
 import fr.afpa.librairie.data.bean.Utilisateur;
-import fr.afpa.librairie.model.list.ListModelChangeListener;
-import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.UtilisateurColumn;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class UtilisateurTableModel extends AbstractTableModel {
-
-    private static final long serialVersionUID = 1547542546403627396L;
-    
-    private final ListModelHolder<Utilisateur> utilisateurListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
+public class UtilisateurTableModel extends TableModel<Utilisateur> {
 
     private Map<UtilisateurColumn, String> columnDisplayNames;
 
@@ -36,20 +26,6 @@ public class UtilisateurTableModel extends AbstractTableModel {
         return this.columnDisplayNames;
     }
 
-    public UtilisateurTableModel() {
-        utilisateurListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    public final void setListModel(ListModel<Utilisateur> listModel) {
-        utilisateurListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        ListModel<Utilisateur> listModel = utilisateurListModelHolder.getModel();
-        return listModel.getSize();
-    }
-
     @Override
     public int getColumnCount() {
         return UtilisateurColumn.values().length;
@@ -59,7 +35,7 @@ public class UtilisateurTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Utilisateur> listModel = utilisateurListModelHolder.getModel();
+        ListModel<Utilisateur> listModel = getListModelHolder().getModel();
         Utilisateur utilisateur = listModel.getElementAt(rowIndex);
         UtilisateurColumn column = getColumn(columnIndex);
 
@@ -121,12 +97,6 @@ public class UtilisateurTableModel extends AbstractTableModel {
         UtilisateurColumn[] columns = UtilisateurColumn.values();
         UtilisateurColumn column = columns[columnIndex];
         return column;
-    }
-
-
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        return String.class;
     }
 
     @Override

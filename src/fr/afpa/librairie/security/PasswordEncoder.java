@@ -14,10 +14,10 @@ import java.security.NoSuchAlgorithmException;
  */
 public class PasswordEncoder {
     
-    private MessageDigest digester;
+    private final MessageDigest digester;
 
     public PasswordEncoder() throws NoSuchAlgorithmException {
-        this.digester = MessageDigest.getInstance("MD5");
+        this(MessageDigest.getInstance("MD5"));
     }
 
     public PasswordEncoder(MessageDigest digester) {

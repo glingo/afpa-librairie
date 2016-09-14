@@ -10,7 +10,8 @@ package fr.afpa.librairie.data.bean;
  * @author cdi309
  */
 public class LigneCommande {
-    private long id;
+    
+    private Long id;
     private int quantite;
     private float prixUnit;
     private float taxe;

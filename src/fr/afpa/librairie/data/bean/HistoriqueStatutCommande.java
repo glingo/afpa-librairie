@@ -12,7 +12,8 @@ import java.sql.Date;
  * @author cdi309
  */
 public class HistoriqueStatutCommande {
-    private long id;
+    
+    private Long id;
     private Date datePassage;
     private String commentaire;
     

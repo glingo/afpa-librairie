@@ -11,51 +11,15 @@ import java.sql.Date;
 import java.text.NumberFormat;
 import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class EditionController extends Controller {
+public class EditionController extends ActivableCRUDController<Edition> {
 
     private static final Logger LOG = Logger.getLogger(EditionController.class.getName());
-
-    private final EditionAdminPanel adminPanel = new EditionAdminPanel(this);
-    private final CreateEditionPanel createPanel = new CreateEditionPanel(this);
-    //appel methode EditionAdminPanel et CreateEditionPanel present dans librairie/view/admin
 
     //contructeur du controller
     public EditionController(MainFrame frame) {
         super(frame);
-    }
-
-    //methode actionPerformed : en fonction de ce que fait l'utilisateur ==> le controller effectuera une action particuliere.
-    @Override
-    public void actionPerformed(ActionEvent e) {
-//        super.actionPerformed(e);
-
-        switch (e.getActionCommand()) {
-
-            case "list":
-                listAction();
-                break;
-
-            // les deux case se valent.     
-            case "create":
-            case "save":
-                createAction();
-                break;
-            case "deactivate":
-                deactivateAction(this.adminPanel.getEditionList().getSelectedValue());
-                break;
-
-            case "activate":
-                activateAction(this.adminPanel.getEditionList().getSelectedValue());
-                break;
-
-            default:
-                if (this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
-                    listAction();
-                }
-        }
     }
 
     //quand User = list ==> controller = listAction
@@ -64,9 +28,9 @@ public class EditionController extends Controller {
         //appel la listModel de edition
         editionListModel.addAll(getDaoFactory().getEditionDAO().findAll());
         //appel DAO Edition ( requetes SQL ) chemin : librairie/data/DAO
-        adminPanel.setEditionList(editionListModel);
+        getAdminPanel().setList(editionListModel);
         //appel du panel que l'on a crée pour Edition. ( pannel principal)
-        this.frame.setContent(adminPanel);
+        getFrame().setContent(getAdminPanel());
         //rajoute a la frame le panelAdmin 
 
         //donc = quand on utilise "list" le controller utilise la methode listAction qui demande
@@ -76,12 +40,13 @@ public class EditionController extends Controller {
     //Si User = "save" alors EditionController ==> createAction
     public void createAction() {
 
-        if (!this.createPanel.equals(this.frame.getContent())) {
-            this.frame.setContent(createPanel);
+        if (!getEditorPanel().equals(getFrame().getContent())) {
+            getEditorPanel().setBean(new Edition());
+            getFrame().setContent(getEditorPanel());
             return;
             //si le panel de création d'une edition n'existe pas = on le crée. 
         }
-
+/*
         this.createPanel.getForm().verify();
         //
         JTextField fieldIsbn = this.createPanel.getForm().getField("Isbn");
@@ -110,7 +75,9 @@ public class EditionController extends Controller {
         edition.setCouverture(couverture);
         edition.setTitre(titre);
         edition.setStock(stock);
-
+*/
+        Edition edition = getEditorPanel().constructBean();
+        
         try {
             getDaoFactory().getEditionDAO().save(edition);
             //appel de la methode EditionDAO. mais surtout appel de la requete SQL save contenu dans EditionDAO.afin de créer une nouvelle edition.
@@ -123,15 +90,17 @@ public class EditionController extends Controller {
 
         }
 
-        this.createPanel.getForm().reset();
+//        this.createPanel.getForm().reset();
 
-        alert("Information", "L'édition a bien été sauvegardée !");
         listAction();
+        getEditorPanel().reset();
+        alert("Information", "L'édition a bien été sauvegardée !");
         //retour au EditionAdminPanel
 
     }
 
-    private void deactivateAction(Edition edition) {
+    @Override
+    public void deactivateAction(Edition edition) {
 
         if (edition == null) {
             return;
@@ -155,7 +124,8 @@ public class EditionController extends Controller {
 
     }
     
-    private void activateAction(Edition edition){
+    @Override
+    public void activateAction(Edition edition){
         
         if(edition == null){
             return;
@@ -174,6 +144,14 @@ public class EditionController extends Controller {
         listAction();
         alert("Information", "L'activation a été pris en compte !");
     }
-   
-    
+
+    @Override
+    public void viewAction(Edition value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteAction(Edition value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

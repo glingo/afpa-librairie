@@ -2,19 +2,13 @@
 package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Commande;
-import fr.afpa.librairie.model.list.ListModelChangeListener;
-import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.CommandeColumn;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class CommandeTableModel extends AbstractTableModel{
+public class CommandeTableModel extends TableModel<Commande> {
     
-    private final ListModelHolder<Commande> commandeListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
-
     private Map<CommandeColumn, String> columnDisplayNames;
 
     public Map<CommandeColumn, String> getColumnDisplayNames() {
@@ -30,21 +24,7 @@ public class CommandeTableModel extends AbstractTableModel{
         }
         return this.columnDisplayNames;
     }
-
-    public CommandeTableModel() {
-        commandeListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    public final void setListModel(ListModel<Commande> listModel) {
-        commandeListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        ListModel<Commande> listModel = commandeListModelHolder.getModel();
-        return listModel.getSize();
-    }
-
+    
     @Override
     public int getColumnCount() {
         return CommandeColumn.values().length;
@@ -54,7 +34,7 @@ public class CommandeTableModel extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Commande> listModel = commandeListModelHolder.getModel();
+        ListModel<Commande> listModel = getListModelHolder().getModel();
         Commande commande = listModel.getElementAt(rowIndex);
         CommandeColumn column = getColumn(columnIndex);
 

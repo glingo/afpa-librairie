@@ -8,13 +8,9 @@ import fr.afpa.librairie.model.table.column.TagColumn;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class TagTableModel extends AbstractTableModel {
+public class TagTableModel extends TableModel<Tag> {
     
-    private final ListModelHolder<Tag> genreListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
-
     private Map<TagColumn, String> columnDisplayNames;
 
     public Map<TagColumn, String> getColumnDisplayNames() {
@@ -25,21 +21,7 @@ public class TagTableModel extends AbstractTableModel {
         }
         return this.columnDisplayNames;
     }
-
-    public TagTableModel() {
-        genreListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    public final void setListModel(ListModel<Tag> listModel) {
-        genreListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        ListModel<Tag> listModel = genreListModelHolder.getModel();
-        return listModel.getSize();
-    }
-
+    
     @Override
     public int getColumnCount() {
         return TagColumn.values().length;
@@ -49,7 +31,7 @@ public class TagTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Tag> listModel = genreListModelHolder.getModel();
+        ListModel<Tag> listModel = getListModelHolder().getModel();
         Tag tag = listModel.getElementAt(rowIndex);
         TagColumn column = getColumn(columnIndex);
 

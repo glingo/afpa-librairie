@@ -14,7 +14,8 @@ package fr.afpa.librairie.data.bean;
  *  nb : le pays est un objet à part
  */
 public class Adresse {
-    private long id;
+    
+    private Long id;
     private String numero;
     private String voie;
     private String cp;

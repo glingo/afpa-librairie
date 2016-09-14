@@ -8,11 +8,11 @@ package fr.afpa.librairie.data.bean;
  * - libelle : nom de l'éditeur
  */
 public class Editeur {
-    private long id;
+    
+    private Long id;
     private String libelle;
 
-    public Editeur() {
-    }
+    public Editeur() {}
 
     public Long getId() {
         return id;
@@ -21,8 +21,6 @@ public class Editeur {
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
     public String getLibelle() {
         return libelle;

@@ -2,19 +2,13 @@
 package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Genre;
-import fr.afpa.librairie.model.list.ListModelChangeListener;
-import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.GenreColumn;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class GenreTableModel extends AbstractTableModel {
+public class GenreTableModel extends TableModel<Genre> {
     
-    private final ListModelHolder<Genre> genreListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
-
     private Map<GenreColumn, String> columnDisplayNames;
 
     public Map<GenreColumn, String> getColumnDisplayNames() {
@@ -26,20 +20,6 @@ public class GenreTableModel extends AbstractTableModel {
         return this.columnDisplayNames;
     }
 
-    public GenreTableModel() {
-        genreListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    public final void setListModel(ListModel<Genre> listModel) {
-        genreListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        ListModel<Genre> listModel = genreListModelHolder.getModel();
-        return listModel.getSize();
-    }
-
     @Override
     public int getColumnCount() {
         return GenreColumn.values().length;
@@ -49,7 +29,7 @@ public class GenreTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Genre> listModel = genreListModelHolder.getModel();
+        ListModel<Genre> listModel = getListModelHolder().getModel();
         Genre genre = listModel.getElementAt(rowIndex);
         GenreColumn column = getColumn(columnIndex);
 

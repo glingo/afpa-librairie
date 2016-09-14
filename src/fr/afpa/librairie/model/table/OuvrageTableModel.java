@@ -2,23 +2,16 @@ package fr.afpa.librairie.model.table;
 
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Genre;
-import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.bean.Tag;
 import fr.afpa.librairie.data.bean.Theme;
-import fr.afpa.librairie.model.list.ListModelChangeListener;
-import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.OuvrageColumn;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class OuvrageTableModel extends AbstractTableModel {
-
-    private final ListModelHolder<Ouvrage> ouvrageListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
+public class OuvrageTableModel extends TableModel<Ouvrage> {
 
     private Map<OuvrageColumn, String> columnDisplayNames;
 
@@ -33,23 +26,8 @@ public class OuvrageTableModel extends AbstractTableModel {
             this.columnDisplayNames.put(OuvrageColumn.RESUME, "Resume");
             this.columnDisplayNames.put(OuvrageColumn.RUBRIQUE, "Rubrique");
             this.columnDisplayNames.put(OuvrageColumn.TAG, "Tag");
-
         }
         return this.columnDisplayNames;
-    }
-
-    public OuvrageTableModel() {
-        ouvrageListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    public final void setListModel(ListModel<Ouvrage> listModel) {
-        ouvrageListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        ListModel<Ouvrage> listModel = ouvrageListModelHolder.getModel();
-        return listModel.getSize();
     }
 
     @Override
@@ -61,7 +39,7 @@ public class OuvrageTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Ouvrage> listModel = ouvrageListModelHolder.getModel();
+        ListModel<Ouvrage> listModel = getListModelHolder().getModel();
         Ouvrage ouvrage = listModel.getElementAt(rowIndex);
         OuvrageColumn column = getColumn(columnIndex);
 

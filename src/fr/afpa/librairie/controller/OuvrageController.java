@@ -6,71 +6,48 @@ import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
-import fr.afpa.librairie.view.admin.OuvrageAdminPanel;
-import fr.afpa.librairie.view.ouvrage.CreateOuvragePanel;
+import fr.afpa.librairie.view.ouvrage.OuvrageAdminPanel;
+import fr.afpa.librairie.view.ouvrage.OuvrageEditorPanel;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
-public class OuvrageController extends Controller {
+public class OuvrageController extends CRUDController<Ouvrage> {
     
     private static final Logger LOG = Logger.getLogger(OuvrageController.class.getName());
 
-    private final OuvrageAdminPanel adminPanel = new OuvrageAdminPanel(this);
-//    private final CreateOuvragePanel createPanel = new CreateOuvragePanel(this);
-    private final CreateOuvragePanel createPanel = new CreateOuvragePanel(this);
-    
     public OuvrageController(MainFrame frame) {
         super(frame);
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-//        super.actionPerformed(e);
-        
-        switch(e.getActionCommand()) {
-            
-            case "list":
-                listAction();
-                break;
-                
-            case "create":
-            case "save":
-                createAction();
-                break;
-            case "delete":
-                deleteAction(this.adminPanel.getOuvrageList().getSelectedValue());
-                break;
-            default:
-                if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
-                    listAction();
-                }
-        }
+        setAdminPanel(new OuvrageAdminPanel(this));
+        setEditorPanel(new OuvrageEditorPanel(this));
     }
 
+    @Override
     public void listAction() {
         ListAdapterListModel<Ouvrage> ouvrageListModel = new ListAdapterListModel<>();
         ouvrageListModel.addAll(getDaoFactory().getOuvrageDAO().findAll());
-        adminPanel.setOuvrageList(ouvrageListModel);
-        this.frame.setContent(adminPanel);
+        getAdminPanel().setList(ouvrageListModel);
+        getFrame().setContent(getAdminPanel());
     }
     
     public void createAction() {
         
-        if(!this.createPanel.equals(this.frame.getContent())) {
+        if(!getEditorPanel().equals(getFrame().getContent())) {
+            getEditorPanel().setBean(new Ouvrage());
+            
             List<Auteur> auteurs = getDaoFactory().getAuteurDAO().findAll();
-            createPanel.setAuteurList(auteurs);
-            createPanel.setCoAuteurList(auteurs);
+            
+//            createPanel.setAuteurList(auteurs);
+//            createPanel.setCoAuteurList(auteurs);
 //            createPanel.setLangueList(getDaoFactory().getLangueDAO().findAll());
             
             // to be continued ...
             
-            this.frame.setContent(createPanel);
+            getFrame().setContent(getEditorPanel());
             return;
         }
         
-        Ouvrage ouvrage = this.createPanel.getOuvrage();
+        Ouvrage ouvrage = getEditorPanel().constructBean();
         
         try{
             getDaoFactory().getOuvrageDAO().save(ouvrage);
@@ -83,11 +60,13 @@ public class OuvrageController extends Controller {
             
         }
         
-        alert("Information", "L'ouvrage a bien été sauvegardé !");
         listAction();
+        getEditorPanel().reset();
+        alert("Information", "L'ouvrage a bien été sauvegardé !");
         
     }
     
+    @Override
     public void deleteAction(Ouvrage ouvrage){
        if(ouvrage == null) {
             // impossible de supprimer si l'utilisateur n'a rien selectionné.
@@ -98,17 +77,18 @@ public class OuvrageController extends Controller {
         
         try {
             getDaoFactory().getOuvrageDAO().delete(ouvrage);
-            
-
-            
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de supprimer cet ouvrage");
             return;
         }
         
-        alert("Information", "L'ouvrage a bien été supprimé !");
         listAction();
-        
+        alert("Information", "L'ouvrage a bien été supprimé !");
+    }
+
+    @Override
+    public void viewAction(Ouvrage value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

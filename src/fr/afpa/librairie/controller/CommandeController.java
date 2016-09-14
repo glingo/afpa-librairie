@@ -5,68 +5,34 @@ import fr.afpa.librairie.data.bean.Commande;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
-import fr.afpa.librairie.view.admin.CommandeAdminPanel;
-import fr.afpa.librairie.view.admin.CreateCommandePanel;
-import java.awt.event.ActionEvent;
-import java.sql.Date;
 import java.util.logging.Logger;
-import javax.swing.JFormattedTextField;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 
-public class CommandeController extends Controller {
+public class CommandeController extends CRUDController<Commande> {
     
     private static final Logger LOG = Logger.getLogger(CommandeController.class.getName());
      
-    private final CommandeAdminPanel adminPanel = new CommandeAdminPanel(this);
-    private final CreateCommandePanel createPanel = new CreateCommandePanel(this);
-    
     public CommandeController(MainFrame frame) {
         super(frame);
     }
     
     @Override
-    public void actionPerformed(ActionEvent e) {
-//        super.actionPerformed(e);
-        
-        switch(e.getActionCommand()) {
-            
-            case "list":
-                listAction();
-                break;
-                
-            case "create":
-            case "save":
-                System.out.println("save");
-                createAction();
-                break;
-                
-            case "deactivate":
-                deactivateAction(this.adminPanel.getCommandeList().getSelectedValue());
-                break;
-
-            default:
-                if(this.frame.getContent() == null || !this.adminPanel.equals(this.frame.getContent())) {
-                    listAction();
-                }
-        }
-    }
-
     public void listAction() {
         ListAdapterListModel<Commande> commandeListModel = new ListAdapterListModel<>();
         commandeListModel.addAll(getDaoFactory().getCommandeDAO().findAll());
-        adminPanel.setCommandeList(commandeListModel);
-        this.frame.setContent(adminPanel);
+        getAdminPanel().setList(commandeListModel);
+        getFrame().setContent(getAdminPanel());
     }
     
+    @Override
     public void createAction() {
         
-        if(!this.createPanel.equals(this.frame.getContent())) {
-            this.frame.setContent(createPanel);
+        if(!getEditorPanel().equals(getFrame().getContent())) {
+            getEditorPanel().setBean(new Commande());
+            getFrame().setContent(getEditorPanel());
             return;
         }
-        
+        /*
         this.createPanel.getForm().verify();
         
         JTextField fieldNumero = this.createPanel.getForm().getField("Numero");
@@ -79,7 +45,9 @@ public class CommandeController extends Controller {
 
         commande.setNumero(numero);
         commande.setDateCommande(new java.sql.Date(dateCommande.getTime()));
-
+        */
+        
+        Commande commande = getEditorPanel().constructBean();
         
         try{
             getDaoFactory().getCommandeDAO().save(commande);
@@ -90,9 +58,11 @@ public class CommandeController extends Controller {
             return;
         }
         
-        this.createPanel.getForm().reset();
-        alert("Information", "La commande a bien été sauvegardée !");
+//        this.createPanel.getForm().reset();
+        
         listAction();
+        getEditorPanel().reset();
+        alert("Information", "La commande a bien été sauvegardée !");
         
     }
     
@@ -116,5 +86,15 @@ public class CommandeController extends Controller {
         listAction();
         
     
+    }
+
+    @Override
+    public void viewAction(Commande value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteAction(Commande value) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -4,21 +4,20 @@ import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.view.MainFrame;
-import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class HomeController extends Controller {
+public class HomeController{
+    
+    private final MainFrame frame;
+    private final DAOFactoryInterface daoFactory;
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(frame == null) {
-            load();
-        }
+    public HomeController(MainFrame frame, DAOFactoryInterface daoFactory) {
+        this.frame = frame;
+        this.daoFactory = daoFactory;
     }
     
     public void load(){
-        this.frame = new MainFrame();
         try {
             List<Rubrique> rubriques = this.getDaoFactory().getRubriqueDAO().findAll();
             this.frame.getLeftMenuPanel().setRubriqueList(rubriques);
@@ -29,6 +28,13 @@ public class HomeController extends Controller {
             System.exit(0);
         }
     }
-    
+
+    public MainFrame getFrame() {
+        return frame;
+    }
+
+    public DAOFactoryInterface getDaoFactory() {
+        return daoFactory;
+    }
     
 }

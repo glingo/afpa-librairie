@@ -1,20 +1,13 @@
 package fr.afpa.librairie.model.table;
 
-import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Promotion;
-import fr.afpa.librairie.model.list.ListModelChangeListener;
-import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.CommandeColumn;
 import fr.afpa.librairie.model.table.column.PromotionColumn;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class PromotionTableModel extends AbstractTableModel {
-
-    private final ListModelHolder<Promotion> promoListModelHolder = new ListModelHolder<>();
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
+public class PromotionTableModel extends TableModel<Promotion> {
 
     private Map<PromotionColumn, String> columnDisplayNames;
 
@@ -32,21 +25,7 @@ public class PromotionTableModel extends AbstractTableModel {
         }
         return this.columnDisplayNames;
     }
-
-    public PromotionTableModel() {
-        promoListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    public final void setListModel(ListModel<Promotion> listModel) {
-        promoListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        ListModel<Promotion> listModel = promoListModelHolder.getModel();
-        return listModel.getSize();
-    }
-
+    
     @Override
     public int getColumnCount() {
         return CommandeColumn.values().length;
@@ -56,7 +35,7 @@ public class PromotionTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Promotion> listModel = promoListModelHolder.getModel();
+        ListModel<Promotion> listModel = getListModelHolder().getModel();
         Promotion promo = listModel.getElementAt(rowIndex);
         PromotionColumn column = getColumn(columnIndex);
 

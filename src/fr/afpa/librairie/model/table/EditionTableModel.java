@@ -5,21 +5,12 @@ import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.data.bean.Rubrique;
-import fr.afpa.librairie.model.list.ListModelChangeListener;
-import fr.afpa.librairie.model.list.ListModelHolder;
 import fr.afpa.librairie.model.table.column.EditionColumn;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ListModel;
-import javax.swing.table.AbstractTableModel;
 
-public class EditionTableModel extends AbstractTableModel {
-    // forme que doit prendre le stockage des instances d'édition.Modèle de la liste.  
-
-    private final ListModelHolder<Edition> editionListModelHolder = new ListModelHolder<>();
-    //appel de la classe ListModelHolder. chemin Librairie/model/list/
-    private final ListModelChangeListener listModelChangeListener = new ListModelChangeListener(this);
-    //idem que pour le modele de liste précedent.
+public class EditionTableModel extends TableModel<Edition> {
 
     private Map<EditionColumn, String> columnDisplayNames;
 
@@ -43,23 +34,6 @@ public class EditionTableModel extends AbstractTableModel {
         return this.columnDisplayNames;
     }
 
-    //constructeur
-    public EditionTableModel() {
-        editionListModelHolder.addListDataListeners(listModelChangeListener);
-    }
-
-    //setter et getter de EditionTableModel
-    public final void setListModel(ListModel<Edition> listModel) {
-        editionListModelHolder.setModel(listModel);
-    }
-
-    @Override
-    public int getRowCount() {
-        //retourne la taille (nre de ligne) de la liste d'Edition
-        ListModel<Edition> listModel = editionListModelHolder.getModel();
-        return listModel.getSize();
-    }
-
     @Override
     public int getColumnCount() {
         //retourne le nombre de colonne de la liste
@@ -70,7 +44,7 @@ public class EditionTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Object columnValue = null;
 
-        ListModel<Edition> listModel = editionListModelHolder.getModel();
+        ListModel<Edition> listModel = getListModelHolder().getModel();
         Edition edition = listModel.getElementAt(rowIndex);
         EditionColumn column = getColumn(columnIndex);
         //recuperation des données de la liste Edition en fonction de la colonne choisie. 
