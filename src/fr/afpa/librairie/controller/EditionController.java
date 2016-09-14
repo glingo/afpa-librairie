@@ -4,14 +4,11 @@ import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
-import fr.afpa.librairie.view.admin.CreateEditionPanel;
-import fr.afpa.librairie.view.admin.EditionAdminPanel;
-import java.awt.event.ActionEvent;
-import java.sql.Date;
-import java.text.NumberFormat;
+import fr.afpa.librairie.view.edition.EditionAdminPanel;
+import fr.afpa.librairie.view.editeur.EditeurAdminPanel;
+import fr.afpa.librairie.view.editeur.EditeurEditorPanel;
+import fr.afpa.librairie.view.edition.EditionEditorPanel;
 import java.util.logging.Logger;
-import javax.swing.JFormattedTextField;
-import javax.swing.JTextField;
 
 public class EditionController extends ActivableCRUDController<Edition> {
 
@@ -20,6 +17,8 @@ public class EditionController extends ActivableCRUDController<Edition> {
     //contructeur du controller
     public EditionController(MainFrame frame) {
         super(frame);
+        setAdminPanel(new EditionAdminPanel(this));
+        setEditorPanel(new EditionEditorPanel(this));
     }
 
     //quand User = list ==> controller = listAction
