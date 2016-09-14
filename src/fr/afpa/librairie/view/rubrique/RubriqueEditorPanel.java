@@ -4,7 +4,7 @@ import fr.afpa.librairie.controller.Controller;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.sql.Date;
 import javax.swing.GroupLayout;
@@ -30,7 +30,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
     private JDateField dateFinTF;
     
     public RubriqueEditorPanel(Controller controller) {
-        super(null, controller);
+        super(new Rubrique(), controller);
     }
 
     public RubriqueEditorPanel(Rubrique bean, Controller controller) {
@@ -74,34 +74,35 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
         dateFinTF = new JDateField(false);
         commentaireTF = new JTextArea();
 
-        libelleLB.setForeground(Color.lightGray);
+//        libelleLB.setForeground(Color.lightGray);
         libelleLB.setText("* Libelle");
 
-        libelleTF.setBackground(Color.lightGray);
+//        libelleTF.setBackground(Color.lightGray);
 
-        dateDebutLB.setForeground(Color.lightGray);
+//        dateDebutLB.setForeground(Color.lightGray);
         dateDebutLB.setText("* Date de début");
 
-        dateDebutTF.setBackground(Color.lightGray);
+//        dateDebutTF.setBackground(Color.lightGray);
 
-        commentaireLB.setForeground(java.awt.Color.lightGray);
+//        commentaireLB.setForeground(java.awt.Color.lightGray);
         commentaireLB.setText("commentaire");
 
         champObligLB.setFont(new Font("Dialog", 0, 10)); // NOI18N
-        champObligLB.setForeground(Color.lightGray);
+//        champObligLB.setForeground(Color.lightGray);
         champObligLB.setText("* Champ obligagoire");
 
-        dateFinLB.setForeground(Color.lightGray);
+//        dateFinLB.setForeground(Color.lightGray);
         dateFinLB.setText("Date de fin");
 
-        dateFinTF.setBackground(Color.lightGray);
+//        dateFinTF.setBackground(Color.lightGray);
 
         commentaireTF.setColumns(20);
         commentaireTF.setRows(5);
         scrollPane.setViewportView(commentaireTF);
-
+        
         GroupLayout bodyPanelLayout = new GroupLayout(body);
         body.setLayout(bodyPanelLayout);
+        
         bodyPanelLayout.setHorizontalGroup(
             bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(bodyPanelLayout.createSequentialGroup()
@@ -119,7 +120,6 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
                                         .addComponent(libelleLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(dateFinLB, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(commentaireLB))
-                                .addGap(13, 13, 13)
                                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                     .addComponent(dateFinTF, GroupLayout.Alignment.LEADING)
                                     .addComponent(dateDebutTF, GroupLayout.Alignment.LEADING)
@@ -127,10 +127,10 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
                                     .addComponent(scrollPane))))
                         .addGap(6, 6, 6))))
         );
+        
         bodyPanelLayout.setVerticalGroup(
             bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(bodyPanelLayout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(champObligLB)
                 .addGap(3, 3, 3)
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
@@ -140,7 +140,6 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(dateDebutTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(dateDebutLB))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(dateFinTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(dateFinLB))
@@ -153,6 +152,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
                         .addComponent(commentaireLB)))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
         );
+        
     }   
     
     @Override

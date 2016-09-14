@@ -3,10 +3,9 @@ package fr.afpa.librairie.view.panel.footer;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.LayoutStyle;
 
 public class FooterEditorPanel extends JPanel {
     
@@ -20,13 +19,9 @@ public class FooterEditorPanel extends JPanel {
     }
 
     private void initComponents() {
-        
         annulerBT = new JButton();
         validerBT = new JButton();
-
-        setBackground(Color.darkGray);
-        setBorder(BorderFactory.createLineBorder(Color.lightGray));
-
+        
         annulerBT.setText("Annuler");
         annulerBT.setActionCommand("annuler");
         annulerBT.addActionListener(this.controller);
@@ -35,31 +30,14 @@ public class FooterEditorPanel extends JPanel {
         validerBT.setActionCommand("save");
         validerBT.addActionListener(this.controller);
         
-        initLayout();
-    }     
-    
-    private void initLayout(){
-        GroupLayout layout = new GroupLayout(this);
-        setLayout(layout);
+        ButtonGroup buttons = new ButtonGroup();
         
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(annulerBT, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(validerBT, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(validerBT)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(annulerBT)
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-    }
-                                    
+        buttons.add(validerBT);
+        buttons.add(annulerBT);
+
+        setBorder(BorderFactory.createLineBorder(Color.lightGray));
+
+        add(validerBT);
+        add(annulerBT);
+    }                           
 }

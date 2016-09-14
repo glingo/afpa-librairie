@@ -49,7 +49,7 @@ public class HeaderPanel extends JPanel {
         seConnecterButton.setText("Se connecter");
 
         GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
+        setLayout(layout);
         
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -72,6 +72,6 @@ public class HeaderPanel extends JPanel {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE))
         );
-    }// </editor-fold>                        
+    }                     
             
 }

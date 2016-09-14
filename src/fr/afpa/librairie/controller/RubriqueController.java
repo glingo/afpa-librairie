@@ -5,6 +5,7 @@ import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.table.RubriqueTableModel;
+import fr.afpa.librairie.model.table.TableModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.admin.RubriqueAdminPanel;
 import fr.afpa.librairie.view.rubrique.RubriqueEditorPanel;
@@ -18,14 +19,12 @@ public class RubriqueController extends Controller implements ListSelectionListe
     
     private static final Logger LOG = Logger.getLogger(RubriqueController.class.getName());
     
-    private final RubriqueAdminPanel adminPanel = new RubriqueAdminPanel(new RubriqueTableModel(), this);
+    private final RubriqueAdminPanel adminPanel;
     private final RubriqueEditorPanel editorPanel = new RubriqueEditorPanel(this);
-    
-//    private final CreateRubriquePanel createPanel = new CreateRubriquePanel(this);
-//    private final RubriqueViewPanel viewPanel = new RubriqueViewPanel(this);
     
     public RubriqueController(MainFrame frame) {
         super(frame);
+        this.adminPanel = new RubriqueAdminPanel(new RubriqueTableModel(), this);
     }
     
     @Override
@@ -80,6 +79,7 @@ public class RubriqueController extends Controller implements ListSelectionListe
     public void createAction() {
                 
         if(!this.editorPanel.equals(this.frame.getContent())) {
+            this.editorPanel.setBean(new Rubrique());
             this.frame.setContent(this.editorPanel);
             return;
         }
@@ -132,13 +132,13 @@ public class RubriqueController extends Controller implements ListSelectionListe
 //        this.frame.setContent(this.viewPanel);
     }
     
-    
     public void editAction(Rubrique rubrique) {
+        if(rubrique == null) {
+            danger("", "Veuillez selectionner une rubrique à mettre a jour.");
+            return;
+        }
+        
         this.editorPanel.setBean(rubrique);
-        this.editorPanel.bindValues();
         this.frame.setContent(this.editorPanel);
-//        List<Ouvrage> ouvrages = getDaoFactory().getOuvrageDAO().findByRubrique(rubrique.getId());
-//        this.viewPanel.setOuvrageList(ouvrages);
-//        this.frame.setContent(this.viewPanel);
     }
 }
