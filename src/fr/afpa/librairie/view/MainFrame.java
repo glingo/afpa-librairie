@@ -15,8 +15,11 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -71,7 +74,16 @@ public class MainFrame extends javax.swing.JFrame {
         setMinimumSize(size);
         setSize(size);
         setLocationRelativeTo(null);
-
+        
+        // noob test don't mind
+        // System.out.println(System.getProperty("user.dir"));
+        
+        try{ 
+            setIconImage(ImageIO.read(new File("./src/fr/afpa/librairie/resources/images/hiboukilicon.trans.bmp")));
+        } 
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     private void initComponents() {
