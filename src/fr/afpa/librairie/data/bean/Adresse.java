@@ -1,13 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fr.afpa.librairie.data.bean;
 
 /**
- *
- * @author cdi309
+ * Création d'un objet Adresse contenant :
+ * 
+ * - l'id (correspond au séquentiel automatiquement généré par la BDD et typé long
+ * - numero : de rue , allee etc... (String car ne fera pas l'objet de calculs)
+ * - voie : nom de la rue, alléee, voie etc...
+ * - cp : code postal
+ * - ville : nom de la ville
+ * - complement : infos complémentaires optionnelles concernant l'adresse
+ * 
+ *  nb : le pays est un objet à part
  */
 public class Adresse {
     private long id;

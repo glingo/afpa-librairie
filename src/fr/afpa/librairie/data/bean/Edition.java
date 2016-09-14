@@ -4,6 +4,25 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Création d'un objet Edition (c'est à dire une des potentiellement multiples éditions d'un même ouvrage)contenant :
+ * 
+ * - l'isbn : numero unique identifiant l'édition d'un ouvrage. 
+ * (chaque édition différente d'un même ouvrage aura un isbn différent)
+ * l'isbn est composé de 10 chiffres (13 avec les tirets) jusqu'en 2006 
+ * et de 13 (17 avec les tirets) chiffres à partir du 1er janvier 2007
+ * - numero : de commande (String car ne fera pas l'objet de calculs)
+ * - date de publication
+ * - prix : hors taxes
+ * - titre : éventuellement le titre modifié d'un ouvrage (par exp : titre français d'un ouvrage original en anglais)
+ * - stock : quantité de livres physiquement disponible
+ * - Statut de l'édition (StatutEdition statut) : Classe contenant toutes les infos relatives à l'état de la commande
+ * (voir StatutEditionDAO)
+ * - Ouvrage : Classe contenant toutes les infos relatives à l'ouvrage auquel se réfère l'édition
+ * - Langue: Classe contenant toutes les infos relatives à la langue dans laquelle est rédigée l'édition
+ * - Taxe : List enregistrant toutes les taxes (au cas où il y en aurait plusieurs) appliquées à l'edition
+ */
+
 public class Edition {
 
     private String isbn;

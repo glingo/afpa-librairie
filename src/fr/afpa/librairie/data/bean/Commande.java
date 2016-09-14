@@ -1,15 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
 
 /**
- *
- * @author cdi309
+ * Création d'un objet Commande contenant :
+ * 
+ * - l'id (correspond au séquentiel automatiquement généré par la BDD et typé long
+ * - numero : de commande (String car ne fera pas l'objet de calculs)
+ * - date 
+ * - Client (Utilisateur user) : Classe contenant toutes les infos relatives au client 
+ * - Statut de la Commande (StatutCommande orderStat) : Classe contenant toutes les infos relatives à l'état de la commande
+ * (StatutCommandeDAO)
+ * - complement : infos complémentaires optionnelles concernant l'adresse
+ * 
+ *  nb : le pays est un objet à part
  */
 public class Commande {
     private long id;

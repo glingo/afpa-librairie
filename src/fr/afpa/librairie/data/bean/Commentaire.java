@@ -1,13 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fr.afpa.librairie.data.bean;
 
 /**
- *
- * @author cdi309
+ * Création d'un objet Commentaire contenant :
+ * 
+ * - l'id (correspond au séquentiel automatiquement généré par la BDD et typé long
+ * - titre : correspond au titre de l'ouvrage commenté
+ * - contenu : commentaire laissé par l'utilisateur sur l'ouvrage
+ * - note : note donnée par l'utilisateur à l'ouvrage
+ * 
  */
 public class Commentaire {
     private long id;

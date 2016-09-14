@@ -2,6 +2,16 @@ package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
 
+/**
+ * Création d'un objet Auteur contenant :
+ * 
+ * - l'id (correspond au séquentiel automatiquement généré par la BDD et typé long
+ * - nom : de l'auteur
+ * - prénom
+ * - date de naissance : info qui pourra ensuite être utile si l'on veut faire des recherches d'auteurs par époque 
+ * - date de décès
+ * 
+ */
 public class Auteur {
 
     private Long id;

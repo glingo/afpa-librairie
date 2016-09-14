@@ -3,12 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/controller/EditeurController.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/support/sql/EditeurSqlDAO.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/controller/AuteurController.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/view/admin/EditeurAdminPanel.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/view/admin/AuteurAdminPanel.java</file>
-            <file>file:/C:/Users/cdi309/Documents/GitHub/afpa-librairie/src/fr/afpa/librairie/data/dao/support/sql/AuteurSqlDAO.java</file>
+            <file>file:/D:/Projet%20Librairie/afpa-librairie/src/fr/afpa/librairie/resources/dao.properties</file>
         </group>
     </open-files>
 </project-private>
