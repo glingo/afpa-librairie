@@ -32,8 +32,7 @@ public class Commentaire {
     /**
      * Retourne l'id (généré par la BDD).
      *
-     * @param id
-     * @return L'id (généré par la BDD) sous la forme d'un entier (typé long).
+     * @return Id (généré par la BDD) sous la forme d'un entier (long).
      */
     public long getId() {
         return id;
@@ -51,7 +50,6 @@ public class Commentaire {
     /**
      * Retourne le titre de l'édition commentée.
      *
-     * @param titre
      * @return Titre de l'édition commentée.
      */
     public String getTitre() {
@@ -70,7 +68,6 @@ public class Commentaire {
     /**
      * Retourne le contenu du commentaire.
      *
-     * @param titre
      * @return Commentaire client.
      */
     public String getContenu() {
@@ -89,7 +86,6 @@ public class Commentaire {
     /**
      * Retourne la note laissée par un client sur un ouvrage.
      *
-     * @param note
      * @return Note Utilisateur (typée int).
      */
     public int getNote() {
@@ -99,7 +95,7 @@ public class Commentaire {
     /**
      * Met à jour la note de l'ouvrage laissée par le client.
      *
-     * @param contenu Modifie la note (typée int) d'un Utilisateur.
+     * @param note Modifie la note (typée int) d'un Utilisateur.
      */
     public void setNote(int note) {
         this.note = note;

@@ -44,9 +44,8 @@ public class Commande {
     /**
      * Retourne l'id (généré par la BDD) de la commande.
      *
-     * @param id
-     * @return L'id (généré par la BDD) de la commande sous la forme de nombre
-     * d'un entier (typé long).
+     * @return Id (généré par la BDD) de la commande sous la forme de nombre
+     * d'un entier (long).
      */
     public long getId() {
         return id;
@@ -64,8 +63,7 @@ public class Commande {
     /**
      * Retourne le numéro de commande.
      *
-     * @param numero
-     * @return Le numero de commande (typée String).
+     * @return Numero de commande (String).
      */
     public String getNumero() {
         return numero;
@@ -83,8 +81,7 @@ public class Commande {
     /**
      * Retourne la date de commande.
      *
-     * @param dateCommande
-     * @return La date de commande (typée Date).
+     * @return Date de commande (Date).
      */
     public Date getDateCommande() {
         return dateCommande;
@@ -102,9 +99,8 @@ public class Commande {
     /**
      * Retourne les infos relatives au client.
      *
-     * @param user
      * @see Utilisateur
-     * @return Les paramètres Utilisateur (client).
+     * @return Paramètres client (Utilisateur).
      */
     public Utilisateur getUser() {
         return user;
@@ -113,7 +109,7 @@ public class Commande {
     /**
      * Met à jour les paramètres du client.
      *
-     * @param user Nouveaux paramètres Utilisateur (Client).
+     * @param user Nouveaux paramètres client (Utilisateur).
      */
     public void setUser(Utilisateur user) {
         this.user = user;
@@ -122,10 +118,9 @@ public class Commande {
     /**
      * Retourne l'état de la commande.
      *
-     * @param orderStat
      * @see StatutCommande
      * @StatutCommandeDAO
-     * @return L'état de la commande.
+     * @return L'état de la commande (StatutCommande).
      */
     public StatutCommande getOrderStat() {
         return orderStat;

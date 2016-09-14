@@ -42,8 +42,7 @@ public class Adresse {
     /**
      * Retourne l'id (généré par la BDD).
      *
-     * @param id
-     * @return L'id (généré par la BDD) sous la forme d'un entier (typé long).
+     * @return Id (généré par la BDD) sous la forme d'un entier (long).
      */
     public long getId() {
         return id;
@@ -59,38 +58,37 @@ public class Adresse {
     }
 
     /**
-     * Retourne le numéro de la rue, allée etc... .
+     * Retourne le numéro de rue, allée etc.
      *
-     * @param numero
-     * @return Le numéro de la rue, allée etc... sous forme de String.
+     * @return Numéro de rue (String).
+     *
      */
     public String getNumero() {
         return numero;
     }
 
     /**
-     * Met à jour le numéro de la rue, allée etc... .
+     * Met à jour le numéro de rue, allée etc.
      *
-     * @param numero Nouveau numero de l'adresse.
+     * @param numero Nouveau numero de rue.
      */
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
     /**
-     * Retourne le nom de la rue, allée etc... .
+     * Retourne le nom de rue, allée.
      *
-     * @param nom
-     * @return Le numéro d'une rue, allée etc... sous forme de String.
+     * @return Nom de rue.
      */
     public String getVoie() {
         return voie;
     }
 
     /**
-     * Met à jour le nom de la rue, allée etc... .
+     * Met à jour le nom de rue, allée etc.
      *
-     * @param nom Nouveau nom de l'adresse
+     * @param nom Nouveau nom de rue.
      */
     public void setVoie(String voie) {
         this.voie = voie;
@@ -99,8 +97,7 @@ public class Adresse {
     /**
      * Retourne le code postal.
      *
-     * @param cp
-     * @return Le code postal sous forme de String.
+     * @return Code postal (String).
      */
     public String getCp() {
         return cp;
@@ -119,7 +116,7 @@ public class Adresse {
      * Retourne le nom de la ville.
      *
      * @param ville
-     * @return Le nom de la ville.
+     * @return Nom de la ville.
      */
     public String getVille() {
         return ville;
@@ -128,7 +125,7 @@ public class Adresse {
     /**
      * Met à jour le nom de la ville.
      *
-     * @param ville Nouvelle ville.
+     * @param ville Nouveau nom de ville.
      */
     public void setVille(String ville) {
         this.ville = ville;
@@ -137,7 +134,6 @@ public class Adresse {
     /**
      * Retourne le(s) complément(s) d'info relatif(s) à l'adresse.
      *
-     * @param complement
      * @return Ajout/modification du/des complément(s) d'info. de l'adresse.
      */
     public String getComplement() {

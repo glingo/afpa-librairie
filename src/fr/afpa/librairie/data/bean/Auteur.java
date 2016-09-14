@@ -56,8 +56,7 @@ public class Auteur {
     /**
      * Retourne l'id (généré par la BDD).
      *
-     * @param id
-     * @return L'id (généré par la BDD) sous la forme d'un entier (typé long).
+     * @return Id (généré par la BDD) sous la forme d'un entier (long).
      */
     public Long getId() {
         return id;
@@ -66,83 +65,79 @@ public class Auteur {
      /**
      * Met à jour l'id (généré par la BDD).
      *
-     * @param id Nouvel id de l'Auteur.
+     * @param id Nouvel id.
      */
     public void setId(Long id) {
         this.id = id;
     }
 
     /**
-     * Retourne le nom de l'auteur.
+     * Retourne le nom.
      *
-     * @param nom
-     * @return Nom de l'auteur.
+     * @return Nom.
      */
     public String getNom() {
         return nom;
     }
 
     /**
-     * Met à jour le nom de l'auteur.
+     * Met à jour le nom.
      *
-     * @param nom Nouveau nom de l'auteur.
+     * @param nom Nouveau nom.
      */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
     /**
-     * Retourne le prénom de l'auteur.
+     * Retourne le prénom.
      *
-     * @param prenom
-     * @return Le prénom de l'auteur.
+     * @return Prénom.
      */
     public String getPrenom() {
         return prenom;
     }
 
     /**
-     * Met à jour le prenom de l'auteur.
+     * Met à jour le prénom.
      *
-     * @param prenom Nouveau prénom de l'auteur.
+     * @param prenom Nouveau prénom.
      */
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
 
     /**
-     * Retourne la date de naissance de l'auteur.
+     * Retourne la date de naissance.
      *
-     * @param dateNaissance
-     * @return La date de naissance (typée Date) de l'auteur.
+     * @return Date de naissance (Date).
      */
     public Date getDateNaissance() {
         return dateNaissance;
     }
 
     /**
-     * Met à jour la date de naissance de l'auteur.
+     * Met à jour la date de naissance.
      *
-     * @param dateNaissance Nouvelle date de naissance de l'auteur.
+     * @param dateNaissance Nouvelle date de naissance.
      */
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
     /**
-     * Retourne la date de décès de l'auteur, si elle existe.
+     * Retourne la date de décès, si elle existe.
      *
-     * @param dateDeces
-     * @return La date de décès ( typée Date) de l'auteur, si elle existe.
+     * @return Date de décès, si elle existe (Date).
      */
     public Date getDateDeces() {
         return dateDeces;
     }
 
     /**
-     * Met à jour la date de décès de l'auteur.
+     * Met à jour la date de décès.
      *
-     * @param dateDeces Nouvelle date de décès de l'auteur.
+     * @param dateDeces Nouvelle date de décès.
      */
     public void setDateDeces(Date dateDeces) {
         this.dateDeces = dateDeces;
