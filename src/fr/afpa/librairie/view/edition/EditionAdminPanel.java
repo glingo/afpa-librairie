@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class EditionAdminPanel extends AdminPanel<Edition> {
     
-    private final static String TITLE = "Administration des rubriques.";
+    private final static String TITLE = "Administration des editions.";
 
     public EditionAdminPanel(ActionListener controller) {
         super(new TitlePanel(TITLE), 

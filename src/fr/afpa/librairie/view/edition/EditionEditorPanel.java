@@ -44,7 +44,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         Edition edition = getBean();
         
         return edition.getIsbn() != null 
-                ? "Rubrique " + edition.getIsbn() 
+                ? "Edition (isbn) : " + edition.getIsbn() 
                 : "Nouvelle Edition";
     }
     
