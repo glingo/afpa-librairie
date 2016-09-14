@@ -22,10 +22,10 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             + " (numero, dateCommande)"
             + " VALUES = (?, ?)";
     
-    private static final String SQL_DELETE = "UPDATE Commande"
-            + " SET idStatutCommande = ?"
-            + " WHERE idUtilisateur = ?";
-    //ce update a bresoind'une jointure. idStatutCommande n'est pas dans commande
+    private static final String SQL_DELETE = " UPDATE Commande" 
+         + " SET idStatutCommande = ?"
+         + " WHERE idUtilisateur = ?";
+            
     
  private static final String SQL_FIND_ALL = "SELECT"
          + " c.idCommande, idUtilisateur, sc.idStatutCommande, numero, dateCommande"
@@ -129,9 +129,9 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
             
-//            StatutCommande orderStat = factory.getStatutCommandeDAO().findByCommande(StatutCommandeDAO().CODE_PAIEMENT_REFUSE);
-//            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true,
-//                    orderStat.getId(), instance.getId());
+            StatutCommande orderStat = factory.getStatutCommandeDAO().findByCode(StatutCommandeDAO.CODE_PAIEMENT_REFUSE);
+            preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true,
+                    orderStat.getId(), instance.getId());
 
  
             if (preparedStatement.executeUpdate() == 0) {

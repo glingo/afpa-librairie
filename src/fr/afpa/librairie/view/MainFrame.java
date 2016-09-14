@@ -9,18 +9,15 @@ import fr.afpa.librairie.controller.PromotionController;
 import fr.afpa.librairie.controller.RubriqueController;
 import fr.afpa.librairie.controller.UtilisateurController;
 import fr.afpa.librairie.view.accueil.AccueilPanel;
-import fr.afpa.librairie.view.rubrique.RubriquePanel;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.GroupLayout;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -28,7 +25,6 @@ import javax.swing.LayoutStyle;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
-import javax.swing.event.ListSelectionEvent;
 
 /**
  *

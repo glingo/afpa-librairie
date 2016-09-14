@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 
 public class CommandeController extends Controller {
+    
     private static final Logger LOG = Logger.getLogger(CommandeController.class.getName());
      
     private final CommandeAdminPanel adminPanel = new CommandeAdminPanel(this);

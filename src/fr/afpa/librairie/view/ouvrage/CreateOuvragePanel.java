@@ -3,7 +3,7 @@ package fr.afpa.librairie.view.ouvrage;
 import fr.afpa.librairie.controller.OuvrageController;
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Ouvrage;
-import fr.afpa.librairie.view.FooterCreatePanel;
+import fr.afpa.librairie.view.panel.footer.FooterEditorPanel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -75,7 +75,7 @@ public class CreateOuvragePanel extends JPanel {
     private JPanel titlePanel;
     private JLabel titreLB;
     private JTextField titreTF;
-    private FooterCreatePanel footer;
+    private FooterEditorPanel footer;
 
     public CreateOuvragePanel(OuvrageController controller) {
         this.controller = controller;
@@ -124,7 +124,7 @@ public class CreateOuvragePanel extends JPanel {
         rubriquesLB = new JLabel();
         rubriqueCB1 = new JComboBox();
         rubriqueCB2 = new JComboBox();
-        footer = new FooterCreatePanel(controller);
+        footer = new FooterEditorPanel(controller);
         
 
         jTextArea1.setColumns(20);

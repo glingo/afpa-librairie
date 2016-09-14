@@ -3,7 +3,7 @@ package fr.afpa.librairie.view.auteur;
 import fr.afpa.librairie.controller.AuteurController;
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
-import fr.afpa.librairie.view.FooterCreatePanel;
+import fr.afpa.librairie.view.panel.footer.FooterEditorPanel;
 import fr.afpa.librairie.view.field.JDateField;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,7 +33,7 @@ public class CreateAuteurPanel extends JPanel{
     private JLabel prenomLB;
     private JTextField prenomTF;
     private JPanel titlePanel;
-    private FooterCreatePanel footer;             
+    private FooterEditorPanel footer;             
 
     public CreateAuteurPanel(AuteurController controller) {
         this.controller = controller;
@@ -58,7 +58,7 @@ public class CreateAuteurPanel extends JPanel{
         champObligLB = new JLabel();
         dateDecesTF = new JDateField(false);
         
-        footer = new FooterCreatePanel(this.controller);
+        footer = new FooterEditorPanel(this.controller);
         
         nouvelAuteurLB.setHorizontalAlignment(SwingConstants.CENTER);
 
