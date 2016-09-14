@@ -15,6 +15,7 @@ import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.dao.StatutCommandeDAO;
 import fr.afpa.librairie.data.dao.StatutEditionDAO;
+import fr.afpa.librairie.data.dao.StatutEntrepriseDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
 import fr.afpa.librairie.data.dao.TaxeDAO;
@@ -118,6 +119,11 @@ public class SqlDAOFactory extends AbstractDAOFactory {
     @Override
     public StatutUtilisateurDAO getStatutUtilisateurDAO(){
         return new StatutUtilisateurSqlDAO(this);
+    }
+    
+    @Override
+    public StatutEntrepriseDAO getStatutEntrepriseDAO(){
+        return new StatutEntrepriseSqlDAO(this);
     }
     
     @Override

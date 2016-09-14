@@ -13,6 +13,7 @@ import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.dao.StatutCommandeDAO;
 import fr.afpa.librairie.data.dao.StatutEditionDAO;
+import fr.afpa.librairie.data.dao.StatutEntrepriseDAO;
 import fr.afpa.librairie.data.dao.StatutUtilisateurDAO;
 import fr.afpa.librairie.data.dao.TagDAO;
 import fr.afpa.librairie.data.dao.TaxeDAO;
@@ -24,6 +25,7 @@ public interface DAOFactoryInterface {
     public UtilisateurDAO getUtilisateurDAO();
     public RoleDAO getRoleDAO();
     public StatutUtilisateurDAO getStatutUtilisateurDAO();
+    public StatutEntrepriseDAO getStatutEntrepriseDAO();
     public AuteurDAO getAuteurDAO();
     public GenreDAO getGenreDAO();
     public ThemeDAO getThemeDAO();
