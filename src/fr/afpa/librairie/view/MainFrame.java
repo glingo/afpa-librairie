@@ -79,7 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
         // System.out.println(System.getProperty("user.dir"));
         
         try{ 
-            setIconImage(ImageIO.read(new File("./src/fr/afpa/librairie/resources/images/hiboukilicon.trans.bmp")));
+            setIconImage(ImageIO.read(new File("./src/fr/afpa/librairie/resources/images/hiboukilicon.trans.png")));
         } 
         catch (IOException e){
             e.printStackTrace();
