@@ -70,6 +70,7 @@ public class MainFrame extends javax.swing.JFrame {
         setName(NAME);
         setMinimumSize(size);
         setSize(size);
+        setLocationRelativeTo(null);
 
     }
 
