@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 
 public class CommandeController extends CRUDController<Commande> {
     
-    
     private static final Logger LOG = Logger.getLogger(CommandeController.class.getName());
      
     public CommandeController(MainFrame frame) {
