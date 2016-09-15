@@ -181,7 +181,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         image.setText(edition.getCouverture());
         titre.setText(edition.getTitre());
         stock.setValue(edition.getStock());
-        
+
         
         
     }
@@ -196,11 +196,12 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         if(datePublication.getValue() != null) {
             edition.setDatePublication(new java.sql.Date(datePublication.getValue().getTime()));
         }
+
         
-        edition.setPrixHt((float) prixHt.getValue());
+        edition.setPrixHt((Float) prixHt.getValue());
         edition.setCouverture(image.getText());
         edition.setTitre(titre.getText());
-        edition.setStock((int) stock.getValue());
+        edition.setStock((Integer) stock.getValue());
  
         return edition;
     }

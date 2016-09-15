@@ -3,6 +3,8 @@ package fr.afpa.librairie.view.admin;
 
 import fr.afpa.librairie.controller.EditionController;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
+import fr.afpa.librairie.view.field.JFloatField;
+import fr.afpa.librairie.view.field.JIntegerField;
 import fr.afpa.librairie.view.form.FormPanel;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -59,7 +61,7 @@ public class CreateEditionPanel extends JPanel {
             this.form.addField("Date de publication", formatText);
             
             //3 = prixHT
-            JTextField prixHTField = new JTextField(15);
+            JFloatField prixHTField = new JFloatField(true);
             prixHTField.setInputVerifier(new StrictInputVerifier());
             this.form.addField("PrixHT", prixHTField);
             
@@ -67,7 +69,7 @@ public class CreateEditionPanel extends JPanel {
             //4 = image de couverture
             JTextField couvertureField = new JTextField(15);
             couvertureField.setInputVerifier(new StrictInputVerifier());
-            this.form.addField("Image de couverture", couvertureField);
+            this.form.addField("Couverture", couvertureField);
             
             
             //5 = titre
@@ -76,7 +78,7 @@ public class CreateEditionPanel extends JPanel {
             this.form.addField("Titre", titreField);
             
             //6 = stock
-            JTextField stockField = new JTextField(15);
+            JIntegerField stockField = new JIntegerField(true);
             stockField.setInputVerifier(new StrictInputVerifier());
             this.form.addField("Stock", stockField);
 

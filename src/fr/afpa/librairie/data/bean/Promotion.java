@@ -25,7 +25,7 @@ public class Promotion {
     /**
      * Montant de la réduction (%age ou valeur).
      */
-    private float reduction;
+    private Float reduction;
     /**
      * String spécifiant le chemin d'accès à l'image de la promotion.
      */

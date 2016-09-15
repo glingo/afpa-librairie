@@ -124,7 +124,7 @@ public class Edition {
      *
      * @return Prix hors taxes (float).
      */
-    public float getPrixHt() {
+    public Float getPrixHt() {
         return prixHt;
     }
 
@@ -133,7 +133,7 @@ public class Edition {
      *
      * @param prixHt Nouveau prix hors taxes.
      */
-    public void setPrixHt(float prixHt) {
+    public void setPrixHt(Float prixHt) {
         this.prixHt = prixHt;
     }
 
@@ -179,7 +179,7 @@ public class Edition {
      *
      * @return Stock disponible (int).
      */
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
@@ -188,7 +188,7 @@ public class Edition {
      *
      * @param stock Nouveau stock.
      */
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
