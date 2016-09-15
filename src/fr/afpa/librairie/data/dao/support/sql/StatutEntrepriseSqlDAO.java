@@ -22,7 +22,7 @@ public class StatutEntrepriseSqlDAO extends AbstractSqlDAO<StatutEntreprise> imp
     private static final String SQL_UPDATE = "UPDATE StatutEntreprise"
             + " SET libelle = ?,"
             + " code = ?"
-            + " WHERE idStatuEntreprise = ?";
+            + " WHERE idStatutEntreprise = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
             + " idStatutEntreprise, libelle, code"
@@ -56,41 +56,6 @@ public class StatutEntrepriseSqlDAO extends AbstractSqlDAO<StatutEntreprise> imp
     }
 
     @Override
-    public void update(StatutEntreprise instance) throws DAOException {
-        SqlDAOFactory factory = getFactory();
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet valeursAutoGenerees = null;
-
-        try {
-            /* Récupération d'une connexion depuis la Factory */
-            connexion = factory.getConnection();
-            
-            preparedStatement = getPreparedStatement(
-                    connexion, SQL_UPDATE, false, 
-                    instance.getLibelle(), instance.getCode(), instance.getId());
-            
-            int statut = preparedStatement.executeUpdate();
-            /* Analyse du statut retourné par la requête d'insertion */
-            if (statut == 0) {
-                throw new DAOException("Échec de la création du statut de l'entreprise, aucune ligne ajoutée dans la table.");
-            }
-            /* Récupération de l'id auto-généré par la requête d'insertion */
-            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-            if (valeursAutoGenerees.next()) {
-                /* Puis initialisation de la propriété id du bean Entreprise avec sa valeur */
-                instance.setId(valeursAutoGenerees.getLong(1));
-            } else {
-                throw new DAOException("Échec de la création du statut de l'entreprise en base, aucun ID auto-généré retourné.");
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            close(valeursAutoGenerees, preparedStatement, connexion);
-        }
-    }
-
-    @Override
     public void create(StatutEntreprise instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -117,6 +82,35 @@ public class StatutEntrepriseSqlDAO extends AbstractSqlDAO<StatutEntreprise> imp
                 instance.setId(valeursAutoGenerees.getLong(1));
             } else {
                 throw new DAOException("Échec de la création du statut de l'entreprise en base, aucun ID auto-généré retourné.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void update(StatutEntreprise instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            
+            preparedStatement = getPreparedStatement(
+                    connexion, SQL_UPDATE, false, 
+                    instance.getLibelle(), 
+                    instance.getCode(),
+                    instance.getId());
+            
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du statut de l'entreprise, aucune ligne ajoutée dans la table.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -171,8 +165,6 @@ public class StatutEntrepriseSqlDAO extends AbstractSqlDAO<StatutEntreprise> imp
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
             resultSet = preparedStatement.executeQuery();
             
-//            resultSet.beforeFirst();
-            
             while (resultSet.next()) {
                 statuts.add(map(resultSet));
             }
@@ -226,14 +218,7 @@ public class StatutEntrepriseSqlDAO extends AbstractSqlDAO<StatutEntreprise> imp
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_UTILISATEUR, false, idEntreprise);
             resultSet = preparedStatement.executeQuery();
             
-//            resultSet.beforeFirst();
-            
             while (resultSet.next()) {
-                statutEntreprises.add(map(resultSet));
-            }
-            
-            if (resultSet.next()) {
-                statutEntreprises= new ArrayList<>();
                 statutEntreprises.add(map(resultSet));
             }
         } catch (SQLException e) {
@@ -289,7 +274,5 @@ public class StatutEntrepriseSqlDAO extends AbstractSqlDAO<StatutEntreprise> imp
                
         return statut;
     }
-
-
 
 }
