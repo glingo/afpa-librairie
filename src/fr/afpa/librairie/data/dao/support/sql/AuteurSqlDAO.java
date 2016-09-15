@@ -100,7 +100,7 @@ public class AuteurSqlDAO extends AbstractSqlDAO<Auteur> implements AuteurDAO {
 
     @Override
     public void update(Auteur instance) throws DAOException {
-         SqlDAOFactory factory = getFactory();
+        SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;

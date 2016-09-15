@@ -25,6 +25,12 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
 
     private static final String SQL_DELETE = "DELETE FROM Ouvrage"
             + " WHERE idOuvrage = ?";
+    
+    private static final String SQL_UPDATE = "UPDATE Ouvrage"
+            + " SET titre = ?,"
+            + " sous_titre = ?,"
+            + " resume = ?,"
+            + " WHERE idOuvrage = ?";
 
     private static final String SQL_FIND_ALL = "SELECT"
             + " idOuvrage, idAuteur, titre, sous_titre, resume"

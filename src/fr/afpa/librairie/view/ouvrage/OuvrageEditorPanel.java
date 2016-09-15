@@ -19,7 +19,15 @@ import javax.swing.LayoutStyle;
  */
 public class OuvrageEditorPanel extends EditorPanel<Ouvrage> {
     
-    // TODO
+    private JLabel titreLabel;
+    private JLabel sousTitreLabel;
+    private JLabel resumeLabel;
+    
+    
+    private JTextField titre;
+    private JTextField sousTitre;
+    private JTextField resume;
+    
     
     public OuvrageEditorPanel(ActionListener controller) {
         super(new Ouvrage(), controller);
@@ -31,7 +39,57 @@ public class OuvrageEditorPanel extends EditorPanel<Ouvrage> {
 
     @Override
     protected void initBody(JPanel body) {
-        // TODO
+        titre = new JTextField();
+        sousTitre = new JTextField();
+        resume = new JDateField(false);
+        
+        
+        titreLabel = new JLabel("Titre :");
+        sousTitreLabel = new JLabel("Sous-titre :");
+        resumeLabel = new JLabel("Resume :");
+        
+        
+        titre.setInputVerifier(new StrictInputVerifier());
+        
+        GroupLayout bodyPanelLayout = new GroupLayout(body);
+        body.setLayout(bodyPanelLayout);
+
+        bodyPanelLayout.setHorizontalGroup(
+            bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(bodyPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, bodyPanelLayout.createSequentialGroup()
+                        .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(bodyPanelLayout.createSequentialGroup()
+                                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                    .addComponent(titreLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(sousTitreLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(resumeLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(13, 13, 13)
+                                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                    .addComponent(titre, GroupLayout.Alignment.LEADING)
+                                    .addComponent(sousTitre, GroupLayout.Alignment.LEADING)
+                                    .addComponent(resume, GroupLayout.Alignment.LEADING))))
+                        .addGap(6, 6, 6))))
+        ));
+
+        bodyPanelLayout.setVerticalGroup(
+            bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(bodyPanelLayout.createSequentialGroup()
+                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(titreLabel)
+                    .addComponent(titre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(sousTitre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sousTitreLabel))
+                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(resume, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resumeLabel))
+               
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
+        );
     }
 
     @Override
@@ -48,13 +106,11 @@ public class OuvrageEditorPanel extends EditorPanel<Ouvrage> {
     public void bindValues() {
         Ouvrage ouvrage = getBean();
         
-        // TODO
         
-//        nom.setText(utilisateur.getNom());
-//        prenom.setText(utilisateur.getPrenom());
-//        mail.setText(utilisateur.getEmail());
-//        dateNaissance.setValue(utilisateur.getDateNaissance());
-//        password.setText(utilisateur.getMotDePasse());
+        titre.setText(ouvrage.getTitre());
+        sousTitre.setText(ouvrage.getSousTitre());
+        resume.setText(ouvrage.getResume());
+        
         
     }
 
@@ -63,29 +119,20 @@ public class OuvrageEditorPanel extends EditorPanel<Ouvrage> {
         
         Ouvrage ouvrage = getBean();
         
-        // TODO
-        
-//        utilisateur.setNom(nom.getText());
-//        utilisateur.setPrenom(prenom.getText());
-//        utilisateur.setEmail(mail.getText());
-//        // encode password !
-//        utilisateur.setMotDePasse(String.valueOf(password.getPassword()));
-//        
-//        if(dateNaissance.getValue() != null) {
-//            utilisateur.setDateNaissance(new java.sql.Date(dateNaissance.getValue().getTime()));
-//        }
-        
+        ouvrage.setTitre(titre.getText());
+        ouvrage.setSousTitre(sousTitre.getText());
+        ouvrage.setResume(resume.getText());
+   
         return ouvrage;
     }
 
     @Override
     public void reset() {
-        // TODO
-//        nom.setText("");
-//        prenom.setText("");
-//        mail.setText("");
-//        dateNaissance.setValue(null);
-//        password.setText("");
+        
+        titre.setText("");
+        sousTitre.setText("");
+        resume.setText("");
+        
     }
     
     
