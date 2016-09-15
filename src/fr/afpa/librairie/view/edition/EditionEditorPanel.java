@@ -5,6 +5,8 @@ import fr.afpa.librairie.view.rubrique.*;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.field.JDateField;
+import fr.afpa.librairie.view.field.JFloatField;
+import fr.afpa.librairie.view.field.JIntegerField;
 import fr.afpa.librairie.view.field.JPercentField;
 import fr.afpa.librairie.view.panel.EditorPanel;
 import java.awt.Font;
@@ -28,10 +30,10 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
     
     private JTextField isbn;
     private JDateField datePublication;
-    private JTextField prixHt;
+    private JFloatField prixHt;
     private JTextField image;
     private JTextField titre;
-    private JTextField stock;
+    private JIntegerField stock;
  
     
     
@@ -73,17 +75,17 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
 
         datePublication = new JDateField(true);
         
-        prixHt = new JTextField(15);
-        prixHt.setInputVerifier(new StrictInputVerifier());
-        
+        prixHt = new JFloatField(true);
+
         image = new JTextField(15);
         image.setInputVerifier(new StrictInputVerifier());
 
         titre = new JTextField(15);
         titre.setInputVerifier(new StrictInputVerifier());
         
-        stock = new JTextField(15);
-        stock.setInputVerifier(new StrictInputVerifier());
+        stock = new JIntegerField(true);
+        //pas besoin de mettre la ligne au dessous parce qu'elle est deja presente dans la methode JIntegerField.
+        //stock.setInputVerifier(new StrictInputVerifier());
  
 
 
@@ -178,10 +180,10 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         
         isbn.setText(edition.getIsbn());
         datePublication.setValue(edition.getDatePublication());
-        //prixHt.setText(edition.getPrixHt());
+        prixHt.setValue(edition.getPrixHt());
         image.setText(edition.getCouverture());
         titre.setText(edition.getTitre());
-        //stock.setText(edition.getStock());
+        stock.setValue(edition.getStock());
         
         
         
@@ -189,30 +191,30 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
 
     @Override
     public void reset() {
-//        libelleTF.setText("");
-//        dateDebutTF.setValue(null);
-//        dateFinTF.setValue(null);
-//        commentaireTF.setText("");
+  
+        isbn.setText("");
+        datePublication.setValue(null);
+        prixHt.setValue(null);
+        image.setText("");
+        titre.setText("");
+        stock.setValue(null);
     }
 
     @Override
     public Edition constructBean() {
         Edition edition = getBean();
         
-//        rubrique.setLibelle(libelleTF.getText().trim());
-//        
-//        if(dateDebutTF.getValue() != null) {
-//            Date debut = new Date(dateDebutTF.getValue().getTime());
-//            rubrique.setDateDebut(debut);
-//        }
-//        
-//        if(dateFinTF.getValue() != null) {
-//            Date fin = new Date(dateFinTF.getValue().getTime());
-//            rubrique.setDateFin(fin);
-//        }
-//        
-//        rubrique.setCommentaire(commentaireTF.getText().trim());
+        edition.setIsbn(isbn.getText());
         
+        if(datePublication.getValue() != null) {
+            edition.setDatePublication(new java.sql.Date(datePublication.getValue().getTime()));
+        }
+        
+        edition.setPrixHt((float) prixHt.getValue());
+        edition.setCouverture(image.getText());
+        edition.setTitre(titre.getText());
+        edition.setStock((int) stock.getValue());
+ 
         return edition;
     }
 

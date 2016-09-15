@@ -27,7 +27,7 @@ public class Edition {
     /**
      * Prix hors taxes (typé float).
      */
-    private float prixHt;
+    private Float prixHt;
     /**
      * String spécifiant le chemin d'accès à l'image de couverture.
      */
@@ -39,7 +39,7 @@ public class Edition {
     /**
      * Quantité physique disponible.
      */
-    private int stock;
+    private Integer stock;
 
     /**
      * Statut de l'édition.
