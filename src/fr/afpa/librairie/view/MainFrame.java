@@ -80,8 +80,8 @@ public class MainFrame extends javax.swing.JFrame {
         
         try{ 
             setIconImage(ImageIO.read(new File("./src/fr/afpa/librairie/resources/images/hiboukilicon.trans.png")));
-        } 
-        catch (IOException e){
+        } catch (IOException e){
+            // on evite le printStackTrace ...
             e.printStackTrace();
         }
     }
