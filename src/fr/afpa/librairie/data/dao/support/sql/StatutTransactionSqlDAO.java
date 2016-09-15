@@ -19,6 +19,11 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
     private static final String SQL_INSERT = "INSERT INTO StatutTransaction (libelle, code) VALUES (?, ?)";
     private static final String SQL_DELETE = "DELETE FROM StatutTransaction WHERE id = ?";
     
+    private static final String SQL_UPDATE = "UPDATE StatutTransaction"
+            + " SET libelle = ?,"
+            + " code = ?"
+            + " WHERE idStatuTransaction = ?";
+    
     private static final String SQL_FIND_ALL = "SELECT"
             + " idStatutTransaction, libelle, code"
             + " FROM StatutTransaction";
@@ -40,19 +45,53 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
 
     
     private static final String SQL_FIND_BY_UTILISATEUR = "SELECT"
-            +" ste.idStatutTransaction, ste.libelle, ste.code"
-            +" FROM StatutTransaction AS ste"
-            +" JOIN Transaction AS ut ON ut.idStatutTransaction = ste.idStatutTransaction"
+            +" stu.idStatutTransaction, stu.libelle, stu.code"
+            +" FROM StatutTransaction AS stu"
+            +" JOIN Transaction AS ut ON ut.idStatutTransaction = stu.idStatutTransaction"
             +" WHERE ut.idTransaction =?";
     
 
     public StatutTransactionSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
-    
 
     @Override
-    public void save(StatutTransaction instance) throws DAOException {
+    public void update(StatutTransaction instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            
+            preparedStatement = getPreparedStatement(
+                    connexion, SQL_UPDATE, false, 
+                    instance.getLibelle(), instance.getCode(), instance.getId());
+            
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du statut de l'utilisateur, aucune ligne ajoutée dans la table.");
+            }
+            /* Récupération de l'id auto-généré par la requête d'insertion */
+            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+            if (valeursAutoGenerees.next()) {
+                /* Puis initialisation de la propriété id du bean Transaction avec sa valeur */
+                instance.setId(valeursAutoGenerees.getLong(1));
+            } else {
+                throw new DAOException("Échec de la création du statut de l'utilisateur en base, aucun ID auto-généré retourné.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void create(StatutTransaction instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -69,7 +108,7 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la création du statut de l'entreprise, aucune ligne ajoutée dans la table.");
+                throw new DAOException("Échec de la création du statut de la transaction, aucune ligne ajoutée dans la table.");
             }
             /* Récupération de l'id auto-généré par la requête d'insertion */
             valeursAutoGenerees = preparedStatement.getGeneratedKeys();
@@ -77,12 +116,21 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
                 /* Puis initialisation de la propriété id du bean Transaction avec sa valeur */
                 instance.setId(valeursAutoGenerees.getLong(1));
             } else {
-                throw new DAOException("Échec de la création du statut de l'entreprise en base, aucun ID auto-généré retourné.");
+                throw new DAOException("Échec de la création du statut de la transaction en base, aucun ID auto-généré retourné.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void save(StatutTransaction instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
         }
     }
 
@@ -100,7 +148,7 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
-                throw new DAOException("Échec de la suppression de l'entreprise, aucune ligne supprimée dans la table.");
+                throw new DAOException("Échec de la suppression de la transaction, aucune ligne supprimée dans la table.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -136,11 +184,6 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
 
         return statuts;
 
-    }
-
-    @Override
-    public StatutTransaction findByExemple(StatutTransaction instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
