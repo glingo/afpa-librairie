@@ -8,6 +8,7 @@ import fr.afpa.librairie.data.dao.EditionDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
 import fr.afpa.librairie.data.dao.LangueDAO;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
+import fr.afpa.librairie.data.dao.PaysDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
@@ -25,6 +26,8 @@ import fr.afpa.librairie.data.dao.UtilisateurDAO;
 public interface DAOFactoryInterface {
 
     public UtilisateurDAO getUtilisateurDAO();
+    
+    public abstract PaysDAO getPaysDAO();
 
     public RoleDAO getRoleDAO();
 

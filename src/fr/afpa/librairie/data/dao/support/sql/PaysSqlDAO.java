@@ -1,8 +1,8 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
-import fr.afpa.librairie.data.bean.Tag;
-import fr.afpa.librairie.data.dao.TagDAO;
+import fr.afpa.librairie.data.bean.Pays;
+import fr.afpa.librairie.data.dao.PaysDAO;
 import fr.afpa.librairie.data.exception.DAOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,44 +11,42 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
+public class PaysSqlDAO extends AbstractSqlDAO<Pays> implements PaysDAO {
 
-    private static final String SQL_INSERT = "INSERT INTO Tag"
-            + " (libelle)"
-            + " VALUES (?)";
+    private static final String SQL_INSERT = "INSERT INTO Pays"
+            + " (libelle, code)"
+            + " VALUES (?, ?)";
     
-    private static final String SQL_UPDATE = "UPDATE Tag"
-            + " SET libelle = ?"
-            + " WHERE idTag = ?";
+    private static final String SQL_UPDATE = "UPDATE Pays"
+            + " SET libelle = ?,"
+            + " code = ?"
+            + " WHERE idPays = ?";
     
-    private static final String SQL_DELETE = "DELETE FROM Tag WHERE idTag = ?";
+    private static final String SQL_DELETE = "DELETE FROM Pays WHERE idPays = ?";
     
-    private static final String SQL_FIND_ALL = "SELECT idTag, libelle FROM Tag ";
+    private static final String SQL_FIND_ALL = "SELECT idPays, libelle, code FROM Pays ";
     
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idTag, libelle"
-            + " FROM Tag"
-            + " WHERE idTag = ?";
+            + " idPays, libelle, code"
+            + " FROM Pays"
+            + " WHERE idPays = ?";
     
     private static final String SQL_FIND_BY_LIBELLE = "SELECT"
-            + " idTag, libelle"
-            + " FROM Tag"
+            + " idPays, libelle, code"
+            + " FROM Pays"
             + " WHERE libelle = ?";
     
-     private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
-             + " t.idTag, t.libelle"
-             + " FROM Tag AS t"
-             + " JOIN Referencement AS r on r.idTag = t.idTag"
-             + " WHERE r.idOuvrage = ?";
-
-    public TagSqlDAO(AbstractDAOFactory factory) {
+    private static final String SQL_FIND_BY_CODE = "SELECT"
+            + " idPays, libelle, code"
+            + " FROM Pays"
+            + " WHERE code = ?";
+    
+    public PaysSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
-    
-    
 
     @Override
-    public void create(Tag instance) throws DAOException {
+    public void create(Pays instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -59,7 +57,7 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
             connexion = factory.getConnection();
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getLibelle());
+                    instance.getLibelle(), instance.getCode());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -81,7 +79,7 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
     }
 
     @Override
-    public void update(Tag instance) throws DAOException {
+    public void update(Pays instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -91,8 +89,8 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
 
             connexion = factory.getConnection();
 
-            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
-                    instance.getLibelle(), instance.getId());
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, false,
+                    instance.getLibelle(), instance.getCode(), instance.getId());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -109,7 +107,7 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
     }
 
     @Override
-    public void save(Tag instance) throws DAOException {
+    public void save(Pays instance) throws DAOException {
         if(instance.getId() != null) {
             update(instance);
         } else {
@@ -118,7 +116,7 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
     }
 
     @Override
-    public void delete(Tag instance) {
+    public void delete(Pays instance) {
         SqlDAOFactory factory = getFactory();
         Connection connexion = getFactory();
         PreparedStatement preparedStatement = null;
@@ -140,12 +138,12 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
     }
     
     @Override
-    public List<Tag> findAll() throws DAOException {
+    public List<Pays> findAll() throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Tag> tags = new ArrayList<>();
+        List<Pays> pays = new ArrayList<>();
 
         try {
             connexion = factory.getConnection();
@@ -153,7 +151,7 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                tags.add(map(resultSet));
+                pays.add(map(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -161,36 +159,40 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
             close(resultSet, preparedStatement, connexion);
         }
 
-        return tags;
+        return pays;
 
     }
 
     @Override
-    protected Tag map(ResultSet resultSet) throws SQLException {
-        Tag tag = new Tag();
+    protected Pays map(ResultSet resultSet) throws SQLException {
+        Pays tag = new Pays();
         
-        tag.setId(resultSet.getLong("idTag"));
-        tag.setLibelle(resultSet.getString("Libelle"));
+        tag.setId(resultSet.getLong("idPays"));
+        tag.setLibelle(resultSet.getString("libelle"));
+        tag.setCode(resultSet.getString("code"));
         
         return tag;
        
     }
     
     @Override
-    public Tag findById(Long id) throws DAOException {
+    public Pays findById(Long id) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Tag tag = null;
+        Pays pays = null;
 
+        System.out.println("find pays by id : " + id);
         try {
             connexion = factory.getConnection();
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, 
                     false, id);
             resultSet = preparedStatement.executeQuery();
 
-            tag = map(resultSet);
+            if(resultSet.next()) {
+                pays = map(resultSet);
+            }
             
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -198,16 +200,16 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
             close(resultSet, preparedStatement, connexion);
         }
 
-        return tag;
+        return pays;
     }
 
     @Override
-    public Tag findByLibelle(String libelle) { 
+    public Pays findByLibelle(String libelle) { 
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Tag tag = null;
+        Pays pays = null;
 
         try {
             connexion = factory.getConnection();
@@ -215,7 +217,7 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
                     false, libelle);
             resultSet = preparedStatement.executeQuery();
 
-            tag = map(resultSet);
+            pays = map(resultSet);
             
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -223,24 +225,25 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
             close(resultSet, preparedStatement, connexion);
         }
 
-        return tag;
+        return pays;
     }
 
     @Override
-    public List<Tag> findByOuvrage(Long idOuvrage) throws DAOException {
+    public Pays findByCode(String code) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Tag> tags = new ArrayList<>();
+        Pays pays = null;
 
         try {
+            /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_OUVRAGE, false, idOuvrage);
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_CODE, false, code);
             resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                tags.add(map(resultSet));
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                pays = map(resultSet);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -248,6 +251,7 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
             close(resultSet, preparedStatement, connexion);
         }
 
-        return tags;
+        return pays;
     }
+
 }

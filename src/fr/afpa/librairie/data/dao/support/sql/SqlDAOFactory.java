@@ -9,6 +9,7 @@ import fr.afpa.librairie.data.dao.EditionDAO;
 import fr.afpa.librairie.data.dao.GenreDAO;
 import fr.afpa.librairie.data.dao.LangueDAO;
 import fr.afpa.librairie.data.dao.OuvrageDAO;
+import fr.afpa.librairie.data.dao.PaysDAO;
 import fr.afpa.librairie.data.dao.PromotionDAO;
 import fr.afpa.librairie.data.dao.RoleDAO;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
@@ -159,6 +160,11 @@ public class SqlDAOFactory extends AbstractDAOFactory {
     @Override
     public TaxeDAO getTaxeDAO() {
        return new TaxeSqlDAO(this);
+    }
+
+    @Override
+    public PaysDAO getPaysDAO() {
+        return new PaysSqlDAO(this);
     }
 
 }

@@ -1,5 +1,6 @@
 package fr.afpa.librairie.view.editeur;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Editeur;
 import fr.afpa.librairie.model.list.renderer.AdresseListCellRenderer;
@@ -42,8 +43,8 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
         adresse = new JComboBox<>();
         newAdresse = new JButton("+");
         
-        newAdresse.setActionCommand("create_new_adresse");
-        newAdresse.addActionListener(getController());
+        newAdresse.setActionCommand(CRUDController.CREATE_MODAL_ACTION);
+//        newAdresse.addActionListener(getController());
         
         adresse.setRenderer(new AdresseListCellRenderer());
         
@@ -116,7 +117,6 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
         Editeur editeur = getBean();
         
         editeur.setLibelle(libelle.getText());
-        System.out.println((Adresse) adresse.getSelectedItem());
         editeur.setAdresse((Adresse) adresse.getSelectedItem());
         
         return editeur;
@@ -126,6 +126,10 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
     public void reset() {
         libelle.setText("");
         adresse.setSelectedItem(null);
+    }
+
+    public JButton getNewAdresse() {
+        return newAdresse;
     }
     
 }

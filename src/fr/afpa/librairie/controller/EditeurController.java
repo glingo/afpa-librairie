@@ -7,19 +7,12 @@ import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.editeur.EditeurAdminPanel;
 import fr.afpa.librairie.view.editeur.EditeurEditorPanel;
-import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.Dialog;
-import java.awt.event.ActionEvent;
 import java.util.logging.Logger;
-import javax.swing.JDialog;
 
 public class EditeurController extends CRUDController<Editeur> {
     
     private static final Logger LOG = Logger.getLogger(EditeurController.class.getName());
     
-    // ici la modale pour ajouter une adresse.
-    private JDialog dialog = new JDialog(getFrame(), "Creer une nouvelle adresse", Dialog.ModalityType.APPLICATION_MODAL);
-
     public EditeurController(MainFrame frame) {
         super(frame);
         setAdminPanel(new EditeurAdminPanel(this));
@@ -34,6 +27,11 @@ public class EditeurController extends CRUDController<Editeur> {
     @Override
     protected void loadEditorPanel() {
         getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
+        getEditorPanel().getNewAdresse().addActionListener(getFrame().getAdresseController());
+        
+//        getModal().onDispose(()-> {
+//            getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
+//        });
     }
 
     @Override
@@ -41,22 +39,6 @@ public class EditeurController extends CRUDController<Editeur> {
         ListAdapterListModel<Editeur> listModel = new ListAdapterListModel<>();
         listModel.addAll(getDaoFactory().getEditeurDAO().findAll());
         return listModel;
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()) {
-            case "create_new_adresse":
-                AdresseController ctrl = getFrame().getAdresseController();
-                dialog.add(ctrl.getEditorPanel());
-                dialog.pack();
-                dialog.setVisible(true);
-                break;
-                
-            default:
-                super.actionPerformed(e);
-        }
-        
     }
     
     @Override

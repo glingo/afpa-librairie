@@ -5,12 +5,12 @@ import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.FactoryType;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
+import fr.afpa.librairie.view.Modal;
 import fr.afpa.librairie.view.panel.AdminPanel;
 import fr.afpa.librairie.view.panel.EditorPanel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 public abstract class CRUDController<T> implements ActionListener {
@@ -22,6 +22,8 @@ public abstract class CRUDController<T> implements ActionListener {
     public static final String DELETE_ACTION    = "delete";
     public static final String VIEW_ACTION      = "view";
     
+    public static final String CREATE_MODAL_ACTION    = "create_modal";
+    
 //    public static final String CREATE_THEN_LIST_ACTION    = "create_then_list";
     
     // Utiliser les dao dans le controller n'est pas tres recommandé, 
@@ -30,6 +32,7 @@ public abstract class CRUDController<T> implements ActionListener {
     
     // Le controller connait la frame pour pouvoir influer sur elle.
     private MainFrame frame;
+    private Modal modal;
     
     private AdminPanel<T> adminPanel;
     private EditorPanel<T> editorPanel;
@@ -43,13 +46,7 @@ public abstract class CRUDController<T> implements ActionListener {
     public CRUDController(MainFrame frame) {
         this();
         this.frame = frame;
-    }
-
-    public CRUDController(MainFrame frame, AdminPanel<T> adminPanel, EditorPanel<T> editorPanel) {
-        this();
-        this.frame = frame;
-        this.adminPanel = adminPanel;
-        this.editorPanel = editorPanel;
+        this.modal = new Modal(frame);
     }
     
     @Override
@@ -64,7 +61,7 @@ public abstract class CRUDController<T> implements ActionListener {
                 
             case CREATE_ACTION:
             case SAVE_ACTION:
-                editAction(newBean());
+                editAction(newBean(), false);
                 break;
                 
             case DELETE_ACTION:
@@ -76,7 +73,11 @@ public abstract class CRUDController<T> implements ActionListener {
                 break;
                 
             case EDIT_ACTION:
-                editAction(selected);
+                editAction(selected, false);
+                break;
+                
+            case CREATE_MODAL_ACTION:
+                editAction(newBean(), true);
                 break;
 
             default:
@@ -99,20 +100,34 @@ public abstract class CRUDController<T> implements ActionListener {
 
     public abstract void create(T value);
     
-    public void editAction(T value) {
+    public void editAction(T value, boolean isModal) {
         
         if(value == null) {
             danger("Veuillez selectionner une ligne à mettre a jour.");
             return;
         }
         
-        if (!getEditorPanel().equals(getFrame().getContent())) {
+        Component current;
+        
+        if(!isModal) {
+            current = getFrame().getContent();
+            getEditorPanel().getFooter().getValiderBT().setActionCommand(CREATE_ACTION);
+        } else {
+            current = modal.getContent();
+            getEditorPanel().getFooter().getValiderBT().setActionCommand(CREATE_MODAL_ACTION);
+        }
+        
+        if (!getEditorPanel().equals(current)) {
             // load any model if needed.
             loadEditorPanel();
             // set bean in editor.
             getEditorPanel().setBean(value);
             // display editor in frame
-            setContent(getEditorPanel());
+            if(isModal) {
+                setContent(modal, getEditorPanel());
+            } else {
+                setContent(getFrame(), getEditorPanel());
+            }
             return;
         }
         
@@ -129,6 +144,12 @@ public abstract class CRUDController<T> implements ActionListener {
         
         // reset values in editor.
         getEditorPanel().reset();
+        
+        if(isModal) {
+            modal.dispose();
+            modal.setContent(null);
+        }
+        
     }
 
     public abstract void viewAction(T value);
@@ -141,6 +162,10 @@ public abstract class CRUDController<T> implements ActionListener {
 
     public MainFrame getFrame() {
         return frame;
+    }
+
+    public Modal getModal() {
+        return modal;
     }
     
     public void setAdminPanel(AdminPanel<T> adminPanel) {
@@ -164,7 +189,17 @@ public abstract class CRUDController<T> implements ActionListener {
     }
     
     protected void setContent(Component component){
-        this.frame.setContent(component);
+        getFrame().setContent(component);
+    }
+    
+    protected void setContent(MainFrame frame, Component component){
+        frame.setContent(component);
+    }
+    
+    protected void setContent(Modal modal, Component component){
+        modal.setContent(component);
+        modal.pack();
+        modal.setVisible(true);
     }
     
     protected void alert(String title, String message){

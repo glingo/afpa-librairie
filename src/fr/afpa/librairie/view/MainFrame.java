@@ -15,7 +15,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.LayoutManager;
 import java.awt.SplashScreen;
 import java.io.File;
 import java.io.IOException;

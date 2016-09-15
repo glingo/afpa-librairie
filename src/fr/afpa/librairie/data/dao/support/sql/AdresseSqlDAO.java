@@ -3,6 +3,7 @@ package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.bean.Adresse;
+import fr.afpa.librairie.data.bean.Pays;
 import fr.afpa.librairie.data.bean.StatutAdresse;
 import fr.afpa.librairie.data.dao.AdresseDAO;
 import fr.afpa.librairie.data.exception.DAOException;
@@ -16,8 +17,8 @@ import java.util.List;
 public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO {
     
     private static final String SQL_INSERT = "INSERT INTO Adresse"
-            + " (numero, voie, codePostal, ville, complement, idStatutAdresse)"
-            + " VALUES (?, ?, ?, ?, ?)";
+            + " (numero, voie, codePostal, ville, complement, idStatutAdresse, idPays)"
+            + " VALUES (?, ?, ?, ?, ?, ?, ?)";
     
     private static final String SQL_UPDATE = "UPDATE Adresse"
             + " SET numero = ?,"
@@ -25,28 +26,29 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
             + " codePostal = ?,"
             + " ville = ?,"
             + " complement = ?,"
-            + " idStatutAdresse = ?"
+            + " idStatutAdresse = ?,"
+            + " idPays = ?"
             + " WHERE idAdresse = ?";
     
     private static final String SQL_DELETE = "DELETE FROM Adresse WHERE idAdresse = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
-            + " idAdresse, numero, voie, codePostal, ville, complement, idStatutAdresse"
+            + " idAdresse, numero, voie, codePostal, ville, complement, idStatutAdresse, idPays"
             + " FROM Adresse ";
     
     private static final String SQL_FIND_BY_CODEPOSTAL = "SELECT"
-            + " idAdresse, numero, voie, codePostal, ville, complement, idStatutAdresse"
+            + " idAdresse, numero, voie, codePostal, ville, complement, idStatutAdresse, idPays"
             + " FROM Adresse"
             + " WHERE codePostal = ?";
     
    
     private static final String SQL_FIND_BY_ID = "SELECT"
-            + " idAdresse, numero, voie, codePostal, ville, complement, idStatutAdresse"
+            + " idAdresse, numero, voie, codePostal, ville, complement, idStatutAdresse, idPays"
             + " FROM Adresse"
             + " WHERE idAdresse = ?";
    
     private static final String SQL_FIND_BY_VILLE = "SELECT"
-            + " idAdresse, numero, voie, codePostal, ville, complement, idStatutAdresse"
+            + " idAdresse, numero, voie, codePostal, ville, complement, idStatutAdresse, idPays"
             + " FROM Adresse"
             + " WHERE ville = ?";
  
@@ -62,15 +64,23 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
         ResultSet valeursAutoGenerees = null;
 
         try {
+            
+            // si l'adresse n'a pas de statut on l'initalise a active par defaut
+            if(instance.getStatut() == null) {
+                StatutAdresse statut = factory.getStatutAdresseDAO().findByCode(StatutAdresseSqlDAO.CODE_ACTIVE);
+                instance.setStatut(statut);
+            }
 
             connexion = factory.getConnection();
-
+//numero, voie, codePostal, ville, complement, idStatutAdresse
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
                     instance.getNumero(), 
                     instance.getVoie(),
                     instance.getCp(), 
+                    instance.getVille(), 
                     instance.getComplement(),
-                    instance.getStatut().getId());
+                    instance.getStatut().getId(),
+                    instance.getPays().getId());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -106,8 +116,10 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
                     instance.getNumero(), 
                     instance.getVoie(),
                     instance.getCp(), 
+                    instance.getVille(), 
                     instance.getComplement(),
                     instance.getStatut().getId(),
+                    instance.getPays().getId(),
                     instance.getId());
 
             int statut = preparedStatement.executeUpdate();
@@ -197,7 +209,9 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
         
         StatutAdresse statut = factory.getStatutAdresseDAO().findById(resultSet.getLong("idStatutAdresse"));
         adresse.setStatut(statut);
-
+        
+        Pays pays = factory.getPaysDAO().findById(resultSet.getLong("idPays"));
+        adresse.setPays(pays);
         // ajouter le pays !
 
         return adresse;

@@ -5,8 +5,6 @@ import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.edition.EditionAdminPanel;
-import fr.afpa.librairie.view.editeur.EditeurAdminPanel;
-import fr.afpa.librairie.view.editeur.EditeurEditorPanel;
 import fr.afpa.librairie.view.edition.EditionEditorPanel;
 import java.util.logging.Logger;
 

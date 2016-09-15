@@ -1,11 +1,14 @@
 package fr.afpa.librairie.controller;
 
 import fr.afpa.librairie.data.bean.Adresse;
+import fr.afpa.librairie.data.bean.Pays;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.adresse.AdresseAdminPanel;
 import fr.afpa.librairie.view.adresse.AdresseEditorPanel;
+import fr.afpa.librairie.view.panel.EditorPanel;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class AdresseController extends CRUDController<Adresse> {
@@ -29,18 +32,19 @@ public class AdresseController extends CRUDController<Adresse> {
         listModel.addAll(getDaoFactory().getAdresseDAO().findAll());
         return listModel;
     }
+
+    @Override
+    public AdresseEditorPanel getEditorPanel() {
+        return (AdresseEditorPanel) super.getEditorPanel(); //To change body of generated methods, choose Tools | Templates.
+    }
     
     @Override
     protected void loadEditorPanel() {
         // set la list de statut.
-    }
-    
-    @Override
-    public void listAction() {
-        ListAdapterListModel<Adresse> listModel = new ListAdapterListModel<>();
-        listModel.addAll(getDaoFactory().getAdresseDAO().findAll());
-        getAdminPanel().setList(listModel);
-        getFrame().setContent(getAdminPanel());
+        
+        // set la list des pays.
+        List<Pays> pays = getDaoFactory().getPaysDAO().findAll();
+        getEditorPanel().setPays(pays);
     }
 
     @Override

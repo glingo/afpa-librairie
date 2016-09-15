@@ -37,6 +37,8 @@ public class Adresse {
     private String complement;
     
     private StatutAdresse statut;
+    
+    private Pays pays;
 
     /**
      * Constructeur de la classe; accès sans utiliser de paramètres.
@@ -162,6 +164,14 @@ public class Adresse {
         return statut;
     }
 
+    public Pays getPays() {
+        return pays;
+    }
+
+    public void setPays(Pays pays) {
+        this.pays = pays;
+    }
+    
     @Override
     public String toString() {
         return "Adresse{" + "id=" + id + ", numero=" + numero + ", voie=" + voie + ", cp=" + cp + ", ville=" + ville + ", complement=" + complement + '}';
