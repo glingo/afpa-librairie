@@ -52,8 +52,6 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
             + " JOIN MiseEnRubrique AS mer on r.idRubrique = mer.idRubrique"
             + " WHERE mer.idOuvrage = ?";
     
-    
-    
     public RubriqueSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
@@ -72,6 +70,7 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         return rubrique;
     }
     
+    @Override
     public void update(Rubrique instance){
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -102,6 +101,7 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         
     }
     
+    @Override
     public void create(Rubrique instance){
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -147,7 +147,6 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
             create(instance);
         }
     }
-    
     
     @Override
     public void delete(Rubrique instance){
@@ -200,13 +199,6 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
 
     }  
     
-    
- 
-    @Override
-    public Rubrique findByExemple(Rubrique instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public Rubrique findById(Long id) throws DAOException {
        SqlDAOFactory factory = getFactory();
@@ -232,8 +224,6 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         return rubrique;
        
     }
-    
-    
 
     @Override
     public Rubrique findByLibelle(String libelle) {
@@ -259,7 +249,6 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         }
 
         return rubrique; 
-    
     }
 
     @Override

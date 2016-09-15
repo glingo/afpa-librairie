@@ -11,12 +11,7 @@ public class RoleListDAO extends AbstractListDAO<Role> implements RoleDAO {
     public RoleListDAO(AbstractDAOFactory factory) {
         super(factory);
     }
-
-    @Override
-    public Role findByExemple(Role instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public Role findById(Long id) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -29,6 +24,16 @@ public class RoleListDAO extends AbstractListDAO<Role> implements RoleDAO {
 
     @Override
     public List<Role> findByUtilisateur(Long idUtilisateur) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void create(Role instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(Role instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

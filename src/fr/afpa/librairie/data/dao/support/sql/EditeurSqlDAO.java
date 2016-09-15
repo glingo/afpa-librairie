@@ -14,20 +14,28 @@ import java.util.List;
 
 public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO {
     
-    
     private static final String SQL_INSERT = "INSERT INTO Editeur"
-            + " (libelle) VALUES"
-            + " (?)";
+            + " (libelle, idAdresse) VALUES"
+            + " (?, ?)";
+    
+    private static final String SQL_UPDATE = "UPDATE Editeur"
+            + " SET libelle = ?"
+            + " WHERE idEditeur = ?";
     
     private static final String SQL_DELETE = "DELETE FROM Editeur"
             + " WHERE idEditeur = ?";
     
+    private static final String SQL_FIND_BY_ID = "SELECT"
+            + " idEditeur, libelle, idAdresse"
+            + " FROM Editeur"
+            + " WHERE idEditeur = ?";
+    
     private static final String SQL_FIND_ALL = "SELECT"
-            + " idEditeur, libelle"
+            + " idEditeur, libelle, idAdresse"
             + " FROM Editeur";
     
     private static final String SQL_FIND_BY_LIBELLE = "SELECT"
-            + " idEditeur, libelle"
+            + " idEditeur, libelle, idAdresse"
             + " FROM Editeur"
             + " WHERE libelle = ?";
             
@@ -35,10 +43,9 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
     public EditeurSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
-    
-    
+
     @Override
-    public void save(Editeur instance) throws DAOException{
+    public void create(Editeur instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement pstmt = null;
@@ -49,7 +56,7 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
             connexion = factory.getConnection();
 
             pstmt = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getLibelle());
+                    instance.getLibelle(), instance.getAdresse().getId());
 
             int statut = pstmt.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -68,7 +75,49 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
         } finally {
             close(valeursAutoGenerees, pstmt, connexion);
         }
-        
+    }
+
+    @Override
+    public void update(Editeur instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement pstmt = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+
+            connexion = factory.getConnection();
+
+            pstmt = getPreparedStatement(connexion, SQL_UPDATE, false,
+                    instance.getLibelle(), instance.getAdresse().getId(),
+                    instance.getId());
+
+            int statut = pstmt.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de l'éditeur, aucune ligne ajoutée dans la table.");
+            }
+
+            valeursAutoGenerees = pstmt.getGeneratedKeys();
+            if (valeursAutoGenerees.next()) {
+                instance.setId(valeursAutoGenerees.getLong(1));
+            } else {
+                throw new DAOException("Échec de la création de l'éditeur en base, aucun ID auto-généré retourné.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, pstmt, connexion);
+        }
+    }
+    
+    @Override
+    public void save(Editeur instance) throws DAOException{
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
+        }
     }
     
     @Override
@@ -131,13 +180,29 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
     }
 
     @Override
-    public Editeur findByExemple(Editeur instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Editeur findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        Editeur editeur = null;
+        
+        try{
+            connexion = factory.getConnection();
+            pstmt = getPreparedStatement(connexion, SQL_FIND_BY_ID, false, id);
+            
+            rset = pstmt.executeQuery();
+            if (rset.next()){
+                editeur = map(rset);
+            }
+            
+        }catch (SQLException e){
+            throw new DAOException(e);
+        } finally {
+            close(rset, pstmt, connexion);
+        }
+        
+        return editeur;
     }
 
     @Override

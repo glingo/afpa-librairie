@@ -21,6 +21,11 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             + " (libelle, code) VALUES"
             + " (?, ?)";
     
+    private static final String SQL_UPDATE = "UPDATE Role"
+            + " SET libelle = ?,"
+            + " code = ?"
+            + " WHERE idRole = ?";
+    
     private static final String SQL_DELETE = "DELETE FROM Role WHERE idRole = ?";
     
     private static final String SQL_FIND_ALL = "SELECT"
@@ -54,7 +59,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
     }
 
     @Override
-    public void save(Role role) throws DAOException {
+    public void create(Role instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -67,7 +72,7 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             
             preparedStatement = getPreparedStatement(
                     connexion, SQL_INSERT, true, 
-                    role.getLibelle(), role.getCode());
+                    instance.getLibelle(), instance.getCode());
             
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -82,15 +87,53 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
             if (!valeursAutoGenerees.next()) {
                 throw new DAOException("Échec de la création du role de l'utilisateur en base, aucun ID auto-généré retourné.");
             }
-                
+
             /* Puis initialisation de la propriété id du bean Role avec sa valeur */
-            role.setId(valeursAutoGenerees.getLong(1));
+            instance.setId(valeursAutoGenerees.getLong(1));
             
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
+    }
+
+    @Override
+    public void update(Role instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            
+            preparedStatement = getPreparedStatement(
+                    connexion, SQL_UPDATE, true, 
+                    instance.getLibelle(), instance.getCode(), instance.getId());
+            
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du role de l'utilisateur, aucune ligne ajoutée dans la table.");
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void save(Role role) throws DAOException {
+       if(role.getId() != null) {
+           update(role);
+       } else {
+           create(role);
+       }
     }
 
     @Override
@@ -148,11 +191,6 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
 
         return roles;
 
-    }
-
-    @Override
-    public Role findByExemple(Role instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override

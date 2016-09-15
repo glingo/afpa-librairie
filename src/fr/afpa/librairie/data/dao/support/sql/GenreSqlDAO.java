@@ -18,11 +18,25 @@ public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
             + " (libelle)"
             + " VALUES (?)";
     
+    public static final String SQL_UPDATE = "UPDATE Genre"
+            + " SET libelle = ?"
+            + " WHERE idGenre = ?";
+    
     public static final String SQL_DELETE = "DELETE FROM Genre WHERE idGenre = ?";
     
     public static final String SQL_FIND_ALL = "SELECT"
             + " idGenre, libelle"
             + " FROM Genre ";  
+    
+    public static final String SQL_FIND_BY_ID = "SELECT"
+            + " g.idGenre, g.libelle"
+            + " FROM Genre as g"
+            + " WHERE g.idOuvrage = ?";  
+    
+    public static final String SQL_FIND_BY_LIBELLE = "SELECT"
+            + " g.idGenre, g.libelle"
+            + " FROM Genre as g"
+            + " WHERE g.libelle = ?";  
     
     public static final String SQL_FIND_BY_OUVRAGE = "SELECT"
             + " g.idGenre, g.libelle"
@@ -34,10 +48,11 @@ public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
     public GenreSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
-
+    
+    
 
     @Override
-    public void save(Genre instance) throws DAOException {
+    public void create(Genre instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -68,6 +83,42 @@ public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
     
+    }
+
+    @Override
+    public void update(Genre instance) throws DAOException {
+        
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+                    instance.getLibelle(), instance.getId());
+
+            int statut = preparedStatement.executeUpdate();
+
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du genre, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void save(Genre instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
+        }
     }
 
     @Override
@@ -120,13 +171,6 @@ public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
         return genres;
     }
 
-    
-     @Override
-    public Genre findByExemple(Genre instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-       
     @Override
     protected Genre map(ResultSet resultSet) throws SQLException {
        Genre genre = new Genre();
@@ -140,12 +184,53 @@ public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
 
     @Override
     public Genre findById(Long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Genre genre = null;
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID,
+                    false, id);
+            resultSet = preparedStatement.executeQuery();
+
+            genre = map(resultSet);
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return genre; 
     }
 
     @Override
     public Genre findByLibelle(String libelle) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Genre genre = null;
+
+        try {
+            connexion = factory.getConnection();
+            
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_LIBELLE,
+                    false, libelle);
+            resultSet = preparedStatement.executeQuery();
+
+            genre = map(resultSet);
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return genre; 
     }
 
     @Override
@@ -173,7 +258,5 @@ public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
 
         return genres;
     }
-
-    
     
 }

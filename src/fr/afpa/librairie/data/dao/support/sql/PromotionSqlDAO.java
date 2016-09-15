@@ -20,6 +20,15 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
             + " (dateDebut, dateFin, reduction, image, description, commentaire) VALUES"
             + " (?, ?, ?, ?, ?, ?)";
     
+    private static final String SQL_UPDATE = "UPDATE Promotion"
+            + " SET dateDebut = ?,"
+            + " dateFin = ?,"
+            + " reduction = ?,"
+            + " image = ?,"
+            + " description = ?,"
+            + " commentaire = ?"
+            + " WHERE idPromo = ?";
+    
     private static final String SQL_DELETE = "DELETE FROM Promotion"
             + " WHERE idPromo = ?";
     
@@ -35,18 +44,15 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
     public PromotionSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
-     
-     
+
     @Override
-    public void save(Promotion instance) throws DAOException {
+    public void create(Promotion instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null; 
         PreparedStatement pstmt = null;
         ResultSet valeursAutoGenerees = null;
 
         try {
-            
-
             
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
@@ -73,6 +79,45 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, pstmt, connexion);
+        }
+    }
+
+    @Override
+    public void update(Promotion instance) throws DAOException {
+       SqlDAOFactory factory = getFactory();
+        Connection connexion = null; 
+        PreparedStatement pstmt = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            
+            pstmt = getPreparedStatement(connexion, SQL_UPDATE, true, 
+                    instance.getDateDebut(), instance.getDateFin(), 
+                    instance.getReduction(), instance.getDescription(),
+                    instance.getImage(), instance.getCommentaire(),
+                    instance.getId());
+            
+            int statut = pstmt.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création de la promotion, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, pstmt, connexion);
+        }
+    }
+    
+    @Override
+    public void save(Promotion instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
         }
     }
 
@@ -148,11 +193,6 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
     }
     
     @Override
-    public Promotion findByExemple(Promotion instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Promotion findById(Long id) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -187,7 +227,5 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
     public Promotion findByReduction(Float reduction) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-
-
+    
 }

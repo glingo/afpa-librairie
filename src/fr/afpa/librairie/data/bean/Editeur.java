@@ -13,6 +13,8 @@ public class Editeur {
      * Nom de l'éditeur.
      */
     private String libelle;
+    
+    private Adresse adresse;
 
     /**
      * Constructeur de la classe; accès sans utiliser de paramètres.
@@ -54,6 +56,14 @@ public class Editeur {
      */
     public void setLibelle(String libelle) {
         this.libelle = libelle;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
     }
 
     @Override

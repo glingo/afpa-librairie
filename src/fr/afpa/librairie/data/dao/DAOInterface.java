@@ -11,8 +11,9 @@ public interface DAOInterface<T> {
     
     List<T> findAll() throws DAOException;
     
-    T findByExemple(T instance) throws DAOException;
-    
     T findById(Long id) throws DAOException;
     
+    void create(T instance) throws DAOException;
+   
+    void update(T instance) throws DAOException;
 }

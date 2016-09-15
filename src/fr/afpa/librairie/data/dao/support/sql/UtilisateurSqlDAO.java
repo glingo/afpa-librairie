@@ -60,6 +60,7 @@ import java.util.List;
         super(factory);
     }
     
+    @Override
     public void update(Utilisateur instance){
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -91,6 +92,7 @@ import java.util.List;
         
     }
     
+    @Override
     public void create(Utilisateur instance){
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -214,6 +216,7 @@ import java.util.List;
 
     }
     
+    @Override
     public void activate(Utilisateur instance){
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -266,11 +269,6 @@ import java.util.List;
 
     }
 
-    @Override
-    public Utilisateur findByExemple(Utilisateur instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     @Override
     public Utilisateur findById(Long id) throws DAOException {
         SqlDAOFactory factory = getFactory();
