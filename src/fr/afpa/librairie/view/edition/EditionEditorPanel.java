@@ -9,6 +9,9 @@ import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.model.list.renderer.AuteurListCellRenderer;
 import fr.afpa.librairie.model.list.renderer.LangueListCellRenderer;
+import fr.afpa.librairie.model.list.renderer.GenreListCellRenderer;
+import fr.afpa.librairie.model.list.renderer.ThemeListCellRenderer;
+import fr.afpa.librairie.model.list.renderer.RubriqueListCellRenderer;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.field.JFloatField;
@@ -30,6 +33,11 @@ import javax.swing.LayoutStyle;
 public class EditionEditorPanel extends EditorPanel<Edition> {
     
     private DefaultComboBoxModel<Auteur> auteurComboModel;
+    private DefaultComboBoxModel<Langue> langueComboModel;
+    private DefaultComboBoxModel<Genre> genreComboModel;
+    private DefaultComboBoxModel<Theme> themeComboModel;
+    private DefaultComboBoxModel<Rubrique> rubriqueComboModel;
+    
     
     private JLabel isbnLB;
     private JLabel auteurLB;
@@ -93,13 +101,13 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         
         
         genre = new JComboBox<>();
-        //genre.setRenderer(new GenreListCellRendered());
+        genre.setRenderer(new GenreListCellRenderer());
         
         theme = new JComboBox<>();
-        //theme.setRendered(new ThemeListCellRendered());
+        theme.setRenderer(new ThemeListCellRenderer());
         
         rubrique = new JComboBox<>();
-        //rubrique.setRenderer(new RubriqueListCellRendered());
+        rubrique.setRenderer(new RubriqueListCellRenderer());
         
        
         prixHt = new JFloatField(true);
