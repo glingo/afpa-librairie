@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 
 public class EditionEditorPanel extends EditorPanel<Edition> {
+    
     private JLabel isbnLB;
     private JLabel datePublicationLB;
     private JLabel prixHtLB;
@@ -46,27 +47,19 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         super(bean, controller);
     }
 
-    @Override
-    public Edition getBean() {
-        Edition edition = super.getBean();
-        
-        if(edition == null){
-            edition = new Edition();
-            setBean(edition);
-        }
-        
-        return edition;
-    }
+//    @Override
+//    public Edition getBean() {
+//        Edition edition = super.getBean();
+//        
+//        if(edition == null){
+//            edition = new Edition();
+//            setBean(edition);
+//        }
+//        
+//        return edition;
+//    }
     
-    @Override
-    protected String getTitleText() {
-        Edition edition = getBean();
-        
-        return edition.getIsbn() != null 
-                ? "Edition (isbn) : " + edition.getIsbn() 
-                : "Nouvelle Edition";
-    }
-    
+  
     @Override
     protected void initBody(JPanel body) {
         
@@ -109,7 +102,8 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         stockLB.setLabelFor(stock);
    
         
-        GroupLayout bodyPanelLayout = new GroupLayout(body);
+        
+       GroupLayout bodyPanelLayout = new GroupLayout(body);
         body.setLayout(bodyPanelLayout);
 
         bodyPanelLayout.setHorizontalGroup(
@@ -122,22 +116,18 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
                             .addGroup(bodyPanelLayout.createSequentialGroup()
                                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                     .addComponent(isbnLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    
                                     .addComponent(datePublicationLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    
                                     .addComponent(prixHtLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(imageLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(titreLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(stockLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    
                                 .addGap(13, 13, 13)
                                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                     .addComponent(isbn, GroupLayout.Alignment.LEADING)
-                                    
                                     .addComponent(datePublication, GroupLayout.Alignment.LEADING)
-
                                     .addComponent(prixHt, GroupLayout.Alignment.LEADING)
-                                    .addComponent(image, GroupLayout.Alignment.LEADING)    
+                                    .addComponent(image, GroupLayout.Alignment.LEADING)
+                                    .addComponent(titre, GroupLayout.Alignment.LEADING)
                                     .addComponent(stock, GroupLayout.Alignment.LEADING))))
                         .addGap(6, 6, 6))))
         );
@@ -149,12 +139,9 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
                     .addComponent(isbnLB)
                     .addComponent(isbn, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(datePublication, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(datePublicationLB))
-                
-                
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(prixHt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(prixHtLB))
@@ -167,11 +154,21 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(stockLB))
-                
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
         );
         
     }   
+    
+    
+        @Override
+    protected String getTitleText() {
+        Edition edition = getBean();
+        
+        return edition.getIsbn() != null 
+                ? "Edition (isbn) : " + edition.getIsbn() 
+                : "Nouvelle Edition";
+    }
+    
     
     @Override
     public void bindValues() {
@@ -189,16 +186,6 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         
     }
 
-    @Override
-    public void reset() {
-  
-        isbn.setText("");
-        datePublication.setValue(null);
-        prixHt.setValue(null);
-        image.setText("");
-        titre.setText("");
-        stock.setValue(null);
-    }
 
     @Override
     public Edition constructBean() {
@@ -216,6 +203,18 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         edition.setStock((int) stock.getValue());
  
         return edition;
+    }
+    
+    
+     @Override
+    public void reset() {
+  
+        isbn.setText("");
+        datePublication.setValue(null);
+        prixHt.setValue(null);
+        image.setText("");
+        titre.setText("");
+        stock.setValue(null);
     }
 
 }
