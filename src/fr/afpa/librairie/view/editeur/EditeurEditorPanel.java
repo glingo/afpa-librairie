@@ -1,10 +1,15 @@
 package fr.afpa.librairie.view.editeur;
 
+import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Editeur;
+import fr.afpa.librairie.model.list.renderer.AdresseListCellRenderer;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.panel.EditorPanel;
 import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -12,9 +17,13 @@ import javax.swing.LayoutStyle;
 
 public class EditeurEditorPanel extends EditorPanel<Editeur> {
     
+    private DefaultComboBoxModel<Adresse> adresseComboModel;
+    
     private JLabel libelleLabel;
+    private JLabel adresseLabel;
     
     private JTextField libelle;
+    private JComboBox<Adresse> adresse;
     
     public EditeurEditorPanel(ActionListener controller) {
         super(new Editeur(), controller);
@@ -28,8 +37,12 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
     protected void initBody(JPanel body) {
         
         libelle = new JTextField();
+        adresse = new JComboBox<>();
+        
+        adresse.setRenderer(new AdresseListCellRenderer());
         
         libelleLabel = new JLabel("Libelle :");
+        adresseLabel = new JLabel("Adresse :");
         
         libelle.setInputVerifier(new StrictInputVerifier());
         
@@ -45,10 +58,12 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
                         .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(bodyPanelLayout.createSequentialGroup()
                                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                    .addComponent(libelleLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(libelleLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(adresseLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(13, 13, 13)
                                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                    .addComponent(libelle, GroupLayout.Alignment.LEADING))))
+                                    .addComponent(libelle, GroupLayout.Alignment.LEADING)
+                                    .addComponent(adresse, GroupLayout.Alignment.LEADING))))
                         .addGap(6, 6, 6))))
         );
 
@@ -58,8 +73,17 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addComponent(libelleLabel)
                     .addComponent(libelle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(adresseLabel)
+                    .addComponent(adresse, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
         );
+    }
+    
+    public void setAdresses(List<Adresse> list){
+        adresseComboModel = new DefaultComboBoxModel(list.toArray());
+        adresse.setModel(adresseComboModel);
+//        bindValues();
     }
 
     @Override
@@ -75,9 +99,8 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
     @Override
     public void bindValues() {
         Editeur editeur = getBean();
-        
         libelle.setText(editeur.getLibelle());
-        
+        adresse.setSelectedItem(editeur.getAdresse());
     }
 
     @Override
@@ -85,6 +108,7 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
         Editeur editeur = getBean();
         
         editeur.setLibelle(libelle.getText());
+        editeur.setAdresse((Adresse) adresse.getSelectedItem());
         
         return editeur;
     }
@@ -92,6 +116,7 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
     @Override
     public void reset() {
         libelle.setText("");
+        adresse.setSelectedItem(null);
     }
     
     

@@ -2,6 +2,7 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
+import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Editeur;
 import fr.afpa.librairie.data.dao.EditeurDAO;
 import fr.afpa.librairie.data.exception.DAOException;
@@ -19,7 +20,8 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
             + " (?, ?)";
     
     private static final String SQL_UPDATE = "UPDATE Editeur"
-            + " SET libelle = ?"
+            + " SET libelle = ?,"
+            + " idAdresse = ?"
             + " WHERE idEditeur = ?";
     
     private static final String SQL_DELETE = "DELETE FROM Editeur"
@@ -87,22 +89,16 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
         try {
 
             connexion = factory.getConnection();
-
+            
             pstmt = getPreparedStatement(connexion, SQL_UPDATE, false,
-                    instance.getLibelle(), instance.getAdresse().getId(),
+                    instance.getLibelle(), 
+                    instance.getAdresse().getId(),
                     instance.getId());
 
             int statut = pstmt.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
                 throw new DAOException("Échec de la création de l'éditeur, aucune ligne ajoutée dans la table.");
-            }
-
-            valeursAutoGenerees = pstmt.getGeneratedKeys();
-            if (valeursAutoGenerees.next()) {
-                instance.setId(valeursAutoGenerees.getLong(1));
-            } else {
-                throw new DAOException("Échec de la création de l'éditeur en base, aucun ID auto-généré retourné.");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -145,10 +141,14 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
    
     @Override
     protected Editeur map(ResultSet rset) throws SQLException {
+        SqlDAOFactory factory = getFactory();
         Editeur editeur = new Editeur();
         
         editeur.setId(rset.getLong("idEditeur"));
-        editeur.setLibelle(rset.getString("Libelle"));
+        editeur.setLibelle(rset.getString("libelle"));
+        
+        Adresse adresse = factory.getAdresseDAO().findById(rset.getLong("idAdresse"));
+        editeur.setAdresse(adresse);
         
         return editeur;
     }

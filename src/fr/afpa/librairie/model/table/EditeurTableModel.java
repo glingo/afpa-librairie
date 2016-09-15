@@ -1,6 +1,8 @@
 
 package fr.afpa.librairie.model.table;
 
+import fr.afpa.librairie.data.bean.Adresse;
+import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Editeur;
 import fr.afpa.librairie.model.table.column.EditeurColumn;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ public class EditeurTableModel extends TableModel<Editeur> {
         if (this.columnDisplayNames == null) {
             this.columnDisplayNames = new HashMap<>();
             this.columnDisplayNames.put(EditeurColumn.LIBELLE, "Libelle");
+            this.columnDisplayNames.put(EditeurColumn.ADRESSE, "Adresse");
 
         }
         return this.columnDisplayNames;
@@ -37,9 +40,12 @@ public class EditeurTableModel extends TableModel<Editeur> {
             case LIBELLE:
                 columnValue = editeur.getLibelle();
                 break;
+                
+            case ADRESSE:
+                columnValue = getAddressObject(editeur);
+                break;
            
             default:
-//                columnValue = getAddressObject(person, column);
                 break;
         }
 
@@ -62,5 +68,18 @@ public class EditeurTableModel extends TableModel<Editeur> {
         EditeurColumn columnObj = getColumn(column);
         String displayName = getColumnDisplayNames().get(columnObj);
         return displayName;
+    }
+
+    private Object getAddressObject(Editeur editeur) {
+        StringBuilder sb = new StringBuilder();
+        Adresse adresse = editeur.getAdresse();
+        sb.append(adresse.getNumero() != null ? adresse.getNumero() + " " : "")
+          .append(adresse.getVoie())
+          .append(", ")        
+          .append(adresse.getCp())
+          .append(" ")
+          .append(adresse.getVille());
+        
+        return sb.toString();
     }
 }

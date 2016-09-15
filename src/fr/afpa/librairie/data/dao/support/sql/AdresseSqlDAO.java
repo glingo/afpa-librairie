@@ -69,7 +69,8 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
                     instance.getNumero(), 
                     instance.getVoie(),
                     instance.getCp(), 
-                    instance.getComplement());
+                    instance.getComplement(),
+                    instance.getStatut().getId());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
@@ -101,11 +102,12 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
 
             connexion = factory.getConnection();
 
-            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
                     instance.getNumero(), 
                     instance.getVoie(),
                     instance.getCp(), 
                     instance.getComplement(),
+                    instance.getStatut().getId(),
                     instance.getId());
 
             int statut = preparedStatement.executeUpdate();

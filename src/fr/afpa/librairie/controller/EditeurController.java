@@ -17,6 +17,11 @@ public class EditeurController extends CRUDController<Editeur> {
         setAdminPanel(new EditeurAdminPanel(this));
         setEditorPanel(new EditeurEditorPanel(this));
     }
+
+    @Override
+    public EditeurEditorPanel getEditorPanel() {
+        return (EditeurEditorPanel) super.getEditorPanel();
+    }
     
     @Override
     public void listAction() {
@@ -28,25 +33,13 @@ public class EditeurController extends CRUDController<Editeur> {
 
     @Override
     public void createAction() {
-
+        
         if (!getEditorPanel().equals(getFrame().getContent())) {
+            getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
             getEditorPanel().setBean(new Editeur());
             getFrame().setContent(getEditorPanel());
             return;
         }
-        
-/*
-        this.createPanel.getForm().verify();
-
-        JTextField fieldLibelle = this.createPanel.getForm().getField("Libelle");
-
-
-        String libelle = fieldLibelle.getText();
-
-        Editeur editeur = new Editeur();
-        
-        editeur.setLibelle(libelle);
-*/
         
         Editeur editeur = getEditorPanel().constructBean();
         
@@ -61,11 +54,9 @@ public class EditeurController extends CRUDController<Editeur> {
             return;
         }
 
-//        this.createPanel.getForm().reset();
         listAction();
         getEditorPanel().reset();
         alert("Information", "L'éditeur a bien été sauvegardé !");
-
     }
 
     @Override
@@ -96,6 +87,14 @@ public class EditeurController extends CRUDController<Editeur> {
     public void viewAction(Editeur value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void editAction(Editeur value) {
+        getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
+        super.editAction(value);
+    }
+    
+    
     
     
 }

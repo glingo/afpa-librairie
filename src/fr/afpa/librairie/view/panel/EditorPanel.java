@@ -52,8 +52,8 @@ public abstract class EditorPanel<T> extends JPanel {
 
     public void setBean(T bean) {
         this.bean = bean;
-        bindValues();
         this.title.setText(getTitleText());
+        bindValues();
     }
 
     public ActionListener getController() {

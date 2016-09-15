@@ -1,5 +1,7 @@
 package fr.afpa.librairie.data.bean;
 
+import java.util.Objects;
+
 /**
  * Enregistre les différents éléments d'une adresse.
  *
@@ -165,4 +167,26 @@ public class Adresse {
         return "Adresse{" + "id=" + id + ", numero=" + numero + ", voie=" + voie + ", cp=" + cp + ", ville=" + ville + ", complement=" + complement + '}';
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Adresse other = (Adresse) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+    
 }
