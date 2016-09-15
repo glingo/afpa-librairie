@@ -33,6 +33,8 @@ public class Adresse {
      * Infos complémentaires optionnelles concernant l'adresse.
      */
     private String complement;
+    
+    private StatutAdresse statut;
 
     /**
      * Constructeur de la classe; accès sans utiliser de paramètres.
@@ -148,6 +150,14 @@ public class Adresse {
      */
     public void setComplement(String complement) {
         this.complement = complement;
+    }
+
+    public void setStatut(StatutAdresse statut) {
+        this.statut = statut;
+    }
+
+    public StatutAdresse getStatut() {
+        return statut;
     }
 
     @Override

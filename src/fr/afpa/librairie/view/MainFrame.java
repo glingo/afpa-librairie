@@ -1,5 +1,6 @@
 package fr.afpa.librairie.view;
 
+import fr.afpa.librairie.controller.AdresseController;
 import fr.afpa.librairie.controller.AuteurController;
 import fr.afpa.librairie.controller.CommandeController;
 import fr.afpa.librairie.controller.EditeurController;
@@ -191,7 +192,10 @@ public class MainFrame extends javax.swing.JFrame {
         editionAdmin.addActionListener(new EditionController(this));
         adminMenu.add(editionAdmin);
         
-
+        JMenuItem adresseAdmin = new JMenuItem("Adresses");
+        adresseAdmin.addActionListener(new AdresseController(this));
+        adminMenu.add(adresseAdmin);
+        
         jMenuBar.add(adminMenu);
     }
 
