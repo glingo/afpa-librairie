@@ -13,11 +13,6 @@ public class StatutTransactionListDAO extends AbstractListDAO<StatutTransaction>
     }
 
     @Override
-    public StatutTransaction findByExemple(StatutTransaction instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public StatutTransaction findById(Long id) throws DAOException {
         return getTable().stream().filter((StatutTransaction statut) -> {
             return statut.getId().equals(id);
@@ -34,6 +29,16 @@ public class StatutTransactionListDAO extends AbstractListDAO<StatutTransaction>
 
     @Override
     public List<StatutTransaction> findByTransaction(Long idTransaction) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void create(StatutTransaction instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(StatutTransaction instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

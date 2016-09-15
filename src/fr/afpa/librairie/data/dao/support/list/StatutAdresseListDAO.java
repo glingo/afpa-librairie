@@ -13,11 +13,6 @@ public class StatutAdresseListDAO extends AbstractListDAO<StatutAdresse> impleme
     }
 
     @Override
-    public StatutAdresse findByExemple(StatutAdresse instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public StatutAdresse findById(Long id) throws DAOException {
         return getTable().stream().filter((StatutAdresse statut) -> {
             return statut.getId().equals(id);
@@ -33,6 +28,16 @@ public class StatutAdresseListDAO extends AbstractListDAO<StatutAdresse> impleme
 
     @Override
     public List<StatutAdresse> findByAdresse(Long idAdresse) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void create(StatutAdresse instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(StatutAdresse instance) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

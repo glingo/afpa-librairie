@@ -19,6 +19,11 @@ public class StatutAdresseSqlDAO extends AbstractSqlDAO<StatutAdresse> implement
     private static final String SQL_INSERT = "INSERT INTO StatutAdresse (libelle, code) VALUES (?, ?)";
     private static final String SQL_DELETE = "DELETE FROM StatutAdresse WHERE id = ?";
     
+    private static final String SQL_UPDATE = "UPDATE StatutAdresse"
+            + " SET libelle = ?,"
+            + " code = ?"
+            + " WHERE idStatutAdresse = ?";
+    
     private static final String SQL_FIND_ALL = "SELECT"
             + " idStatutAdresse, libelle, code"
             + " FROM StatutAdresse";
@@ -49,10 +54,9 @@ public class StatutAdresseSqlDAO extends AbstractSqlDAO<StatutAdresse> implement
     public StatutAdresseSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
-    
 
     @Override
-    public void save(StatutAdresse instance) throws DAOException {
+    public void create(StatutAdresse instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -83,6 +87,44 @@ public class StatutAdresseSqlDAO extends AbstractSqlDAO<StatutAdresse> implement
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void update(StatutAdresse instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            
+            preparedStatement = getPreparedStatement(
+                    connexion, SQL_UPDATE, false, 
+                    instance.getLibelle(), 
+                    instance.getCode(),
+                    instance.getId());
+            
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du statut de l'entreprise, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void save(StatutAdresse instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
         }
     }
 
@@ -136,11 +178,6 @@ public class StatutAdresseSqlDAO extends AbstractSqlDAO<StatutAdresse> implement
 
         return statuts;
 
-    }
-
-    @Override
-    public StatutAdresse findByExemple(StatutAdresse instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
@@ -246,7 +283,4 @@ public class StatutAdresseSqlDAO extends AbstractSqlDAO<StatutAdresse> implement
                
         return statut;
     }
-
-
-
 }

@@ -19,6 +19,11 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
     private static final String SQL_INSERT = "INSERT INTO StatutTransaction (libelle, code) VALUES (?, ?)";
     private static final String SQL_DELETE = "DELETE FROM StatutTransaction WHERE id = ?";
     
+    private static final String SQL_UPDATE = "UPDATE StatutTransaction"
+            + " SET libelle = ?,"
+            + " code = ?"
+            + " WHERE idStatutTransaction = ?";
+    
     private static final String SQL_FIND_ALL = "SELECT"
             + " idStatutTransaction, libelle, code"
             + " FROM StatutTransaction";
@@ -49,10 +54,9 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
     public StatutTransactionSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
-    
 
     @Override
-    public void save(StatutTransaction instance) throws DAOException {
+    public void create(StatutTransaction instance) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -83,6 +87,44 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+
+    @Override
+    public void update(StatutTransaction instance) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+            
+            preparedStatement = getPreparedStatement(
+                    connexion, SQL_UPDATE, false, 
+                    instance.getLibelle(), 
+                    instance.getCode(),
+                    instance.getId());
+            
+            int statut = preparedStatement.executeUpdate();
+            /* Analyse du statut retourné par la requête d'insertion */
+            if (statut == 0) {
+                throw new DAOException("Échec de la création du statut de l'entreprise, aucune ligne ajoutée dans la table.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(valeursAutoGenerees, preparedStatement, connexion);
+        }
+    }
+    
+    @Override
+    public void save(StatutTransaction instance) throws DAOException {
+        if(instance.getId() != null) {
+            update(instance);
+        } else {
+            create(instance);
         }
     }
 
@@ -138,11 +180,6 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
 
     }
 
-    @Override
-    public StatutTransaction findByExemple(StatutTransaction instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     @Override
     public StatutTransaction findById(Long id) throws DAOException {
         SqlDAOFactory factory = getFactory();
