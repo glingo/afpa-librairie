@@ -1,15 +1,12 @@
 
 package fr.afpa.librairie.controller;
 
-import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.ouvrage.OuvrageAdminPanel;
 import fr.afpa.librairie.view.ouvrage.OuvrageEditorPanel;
-import java.awt.event.ActionEvent;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class OuvrageController extends CRUDController<Ouvrage> {
@@ -23,47 +20,35 @@ public class OuvrageController extends CRUDController<Ouvrage> {
     }
 
     @Override
-    public void listAction() {
-        ListAdapterListModel<Ouvrage> ouvrageListModel = new ListAdapterListModel<>();
-        ouvrageListModel.addAll(getDaoFactory().getOuvrageDAO().findAll());
-        getAdminPanel().setList(ouvrageListModel);
-        getFrame().setContent(getAdminPanel());
+    public Ouvrage newBean() {
+        return new Ouvrage();
+    }
+
+    @Override
+    protected ListAdapterListModel<Ouvrage> getAll() {
+        ListAdapterListModel<Ouvrage> listModel = new ListAdapterListModel<>();
+        listModel.addAll(getDaoFactory().getOuvrageDAO().findAll());
+        return listModel;
     }
     
-    public void createAction() {
-        
-        if(!getEditorPanel().equals(getFrame().getContent())) {
-            getEditorPanel().setBean(new Ouvrage());
-            
-            List<Auteur> auteurs = getDaoFactory().getAuteurDAO().findAll();
-            
-//            createPanel.setAuteurList(auteurs);
-//            createPanel.setCoAuteurList(auteurs);
-//            createPanel.setLangueList(getDaoFactory().getLangueDAO().findAll());
-            
-            // to be continued ...
-            
-            getFrame().setContent(getEditorPanel());
-            return;
-        }
-        
-        Ouvrage ouvrage = getEditorPanel().constructBean();
+    @Override
+    protected void loadEditorPanel() {
+        // load auteurs
+        // load coauteurs
+    }
+    
+    @Override
+    public void create(Ouvrage value) {
         
         try{
-            getDaoFactory().getOuvrageDAO().save(ouvrage);
-            
+            getDaoFactory().getOuvrageDAO().save(value);
+            alert("Information", "L'ouvrage a bien été sauvegardé !");
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder cet ouvrage");
-            
-            return;
-            
         }
         
-        listAction();
-        getEditorPanel().reset();
-        alert("Information", "L'ouvrage a bien été sauvegardé !");
-        
+//        listAction();
     }
     
     @Override

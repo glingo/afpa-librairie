@@ -19,35 +19,35 @@ public class UtilisateurController extends ActivableCRUDController<Utilisateur> 
     }
 
     @Override
-    public void listAction() {
-        ListAdapterListModel<Utilisateur> utilisateurListModel = new ListAdapterListModel<>();
-        utilisateurListModel.addAll(getDaoFactory().getUtilisateurDAO().findAll());
-        getAdminPanel().setList(utilisateurListModel);
-        getFrame().setContent(getAdminPanel());
+    public Utilisateur newBean() {
+        return new Utilisateur();
     }
 
     @Override
-    public void createAction() {
-
-        if (!getEditorPanel().equals(getFrame().getContent())) {
-            getEditorPanel().setBean(new Utilisateur());
-            getFrame().setContent(getEditorPanel());
-            return;
-        }
-
-        Utilisateur utilisateur = getEditorPanel().constructBean();
+    protected ListAdapterListModel<Utilisateur> getAll() {
+        ListAdapterListModel<Utilisateur> listModel = new ListAdapterListModel<>();
+        listModel.addAll(getDaoFactory().getUtilisateurDAO().findAll());
+        return listModel;
+    }
+    
+    @Override
+    protected void loadEditorPanel() {
+        // load list of role.
+    }
+    
+    @Override
+    public void create(Utilisateur value) {
 
         try {
-            getDaoFactory().getUtilisateurDAO().save(utilisateur);
+            getDaoFactory().getUtilisateurDAO().save(value);
+            alert("Information", "L'utilisateur a bien été sauvegardé !");
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !",
                     "Impossible de sauvegarder cet utilisateur.");
-            return;
         }
 
-        listAction();
-        alert("Information", "L'utilisateur a bien été sauvegardé !");
+//        listAction();
     }
 
     @Override

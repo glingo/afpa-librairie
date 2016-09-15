@@ -1,16 +1,24 @@
 package fr.afpa.librairie.controller;
 
+import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Editeur;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.editeur.EditeurAdminPanel;
 import fr.afpa.librairie.view.editeur.EditeurEditorPanel;
+import fr.afpa.librairie.view.panel.EditorPanel;
+import java.awt.Dialog;
+import java.awt.event.ActionEvent;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 
 public class EditeurController extends CRUDController<Editeur> {
     
     private static final Logger LOG = Logger.getLogger(EditeurController.class.getName());
+    
+    // ici la modale pour ajouter une adresse.
+    private JDialog dialog = new JDialog(getFrame(), "Creer une nouvelle adresse", Dialog.ModalityType.APPLICATION_MODAL);
 
     public EditeurController(MainFrame frame) {
         super(frame);
@@ -19,44 +27,56 @@ public class EditeurController extends CRUDController<Editeur> {
     }
 
     @Override
+    public Editeur newBean() {
+        return new Editeur();
+    }
+
+    @Override
+    protected void loadEditorPanel() {
+        getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
+    }
+
+    @Override
+    protected ListAdapterListModel<Editeur> getAll() {
+        ListAdapterListModel<Editeur> listModel = new ListAdapterListModel<>();
+        listModel.addAll(getDaoFactory().getEditeurDAO().findAll());
+        return listModel;
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch(e.getActionCommand()) {
+            case "create_new_adresse":
+                AdresseController ctrl = getFrame().getAdresseController();
+                dialog.add(ctrl.getEditorPanel());
+                dialog.pack();
+                dialog.setVisible(true);
+                break;
+                
+            default:
+                super.actionPerformed(e);
+        }
+        
+    }
+    
+    @Override
     public EditeurEditorPanel getEditorPanel() {
         return (EditeurEditorPanel) super.getEditorPanel();
     }
     
     @Override
-    public void listAction() {
-        ListAdapterListModel<Editeur> editeurListModel = new ListAdapterListModel<>();
-        editeurListModel.addAll(getDaoFactory().getEditeurDAO().findAll());
-        getAdminPanel().setList(editeurListModel);
-        getFrame().setContent(getAdminPanel());
-    }
-
-    @Override
-    public void createAction() {
-        
-        if (!getEditorPanel().equals(getFrame().getContent())) {
-            getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
-            getEditorPanel().setBean(new Editeur());
-            getFrame().setContent(getEditorPanel());
-            return;
-        }
-        
-        Editeur editeur = getEditorPanel().constructBean();
+    public void create(Editeur value) {
         
         try {
-            getDaoFactory().getEditeurDAO().save(editeur);
-            
+            getDaoFactory().getEditeurDAO().save(value);
+            alert("Information", "L'éditeur a bien été sauvegardé !");
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de réaliser la sauvegarde de l'éditeur.");
-            
-            return;
         }
 
-        listAction();
-        getEditorPanel().reset();
-        alert("Information", "L'éditeur a bien été sauvegardé !");
+//        listAction();
     }
 
     @Override
@@ -88,13 +108,10 @@ public class EditeurController extends CRUDController<Editeur> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void editAction(Editeur value) {
-        getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
-        super.editAction(value);
-    }
-    
-    
-    
+//    @Override
+//    public void editAction(Editeur value) {
+//        getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
+//        super.editAction(value);
+//    }
     
 }

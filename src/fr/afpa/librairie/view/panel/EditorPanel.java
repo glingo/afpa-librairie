@@ -12,7 +12,7 @@ public abstract class EditorPanel<T> extends JPanel {
     
     private TitlePanel title;
     private JPanel body;
-    private FooterEditorPanel footer;
+    private FooterPanel footer;
     
     public EditorPanel(T bean, ActionListener controller) {
         this.bean = bean;
@@ -26,6 +26,7 @@ public abstract class EditorPanel<T> extends JPanel {
         initBody(body);
         
         title = new TitlePanel(getTitleText());
+        
         footer = new FooterEditorPanel(getController());
         
         setLayout(new BorderLayout());

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
     
     private JTextField libelle;
     private JComboBox<Adresse> adresse;
+    private JButton newAdresse;
     
     public EditeurEditorPanel(ActionListener controller) {
         super(new Editeur(), controller);
@@ -38,6 +40,10 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
         
         libelle = new JTextField();
         adresse = new JComboBox<>();
+        newAdresse = new JButton("+");
+        
+        newAdresse.setActionCommand("create_new_adresse");
+        newAdresse.addActionListener(getController());
         
         adresse.setRenderer(new AdresseListCellRenderer());
         
@@ -63,7 +69,9 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
                                 .addGap(13, 13, 13)
                                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                     .addComponent(libelle, GroupLayout.Alignment.LEADING)
-                                    .addComponent(adresse, GroupLayout.Alignment.LEADING))))
+                                    .addComponent(adresse, GroupLayout.Alignment.CENTER))
+                                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                    .addComponent(newAdresse, GroupLayout.Alignment.TRAILING))))
                         .addGap(6, 6, 6))))
         );
 
@@ -75,7 +83,8 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
                     .addComponent(libelle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addComponent(adresseLabel)
-                    .addComponent(adresse, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(adresse, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newAdresse))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
         );
     }
@@ -83,7 +92,6 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
     public void setAdresses(List<Adresse> list){
         adresseComboModel = new DefaultComboBoxModel(list.toArray());
         adresse.setModel(adresseComboModel);
-//        bindValues();
     }
 
     @Override
@@ -108,6 +116,7 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
         Editeur editeur = getBean();
         
         editeur.setLibelle(libelle.getText());
+        System.out.println((Adresse) adresse.getSelectedItem());
         editeur.setAdresse((Adresse) adresse.getSelectedItem());
         
         return editeur;
@@ -118,6 +127,5 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
         libelle.setText("");
         adresse.setSelectedItem(null);
     }
-    
     
 }

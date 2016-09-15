@@ -20,36 +20,35 @@ public class AuteurController extends CRUDController<Auteur> {
     }
 
     @Override
-    public void listAction() {
-        ListAdapterListModel<Auteur> auteurListModel = new ListAdapterListModel<>();
-        auteurListModel.addAll(getDaoFactory().getAuteurDAO().findAll());
-        getAdminPanel().setList(auteurListModel);
-        getFrame().setContent(getAdminPanel());
+    public Auteur newBean() {
+        return new Auteur();
     }
 
     @Override
-    public void createAction() {
+    protected ListAdapterListModel<Auteur> getAll() {
+        ListAdapterListModel<Auteur> listModel = new ListAdapterListModel<>();
+        listModel.addAll(getDaoFactory().getAuteurDAO().findAll());
+        return listModel;
+    }
+    
+    @Override
+    protected void loadEditorPanel() {
+        // nothing to do ?
+    }
+    
+    @Override
+    public void create(Auteur value) {
 
-        if (!getEditorPanel().equals(getFrame().getContent())) {
-            getEditorPanel().setBean(new Auteur());
-            getFrame().setContent(getEditorPanel());
-            return;
-        }
-        
-        Auteur auteur = getEditorPanel().constructBean();
-        
         try {
-            getDaoFactory().getAuteurDAO().save(auteur);
-            
+            getDaoFactory().getAuteurDAO().save(value);
+            alert("Information", "L'auteur a bien été sauvegardé !");
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de sauvegarder cet auteur.");
         }
         
-        listAction();
-        getEditorPanel().reset();
-        alert("Information", "L'auteur a bien été sauvegardé !");
+//        listAction();
     }
 
     @Override

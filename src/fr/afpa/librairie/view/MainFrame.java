@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.LayoutManager;
 import java.awt.SplashScreen;
 import java.io.File;
 import java.io.IOException;
@@ -55,14 +56,22 @@ public class MainFrame extends javax.swing.JFrame {
             LOG.log(Level.SEVERE, null, ex);
         }
     }
+    
+    private final UtilisateurController utilisateurController = new UtilisateurController(this);
+    private final RubriqueController rubriqueController = new RubriqueController(this);
+    private final AuteurController auteurController = new AuteurController(this);
+    private final OuvrageController ouvrageController = new OuvrageController(this);
+    private final CommandeController commandeController = new CommandeController(this);
+    private final EditeurController editeurController = new EditeurController(this);
+    private final PromotionController promotionController = new PromotionController(this);
+    private final EditionController editionController = new EditionController(this);
+    private final AdresseController adresseController = new AdresseController(this);
 
     private HeaderPanel headerPanel;
     private LeftMenuPanel leftMenuPanel;
     private Component currentContent;
 
     private GroupLayout layout;
-    
-    private final RubriqueController rubriqueController = new RubriqueController(this);
 
     public MainFrame() {
         initComponents();
@@ -161,15 +170,15 @@ public class MainFrame extends javax.swing.JFrame {
         JMenu adminMenu = new JMenu("Administration");
 
         JMenuItem utilisateurAdmin = new JMenuItem("Utilisateurs");
-        utilisateurAdmin.addActionListener(new UtilisateurController(this));
+        utilisateurAdmin.addActionListener(utilisateurController);
         adminMenu.add(utilisateurAdmin);
 
         JMenuItem auteurAdmin = new JMenuItem("Auteurs");
-        auteurAdmin.addActionListener(new AuteurController(this));
+        auteurAdmin.addActionListener(auteurController);
         adminMenu.add(auteurAdmin);
 
         JMenuItem ouvrageAdmin = new JMenuItem("Ouvrages");
-        ouvrageAdmin.addActionListener(new OuvrageController(this));
+        ouvrageAdmin.addActionListener(ouvrageController);
         adminMenu.add(ouvrageAdmin);
 
         JMenuItem rubriqueAdmin = new JMenuItem("Rubriques");
@@ -177,23 +186,23 @@ public class MainFrame extends javax.swing.JFrame {
         adminMenu.add(rubriqueAdmin);
 
         JMenuItem commandeAdmin = new JMenuItem("Commandes");
-        commandeAdmin.addActionListener(new CommandeController(this));
+        commandeAdmin.addActionListener(commandeController);
         adminMenu.add(commandeAdmin);
 
         JMenuItem editeurAdmin = new JMenuItem("Editeurs");
-        editeurAdmin.addActionListener(new EditeurController(this));
+        editeurAdmin.addActionListener(editeurController);
         adminMenu.add(editeurAdmin);
 
         JMenuItem promotionAdmin = new JMenuItem("Promotions");
-        promotionAdmin.addActionListener(new PromotionController(this));
+        promotionAdmin.addActionListener(promotionController);
         adminMenu.add(promotionAdmin);
 
         JMenuItem editionAdmin = new JMenuItem("Editions");
-        editionAdmin.addActionListener(new EditionController(this));
+        editionAdmin.addActionListener(editionController);
         adminMenu.add(editionAdmin);
         
         JMenuItem adresseAdmin = new JMenuItem("Adresses");
-        adresseAdmin.addActionListener(new AdresseController(this));
+        adresseAdmin.addActionListener(adresseController);
         adminMenu.add(adresseAdmin);
         
         jMenuBar.add(adminMenu);
@@ -238,5 +247,13 @@ public class MainFrame extends javax.swing.JFrame {
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
-    
+
+    public UtilisateurController getUtilisateurController() {
+        return utilisateurController;
+    }
+
+    public AdresseController getAdresseController() {
+        return adresseController;
+    }
+
 }

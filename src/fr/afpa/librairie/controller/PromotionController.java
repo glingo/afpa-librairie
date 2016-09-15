@@ -19,67 +19,34 @@ public class PromotionController extends CRUDController<Promotion> {
     }
 
     @Override
-    public void listAction() {
-        ListAdapterListModel<Promotion> promotionListModel = new ListAdapterListModel<>();
-        promotionListModel.addAll(getDaoFactory().getPromotionDAO().findAll());
-        getAdminPanel().setList(promotionListModel);
-        getFrame().setContent(getAdminPanel());
+    public Promotion newBean() {
+        return new Promotion();
     }
 
     @Override
-    public void createAction() {
+    protected ListAdapterListModel<Promotion> getAll() {
+        ListAdapterListModel<Promotion> listModel = new ListAdapterListModel<>();
+        listModel.addAll(getDaoFactory().getPromotionDAO().findAll());
+        return listModel;
+    }
+    
+    @Override
+    protected void loadEditorPanel() {
+        // nothing to do
+    }
 
-        if (!getEditorPanel().equals(getFrame().getContent())) {
-            getEditorPanel().setBean(new Promotion());
-            getFrame().setContent(getEditorPanel());
-            return;
-        }
-        
-/*
-        this.createPanel.getForm().verify();
+    @Override
+    public void create(Promotion value) {
 
-        JFormattedTextField fieldDateDebut = this.createPanel.getForm().getField("Date de début");
-        JFormattedTextField fieldDateFin = this.createPanel.getForm().getField("Date de fin");
-        JFormattedTextField fieldReduction = new JFormattedTextField(NumberFormat.getPercentInstance());
-        //formatter le champs texte pour acceuillir un float et l'afficher en pourcentage.
-        fieldReduction = this.createPanel.getForm().getField("Reduction");
-        JTextField fieldImage = this.createPanel.getForm().getField("Image");
-        JTextField fieldDescription = this.createPanel.getForm().getField("Description");
-        JTextField fieldCommentaire = this.createPanel.getForm().getField("Commentaire");
-
-        Date dateDebut = (Date) fieldDateDebut.getValue();
-        Date dateFin = (Date) fieldDateFin.getValue();
-        Float reduction = (Float) fieldReduction.getValue();
-        String image = fieldImage.getText();
-        String description = fieldDescription.getText();
-        String commentaire = fieldCommentaire.getText();
-
-        Promotion promotion = new Promotion();
-
-        promotion.setDateDebut(new java.sql.Date(dateDebut.getTime()));
-        promotion.setDateFin(new java.sql.Date(dateFin.getTime()));
-        promotion.setReduction(reduction);
-        promotion.setImage(image);
-        promotion.setDescription(description);
-        promotion.setCommentaire(commentaire);
-*/
-        Promotion promotion = getEditorPanel().constructBean();
-        
         try {
-            getDaoFactory().getPromotionDAO().save(promotion);
+            getDaoFactory().getPromotionDAO().save(value);
+            alert("Information", "La promotion a bien été sauvegardée !");
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder cette promotion. ");
-            
-            return;
         }
 
-//        this.createPanel.getForm().reset();
-        
-        listAction();
-        alert("Information", "La promotion a bien été sauvegardée !");
-        getEditorPanel().reset();
-        
+//        listAction();
     }
 
     @Override
@@ -104,17 +71,6 @@ public class PromotionController extends CRUDController<Promotion> {
         listAction();
         
     }
-
-//    @Override
-//    public void editAction(Promotion value) {
-//        if(value == null) {
-//            danger("", "Veuillez selectionner une promotion à mettre a jour.");
-//            return;
-//        }
-//        
-//        getEditorPanel().setBean(value);
-//        getFrame().setContent(getEditorPanel());
-//    }
 
     @Override
     public void viewAction(Promotion value) {

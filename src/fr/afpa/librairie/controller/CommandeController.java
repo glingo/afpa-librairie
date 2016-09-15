@@ -19,54 +19,37 @@ public class CommandeController extends CRUDController<Commande> {
         setAdminPanel(new CommandeAdminPanel(this));
         setEditorPanel(new CommandeEditorPanel(this));
     }
-    
+
     @Override
-    public void listAction() {
-        ListAdapterListModel<Commande> commandeListModel = new ListAdapterListModel<>();
-        commandeListModel.addAll(getDaoFactory().getCommandeDAO().findAll());
-        getAdminPanel().setList(commandeListModel);
-        getFrame().setContent(getAdminPanel());
+    public Commande newBean() {
+        return new Commande();
+    }
+
+    @Override
+    protected ListAdapterListModel<Commande> getAll() {
+        ListAdapterListModel<Commande> listModel = new ListAdapterListModel<>();
+        listModel.addAll(getDaoFactory().getCommandeDAO().findAll());
+        return listModel;
+    }
+
+    @Override
+    protected void loadEditorPanel() {
+        // nothing to do.
     }
     
     @Override
-    public void createAction() {
-        
-        if(!getEditorPanel().equals(getFrame().getContent())) {
-            getEditorPanel().setBean(new Commande());
-            getFrame().setContent(getEditorPanel());
-            return;
-        }
-        /*
-        this.createPanel.getForm().verify();
-        
-        JTextField fieldNumero = this.createPanel.getForm().getField("Numero");
-        JFormattedTextField fieldDateCommande = this.createPanel.getForm().getField("Date de commande");
-        
-        String numero = fieldNumero.getText();
-        Date dateCommande = (Date) fieldDateCommande.getValue();
-        
-        Commande commande = new Commande();
-
-        commande.setNumero(numero);
-        commande.setDateCommande(new java.sql.Date(dateCommande.getTime()));
-        */
-        
-        Commande commande = getEditorPanel().constructBean();
-        
+    public void create(Commande value) {
+       
         try{
-            getDaoFactory().getCommandeDAO().save(commande);
+            getDaoFactory().getCommandeDAO().save(value);
+            alert("Information", "La commande a bien été sauvegardée !");
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", " Impossible de sauvegarder cette commande");
-            
-            return;
         }
         
-//        this.createPanel.getForm().reset();
-        
-        listAction();
-        getEditorPanel().reset();
-        alert("Information", "La commande a bien été sauvegardée !");
+//        listAction();
+//        getEditorPanel().reset();
         
     }
     

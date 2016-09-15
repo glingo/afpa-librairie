@@ -3,11 +3,14 @@ package fr.afpa.librairie.controller;
 import fr.afpa.librairie.data.AbstractDAOFactory;
 import fr.afpa.librairie.data.DAOFactoryInterface;
 import fr.afpa.librairie.data.FactoryType;
+import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.panel.AdminPanel;
 import fr.afpa.librairie.view.panel.EditorPanel;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public abstract class CRUDController<T> implements ActionListener {
@@ -18,6 +21,8 @@ public abstract class CRUDController<T> implements ActionListener {
     public static final String SAVE_ACTION      = "save";
     public static final String DELETE_ACTION    = "delete";
     public static final String VIEW_ACTION      = "view";
+    
+//    public static final String CREATE_THEN_LIST_ACTION    = "create_then_list";
     
     // Utiliser les dao dans le controller n'est pas tres recommandé, 
     // mais en attendant les managers on fera avec.
@@ -49,6 +54,7 @@ public abstract class CRUDController<T> implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        T selected = this.adminPanel.getList().getSelectedValue();
         
         switch(e.getActionCommand()) {
             
@@ -58,19 +64,19 @@ public abstract class CRUDController<T> implements ActionListener {
                 
             case CREATE_ACTION:
             case SAVE_ACTION:
-                createAction();
+                editAction(newBean());
                 break;
                 
             case DELETE_ACTION:
-                deleteAction(this.adminPanel.getList().getSelectedValue()); 
+                deleteAction(selected); 
                 break;
                 
             case VIEW_ACTION:
-                viewAction(this.adminPanel.getList().getSelectedValue());
+                viewAction(selected);
                 break;
                 
             case EDIT_ACTION:
-                editAction(this.adminPanel.getList().getSelectedValue());
+                editAction(selected);
                 break;
 
             default:
@@ -80,19 +86,49 @@ public abstract class CRUDController<T> implements ActionListener {
         }
     }
     
-    public abstract void listAction();
+    public abstract T newBean();
+    
+    protected abstract ListAdapterListModel<T> getAll();
+    
+    protected abstract void loadEditorPanel();
+    
+    public void listAction(){
+        getAdminPanel().setList(getAll());
+        setContent(getAdminPanel());
+    };
 
-    public abstract void createAction();
+    public abstract void create(T value);
     
     public void editAction(T value) {
         
         if(value == null) {
-            danger("", "Veuillez selectionner une ligne à mettre a jour.");
+            danger("Veuillez selectionner une ligne à mettre a jour.");
             return;
         }
         
-        getEditorPanel().setBean(value);
-        getFrame().setContent(getEditorPanel());
+        if (!getEditorPanel().equals(getFrame().getContent())) {
+            // load any model if needed.
+            loadEditorPanel();
+            // set bean in editor.
+            getEditorPanel().setBean(value);
+            // display editor in frame
+            setContent(getEditorPanel());
+            return;
+        }
+        
+        // build bean from editor.
+        value = getEditorPanel().constructBean();
+        
+        if(value == null) {
+            danger("Impossible de sauvegarder cette entité."); 
+            return;
+        }
+        
+        // create or update value.
+        create(value);
+        
+        // reset values in editor.
+        getEditorPanel().reset();
     }
 
     public abstract void viewAction(T value);
@@ -127,6 +163,9 @@ public abstract class CRUDController<T> implements ActionListener {
         return daoFactory;
     }
     
+    protected void setContent(Component component){
+        this.frame.setContent(component);
+    }
     
     protected void alert(String title, String message){
         JOptionPane.showMessageDialog(frame, message, title, JOptionPane.INFORMATION_MESSAGE);
@@ -134,6 +173,10 @@ public abstract class CRUDController<T> implements ActionListener {
     
     protected void danger(String title, String message){
         JOptionPane.showMessageDialog(frame, message, title, JOptionPane.ERROR_MESSAGE);
+    }
+    
+    protected void danger(String message){
+        danger(null, message);
     }
 
 }

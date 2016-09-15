@@ -60,7 +60,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         super(new Edition(), controller);
     }
 
-    public EditionEditorPanel(Edition bean, ActionListener controller) {
+    public EditionEditorPanel(Edition bean, ActionListener controller, boolean modal) {
         super(bean, controller);
     }
 

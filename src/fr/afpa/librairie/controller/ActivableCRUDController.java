@@ -7,14 +7,9 @@ package fr.afpa.librairie.controller;
 
 import static fr.afpa.librairie.controller.UtilisateurController.ACTIVATE_ACTION;
 import static fr.afpa.librairie.controller.UtilisateurController.DESACTIVATE_ACTION;
-import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.view.MainFrame;
 import java.awt.event.ActionEvent;
 
-/**
- *
- * @author cdi305
- */
 public abstract class ActivableCRUDController<T> extends CRUDController<T> {
     
     public static final String ACTIVATE_ACTION = "activate";

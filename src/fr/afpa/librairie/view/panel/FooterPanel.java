@@ -35,5 +35,9 @@ public abstract class FooterPanel extends JPanel {
     protected abstract void initButtons();
     
     protected abstract List<AbstractButton> getButtons();
+
+    public ActionListener getController() {
+        return controller;
+    }
     
 }

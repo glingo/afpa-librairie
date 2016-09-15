@@ -9,12 +9,30 @@ import fr.afpa.librairie.view.adresse.AdresseEditorPanel;
 import java.util.logging.Logger;
 
 public class AdresseController extends CRUDController<Adresse> {
+    
     private static final Logger LOG = Logger.getLogger(AdresseController.class.getName());
 
     public AdresseController(MainFrame frame) {
         super(frame);
         setAdminPanel(new AdresseAdminPanel(this));
         setEditorPanel(new AdresseEditorPanel(this));
+    }
+
+    @Override
+    public Adresse newBean() {
+        return new Adresse();
+    }
+
+    @Override
+    protected ListAdapterListModel<Adresse> getAll() {
+        ListAdapterListModel<Adresse> listModel = new ListAdapterListModel<>();
+        listModel.addAll(getDaoFactory().getAdresseDAO().findAll());
+        return listModel;
+    }
+    
+    @Override
+    protected void loadEditorPanel() {
+        // set la list de statut.
     }
     
     @Override
@@ -26,28 +44,18 @@ public class AdresseController extends CRUDController<Adresse> {
     }
 
     @Override
-    public void createAction() {
-        if (!getEditorPanel().equals(getFrame().getContent())) {
-            getEditorPanel().setBean(new Adresse());
-            getFrame().setContent(getEditorPanel());
-            return;
-        }
-        
-        Adresse adresse = getEditorPanel().constructBean();
+    public void create(Adresse value) {
         
         try {
-            getDaoFactory().getAdresseDAO().save(adresse);
-            
+            getDaoFactory().getAdresseDAO().save(value);
+            alert("Information", "L'adresse a bien été sauvegardée !");
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de sauvegarder cette adresse.");
         }
         
-        listAction();
-        getEditorPanel().reset();
-        alert("Information", "L'adresse a bien été sauvegardée !");
-        
+//        listAction();
     }
 
     @Override

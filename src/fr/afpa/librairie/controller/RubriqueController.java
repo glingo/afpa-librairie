@@ -24,6 +24,23 @@ public class RubriqueController extends CRUDController<Rubrique> implements List
         setAdminPanel(new RubriqueAdminPanel(this));
         setEditorPanel(new RubriqueEditorPanel(this));
     }
+
+    @Override
+    public Rubrique newBean() {
+        return new Rubrique();
+    }
+
+    @Override
+    protected ListAdapterListModel<Rubrique> getAll() {
+        ListAdapterListModel<Rubrique> listModel = new ListAdapterListModel<>();
+        listModel.addAll(getDaoFactory().getRubriqueDAO().findAll());
+        return listModel;
+    }
+
+    @Override
+    protected void loadEditorPanel() {
+       // nothing to do.
+    }
     
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -33,40 +50,19 @@ public class RubriqueController extends CRUDController<Rubrique> implements List
             viewAction(rubrique);
         }
     }
-
-    @Override
-    public void listAction() {
-        ListAdapterListModel<Rubrique> rubriqueListModel = new ListAdapterListModel<>();
-        rubriqueListModel.addAll(getDaoFactory().getRubriqueDAO().findAll());
-        getAdminPanel().setList(rubriqueListModel);
-        getFrame().setContent(getAdminPanel());
-    }
     
     @Override
-    public void createAction() {
-                
-        if(!getEditorPanel().equals(getFrame().getContent())) {
-            getEditorPanel().setBean(new Rubrique());
-            getFrame().setContent(getEditorPanel());
-            return;
-        }
-        
-        Rubrique rubrique = getEditorPanel().constructBean();
-        
+    public void create(Rubrique value) {
         try{
-            getDaoFactory().getRubriqueDAO().save(rubrique);
+            getDaoFactory().getRubriqueDAO().save(value);
+            alert("Information", "La sauvegarde a bien été effectué !");
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de sauvegarder cette rubrique.");
-            
-            // on souhaite rester sur l'ecran de creation et ne pas retourner vers la liste.
-            return;
         }
         
-        getEditorPanel().reset();
-        listAction();
-        alert("Information", "La sauvegarde a bien été effectué !");
+//        listAction();
     }
     
     @Override
