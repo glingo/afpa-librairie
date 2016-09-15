@@ -22,5 +22,7 @@ public class EditionAdminPanel extends AdminPanel<Edition> {
             new ListPanel<>(new EditionTableModel()), 
             new ActivableFooterAdminPanel(controller));
     }
+    
+   
   
 }

@@ -75,7 +75,7 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
         try {
             
             if(instance.getOrderStat() == null) {
-                StatutCommande orderStat = getFactory().getStatutCommandeDAO().findByCode("OK");
+                StatutCommande orderStat = getFactory().getStatutCommandeDAO().findByCode("ac1");
                 instance.setOrderStat(orderStat);
             }
 
