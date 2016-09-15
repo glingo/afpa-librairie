@@ -1,20 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.data.bean;
 
 /**
+ * Enregistre les différentes info. relatives au statut d'une transaction.
  *
- * @author cdi309
  */
 public class StatutTransaction {
-    
+
+    /**
+     * Séquentiel de la table StatutTransaction généré automatiquement par la
+     * BDD.
+     */
     private Long id;
+    /**
+     * Libellé du statut.
+     *
+     * @see StatutTransactionDAO
+     */
     private String libelle;
+    /**
+     * Code Statut.
+     */
     private String code;
 
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public StatutTransaction() {
     }
 
@@ -46,6 +56,5 @@ public class StatutTransaction {
     public String toString() {
         return "StatutTransaction{" + "id=" + id + ", libelle=" + libelle + ", code=" + code + '}';
     }
-    
-    
+
 }

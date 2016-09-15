@@ -21,28 +21,32 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ListDAOFactory extends AbstractDAOFactory {
-    
+
     private HashMap<String, List> tables;
-    
+
     public ListDAOFactory() {
         super();
     }
-    
+
     protected List getTable(String name) {
-        
-        if(!getTables().containsKey(name)) {
+
+        if (!getTables().containsKey(name)) {
             getTables().put(name, new ArrayList());
         }
-        
+
         return getTables().get(name);
-    };
+    }
+
+    ;
      
     protected HashMap<String, List> getTables() {
-        if(this.tables == null) {
+        if (this.tables == null) {
             this.tables = new HashMap<>();
         }
         return this.tables;
-    };
+    }
+
+    ;
 
     @Override
     public UtilisateurListDAO getUtilisateurDAO() {
@@ -58,12 +62,22 @@ public class ListDAOFactory extends AbstractDAOFactory {
     public StatutUtilisateurListDAO getStatutUtilisateurDAO() {
         return new StatutUtilisateurListDAO(this);
     }
-    
-        //@Override
+
+    @Override
     public StatutEntrepriseListDAO getStatutEntrepriseDAO() {
         return new StatutEntrepriseListDAO(this);
     }
 
+    @Override
+    public StatutAdresseListDAO getStatutAdresseDAO() {
+        return new StatutAdresseListDAO(this);
+    }
+
+    
+    @Override
+    public StatutTransactionListDAO getStatutTransactionDAO(){
+        return new StatutTransactionListDAO(this);
+    }
     @Override
     public AuteurDAO getAuteurDAO() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -143,5 +157,5 @@ public class ListDAOFactory extends AbstractDAOFactory {
     public TaxeDAO getTaxeDAO() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

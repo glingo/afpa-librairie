@@ -1,24 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
 
 /**
- *
- * @author cdi309
+ * Enregistre les différentes info. relatives au passage d'une commande.
  */
 public class HistoriqueStatutCommande {
-    
-    private Long id;
-    private Date datePassage;
-    private String commentaire;
-    
-    
 
+    /**
+     * Séquentiel de la table HistoriqueStatutCommande généré automatiquement par la BDD.
+     */
+    private Long id;
+    /**
+     * Date de passage de la commande.
+     */
+    private Date datePassage;
+    /**
+     * Commentaire interne éventuel concernant la commande.
+     */
+    private String commentaire;
+
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public HistoriqueStatutCommande() {
     }
 
@@ -50,6 +54,5 @@ public class HistoriqueStatutCommande {
     public String toString() {
         return "HistoriqueStatutCommande{" + "id=" + id + ", datePassage=" + datePassage + ", commentaire=" + commentaire + '}';
     }
-    
-    
+
 }

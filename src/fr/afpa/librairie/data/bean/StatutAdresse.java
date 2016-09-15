@@ -1,20 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.data.bean;
 
 /**
+ * Enregistre les différentes info. relatives au statut d'une adresse.
  *
- * @author cdi309
  */
 public class StatutAdresse {
-    
+
+    /**
+     * Séquentiel de la table StatutAdresse généré automatiquement par la BDD.
+     */
     private Long id;
+    /**
+     * Libellé du statut.
+     * 
+     * @see StatutAdresseDAO
+     */
     private String libelle;
+    /**
+     * N° de code du Statut.
+     * 
+     * @see StatutAdresseDAO
+     */
     private String code;
 
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public StatutAdresse() {
     }
 
@@ -46,6 +57,5 @@ public class StatutAdresse {
     public String toString() {
         return "StatutAdresse{" + "id=" + id + ", libelle=" + libelle + ", code=" + code + '}';
     }
-    
-    
+
 }

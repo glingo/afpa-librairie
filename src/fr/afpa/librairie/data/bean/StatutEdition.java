@@ -1,20 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.data.bean;
 
 /**
+ * Enregistre les différentes info. relatives au statut d'une édition.
  *
- * @author cdi309
  */
 public class StatutEdition {
-    
+
+    /**
+     * Séquentiel de la table StatutEdition généré automatiquement par la BDD.
+     */
     private Long id;
+    /**
+     * Libellé du statut.
+     *
+     * @see StatutEditionDAO
+     */
     private String libelle;
+    /**
+     * N° de code du Statut.
+     *
+     * @see StatutEditionDAO
+     */
     private String code;
 
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public StatutEdition() {
     }
 
@@ -46,6 +57,5 @@ public class StatutEdition {
     public String toString() {
         return "StatutEdition{" + "id=" + id + ", libelle=" + libelle + ", code=" + code + '}';
     }
-    
-    
+
 }

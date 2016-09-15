@@ -1,20 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.data.bean;
 
 /**
- *
- * @author cdi309
+ * Enregistre les différentes info. relatives au statut d'une commande.
+ * 
  */
 public class StatutCommande {
-    
+
+    /**
+     * Séquentiel de la table StatutCommande généré automatiquement par
+     * la BDD.
+     * 
+     */
     private Long id;
+    /**
+     * Libellé du statut.
+     * 
+     * @see StatutAdresseDAO
+     */
     private String libelle;
+    /**
+     * Code du Statut.
+     * 
+     * @see StatutAdresseDAO
+     */
     private String code;
 
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public StatutCommande() {
     }
 
@@ -46,7 +59,5 @@ public class StatutCommande {
     public String toString() {
         return "StatutCommande{" + "id=" + id + ", libelle=" + libelle + ", code=" + code + '}';
     }
-    
-    
-    
+
 }

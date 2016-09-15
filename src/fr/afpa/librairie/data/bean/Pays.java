@@ -1,20 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.data.bean;
 
 /**
+ * Enregistre les différentes info. relatives à un pays.
  *
- * @author cdi309
  */
 public class Pays {
-    
+
+    /**
+     * Séquentiel de la table Pays généré automatiquement par la BDD.
+     */
     private Long id;
+    /**
+     * Nom du pays
+     */
     private String libelle;
+    /**
+     * Code du pays.
+     */
     private String code;
 
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public Pays() {
     }
 
@@ -46,6 +53,5 @@ public class Pays {
     public String toString() {
         return "Pays{" + "id=" + id + ", libelle=" + libelle + ", code=" + code + '}';
     }
-    
-    
+
 }

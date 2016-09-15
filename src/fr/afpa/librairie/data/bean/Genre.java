@@ -6,7 +6,7 @@ package fr.afpa.librairie.data.bean;
 public class Genre {
 
     /**
-     * Séquentiel de la table Auteur automatiquement généré par la BDD.
+     * Séquentiel de la table Genre généré automatiquement par la BDD.
      */
     private Long id;
     /**

@@ -1,21 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
 
 /**
- *
- * @author cdi309
+ * Enregistre la date d'une transaction.
  */
 public class Transaction {
-    
+
+    /**
+     * Séquentiel de la table Transaction généré automatiquement par la BDD.
+     */
     private Long id;
+    /**
+     * Date de la transaction.
+     */
     private Date dateTransaction;
 
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public Transaction() {
     }
 
@@ -39,6 +42,5 @@ public class Transaction {
     public String toString() {
         return "Transaction{" + "id=" + id + ", dateTransaction=" + dateTransaction + '}';
     }
-    
-    
+
 }

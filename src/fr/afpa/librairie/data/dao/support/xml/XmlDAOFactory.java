@@ -36,8 +36,19 @@ public class XmlDAOFactory extends AbstractDAOFactory {
         return new StatutUtilisateurXmlDAO(this);
     }
     
+    @Override
         public StatutEntrepriseXmlDAO getStatutEntrepriseDAO(){
         return new StatutEntrepriseXmlDAO(this);
+    }
+        
+    @Override
+        public StatutAdresseXmlDAO getStatutAdresseDAO(){
+        return new StatutAdresseXmlDAO(this);
+    }
+        
+            @Override
+        public StatutTransactionXmlDAO getStatutTransactionDAO(){
+        return new StatutTransactionXmlDAO(this);
     }
     
     @Override

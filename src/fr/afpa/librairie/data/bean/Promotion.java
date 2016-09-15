@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
@@ -10,23 +5,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Enregistre les différentes info. relatives à une promotion.
  *
- * @author cdi309
  */
 public class Promotion {
-    
-    private Long id;
-    private Date dateDebut;
-    private Date dateFin;
-    private float reduction;
-    private String image;
-    private String description;
-    private String commentaire;
- 
 
+    /**
+     * Séquentiel de la table Promotion généré automatiquement par la BDD.
+     */
+    private Long id;
+    /**
+     * Date d'entrée en vigueur de la promotion.
+     */
+    private Date dateDebut;
+    /**
+     * Date de fin de la promotion.
+     */
+    private Date dateFin;
+    /**
+     * Montant de la réduction (%age ou valeur).
+     */
+    private float reduction;
+    /**
+     * String spécifiant le chemin d'accès à l'image de la promotion.
+     */
+    private String image;
+    /**
+     * Info. relatives à la promotion.
+     */
+    private String description;
+    /**
+     * Commentaires relatifs à la promotion.
+     */
+    private String commentaire;
+
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public Promotion() {
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -88,8 +106,4 @@ public class Promotion {
         return "Promotion{" + "id=" + id + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", reduction=" + reduction + ", image=" + image + ", description=" + description + ", commentaire=" + commentaire + '}';
     }
 
-    
-    
-    
-    
 }

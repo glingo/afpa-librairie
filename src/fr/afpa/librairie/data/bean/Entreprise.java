@@ -6,7 +6,7 @@ package fr.afpa.librairie.data.bean;
 public class Entreprise {
 
     /**
-     * Séquentiel de la table Entreprise automatiquement généré par la BDD.
+     * Séquentiel de la table Entreprise généré automatiquement par la BDD.
      */
     private Long id;
 

@@ -6,15 +6,30 @@
 package fr.afpa.librairie.data.bean;
 
 /**
+ * Enregistre les différentes info. relatives aà la/aux taxe(s) appliquée(s)
+ * lors de la vente d'un ouvrage à partir de son prix hors taxes.
  *
- * @author cdi309
  */
 public class Taxe {
-    
-    private Long id;
-    private String libelle;
-    private float valeur;
 
+        /**
+     * Séquentiel de la table Taxe généré automatiquement par la
+     * BDD.
+     */
+    private Long id;
+    /**
+     * Libellé de la taxe.
+     */
+    private String libelle;
+    /**
+     * Valeur appliquée en %age.
+     */
+    private float valeur;
+    
+    
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public Taxe() {
     }
 
@@ -46,6 +61,5 @@ public class Taxe {
     public String toString() {
         return "Taxe{" + "id=" + id + ", libelle=" + libelle + ", valeur=" + valeur + '}';
     }
-    
-    
+
 }

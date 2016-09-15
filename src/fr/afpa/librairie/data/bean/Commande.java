@@ -3,14 +3,14 @@ package fr.afpa.librairie.data.bean;
 import java.sql.Date;
 
 /**
- * Enregistre les différetes info. relatives à la commande d'un ouvrage.
+ * Enregistre les différentes info. relatives à la commande d'un ouvrage.
  *
  * @see Ouvrage
  */
 public class Commande {
     
     /**
-     * Séquentiel de la table Commande automatiquement généré par la BDD.
+     * Séquentiel de la table Commande généré automatiquement par la BDD.
      */
     private Long id;
     /**

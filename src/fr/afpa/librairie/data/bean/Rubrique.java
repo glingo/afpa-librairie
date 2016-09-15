@@ -2,16 +2,37 @@ package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
 
+/**
+ * Enregistre les différentes info. relatives à une rubrique.
+ */
 public class Rubrique {
-    
+
+    /**
+     * Séquentiel de la table Rubrique généré automatiquement par la BDD.
+     */
     private Long id;
+    /**
+     * Nom de la rubrique.
+     */
     private String libelle;
-    
+    /**
+     * Date d'entrée en vigueur de la rubrique.
+     */
     private Date dateDebut;
+    /**
+     * Date de fin de la rubrique.
+     */
     private Date dateFin;
+    /**
+     * Info. relatives à la rubrique.
+     */
     private String commentaire;
 
-    public Rubrique() {}
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
+    public Rubrique() {
+    }
 
     public Long getId() {
         return id;
@@ -44,17 +65,17 @@ public class Rubrique {
     public void setDateFin(Date dateFin) {
         this.dateFin = dateFin;
     }
-    
-    public String getCommentaire(){
+
+    public String getCommentaire() {
         return commentaire;
     }
-    
-    public void setCommentaire(String commentaire){
+
+    public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
     }
-    
-    public String toString(){
+
+    public String toString() {
         return libelle;
     }
-    
+
 }

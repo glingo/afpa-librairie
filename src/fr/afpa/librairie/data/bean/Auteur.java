@@ -3,14 +3,14 @@ package fr.afpa.librairie.data.bean;
 import java.sql.Date;
 
 /**
- * Enregistre les différetes info. relatives à l'auteur d'un ouvrage.
+ * Enregistre les différentes info. relatives à l'auteur d'un ouvrage.
  *
  * @see Ouvrage
  */
 public class Auteur {
 
     /**
-     * Séquentiel de la table Auteur automatiquement généré par la BDD.
+     * Séquentiel de la table Auteur généré automatiquement par la BDD.
      */
     private Long id;
     /**

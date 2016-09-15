@@ -1,11 +1,12 @@
 package fr.afpa.librairie.data.bean;
 
 /**
- * Enregistre les différetes info. relatives à l'Editeur d'une Edition.
+ * Enregistre les différentes info. relatives à l'Editeur d'une Edition.
  */
 public class Editeur {
+
     /**
-     * Séquentiel de la table Editeur automatiquement généré par la BDD.
+     * Séquentiel de la table Editeur généré automatiquement par la BDD.
      */
     private Long id;
     /**
@@ -28,7 +29,7 @@ public class Editeur {
         return id;
     }
 
-     /**
+    /**
      * Met à jour l'id (généré par la BDD).
      *
      * @param id Nouvel id.

@@ -7,7 +7,7 @@ package fr.afpa.librairie.data.bean;
 public class Commentaire {
 
     /**
-     * Séquentiel de la table Commentaire automatiquement généré par la BDD.
+     * Séquentiel de la table Commentaire généré automatiquement par la BDD.
      */
     private Long id;
     /**

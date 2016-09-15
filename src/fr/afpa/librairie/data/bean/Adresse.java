@@ -8,7 +8,7 @@ package fr.afpa.librairie.data.bean;
 public class Adresse {
     
     /**
-     * Séquentiel de la table Adresse automatiquement généré par la BDD.
+     * Séquentiel de la table Adresse généré automatiquement par la BDD.
      */
     private Long id;
     

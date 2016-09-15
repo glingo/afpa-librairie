@@ -1,11 +1,26 @@
-
 package fr.afpa.librairie.data.bean;
 
+/**
+ * Enregistre les différentes info. relatives aux mots-clefs utilisés pour
+ * résumer un ouvrage.
+ *
+ */
 public class Tag {
-    
+
+        /**
+     * Séquentiel de la table Tag généré automatiquement par la
+     * BDD.
+     */
     private Long id;
+        /**
+     * Libellé du mot-clef.
+     *
+     */
     private String libelle;
 
+        /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public Tag() {
     }
 
@@ -30,6 +45,5 @@ public class Tag {
 //        return "Tag{" + "id=" + id + ", libelle=" + libelle + '}';
         return libelle;
     }
-    
-    
+
 }

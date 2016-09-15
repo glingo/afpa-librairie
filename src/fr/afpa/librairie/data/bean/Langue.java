@@ -1,20 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fr.afpa.librairie.data.bean;
 
 /**
- *
- * @author cdi309
+ * Enregistre les différentes info. relatives à la langue dans laquelle
+ * a été rédigé une édition.
  */
 public class Langue {
     
+        /**
+     * Séquentiel de la table Langue généré automatiquement par la BDD.
+     */
     private Long id;
+    /**
+     * Langue de l'ouvrage.
+     */
     private String libelle;
+    /**
+     * Code de la langue.
+     */
     private String code;
 
+        /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public Langue() {
     }
 

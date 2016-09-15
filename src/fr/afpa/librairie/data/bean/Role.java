@@ -1,12 +1,25 @@
 package fr.afpa.librairie.data.bean;
 
+/**
+ * Distingue les employés des clients.
+ */
 public class Role {
-   
+
+    /**
+     * Séquentiel de la table Role généré automatiquement par la BDD.
+     */
     private Long id;
+    /**
+     * Statut utilisateur
+     */
     private String libelle;
+    /**
+     * Code utilisateur.
+     */
     private String code;
 
-    public Role() {}
+    public Role() {
+    }
 
     public Long getId() {
         return id;
@@ -15,7 +28,7 @@ public class Role {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getLibelle() {
         return libelle;
     }
@@ -31,6 +44,5 @@ public class Role {
     public void setCode(String code) {
         this.code = code;
     }
-    
-    
+
 }

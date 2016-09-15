@@ -1,11 +1,32 @@
 package fr.afpa.librairie.data.bean;
 
+/**
+ * Enregistre les différentes info. relatives au statut d'un utilisateur.
+ *
+ */
 public class StatutUtilisateur {
-    
+
+    /**
+     * Séquentiel de la table StatutUtilisateur généré automatiquement par la
+     * BDD.
+     */
     private Long id;
+    /**
+     * Libellé du statut.
+     *
+     * @see StatutUtilisateurDAO
+     */
     private String libelle;
+    /**
+     * N° de code du Statut.
+     *
+     * @see StatutUtilisateurDAO
+     */
     private String code;
 
+    /**
+     * Constructeur de la classe; accès sans utiliser de paramètres.
+     */
     public StatutUtilisateur() {
     }
 
@@ -16,7 +37,7 @@ public class StatutUtilisateur {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getLibelle() {
         return libelle;
     }
@@ -32,5 +53,5 @@ public class StatutUtilisateur {
     public void setCode(String code) {
         this.code = code;
     }
-    
+
 }

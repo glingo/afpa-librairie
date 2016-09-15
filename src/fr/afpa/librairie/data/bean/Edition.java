@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Enregistre les différetes info. relatives à l'édition d'un ouvrage.
+ * Enregistre les différentes info. relatives à l'édition d'un ouvrage.
  *
  * @see Ouvrage
  */
