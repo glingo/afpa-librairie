@@ -94,7 +94,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         try {
 
             if (instance.getStatut() == null) {
-                StatutEdition statut = getFactory().getStatutEditionDAO().findByCode("OK");
+                StatutEdition statut = getFactory().getStatutEditionDAO().findByCode("1");
                 instance.setStatut(statut);
             }
 
@@ -105,7 +105,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
 
             if (instance.getOuvrage() == null) {
 
-                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre("OK");
+                Ouvrage ouvrage = getFactory().getOuvrageDAO().findByTitre("Les fourmis");
                 instance.setOuvrage(ouvrage);
             }
 
@@ -116,7 +116,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
 
             if (instance.getLangue() == null) {
 
-                Langue langue = getFactory().getLangueDAO().findByCode("OK");
+                Langue langue = getFactory().getLangueDAO().findByCode("fr1");
                 instance.setLangue(langue);
             }
 

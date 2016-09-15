@@ -13,5 +13,14 @@ public class JFloatField extends JFormattedTextField {
             setInputVerifier(new StrictInputVerifier());
         }
     }
+    
+    @Override
+    public Float getValue() {
+        if(super.getValue() == null) {
+            return null;
+        }
+        
+        return ((Number) super.getValue()).floatValue();
+    }
 
 }

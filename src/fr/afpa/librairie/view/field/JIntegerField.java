@@ -12,4 +12,15 @@ public class JIntegerField extends JFormattedTextField {
             setInputVerifier(new StrictInputVerifier());
         }
     }
+
+    @Override
+    public Integer getValue() {
+       if(super.getValue() == null) {
+            return null;
+        }
+        
+        return ((Number) super.getValue()).intValue();
+    }
+    
+    
 }
