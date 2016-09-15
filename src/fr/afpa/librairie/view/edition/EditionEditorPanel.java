@@ -31,7 +31,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
     private JTextField prixHt;
     private JTextField image;
     private JTextField titre;
-    private JPercentField stock;
+    private JTextField stock;
  
     
     
@@ -82,8 +82,8 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         titre = new JTextField(15);
         titre.setInputVerifier(new StrictInputVerifier());
         
-        /*stock = new JTextField(15);
-        stock.setInputVerifier(new StrictInputVerifier());*/
+        stock = new JTextField(15);
+        stock.setInputVerifier(new StrictInputVerifier());
  
 
 
