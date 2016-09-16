@@ -70,7 +70,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final PaysController paysController = new PaysController(this);
 
     private HeaderPanel headerPanel;
-    private LeftMenuPanel leftMenuPanel;
+//    private LeftMenuPanel leftMenuPanel;
     private Component currentContent;
 
     private GroupLayout layout;
@@ -108,12 +108,12 @@ public class MainFrame extends javax.swing.JFrame {
         initMenu(jMenuBar);
 
         headerPanel = new HeaderPanel();
-        leftMenuPanel = new LeftMenuPanel();
+//        leftMenuPanel = new LeftMenuPanel();
         currentContent = new AccueilPanel();
 
         initLayout();
         
-        leftMenuPanel.getRubriques().addListSelectionListener(rubriqueController);
+//        leftMenuPanel.getRubriques().addListSelectionListener(rubriqueController);
 
         pack();
     }
@@ -140,8 +140,8 @@ public class MainFrame extends javax.swing.JFrame {
                 layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//                        .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addComponent(headerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -153,7 +153,8 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+//                                .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        )
                         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
@@ -256,9 +257,9 @@ public class MainFrame extends javax.swing.JFrame {
         g.drawString(LOADING_MSG[(frame / 5) % 3] + " ...", 120, 150);
     }
 
-    public LeftMenuPanel getLeftMenuPanel() {
-        return leftMenuPanel;
-    }
+//    public LeftMenuPanel getLeftMenuPanel() {
+//        return leftMenuPanel;
+//    }
 
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
