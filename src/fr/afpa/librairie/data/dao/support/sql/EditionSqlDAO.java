@@ -1,6 +1,7 @@
 package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.AbstractDAOFactory;
+import fr.afpa.librairie.data.bean.Editeur;
 import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.data.bean.Ouvrage;
@@ -123,17 +124,37 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
                 Langue langue = getFactory().getLangueDAO().findByCode(instance.getLangue().getCode());
                 instance.setLangue(langue);
             }
-
-//            if(instance.getTaxe().getValeur() == null){
-//                Taxe taxe = getFactory().getTaxeDAO().findByLibelle("");
-//                instance.setTaxe(taxe);
-//                
+            
+            
+//            if (instance.getEditeur() == null) {
+//
+//                Editeur editeur = getFactory().getEditeurDAO().findByLibelle("Actes Sud");
+//                instance.setEditeur(editeur);
+//            }
+//
+//            if (instance.getEditeur().getLibelle() == null) {
+//                Editeur editeur = getFactory().getEditeurDAO().findByLibelle(instance.getEditeur().getLibelle());
+//                instance.setEditeur(editeur);
 //            }
 //            
-//            if(instance.getTaxe().getValeur() == null){
-//                Taxe taxe = getFactory().getTaxeDAO().findByLibelle(instance.getTaxe().getLibelle());
-//                instance.setTaxe(taxe);
-//            }
+            
+            if(instance.getTaxes() == null) {
+                // on recupère le Role par default
+                // le code devrait etre une constante.
+                Taxe taxe = getFactory().getTaxeDAO().findByLibelle("TVA classique");
+                instance.addTaxe(taxe);
+            }
+            
+            // On verifie que tout les roles sont enregistré
+            instance.getTaxes().forEach((Taxe taxe) -> {
+                if(taxe != null && taxe.getId() == null) {
+                    taxe = getFactory().getTaxeDAO().findByValeur(taxe.getValeur());
+                }
+            });
+            
+            
+            
+      
             //recuperation de la connexion depuis la factory
             connexion = factory.getConnection();
             //requete prepare avec des conditions particulières.
@@ -141,7 +162,8 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
                     instance.getIsbn(), instance.getOuvrage().getId(),
                     instance.getLangue().getId(), instance.getStatut().getId(),
                     instance.getDatePublication(), instance.getPrixHt(), 
-                    instance.getCouverture(), instance.getTitre(),
+                    instance.getCouverture(), instance.getTitre(), 
+                    instance.getTaxes(),
                     instance.getStock());
 
             int statut = preparedStatement.executeUpdate();
@@ -179,6 +201,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
                     instance.getOuvrage().getId(), instance.getLangue().getId(), 
                     instance.getStatut().getId(), instance.getDatePublication(), 
                     instance.getPrixHt(), instance.getCouverture(), 
+                    instance.getTaxes(),
                     instance.getTitre(), instance.getStock());
 
             int statut = preparedStatement.executeUpdate();
@@ -378,6 +401,8 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
 
         Langue langue = factory.getLangueDAO().findById(resultSet.getLong("idLangue"));
         edition.setLangue(langue);
+        
+       
 
         StatutEdition statut = factory.getStatutEditionDAO().findById(resultSet.getLong("idStatutEdition"));
         edition.setStatut(statut);

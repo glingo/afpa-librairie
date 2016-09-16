@@ -5,6 +5,7 @@ import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.data.bean.Taxe;
 import fr.afpa.librairie.model.table.column.EditionColumn;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +49,9 @@ public class EditionTableModel extends TableModel<Edition> {
             case ISBN:
                 columnValue = edition.getIsbn();
                 break;
+//            case EDITEUR:
+//                columnValue = getEditeurObject(edition);
+//                  break;
             case DATEPUBLI:
                 columnValue = edition.getDatePublication();
                 break;
@@ -56,6 +60,9 @@ public class EditionTableModel extends TableModel<Edition> {
                 break;
             case PRIXHT:
                 columnValue = edition.getPrixHt();
+                break;
+            case TAXE:
+                columnValue = getTaxeObject(edition);
                 break;
             case COUVERTURE:
                 columnValue = edition.getCouverture();
@@ -87,7 +94,28 @@ public class EditionTableModel extends TableModel<Edition> {
     private String getLangueObject(Edition edition) {
         return edition.getLangue().getLibelle();
     }
-
+    
+//    private String getEditeurObject(Edition edition){
+//        return edition.getEditeur().getLibelle();
+//    }
+//    
+    private String getTaxeObject(Edition edition){
+        StringBuilder sb = new StringBuilder();
+        
+        int len = edition.getTaxes().size();
+        
+        for(int i = 0; i < len; i++){
+            Taxe taxe = edition.getTaxes().get(i);
+            sb.append(taxe.getLibelle());
+            
+            if(i < len - 1){
+                sb.append(", ");
+            }
+        }
+        
+        return sb.toString();
+    }
+            
 
     private EditionColumn getColumn(int columnIndex) {
         EditionColumn[] columns = EditionColumn.values();
