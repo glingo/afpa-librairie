@@ -169,7 +169,7 @@ public abstract class CRUDController<T> implements ActionListener {
             if(isModal) {
                 disposeModal();
             } else {
-                listAction();
+                adminAction();
             }
         }
     }

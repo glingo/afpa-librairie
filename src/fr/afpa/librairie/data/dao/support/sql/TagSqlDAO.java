@@ -110,6 +110,12 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
 
     @Override
     public void save(Tag instance) throws DAOException {
+        Tag registered = findByLibelle(instance.getLibelle());
+        
+        if(registered != null) {
+            instance.setId(registered.getId());
+        }
+        
         if(instance.getId() != null) {
             update(instance);
         } else {
@@ -213,9 +219,12 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
             connexion = factory.getConnection();
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_LIBELLE, 
                     false, libelle);
+            
             resultSet = preparedStatement.executeQuery();
 
-            tag = map(resultSet);
+            if(resultSet.next()) {
+                tag = map(resultSet);
+            }
             
         } catch (SQLException e) {
             throw new DAOException(e);

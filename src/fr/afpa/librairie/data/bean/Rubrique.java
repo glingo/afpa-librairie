@@ -1,6 +1,7 @@
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
+import java.util.Objects;
 
 /**
  * Enregistre les différentes info. relatives à une rubrique.
@@ -76,6 +77,28 @@ public class Rubrique {
 
     public String toString() {
         return libelle;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Rubrique other = (Rubrique) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
 }

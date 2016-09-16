@@ -1,12 +1,17 @@
 
 package fr.afpa.librairie.controller;
 
+import fr.afpa.librairie.data.bean.Auteur;
+import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Ouvrage;
+import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.ouvrage.OuvrageAdminPanel;
 import fr.afpa.librairie.view.ouvrage.OuvrageEditorPanel;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class OuvrageController extends CRUDController<Ouvrage> {
@@ -30,11 +35,32 @@ public class OuvrageController extends CRUDController<Ouvrage> {
         listModel.addAll(getDaoFactory().getOuvrageDAO().findAll());
         return listModel;
     }
+
+    @Override
+    public OuvrageEditorPanel getEditorPanel() {
+        return (OuvrageEditorPanel) super.getEditorPanel(); //To change body of generated methods, choose Tools | Templates.
+    }
     
     @Override
     protected void loadEditorPanel() {
+        List<Auteur> auteurs = getDaoFactory().getAuteurDAO().findAll();
+        
         // load auteurs
+        getEditorPanel().setAuteurModel(auteurs);
         // load coauteurs
+        getEditorPanel().setCoAuteurModel(auteurs);
+        
+        // load genres
+        List<Genre> genres = getDaoFactory().getGenreDAO().findAll();
+        getEditorPanel().setGenresModel(genres);
+        
+        // load themes
+        List<Theme> themes = getDaoFactory().getThemeDAO().findAll();
+        getEditorPanel().setThemesModel(themes);
+        
+        // load rubriques
+        List<Rubrique> rubriques = getDaoFactory().getRubriqueDAO().findAll();
+        getEditorPanel().setRubriquesModel(rubriques);
     }
     
     @Override

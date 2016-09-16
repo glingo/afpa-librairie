@@ -84,7 +84,7 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
     }
     
     public void setAdresses(ListAdapterListModel<Adresse> list){
-        adresseComboModel = new DefaultComboBoxModel(list.getList().toArray());
+        adresseComboModel = new DefaultComboBoxModel(list.toArray());
         adresseComboModel.insertElementAt(null, 0);
         adresseComboModel.setSelectedItem(null);
         adresse.setModel(adresseComboModel);

@@ -16,7 +16,7 @@ public class LeftMenuPanel extends JPanel {
 
     private final ListAdapterListModel<Rubrique> listModel = new ListAdapterListModel<>();
     private final ListSelectionModel selectionModel = new DefaultListSelectionModel();
-    private final ListModelSelection<Rubrique> listModelSelection = new ListModelSelection<>();
+    private final ListModelSelection listModelSelection = new ListModelSelection();
 //    private final ListCellRenderer cellRenderer = new RubriqueListCellRenderer();
     
     private JList rubriques;

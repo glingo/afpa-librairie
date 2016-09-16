@@ -30,6 +30,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             + " SET titre = ?,"
             + " sous_titre = ?,"
             + " resume = ?,"
+            + " idAuteur = ?"
             + " WHERE idOuvrage = ?";
 
     private static final String SQL_FIND_ALL = "SELECT"
@@ -66,6 +67,234 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
     public OuvrageSqlDAO(AbstractDAOFactory factory) {
         super(factory);
     }
+    
+    private void detachTags(Long id) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, 
+                    "DELETE FROM Referencement WHERE idOuvrage = ?", false, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
+    private void attachTags(Long id, List<Tag> tags) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            detachTags(id);
+            for (Tag tag : tags) {
+                /* Récupération d'une connexion depuis la Factory */
+                connexion = factory.getConnection();
+
+                preparedStatement = getPreparedStatement(connexion, 
+                        "INSERT INTO Referencement (idTag, idOuvrage)"
+                      + " VALUES (?, ?)", false,
+                      tag.getId(), id);
+
+                preparedStatement.executeUpdate();
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
+    private void detachCoAuteurs(Long id) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, 
+                    "DELETE FROM CoAuteur WHERE idOuvrage = ?", false, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
+    private void attachCoAuteurs(Long id, List<Auteur> auteurs) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            detachCoAuteurs(id);
+            for (Auteur auteur : auteurs) {
+                /* Récupération d'une connexion depuis la Factory */
+                connexion = factory.getConnection();
+
+                preparedStatement = getPreparedStatement(connexion, 
+                        "INSERT INTO CoAuteur (idAuteur, idOuvrage)"
+                      + " VALUES (?, ?)", false,
+                      auteur.getId(), id);
+
+                preparedStatement.executeUpdate();
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
+    private void detachRubriques(Long id) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, 
+                    "DELETE FROM MiseEnRubrique WHERE idOuvrage = ?", false, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
+    private void attachRubriques(Long id, List<Rubrique> rubriques) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            detachRubriques(id);
+            for (Rubrique rubrique : rubriques) {
+                /* Récupération d'une connexion depuis la Factory */
+                connexion = factory.getConnection();
+
+                preparedStatement = getPreparedStatement(connexion, 
+                        "INSERT INTO MiseEnRubrique (idRubrique, idOuvrage)"
+                      + " VALUES (?, ?)", false,
+                      rubrique.getId(), id);
+
+                preparedStatement.executeUpdate();
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
+    private void detachThemes(Long id) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, 
+                    "DELETE FROM Thematique WHERE idOuvrage = ?", false, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
+    private void attachThemes(Long id, List<Theme> themes) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            detachThemes(id);
+            for (Theme theme : themes) {
+                /* Récupération d'une connexion depuis la Factory */
+                connexion = factory.getConnection();
+
+                preparedStatement = getPreparedStatement(connexion, 
+                        "INSERT INTO Thematique (idTheme, idOuvrage)"
+                      + " VALUES (?, ?)", false,
+                      theme.getId(), id);
+
+                preparedStatement.executeUpdate();
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
+    private void attachGenres(Long id, List<Genre> genres) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            detachGenres(id);
+            for (Genre genre : genres) {
+                /* Récupération d'une connexion depuis la Factory */
+                connexion = factory.getConnection();
+
+                preparedStatement = getPreparedStatement(connexion, 
+                        "INSERT INTO IndexGenre (idGenre, idOuvrage)"
+                      + " VALUES (?, ?)", false,
+                      genre.getId(), id);
+
+                preparedStatement.executeUpdate();
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
+    private void detachGenres(Long id) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion, 
+                    "DELETE FROM IndexGenre WHERE idOuvrage = ?", false, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+    
 
     @Override
     public void create(Ouvrage instance) throws DAOException {
@@ -84,62 +313,14 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             if (instance.getAuteur().getId() == null) {
                 getFactory().getAuteurDAO().save(instance.getAuteur());
             }
-            
-            // Je ne comprend pas d'ou vient d'erreur. 
-//            if (instance.getThemes() == null) {
-//
-//                Theme theme = getFactory().getThemeDAO().findByLibelle("CLI");
-//                instance.addTheme(theme);
-//            }
-
-//            instance.getThemes().forEach((Theme theme) -> {
-//                if (theme != null && theme.getId() == null) {
-//                    theme = getFactory().getThemeDAO().findByLibelle(theme.getLibelle());
-//                }
-//            });
-
-//            if (instance.getGenres() == null) {
-//
-//                Genre genre = getFactory().getGenreDAO().findByLibelle("CLI");
-//                instance.addGenre(genre);
-//            }
-
-//            instance.getGenres().forEach((Genre genre) -> {
-//                if (genre != null && genre.getId() == null) {
-//                    genre = getFactory().getGenreDAO().findByLibelle(genre.getLibelle());
-//                }
-//            });
-
-//            if (instance.getRubriques() == null) {
-//
-//                Rubrique rubrique = getFactory().getRubriqueDAO().findByLibelle("CLI");
-//                instance.addRubrique(rubrique);
-//            }
-//
-//            instance.getRubriques().forEach((Rubrique rubrique) -> {
-//                if (rubrique != null && rubrique.getId() == null) {
-//                    rubrique = getFactory().getRubriqueDAO().findByLibelle(rubrique.getLibelle());
-//                }
-//            });
-//
-//            if (instance.getTags() == null) {
-//
-//                Tag tag = getFactory().getTagDAO().findByLibelle("CLI");
-//                instance.addTag(tag);
-//            }
-//
-//            instance.getTags().forEach((Tag tag) -> {
-//                if (tag != null && tag.getId() == null) {
-//                    tag = getFactory().getTagDAO().findByLibelle(tag.getLibelle());
-//                }
-//            });
-
 
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
 
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getTitre(), instance.getSousTitre(), instance.getResume(),
+                    instance.getTitre(), 
+                    instance.getSousTitre(), 
+                    instance.getResume(),
                     instance.getAuteur().getId());
 
             int statut = preparedStatement.executeUpdate();
@@ -167,36 +348,51 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
-        ResultSet valeursAutoGenerees = null;
 
         try {
 
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
 
-            preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
-                    instance.getTitre(), instance.getSousTitre(), instance.getResume(),
-                    instance.getAuteur().getId(), instance.getId());
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, false,
+                    instance.getTitre(), 
+                    instance.getSousTitre(), 
+                    instance.getResume(),
+                    instance.getAuteur().getId(), 
+                    instance.getId());
 
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
                 throw new DAOException("Échec de la création de l'ouvrage, aucune ligne ajoutée dans la table.");
             }
+            
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            close(valeursAutoGenerees, preparedStatement, connexion);
+            close(preparedStatement, connexion);
         }
     }
 
     @Override
     public void save(Ouvrage instance) throws DAOException {
+        
+        if(instance.getTags() != null) {
+            instance.getTags().forEach(getFactory().getTagDAO()::save);
+        }
+        
         if(instance.getId() != null) {
             update(instance);
         } else {
             create(instance);
         }
+        
+        attachGenres(instance.getId(), instance.getGenres());
+        attachThemes(instance.getId(), instance.getThemes());
+        attachRubriques(instance.getId(), instance.getRubriques());
+        attachCoAuteurs(instance.getId(), instance.getCoAuteurs());
+        attachTags(instance.getId(), instance.getTags());
+        
     }
 
     @Override
@@ -212,7 +408,6 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_ALL, false);
             resultSet = preparedStatement.executeQuery();
 
-//            resultSet.beforeFirst();
             while (resultSet.next()) {
                 ouvrages.add(map(resultSet));
             }
@@ -362,8 +557,9 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         Auteur auteur = factory.getAuteurDAO().findById(result.getLong("idAuteur"));
         ouvrage.setAuteur(auteur);
         
-        /*List<Auteur> coAuteurs = factory.getAuteurDAO().findCoAuteursByOuvrage(idOuvrage);
-         ouvrage.setCoAuteurs(coAuteurs);*/
+        List<Auteur> coAuteurs = factory.getAuteurDAO().findCoAuteursByOuvrage(idOuvrage);
+        ouvrage.setCoAuteurs(coAuteurs);
+        
         return ouvrage;
     }
 
