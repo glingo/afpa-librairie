@@ -6,6 +6,7 @@ import fr.afpa.librairie.controller.CommandeController;
 import fr.afpa.librairie.controller.EditeurController;
 import fr.afpa.librairie.controller.EditionController;
 import fr.afpa.librairie.controller.OuvrageController;
+import fr.afpa.librairie.controller.PaysController;
 import fr.afpa.librairie.controller.PromotionController;
 import fr.afpa.librairie.controller.RubriqueController;
 import fr.afpa.librairie.controller.UtilisateurController;
@@ -65,6 +66,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final PromotionController promotionController = new PromotionController(this);
     private final EditionController editionController = new EditionController(this);
     private final AdresseController adresseController = new AdresseController(this);
+    private final PaysController paysController = new PaysController(this);
 
     private HeaderPanel headerPanel;
     private LeftMenuPanel leftMenuPanel;
@@ -204,6 +206,10 @@ public class MainFrame extends javax.swing.JFrame {
         adresseAdmin.addActionListener(adresseController);
         adminMenu.add(adresseAdmin);
         
+        JMenuItem paysAdmin = new JMenuItem("Pays");
+        paysAdmin.addActionListener(paysController);
+        adminMenu.add(paysAdmin);
+        
         jMenuBar.add(adminMenu);
     }
 
@@ -255,4 +261,7 @@ public class MainFrame extends javax.swing.JFrame {
         return adresseController;
     }
 
+    public PaysController getPaysController() {
+        return paysController;
+    }
 }

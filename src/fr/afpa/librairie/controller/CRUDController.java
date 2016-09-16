@@ -23,6 +23,7 @@ public abstract class CRUDController<T> implements ActionListener {
     public static final String VIEW_ACTION      = "view";
     
     public static final String CREATE_MODAL_ACTION    = "create_modal";
+    public static final String DISPOSE_MODAL_ACTION    = "dispose_modal";
     
 //    public static final String CREATE_THEN_LIST_ACTION    = "create_then_list";
     
@@ -78,6 +79,10 @@ public abstract class CRUDController<T> implements ActionListener {
             case CREATE_MODAL_ACTION:
                 editAction(newBean(), true);
                 break;
+                
+            case DISPOSE_MODAL_ACTION:
+                disposeModal();
+                break;
 
             default:
                 if(this.frame.getContent() == null || !this.frame.getContent().equals(this.adminPanel)) {
@@ -110,10 +115,13 @@ public abstract class CRUDController<T> implements ActionListener {
         
         if(!isModal) {
             current = getFrame().getContent();
-            getEditorPanel().getFooter().getValiderBT().setActionCommand(CREATE_ACTION);
         } else {
             current = getModal().getContent();
+            
+            // on doit modifier les actions commands pour ne pas avoir
+            // le comportement dédié a la mainframe.
             getEditorPanel().getFooter().getValiderBT().setActionCommand(CREATE_MODAL_ACTION);
+            getEditorPanel().getFooter().getAnnulerBT().setActionCommand(DISPOSE_MODAL_ACTION);
         }
         
         if (!getEditorPanel().equals(current)) {
@@ -146,8 +154,7 @@ public abstract class CRUDController<T> implements ActionListener {
             getEditorPanel().reset();
 
             if(isModal) {
-                modal.dispose();
-                modal.setContent(null);
+                disposeModal();
             } else {
                 listAction();
             }
@@ -205,6 +212,13 @@ public abstract class CRUDController<T> implements ActionListener {
         getModal().setContent(component);
         getModal().pack();
         getModal().setVisible(true);
+    }
+    
+    protected void disposeModal() {
+        if(modal != null) {
+            modal.dispose();
+            modal.setContent(null);
+        }
     }
     
     protected void alert(String title, String message){

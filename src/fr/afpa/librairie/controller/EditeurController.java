@@ -7,7 +7,9 @@ import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.editeur.EditeurAdminPanel;
 import fr.afpa.librairie.view.editeur.EditeurEditorPanel;
+import java.util.Arrays;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 public class EditeurController extends CRUDController<Editeur> {
     
@@ -28,10 +30,14 @@ public class EditeurController extends CRUDController<Editeur> {
     protected void loadEditorPanel() {
         AdresseController adrController = getFrame().getAdresseController();
         getEditorPanel().setAdresses(adrController.getAll());
-        getEditorPanel().getNewAdresse().addActionListener(adrController);
-        adrController.getModal().onDispose(()-> {
-            loadEditorPanel();
-        });
+        
+        JButton newAdr = getEditorPanel().getNewAdresse();
+        if(!Arrays.asList(newAdr.getActionListeners()).contains(adrController)){
+            newAdr.addActionListener(adrController);
+            adrController.getModal().onDispose(()-> {
+                loadEditorPanel();
+            });
+        }
     }
 
     @Override

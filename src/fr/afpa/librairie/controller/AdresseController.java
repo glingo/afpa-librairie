@@ -7,8 +7,11 @@ import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.adresse.AdresseAdminPanel;
 import fr.afpa.librairie.view.adresse.AdresseEditorPanel;
+import java.sql.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 public class AdresseController extends CRUDController<Adresse> {
     
@@ -44,6 +47,17 @@ public class AdresseController extends CRUDController<Adresse> {
         // set la list des pays.
         List<Pays> pays = getDaoFactory().getPaysDAO().findAll();
         getEditorPanel().setPays(pays);
+        
+        PaysController paysCtrl = getFrame().getPaysController();
+        JButton newPays = getEditorPanel().getNewPays();
+        
+        if(!Arrays.asList(newPays.getActionListeners()).contains(paysCtrl)){
+            getEditorPanel().getNewPays().addActionListener(paysCtrl);
+            paysCtrl.getModal().onDispose(()-> {
+                loadEditorPanel();
+            });
+        }
+        
     }
 
     @Override

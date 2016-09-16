@@ -1,5 +1,6 @@
 package fr.afpa.librairie.view.adresse;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Pays;
 import fr.afpa.librairie.model.list.renderer.PaysListCellRenderer;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,6 +35,7 @@ public class AdresseEditorPanel extends EditorPanel<Adresse> {
     private JTextField ville;
     private JTextArea  complement;
     private JComboBox<Pays> pays;
+    private JButton newPays;
     
     // ajouter statutadresse
     
@@ -53,6 +56,8 @@ public class AdresseEditorPanel extends EditorPanel<Adresse> {
         ville       = new JTextField();
         complement  = new JTextArea();
         pays        = new JComboBox<>();
+        newPays     = new JButton("+");
+        newPays.setActionCommand(CRUDController.CREATE_MODAL_ACTION);
         
         pays.setRenderer(new PaysListCellRenderer());
         
@@ -92,7 +97,9 @@ public class AdresseEditorPanel extends EditorPanel<Adresse> {
                                     .addComponent(cp, GroupLayout.Alignment.LEADING)
                                     .addComponent(ville, GroupLayout.Alignment.LEADING)
                                     .addComponent(complement, GroupLayout.Alignment.LEADING)
-                                    .addComponent(pays, GroupLayout.Alignment.LEADING))))
+                                    .addComponent(pays, GroupLayout.Alignment.LEADING))
+                                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                    .addComponent(newPays, GroupLayout.Alignment.TRAILING))))
                         .addGap(6, 6, 6))))
         );
 
@@ -117,7 +124,8 @@ public class AdresseEditorPanel extends EditorPanel<Adresse> {
                     .addComponent(complementLabel))
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(pays, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paysLabel))
+                    .addComponent(paysLabel)
+                    .addComponent(newPays))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
         );
     }
@@ -170,7 +178,12 @@ public class AdresseEditorPanel extends EditorPanel<Adresse> {
     
     public void setPays(List<Pays> list){
         paysComboModel = new DefaultComboBoxModel(list.toArray());
+        paysComboModel.setSelectedItem(null);
         pays.setModel(paysComboModel);
+    }
+
+    public JButton getNewPays() {
+        return newPays;
     }
     
 }
