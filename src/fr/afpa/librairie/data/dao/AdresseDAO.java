@@ -8,5 +8,4 @@ public interface AdresseDAO extends DAOInterface<Adresse> {
     Adresse findByCp(String cp);
     Adresse findByVille(String ville);
     
-    
 }

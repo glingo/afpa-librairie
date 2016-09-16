@@ -38,6 +38,10 @@ public class AuteurController extends CRUDController<Auteur> {
     
     @Override
     public boolean create(Auteur value) {
+        
+        if("".equals(value.getNom())) {
+            alert("", "Vous devez specifier le nom de l'auteur !");
+        }
 
         try {
             getDaoFactory().getAuteurDAO().save(value);

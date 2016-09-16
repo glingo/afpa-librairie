@@ -111,7 +111,7 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
 
             connexion = factory.getConnection();
 
-            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, false,
                     instance.getNumero(), 
                     instance.getVoie(),
                     instance.getCp(), 
