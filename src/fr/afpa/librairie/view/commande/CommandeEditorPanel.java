@@ -1,11 +1,10 @@
 package fr.afpa.librairie.view.commande;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Commande;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.event.ActionListener;
-import java.sql.Date;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,38 +13,22 @@ import javax.swing.LayoutStyle;
 
 public class CommandeEditorPanel extends EditorPanel<Commande> {
     
-        private JLabel adrLivLabel;
-        private JLabel adrFacLabel;
-        private JLabel utilisLabel;
-        private JLabel numeroLabel;
-        private JLabel datComLabel;
-        
-        private JTextField adresseLivraison;
-        private JTextField adresseFacturation;
-        private JTextField utilisateur;
-        private JTextField numero;
-        private JDateField dateCommande;
+    private JLabel adrLivLabel;
+    private JLabel adrFacLabel;
+    private JLabel utilisLabel;
+    private JLabel numeroLabel;
+    private JLabel datComLabel;
+
+    private JTextField adresseLivraison;
+    private JTextField adresseFacturation;
+    private JTextField utilisateur;
+    private JTextField numero;
+    private JDateField dateCommande;
     
-    public CommandeEditorPanel(ActionListener controller) {
-        super(new Commande(), controller);
+    public CommandeEditorPanel(CRUDController<Commande> controller) {
+        super(controller);
     }
 
-    public CommandeEditorPanel(Commande bean, ActionListener controller) {
-        super(bean, controller);
-    }
-
-    @Override
-    public Commande getBean() {
-        Commande commande = super.getBean();
-        
-        if(commande == null){
-            commande = new Commande();
-            setBean(commande);
-        }
-        
-        return commande;
-    }
-    
     @Override
     protected String getTitleText() {
         Commande commande = super.getBean();

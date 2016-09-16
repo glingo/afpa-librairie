@@ -6,7 +6,6 @@ import fr.afpa.librairie.data.bean.Pays;
 import fr.afpa.librairie.model.list.renderer.PaysListCellRenderer;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -39,12 +38,8 @@ public class AdresseEditorPanel extends EditorPanel<Adresse> {
     
     // ajouter statutadresse
     
-    public AdresseEditorPanel(ActionListener controller) {
-        super(new Adresse(), controller);
-    }
-    
-    public AdresseEditorPanel(Adresse bean, ActionListener controller) {
-        super(bean, controller);
+    public AdresseEditorPanel(CRUDController<Adresse> controller) {
+        super(controller);
     }
 
     @Override

@@ -8,6 +8,7 @@ import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.Modal;
 import fr.afpa.librairie.view.panel.AdminPanel;
 import fr.afpa.librairie.view.panel.EditorPanel;
+import fr.afpa.librairie.view.panel.ListPanel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 
 public abstract class CRUDController<T> implements ActionListener {
     
+    public static final String ADMIN_ACTION     = "admin";
     public static final String LIST_ACTION      = "list";
     public static final String EDIT_ACTION      = "edit";
     public static final String CREATE_ACTION    = "create";
@@ -37,6 +39,7 @@ public abstract class CRUDController<T> implements ActionListener {
     
     private AdminPanel<T> adminPanel;
     private EditorPanel<T> editorPanel;
+    private ListPanel<T> listPanel;
     
     public CRUDController() {
 //        this.daoFactory = AbstractDAOFactory.getFactory(FactoryType.LIST_DAO_FACTORY);
@@ -55,10 +58,14 @@ public abstract class CRUDController<T> implements ActionListener {
         
         switch(e.getActionCommand()) {
             
+            case ADMIN_ACTION:
+                adminAction();
+                break;
+            
             case LIST_ACTION:
                 listAction();
                 break;
-                
+
             case CREATE_ACTION:
             case SAVE_ACTION:
                 editAction(newBean(), false);
@@ -97,9 +104,15 @@ public abstract class CRUDController<T> implements ActionListener {
     
     protected abstract void loadEditorPanel();
     
-    public void listAction(){
+    public void adminAction(){
         getAdminPanel().setList(getAll());
         setContent(getAdminPanel());
+    };
+    
+    public void listAction(){
+        getListPanel().setList(getAll());
+//        null pour le moment
+//        setContent(getListPanel());
     };
 
     public abstract boolean create(T value);
@@ -188,6 +201,14 @@ public abstract class CRUDController<T> implements ActionListener {
         return adminPanel;
     }
 
+    public void setListPanel(ListPanel<T> listPanel) {
+        this.listPanel = listPanel;
+    }
+
+    public ListPanel<T> getListPanel() {
+        return listPanel;
+    }
+    
     public void setEditorPanel(EditorPanel<T> editorPanel) {
         this.editorPanel = editorPanel;
     }

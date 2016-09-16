@@ -1,10 +1,10 @@
 package fr.afpa.librairie.view.edition;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Langue;
-import fr.afpa.librairie.view.rubrique.*;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.bean.Theme;
 import fr.afpa.librairie.model.list.renderer.AuteurListCellRenderer;
@@ -16,17 +16,12 @@ import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.field.JFloatField;
 import fr.afpa.librairie.view.field.JIntegerField;
-import fr.afpa.librairie.view.field.JPercentField;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.sql.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 
@@ -64,27 +59,10 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
     private JTextField titre;
     private JIntegerField stock;
 
-    public EditionEditorPanel(ActionListener controller) {
-        super(new Edition(), controller);
+    public EditionEditorPanel(CRUDController<Edition> controller) {
+        super(controller);
     }
 
-    public EditionEditorPanel(Edition bean, ActionListener controller, boolean modal) {
-        super(bean, controller);
-    }
-
-//    @Override
-//    public Edition getBean() {
-//        Edition edition = super.getBean();
-//        
-//        if(edition == null){
-//            edition = new Edition();
-//            setBean(edition);
-//        }
-//        
-//        return edition;
-//    }
-    
-  
     @Override
     protected void initBody(JPanel body) {
         

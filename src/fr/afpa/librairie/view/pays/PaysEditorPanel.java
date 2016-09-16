@@ -1,8 +1,8 @@
 package fr.afpa.librairie.view.pays;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Pays;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,26 +17,10 @@ public class PaysEditorPanel extends EditorPanel<Pays> {
     private JTextField libelle;
     private JTextField code;
     
-    public PaysEditorPanel(ActionListener controller) {
-        super(new Pays(), controller);
+    public PaysEditorPanel(CRUDController<Pays> controller) {
+        super(controller);
     }
 
-    public PaysEditorPanel(Pays bean, ActionListener controller) {
-        super(bean, controller);
-    }
-
-    @Override
-    public Pays getBean() {
-        Pays pays = super.getBean();
-        
-        if(pays == null){
-            pays = new Pays();
-            setBean(pays);
-        }
-        
-        return pays;
-    }
-    
     @Override
     protected String getTitleText() {
         Pays pays = super.getBean();

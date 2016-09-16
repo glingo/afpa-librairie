@@ -1,5 +1,6 @@
 package fr.afpa.librairie.view.auteur;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.field.JDateField;
@@ -27,14 +28,10 @@ public class AuteurEditorPanel extends EditorPanel<Auteur> {
     private JDateField dateNaiss;
     private JDateField dateDeces;
     
-    public AuteurEditorPanel(ActionListener controller) {
-        super(new Auteur(), controller);
+    public AuteurEditorPanel(CRUDController<Auteur> controller) {
+        super(controller);
     }
     
-    public AuteurEditorPanel(Auteur bean, ActionListener controller) {
-        super(bean, controller);
-    }
-
     @Override
     protected void initBody(JPanel body) {
         

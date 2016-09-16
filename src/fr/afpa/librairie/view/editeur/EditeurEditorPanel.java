@@ -7,8 +7,6 @@ import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.list.renderer.AdresseListCellRenderer;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -29,14 +27,10 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
     private JComboBox<Adresse> adresse;
     private JButton newAdresse;
     
-    public EditeurEditorPanel(ActionListener controller) {
-        super(new Editeur(), controller);
+    public EditeurEditorPanel(CRUDController<Editeur> controller) {
+        super(controller);
     }
     
-    public EditeurEditorPanel(Editeur bean, ActionListener controller) {
-        super(bean, controller);
-    }
-
     @Override
     protected void initBody(JPanel body) {
         

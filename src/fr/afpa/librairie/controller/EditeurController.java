@@ -1,6 +1,5 @@
 package fr.afpa.librairie.controller;
 
-import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Editeur;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
@@ -98,10 +97,4 @@ public class EditeurController extends CRUDController<Editeur> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-//    @Override
-//    public void editAction(Editeur value) {
-//        getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
-//        super.editAction(value);
-//    }
-    
 }

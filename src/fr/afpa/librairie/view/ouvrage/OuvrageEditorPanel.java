@@ -1,25 +1,22 @@
 package fr.afpa.librairie.view.ouvrage;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.bean.Theme;
-import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.model.list.renderer.AuteurListCellRenderer;
 import fr.afpa.librairie.model.list.renderer.GenreListCellRenderer;
 import fr.afpa.librairie.model.list.renderer.RubriqueListCellRenderer;
 import fr.afpa.librairie.model.list.renderer.ThemeListCellRenderer;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
-import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -30,6 +27,7 @@ import javax.swing.LayoutStyle;
  * @author cdi305
  */
 public class OuvrageEditorPanel extends EditorPanel<Ouvrage> {
+    
     private DefaultComboBoxModel<Auteur> adresseComboModel;
     private DefaultComboBoxModel<Genre> genreComboModel;
     private DefaultComboBoxModel<Theme> themeComboModel;
@@ -55,14 +53,10 @@ public class OuvrageEditorPanel extends EditorPanel<Ouvrage> {
     private JScrollPane scrollPane;
     
     
-    public OuvrageEditorPanel(ActionListener controller) {
-        super(new Ouvrage(), controller);
+    public OuvrageEditorPanel(CRUDController<Ouvrage> controller) {
+        super(controller);
     }
     
-    public OuvrageEditorPanel(Ouvrage bean, ActionListener controller) {
-        super(bean, controller);
-    }
-
     @Override
     protected void initBody(JPanel body) {
         

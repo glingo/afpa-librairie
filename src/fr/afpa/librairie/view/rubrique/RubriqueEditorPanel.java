@@ -1,10 +1,10 @@
 package fr.afpa.librairie.view.rubrique;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.panel.EditorPanel;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -28,26 +28,10 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
     private JDateField dateDebutTF;
     private JDateField dateFinTF;
     
-    public RubriqueEditorPanel(ActionListener controller) {
-        super(new Rubrique(), controller);
+    public RubriqueEditorPanel(CRUDController<Rubrique> controller) {
+        super(controller);
     }
 
-    public RubriqueEditorPanel(Rubrique bean, ActionListener controller) {
-        super(bean, controller);
-    }
-
-    @Override
-    public Rubrique getBean() {
-        Rubrique rubrique = super.getBean();
-        
-        if(rubrique == null){
-            rubrique = new Rubrique();
-            setBean(rubrique);
-        }
-        
-        return rubrique;
-    }
-    
     @Override
     protected String getTitleText() {
         Rubrique rubrique = getBean();

@@ -2,6 +2,7 @@ package fr.afpa.librairie.view;
 
 import fr.afpa.librairie.controller.AdresseController;
 import fr.afpa.librairie.controller.AuteurController;
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.controller.CommandeController;
 import fr.afpa.librairie.controller.EditeurController;
 import fr.afpa.librairie.controller.EditionController;
@@ -172,42 +173,52 @@ public class MainFrame extends javax.swing.JFrame {
 
         JMenuItem utilisateurAdmin = new JMenuItem("Utilisateurs");
         utilisateurAdmin.addActionListener(utilisateurController);
+        utilisateurAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(utilisateurAdmin);
 
         JMenuItem auteurAdmin = new JMenuItem("Auteurs");
         auteurAdmin.addActionListener(auteurController);
+        auteurAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(auteurAdmin);
 
         JMenuItem ouvrageAdmin = new JMenuItem("Ouvrages");
         ouvrageAdmin.addActionListener(ouvrageController);
+        ouvrageAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(ouvrageAdmin);
 
         JMenuItem rubriqueAdmin = new JMenuItem("Rubriques");
         rubriqueAdmin.addActionListener(rubriqueController);
+        rubriqueAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(rubriqueAdmin);
 
         JMenuItem commandeAdmin = new JMenuItem("Commandes");
         commandeAdmin.addActionListener(commandeController);
+        commandeAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(commandeAdmin);
 
         JMenuItem editeurAdmin = new JMenuItem("Editeurs");
         editeurAdmin.addActionListener(editeurController);
+        editeurAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(editeurAdmin);
 
         JMenuItem promotionAdmin = new JMenuItem("Promotions");
         promotionAdmin.addActionListener(promotionController);
+        promotionAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(promotionAdmin);
 
         JMenuItem editionAdmin = new JMenuItem("Editions");
         editionAdmin.addActionListener(editionController);
+        editionAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(editionAdmin);
         
         JMenuItem adresseAdmin = new JMenuItem("Adresses");
         adresseAdmin.addActionListener(adresseController);
+        adresseAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(adresseAdmin);
         
         JMenuItem paysAdmin = new JMenuItem("Pays");
         paysAdmin.addActionListener(paysController);
+        paysAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(paysAdmin);
         
         jMenuBar.add(adminMenu);
