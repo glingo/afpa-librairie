@@ -6,38 +6,47 @@ import fr.afpa.librairie.data.bean.Edition;
 import fr.afpa.librairie.data.bean.Genre;
 import fr.afpa.librairie.data.bean.Langue;
 import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.data.bean.Taxe;
 import fr.afpa.librairie.data.bean.Theme;
+import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.list.renderer.AuteurListCellRenderer;
 import fr.afpa.librairie.model.list.renderer.LangueListCellRenderer;
 import fr.afpa.librairie.model.list.renderer.GenreListCellRenderer;
 import fr.afpa.librairie.model.list.renderer.ThemeListCellRenderer;
 import fr.afpa.librairie.model.list.renderer.RubriqueListCellRenderer;
+import fr.afpa.librairie.model.list.renderer.TaxeListCellRenderer;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.field.JFloatField;
 import fr.afpa.librairie.view.field.JIntegerField;
 import fr.afpa.librairie.view.panel.EditorPanel;
+import java.awt.Dimension;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
+import javax.swing.ListSelectionModel;
 
 public class EditionEditorPanel extends EditorPanel<Edition> {
     
     
     private DefaultComboBoxModel<Langue> langueComboModel;
+    private DefaultComboBoxModel<Taxe> taxeComboModel;
 
-    
-    
+ 
     private JLabel isbnLB;
     private JLabel datePublicationLB;
     private JLabel langueLB;
     private JLabel prixHtLB;
     private JLabel imageLB;
     private JLabel titreLB;
+    private JLabel taxeLB;
     private JLabel stockLB;
  
     
@@ -47,7 +56,12 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
     private JFloatField prixHt;
     private JTextField image;
     private JTextField titre;
+    private JComboBox<Taxe> taxe;
     private JIntegerField stock;
+    
+    
+    
+
 
     public EditionEditorPanel(CRUDController<Edition> controller) {
         super(controller);
@@ -55,6 +69,8 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
 
     @Override
     protected void initBody(JPanel body) {
+        
+     
         
         isbn = new JTextField(15);
         isbn.setInputVerifier(new StrictInputVerifier());
@@ -73,6 +89,9 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
 
         titre = new JTextField(15);
         titre.setInputVerifier(new StrictInputVerifier());
+        
+        taxe = new JComboBox<>();
+        taxe.setRenderer(new TaxeListCellRenderer());
         
         stock = new JIntegerField(true);
         //pas besoin de mettre la ligne au dessous parce qu'elle est deja presente dans la methode JIntegerField.
@@ -93,6 +112,8 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         
         titreLB                     = new JLabel("Titre :");
         
+        taxeLB                      = new JLabel("Taxe :");
+        
         stockLB                     = new JLabel("Stock :");
 
   
@@ -104,6 +125,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         prixHtLB.setLabelFor(prixHt);
         imageLB.setLabelFor(image);
         titreLB.setLabelFor(titre);
+        taxeLB.setLabelFor(taxe);
         stockLB.setLabelFor(stock);
    
         
@@ -126,6 +148,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
                                     .addComponent(prixHtLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(imageLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(titreLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(taxeLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(stockLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(13, 13, 13)
                                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
@@ -135,6 +158,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
                                     .addComponent(prixHt, GroupLayout.Alignment.LEADING)
                                     .addComponent(image, GroupLayout.Alignment.LEADING)
                                     .addComponent(titre, GroupLayout.Alignment.LEADING)
+                                    .addComponent(taxe, GroupLayout.Alignment.LEADING)
                                     .addComponent(stock, GroupLayout.Alignment.LEADING))))
                         .addGap(6, 6, 6))))
         );
@@ -161,6 +185,9 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(titre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(titreLB))
+                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(taxe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(taxeLB))
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(stockLB))
@@ -191,9 +218,16 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         image.setText(edition.getCouverture());
         titre.setText(edition.getTitre());
         stock.setValue(edition.getStock());
+        
+        if(edition.getLangue() != null){
+            this.langue.setSelectedItem(edition.getLangue());
+        }
+        
+        if(edition.getTaxes() != null){
+            this.taxe.setSelectedItem(edition.getTaxes());
+        }
 
-        
-        
+  
     }
 
 
@@ -212,6 +246,11 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         edition.setCouverture(image.getText());
         edition.setTitre(titre.getText());
         edition.setStock((Integer) stock.getValue());
+        edition.setLangue((Langue) langue.getSelectedItem());
+        edition.setTaxes((List<Taxe>) (Taxe) taxe.getSelectedItem());
+        
+        
+        
  
         return edition;
     }
@@ -228,6 +267,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         prixHt.setValue(null);
         image.setText("");
         titre.setText("");
+        taxe.setSelectedItem("");
         stock.setValue(null);
     }
 
