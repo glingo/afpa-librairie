@@ -1,28 +1,32 @@
-
 package fr.afpa.librairie.controller;
 
+import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.rubrique.RubriqueAdminPanel;
 import fr.afpa.librairie.view.rubrique.RubriqueEditorPanel;
+import fr.afpa.librairie.view.rubrique.RubriqueViewPanel;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class RubriqueController extends CRUDController<Rubrique> implements ListSelectionListener {
-    
+
     private static final Logger LOG = Logger.getLogger(RubriqueController.class.getName());
-    
+
 //    private final RubriqueAdminPanel adminPanel;
 //    private final RubriqueEditorPanel editorPanel = new RubriqueEditorPanel(this);
-    
     public RubriqueController(MainFrame frame) {
         super(frame);
         setAdminPanel(new RubriqueAdminPanel(this));
         setEditorPanel(new RubriqueEditorPanel(this));
+        setEditorPanel(new RubriqueViewPanel(this));
     }
 
     @Override
@@ -37,57 +41,76 @@ public class RubriqueController extends CRUDController<Rubrique> implements List
         return listModel;
     }
 
-    @Override
-    protected void loadEditorPanel() {
-       // nothing to do.
+    public RubriqueEditorPanel getEditorPanel() {
+        return (RubriqueEditorPanel) super.getEditorPanel();
     }
     
+    
+
+//    @Override
+//    protected void loadEditorPanel() {
+//        List<Ouvrage> ouvrages = getDaoFactory().getOuvrageDAO().findAll();
+//        getEditorPanel().setOuvrages(ouvrages);
+//
+//        OuvrageController ouvrageCtrl = getFrame().getOuvrageController();
+//        JButton ajoutOuvrage = getEditorPanel().getAjoutOuvrage();
+//
+//        if (!Arrays.asList(ajoutOuvrage.getActionListeners()).contains(ouvrageCtrl)) {
+//            getEditorPanel().getAjoutOuvrage().addActionListener(OuvrageCtrl);
+//            ouvrageCtrl.getModal().onDispose(() -> {
+//                loadEditorPanel();
+//            });
+//        }
+//
+//        
+//    }
+
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if(!e.getValueIsAdjusting()) {
+        if (!e.getValueIsAdjusting()) {
             JList list = (JList) e.getSource();
-            Rubrique rubrique = (Rubrique)list.getSelectedValue();
+            Rubrique rubrique = (Rubrique) list.getSelectedValue();
             viewAction(rubrique);
         }
     }
-    
+
     @Override
     public boolean create(Rubrique value) {
-        try{
+        try {
             getDaoFactory().getRubriqueDAO().save(value);
             alert("Information", "La sauvegarde a bien été effectué !");
             return true;
-        } catch(DAOException ex){
+        } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
-            danger("Une erreur est survenue !", 
+            danger("Une erreur est survenue !",
                     "Impossible de sauvegarder cette rubrique.");
         }
         return false;
 //        listAction();
     }
-    
+
     @Override
-    public void deleteAction(Rubrique rubrique){
-        if(rubrique == null) {
+    public void deleteAction(Rubrique rubrique) {
+        if (rubrique == null) {
 
             return;
         }
 
         try {
             getDaoFactory().getRubriqueDAO().delete(rubrique);
-        } catch(DAOException ex){
+        } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
-            danger("Une erreur est survenue !", 
+            danger("Une erreur est survenue !",
                     "Impossible de supprimer cette rubrique.");
-            
+
             return;
         }
-        
+
         // ajouter un message comme quoi la suppression s'est bien deroulée.
         listAction();
         alert("Information", "La suppression a bien été effectuée !");
     }
-    
+
     @Override
     public void viewAction(Rubrique rubrique) {
 //        this.editorPanel.setBean(rubrique);
@@ -97,7 +120,7 @@ public class RubriqueController extends CRUDController<Rubrique> implements List
 //        this.viewPanel.setOuvrageList(ouvrages);
 //        this.frame.setContent(this.viewPanel);
     }
-    
+
 //    @Override
 //    public void editAction(Rubrique rubrique) {
 //        if(rubrique == null) {
@@ -109,4 +132,8 @@ public class RubriqueController extends CRUDController<Rubrique> implements List
 //        getFrame().setContent(getEditorPanel());
 //    }
 
+    @Override
+    protected void loadEditorPanel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
