@@ -38,19 +38,19 @@ public class CommandeController extends CRUDController<Commande> {
     }
     
     @Override
-    public void create(Commande value) {
+    public boolean create(Commande value) {
        
         try{
             getDaoFactory().getCommandeDAO().save(value);
             alert("Information", "La commande a bien été sauvegardée !");
+            return true;
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", " Impossible de sauvegarder cette commande");
         }
+        return false;
         
 //        listAction();
-//        getEditorPanel().reset();
-        
     }
     
     public void deactivateAction(Commande commande){

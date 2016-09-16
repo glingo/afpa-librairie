@@ -37,16 +37,19 @@ public class AuteurController extends CRUDController<Auteur> {
     }
     
     @Override
-    public void create(Auteur value) {
+    public boolean create(Auteur value) {
 
         try {
             getDaoFactory().getAuteurDAO().save(value);
             alert("Information", "L'auteur a bien été sauvegardé !");
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de sauvegarder cet auteur.");
         }
+        
+        return false;
         
 //        listAction();
     }

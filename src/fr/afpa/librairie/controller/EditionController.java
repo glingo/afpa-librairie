@@ -39,17 +39,20 @@ public class EditionController extends ActivableCRUDController<Edition> {
 
     //Si User = "save" alors EditionController ==> createAction
     @Override
-    public void create(Edition value) {
+    public boolean create(Edition value) {
 
         try {
             getDaoFactory().getEditionDAO().save(value);
             //appel de la methode EditionDAO. mais surtout appel de la requete SQL save contenu dans EditionDAO.afin de créer une nouvelle edition.
 
             alert("Information", "L'édition a bien été sauvegardée !");
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder l'édition");
         }
+        
+        return false;
 
 //        listAction();
     }

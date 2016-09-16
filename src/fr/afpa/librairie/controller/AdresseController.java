@@ -47,18 +47,23 @@ public class AdresseController extends CRUDController<Adresse> {
     }
 
     @Override
-    public void create(Adresse value) {
+    public boolean create(Adresse value) {
+          
+        if(value.getPays() == null) {
+            danger("Vous devez renseigner un pays pour cette adresse.");
+            return false;
+        }
         
         try {
             getDaoFactory().getAdresseDAO().save(value);
             alert("Information", "L'adresse a bien été sauvegardée !");
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
-            danger("Une erreur est survenue !", 
-                    "Impossible de sauvegarder cette adresse.");
+            danger("Impossible de sauvegarder cette adresse.");
         }
         
-//        listAction();
+        return false;
     }
 
     @Override

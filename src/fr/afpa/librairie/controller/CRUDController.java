@@ -97,7 +97,7 @@ public abstract class CRUDController<T> implements ActionListener {
         setContent(getAdminPanel());
     };
 
-    public abstract void create(T value);
+    public abstract boolean create(T value);
     
     public void editAction(T value, boolean isModal) {
         
@@ -139,16 +139,19 @@ public abstract class CRUDController<T> implements ActionListener {
         }
         
         // create or update value.
-        create(value);
+        boolean created = create(value);
         
-        // reset values in editor.
-        getEditorPanel().reset();
-        
-        if(isModal) {
-            modal.dispose();
-            modal.setContent(null);
+        if(created) {
+            // reset values in editor.
+            getEditorPanel().reset();
+
+            if(isModal) {
+                modal.dispose();
+                modal.setContent(null);
+            } else {
+                listAction();
+            }
         }
-        
     }
 
     public abstract void viewAction(T value);

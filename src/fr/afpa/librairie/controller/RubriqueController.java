@@ -52,16 +52,17 @@ public class RubriqueController extends CRUDController<Rubrique> implements List
     }
     
     @Override
-    public void create(Rubrique value) {
+    public boolean create(Rubrique value) {
         try{
             getDaoFactory().getRubriqueDAO().save(value);
             alert("Information", "La sauvegarde a bien été effectué !");
+            return true;
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de sauvegarder cette rubrique.");
         }
-        
+        return false;
 //        listAction();
     }
     

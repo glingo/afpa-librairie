@@ -47,17 +47,19 @@ public class EditeurController extends CRUDController<Editeur> {
     }
     
     @Override
-    public void create(Editeur value) {
+    public boolean create(Editeur value) {
         
         try {
             getDaoFactory().getEditeurDAO().save(value);
             alert("Information", "L'éditeur a bien été sauvegardé !");
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de réaliser la sauvegarde de l'éditeur.");
         }
-
+        
+        return false;
 //        listAction();
     }
 

@@ -38,16 +38,18 @@ public class OuvrageController extends CRUDController<Ouvrage> {
     }
     
     @Override
-    public void create(Ouvrage value) {
+    public boolean create(Ouvrage value) {
         
         try{
             getDaoFactory().getOuvrageDAO().save(value);
             alert("Information", "L'ouvrage a bien été sauvegardé !");
+            return true;
         } catch(DAOException ex){
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder cet ouvrage");
         }
         
+        return false;
 //        listAction();
     }
     

@@ -36,17 +36,19 @@ public class UtilisateurController extends ActivableCRUDController<Utilisateur> 
     }
     
     @Override
-    public void create(Utilisateur value) {
+    public boolean create(Utilisateur value) {
 
         try {
             getDaoFactory().getUtilisateurDAO().save(value);
             alert("Information", "L'utilisateur a bien été sauvegardé !");
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !",
                     "Impossible de sauvegarder cet utilisateur.");
         }
 
+        return false;
 //        listAction();
     }
 
