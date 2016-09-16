@@ -270,5 +270,19 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         taxe.setSelectedItem("");
         stock.setValue(null);
     }
+    
+    
+    public void setLangueModel(List<Langue> list){
+        this.langueComboModel = new DefaultComboBoxModel(list.toArray());
+        this.langueComboModel.setSelectedItem(null);
+        this.langue.setModel(this.langueComboModel);
+    }
+    
+    
+    public void setTaxeModel(List<Taxe> list){
+        this.taxeComboModel = new DefaultComboBoxModel(list.toArray());
+        this.taxeComboModel.setSelectedItem(null);
+        this.taxe.setModel(this.taxeComboModel);
+    }
 
 }
