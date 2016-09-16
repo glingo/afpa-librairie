@@ -26,12 +26,12 @@ public class EditeurController extends CRUDController<Editeur> {
 
     @Override
     protected void loadEditorPanel() {
-        getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
-        getEditorPanel().getNewAdresse().addActionListener(getFrame().getAdresseController());
-        
-//        getModal().onDispose(()-> {
-//            getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
-//        });
+        AdresseController adrController = getFrame().getAdresseController();
+        getEditorPanel().setAdresses(adrController.getAll());
+        getEditorPanel().getNewAdresse().addActionListener(adrController);
+        adrController.getModal().onDispose(()-> {
+            loadEditorPanel();
+        });
     }
 
     @Override

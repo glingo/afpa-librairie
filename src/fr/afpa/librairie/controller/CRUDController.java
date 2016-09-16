@@ -46,7 +46,6 @@ public abstract class CRUDController<T> implements ActionListener {
     public CRUDController(MainFrame frame) {
         this();
         this.frame = frame;
-        this.modal = new Modal(frame);
     }
     
     @Override
@@ -113,7 +112,7 @@ public abstract class CRUDController<T> implements ActionListener {
             current = getFrame().getContent();
             getEditorPanel().getFooter().getValiderBT().setActionCommand(CREATE_ACTION);
         } else {
-            current = modal.getContent();
+            current = getModal().getContent();
             getEditorPanel().getFooter().getValiderBT().setActionCommand(CREATE_MODAL_ACTION);
         }
         
@@ -124,9 +123,9 @@ public abstract class CRUDController<T> implements ActionListener {
             getEditorPanel().setBean(value);
             // display editor in frame
             if(isModal) {
-                setContent(modal, getEditorPanel());
+                setModalContent(getEditorPanel());
             } else {
-                setContent(getFrame(), getEditorPanel());
+                setFrameContent(getEditorPanel());
             }
             return;
         }
@@ -165,6 +164,9 @@ public abstract class CRUDController<T> implements ActionListener {
     }
 
     public Modal getModal() {
+        if(modal == null) {
+            this.modal = new Modal(getFrame());
+        }
         return modal;
     }
     
@@ -192,14 +194,14 @@ public abstract class CRUDController<T> implements ActionListener {
         getFrame().setContent(component);
     }
     
-    protected void setContent(MainFrame frame, Component component){
-        frame.setContent(component);
+    protected void setFrameContent(Component component){
+        getFrame().setContent(component);
     }
     
-    protected void setContent(Modal modal, Component component){
-        modal.setContent(component);
-        modal.pack();
-        modal.setVisible(true);
+    protected void setModalContent(Component component){
+        getModal().setContent(component);
+        getModal().pack();
+        getModal().setVisible(true);
     }
     
     protected void alert(String title, String message){

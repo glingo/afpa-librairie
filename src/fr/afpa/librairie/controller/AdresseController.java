@@ -7,7 +7,6 @@ import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.adresse.AdresseAdminPanel;
 import fr.afpa.librairie.view.adresse.AdresseEditorPanel;
-import fr.afpa.librairie.view.panel.EditorPanel;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -35,7 +34,7 @@ public class AdresseController extends CRUDController<Adresse> {
 
     @Override
     public AdresseEditorPanel getEditorPanel() {
-        return (AdresseEditorPanel) super.getEditorPanel(); //To change body of generated methods, choose Tools | Templates.
+        return (AdresseEditorPanel) super.getEditorPanel();
     }
     
     @Override
