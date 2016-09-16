@@ -1,6 +1,8 @@
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,7 +30,9 @@ public class Rubrique {
      * Info. relatives à la rubrique.
      */
     private String commentaire;
-
+    
+    
+    private List<Ouvrage> ouvrages;
     /**
      * Constructeur de la classe; accès sans utiliser de paramètres.
      */
@@ -74,7 +78,25 @@ public class Rubrique {
     public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
     }
+    
+    public List<Ouvrage> getOuvrage(){
+        return ouvrages;
+    }
+    
+    public void setOuvrage(Ouvrage ouvrage){
+        this.ouvrages = ouvrages;
+    }
+    
+    public void addOuvrage(Ouvrage ouvrage){
+        if(this.ouvrages == null){
+            this.ouvrages = new ArrayList<>();
+        }
+        this.ouvrages.add(ouvrage);
+    }
+      
 
+
+    @Override
     public String toString() {
         return libelle;
     }

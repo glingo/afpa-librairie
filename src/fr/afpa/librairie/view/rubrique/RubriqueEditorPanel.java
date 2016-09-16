@@ -1,11 +1,14 @@
 package fr.afpa.librairie.view.rubrique;
 
 import fr.afpa.librairie.controller.CRUDController;
+import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
+import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.panel.EditorPanel;
 import java.awt.Font;
 import java.sql.Date;
+import java.util.List;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -164,5 +167,6 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
         
         return rubrique;
     }
-
+    
+    
 }
