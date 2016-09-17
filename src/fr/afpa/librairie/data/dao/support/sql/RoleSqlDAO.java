@@ -316,4 +316,9 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
         return role;
     }
 
+    @Override
+    public void view(Role instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

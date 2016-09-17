@@ -259,4 +259,9 @@ public class TagSqlDAO extends AbstractSqlDAO<Tag> implements TagDAO {
 
         return tags;
     }
+
+    @Override
+    public void view(Tag instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

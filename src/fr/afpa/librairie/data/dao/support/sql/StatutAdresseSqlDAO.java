@@ -277,4 +277,9 @@ public class StatutAdresseSqlDAO extends AbstractSqlDAO<StatutAdresse> implement
                
         return statut;
     }
+
+    @Override
+    public void view(StatutAdresse instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

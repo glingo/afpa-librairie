@@ -275,4 +275,9 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void view(Adresse instance) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
