@@ -41,9 +41,6 @@ public class StatutTransactionListDAO extends AbstractListDAO<StatutTransaction>
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void view(StatutTransaction instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
 }

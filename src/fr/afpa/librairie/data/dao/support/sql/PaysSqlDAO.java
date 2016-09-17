@@ -253,9 +253,6 @@ public class PaysSqlDAO extends AbstractSqlDAO<Pays> implements PaysDAO {
         return pays;
     }
 
-    @Override
-    public void view(Pays instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
 }

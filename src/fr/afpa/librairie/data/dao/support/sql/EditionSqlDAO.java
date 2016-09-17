@@ -39,10 +39,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             + " stock = ?"
             + " WHERE idEdition = ?";
     
-    private static final String SQL_VIEW = "SELECT"
-            + " isbn, idOuvrage, idLanuge, idStatutEdition"
-            + " datePubli, prixHt, couverture, titre, stock"
-            + " FROM Edition";
+  
 
     private static final String SQL_DELETE = "UPDATE Edition "
             + " SET idStatutEdition = ?"
@@ -479,36 +476,6 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
         }
     }
 
-    @Override
-    public void view(Edition instance) throws DAOException {
-        SqlDAOFactory factory = getFactory();
-        Connection connexion = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet valeursAutoGenerees = null;
-
-        try {
-            connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_VIEW, true,
-                    instance.getIsbn(), 
-                    instance.getOuvrage().getId(), instance.getLangue().getId(), 
-                    instance.getStatut().getId(), instance.getDatePublication(), 
-                    instance.getPrixHt(), instance.getCouverture(), 
-                    instance.getTaxes(),
-                    instance.getTitre(), instance.getStock());
-
-            int statut = preparedStatement.executeUpdate();
-            /* Analyse du statut retourné par la requête d'insertion */
-            //nbr de ligne 
-            if (statut == 0) {
-                throw new DAOException("Échec de la vue de l'édition, aucune ligne ajoutée dans la table.");
-            }
-
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            close(valeursAutoGenerees, preparedStatement, connexion);
-        }
-
-    }
+    
 
 }

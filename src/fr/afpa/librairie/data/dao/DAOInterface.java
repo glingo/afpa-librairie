@@ -17,5 +17,5 @@ public interface DAOInterface<T> {
    
     void update(T instance) throws DAOException;
     
-    void view(T instance) throws DAOException;
+
 }

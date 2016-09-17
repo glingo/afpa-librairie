@@ -300,8 +300,5 @@ public class LangueSqlDAO extends AbstractSqlDAO<Langue> implements LangueDAO {
         return langue;
     }
 
-    @Override
-    public void view(Langue instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 }

@@ -25,6 +25,7 @@ public abstract class AbstractSqlDAO<T> extends AbstractDAO<T> {
     public abstract void create(T instance) throws DAOException;
     @Override
     public abstract void update(T instance) throws DAOException;
+
     
     /*
      * Initialise la requête préparée basée sur la connexion passée en argument,

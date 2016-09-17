@@ -259,9 +259,5 @@ public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
         return genres;
     }
 
-    @Override
-    public void view(Genre instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }

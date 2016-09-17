@@ -284,11 +284,6 @@ public class StatutTransactionSqlDAO extends AbstractSqlDAO<StatutTransaction> i
         return statut;
     }
 
-    @Override
-    public void view(StatutTransaction instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 
 
 }

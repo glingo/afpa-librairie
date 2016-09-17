@@ -126,24 +126,7 @@ public class EditionController extends ActivableCRUDController<Edition> {
 
     @Override
     public void viewAction(Edition edition) {
-         if (edition == null) {
-            return;
-        }
-        // on verifier si edition = null. Si l'édition est nulle ( donc pas selectionnée ) alors impossible de supprimer.
-
-        try {
-            getDaoFactory().getEditionDAO().view(edition);
-        } catch (DAOException ex) {
-            LOG.severe(ex.getMessage());
-            danger("Une erreur est survenue !", "Impossible de voir l'édition");
-
-            return;
-
-        }
-
-        alert("Information", "L'edition a bien été visonnée !");
-        // ajouter un message comme quoi la suppression s'est bien deroulée.
-        listAction();
+       
     }
 
     @Override

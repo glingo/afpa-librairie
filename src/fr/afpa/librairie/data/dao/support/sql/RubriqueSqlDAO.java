@@ -352,9 +352,5 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         return rubriques;
     }
 
-    @Override
-    public void view(Rubrique instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }

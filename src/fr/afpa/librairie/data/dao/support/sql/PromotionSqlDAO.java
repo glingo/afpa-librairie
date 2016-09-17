@@ -228,9 +228,5 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void view(Promotion instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+
 }

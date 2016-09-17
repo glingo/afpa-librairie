@@ -275,9 +275,6 @@ public class StatutEntrepriseSqlDAO extends AbstractSqlDAO<StatutEntreprise> imp
         return statut;
     }
 
-    @Override
-    public void view(StatutEntreprise instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
 }

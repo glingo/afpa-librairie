@@ -301,9 +301,6 @@ public class StatutCommandeSqlDAO extends AbstractSqlDAO<StatutCommande> impleme
         return orderStatus;
     }
 
-    @Override
-    public void view(StatutCommande instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
     
 }

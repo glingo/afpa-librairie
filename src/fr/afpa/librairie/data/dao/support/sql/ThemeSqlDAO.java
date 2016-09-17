@@ -253,8 +253,5 @@ public class ThemeSqlDAO extends AbstractSqlDAO<Theme> implements ThemeDAO {
         return themes;
     }
 
-    @Override
-    public void view(Theme instance) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 }
