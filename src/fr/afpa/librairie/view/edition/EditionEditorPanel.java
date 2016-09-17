@@ -24,6 +24,8 @@ import java.awt.Dimension;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -58,6 +60,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
     private JTextField titre;
     private JComboBox<Taxe> taxe;
     private JIntegerField stock;
+    private JButton modifierImage;
     
     
     
@@ -70,7 +73,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
     @Override
     protected void initBody(JPanel body) {
         
-     
+        modifierImage     = new JButton("Modifier image");
         
         isbn = new JTextField(15);
         isbn.setInputVerifier(new StrictInputVerifier());
@@ -98,7 +101,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         //stock.setInputVerifier(new StrictInputVerifier());
  
 
-
+        
         isbnLB                      = new JLabel("Isbn :");
  
         datePublicationLB           = new JLabel("Date de publication :");
@@ -108,8 +111,8 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
   
         prixHtLB                    = new JLabel("Prix HT :");
         
-        imageLB                     = new JLabel("Couverture :");
-        
+        imageLB                     = new JLabel(new ImageIcon("C:\\Users\\Marÿn\\Documents\\imageTest\\toad.jpg"));
+
         titreLB                     = new JLabel("Titre :");
         
         taxeLB                      = new JLabel("Taxe :");
@@ -127,73 +130,95 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         titreLB.setLabelFor(titre);
         taxeLB.setLabelFor(taxe);
         stockLB.setLabelFor(stock);
-   
         
         
-       GroupLayout bodyPanelLayout = new GroupLayout(body);
+        GroupLayout bodyPanelLayout = new GroupLayout(body);
         body.setLayout(bodyPanelLayout);
 
         bodyPanelLayout.setHorizontalGroup(
-            bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(bodyPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(GroupLayout.Alignment.TRAILING, bodyPanelLayout.createSequentialGroup()
+                bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(bodyPanelLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(bodyPanelLayout.createSequentialGroup()
-                                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                    .addComponent(isbnLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)   
-                                    .addComponent(datePublicationLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(langueLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(prixHtLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(imageLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(titreLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(taxeLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(stockLB, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(13, 13, 13)
-                                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                    .addComponent(isbn, GroupLayout.Alignment.LEADING)
-                                    .addComponent(datePublication, GroupLayout.Alignment.LEADING)
-                                    .addComponent(langue, GroupLayout.Alignment.LEADING)
-                                    .addComponent(prixHt, GroupLayout.Alignment.LEADING)
-                                    .addComponent(image, GroupLayout.Alignment.LEADING)
-                                    .addComponent(titre, GroupLayout.Alignment.LEADING)
-                                    .addComponent(taxe, GroupLayout.Alignment.LEADING)
-                                    .addComponent(stock, GroupLayout.Alignment.LEADING))))
-                        .addGap(6, 6, 6))))
-        );
-
-        bodyPanelLayout.setVerticalGroup(
-            bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addGroup(GroupLayout.Alignment.TRAILING, bodyPanelLayout.createSequentialGroup()
+                                        .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addGroup(bodyPanelLayout.createSequentialGroup()
             .addGroup(bodyPanelLayout.createSequentialGroup()
-                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(isbnLB)
-                    .addComponent(isbn, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(datePublication, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(datePublicationLB))
-                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(langue, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(langueLB))
-                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(prixHt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(prixHtLB))
-                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(image, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(imageLB))
-                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(titre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(titreLB))
-                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(taxe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(taxeLB))
-                .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stockLB))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        
+                            .addGroup(bodyPanelLayout.createSequentialGroup()
+                                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(imageLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(modifierImage, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE))
+                                .addGap(53, 53, 53)
+                                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(isbnLB)
+                                    .addComponent(datePublicationLB, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(titreLB, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(langueLB, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(prixHtLB, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(taxeLB, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(stockLB, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(127, 127, 127)
+                                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(isbn)
+                                    .addComponent(titre, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                                    .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(prixHt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                                        .addComponent(stock, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(datePublication, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(taxe, javax.swing.GroupLayout.Alignment.LEADING, 0, 130, Short.MAX_VALUE)
+                                        .addComponent(langue, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                    
+                .addContainerGap(26, Short.MAX_VALUE))
+      ))))));
+        bodyPanelLayout.setVerticalGroup(
+            bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bodyPanelLayout.createSequentialGroup()
+                
+                .addGap(33, 33, 33)
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                        .addComponent(imageLB, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(taxeLB, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(taxe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(modifierImage, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38))
+                    .addGroup(bodyPanelLayout.createSequentialGroup()
+                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(isbnLB, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(datePublicationLB, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(datePublication, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(titreLB, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(titre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(langueLB, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(langue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(prixHtLB, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(prixHt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(109, 109, 109)))
+                .addGroup(bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stockLB, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                
+                .addGap(34, 34, 34))
         );
-        
+   
+
     }   
     
     
