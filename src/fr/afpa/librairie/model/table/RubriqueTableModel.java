@@ -1,6 +1,7 @@
 
 package fr.afpa.librairie.model.table;
 
+import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.model.table.column.RubriqueColumn;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class RubriqueTableModel extends TableModel<Rubrique> {
             this.columnDisplayNames.put(RubriqueColumn.DATEDEBUT, "Date de début");
             this.columnDisplayNames.put(RubriqueColumn.DATEFIN, "Date de fin");
             this.columnDisplayNames.put(RubriqueColumn.COMMENTAIRE, "Commentaire");
+            this.columnDisplayNames.put(RubriqueColumn.OUVRAGE, "Ouvrage");
         }
         return this.columnDisplayNames;
     }
@@ -50,7 +52,9 @@ public class RubriqueTableModel extends TableModel<Rubrique> {
             case COMMENTAIRE:
                 columnValue = rubrique.getCommentaire();
                 break;
-
+            case OUVRAGE:
+                columnValue = getOuvrageObject(rubrique);
+                break;
             default:
 //                columnValue = getAddressObject(person, column);
                 break;
@@ -58,6 +62,7 @@ public class RubriqueTableModel extends TableModel<Rubrique> {
 
         return columnValue;
     }
+    
 
     private RubriqueColumn getColumn(int columnIndex) {
         RubriqueColumn[] columns = RubriqueColumn.values();
@@ -71,4 +76,22 @@ public class RubriqueTableModel extends TableModel<Rubrique> {
         String displayName = getColumnDisplayNames().get(columnObj);
         return displayName;
     }
+    
+    private String getOuvrageObject(Rubrique rubrique){
+        StringBuilder sb = new StringBuilder();
+        System.out.println("hello");
+        int len = rubrique.getOuvrage().size();
+        System.out.println("hello2");
+        for(int i = 0; i < len; i++){
+            Ouvrage ouvrage = rubrique.getOuvrage().get(i);
+            sb.append(ouvrage.getTitre());
+
+            if(i < len-1){
+                sb.append(", ");
+            }
+        }
+        
+        return sb.toString();
+    }
+    
 }

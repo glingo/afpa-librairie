@@ -80,10 +80,12 @@ public class Rubrique {
     }
     
     public List<Ouvrage> getOuvrage(){
+        
         return ouvrages;
     }
     
-    public void setOuvrage(Ouvrage ouvrage){
+    public void setOuvrage(List<Ouvrage> ouvrages){
+        
         this.ouvrages = ouvrages;
     }
     

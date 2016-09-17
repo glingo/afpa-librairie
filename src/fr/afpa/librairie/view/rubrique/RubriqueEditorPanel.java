@@ -212,7 +212,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
         
         rubrique.setCommentaire(commentaireTF.getText().trim());
         
-        rubrique.setOuvrage((Ouvrage) ouvrages.getSelectedValuesList());
+        rubrique.setOuvrage(ouvrages.getSelectedValuesList());
         
         
         return rubrique;

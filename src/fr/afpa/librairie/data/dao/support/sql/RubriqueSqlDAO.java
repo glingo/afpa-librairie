@@ -1,6 +1,7 @@
-package fr.afpa.librairie.data.dao.support.sql;
+        package fr.afpa.librairie.data.dao.support.sql;
 
 import fr.afpa.librairie.data.DAOFactoryInterface;
+import fr.afpa.librairie.data.bean.Ouvrage;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.data.dao.RubriqueDAO;
 import fr.afpa.librairie.data.exception.DAOException;
@@ -17,41 +18,41 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
     private static final String SQL_INSERT = "INSERT INTO Rubrique"
             + " (libelle, date_debut, date_fin, commentaire)"
             + " VALUES (?, ?, ?, ?)";
-    
+
     private static final String SQL_UPDATE = "UPDATE Rubrique SET"
             + " libelle = ?,"
             + " date_debut = ?,"
             + " date_fin = ?,"
             + " commentaire = ?"
             + " WHERE idRubrique = ?";
-    
+
     private static final String SQL_DELETE = "DELETE FROM Rubrique WHERE idRubrique = ?";
-    
+
     private static final String SQL_FIND_ALL = "SELECT"
             + " idRubrique, libelle, date_debut, date_fin, commentaire"
             + " FROM Rubrique";
-    
+
     private static final String SQL_FIND_BY_DATEDEBUT = "SELECT"
             + " idRubrique, libelle, date_debut, date_fin, commentaire"
             + " FROM Rubrique"
             + " WHERE date_debut = ?";
-    
+
     private static final String SQL_FIND_BY_LIBELLE = "SELECT"
             + " idRubrique, libelle, date_debut, date_fin, commentaire"
             + " FROM Rubrique"
             + " WHERE libelle = ?";
-    
+
     private static final String SQL_FIND_BY_ID = "SELECT"
             + " idRubrique, libelle, date_debut, date_fin, commentaire"
             + " FROM Rubrique"
             + " WHERE idRubrique = ?";
-    
+
     private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
             + " r.idRubrique, r.libelle, r.date_debut, r.date_fin, r.commentaire"
             + " FROM Rubrique AS r"
             + " JOIN MiseEnRubrique AS mer on r.idRubrique = mer.idRubrique"
             + " WHERE mer.idOuvrage = ?";
-    
+
     public RubriqueSqlDAO(DAOFactoryInterface factory) {
         super(factory);
     }
@@ -69,60 +70,105 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
 
         return rubrique;
     }
-    
+
+    private void detachOuvrages(Long id) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        try {
+
+            connexion = factory.getConnection();
+
+            preparedStatement = getPreparedStatement(connexion,
+                    "DELETE FROM MiseEnRubrique WHERE idRubrique = ?", false, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+
+    private void attachOuvrage(Long id, List<Ouvrage> ouvrages) throws DAOException {
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            detachOuvrages(id);
+            for (Ouvrage ouvrage : ouvrages) {
+
+                connexion = factory.getConnection();
+
+                preparedStatement = getPreparedStatement(connexion,
+                        "INSERT INTO MiseEnRubrique (idRubrique, idOuvrage)"
+                        + " VALUES (?, ?)", false,
+                        ouvrage.getId(), id);
+
+                preparedStatement.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(preparedStatement, connexion);
+        }
+    }
+
     @Override
-    public void update(Rubrique instance){
+    public void update(Rubrique instance) {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
-        
+
         try {
 
             connexion = factory.getConnection();
-            
+
             preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
                     instance.getLibelle(), instance.getDateDebut(),
                     instance.getDateFin(), instance.getCommentaire(),
                     instance.getId());
-            
+
             int statut = preparedStatement.executeUpdate();
-            
+
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
                 throw new DAOException("Échec de la création de la rubrique, aucune ligne ajoutée dans la table.");
             }
-            
+
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
-        
+
     }
-    
+
     @Override
-    public void create(Rubrique instance){
+    public void create(Rubrique instance) {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
-        
+
         try {
 
             connexion = factory.getConnection();
-            
+
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
                     instance.getLibelle(), instance.getDateDebut(),
                     instance.getDateFin(), instance.getCommentaire());
-            
+
             int statut = preparedStatement.executeUpdate();
-            
+
             /* Analyse du statut retourné par la requête d'insertion */
             if (statut == 0) {
                 throw new DAOException("Échec de la création de la rubrique, aucune ligne ajoutée dans la table.");
             }
-            
+
             valeursAutoGenerees = preparedStatement.getGeneratedKeys();
 
             if (valeursAutoGenerees.next()) {
@@ -136,26 +182,29 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
-        
+
     }
 
     @Override
     public void save(Rubrique instance) throws DAOException {
-        if(instance.getId() != null) {
+        if (instance.getId() != null) {
             update(instance);
         } else {
             create(instance);
         }
+        
+        attachOuvrage(instance.getId(), instance.getOuvrage());
+
     }
-    
+
     @Override
-    public void delete(Rubrique instance){
+    public void delete(Rubrique instance) {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
-        
-         try {
+
+        try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
             preparedStatement = getPreparedStatement(connexion, SQL_DELETE, true, instance.getId());
@@ -169,10 +218,9 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         } finally {
             close(valeursAutoGenerees, preparedStatement, connexion);
         }
-        
+
     }
-    
-    
+
     @Override
     public List<Rubrique> findAll() throws DAOException {
         SqlDAOFactory factory = getFactory();
@@ -197,20 +245,20 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
 
         return rubriques;
 
-    }  
-    
+    }
+
     @Override
     public Rubrique findById(Long id) throws DAOException {
-       SqlDAOFactory factory = getFactory();
-       Connection connexion = null;
-       PreparedStatement preparedStatement = null; 
-       ResultSet resultSet = null; 
-       Rubrique rubrique = null; 
-       
-       try{
-          connexion = factory.getConnection();
-          preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, false, id);
-          resultSet = preparedStatement.executeQuery();
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Rubrique rubrique = null;
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, false, id);
+            resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             if (resultSet.next()) {
                 rubrique = map(resultSet);
@@ -222,7 +270,7 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         }
 
         return rubrique;
-       
+
     }
 
     @Override
@@ -232,7 +280,7 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Rubrique rubrique = null;
-        
+
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
@@ -248,7 +296,7 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
             close(resultSet, preparedStatement, connexion);
         }
 
-        return rubrique; 
+        return rubrique;
     }
 
     @Override
@@ -258,7 +306,7 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Rubrique rubrique = null;
-        
+
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
@@ -275,7 +323,7 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         }
 
         return rubrique;
-        
+
     }
 
     @Override
@@ -302,6 +350,5 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
 
         return rubriques;
     }
-    
 
 }
