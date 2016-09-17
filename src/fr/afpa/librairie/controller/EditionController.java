@@ -8,10 +8,14 @@ import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.edition.EditionAdminPanel;
 import fr.afpa.librairie.view.edition.EditionEditorPanel;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 public class EditionController extends ActivableCRUDController<Edition> {
+    
+
 
     private static final Logger LOG = Logger.getLogger(EditionController.class.getName());
 
@@ -59,6 +63,8 @@ public class EditionController extends ActivableCRUDController<Edition> {
 
     }
 
+    
+
     //Si User = "save" alors EditionController ==> createAction
     @Override
     public boolean create(Edition value) {
@@ -78,6 +84,7 @@ public class EditionController extends ActivableCRUDController<Edition> {
 
 //        listAction();
     }
+
 
     @Override
     public void deactivateAction(Edition edition) {
