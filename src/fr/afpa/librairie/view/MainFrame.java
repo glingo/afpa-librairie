@@ -277,5 +277,9 @@ public class MainFrame extends javax.swing.JFrame {
         return paysController;
     }
     
+    public OuvrageController getOuvrageController(){
+        return ouvrageController;
+    }
+    
     
 }

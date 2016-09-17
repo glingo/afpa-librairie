@@ -9,6 +9,7 @@ import fr.afpa.librairie.view.Modal;
 import fr.afpa.librairie.view.panel.AdminPanel;
 import fr.afpa.librairie.view.panel.EditorPanel;
 import fr.afpa.librairie.view.panel.ListPanel;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,6 +41,7 @@ public abstract class CRUDController<T> implements ActionListener {
     private AdminPanel<T> adminPanel;
     private EditorPanel<T> editorPanel;
     private ListPanel<T> listPanel;
+
     
     public CRUDController() {
 //        this.daoFactory = AbstractDAOFactory.getFactory(FactoryType.LIST_DAO_FACTORY);
@@ -217,6 +219,7 @@ public abstract class CRUDController<T> implements ActionListener {
         return editorPanel;
     }
     
+
     public DAOFactoryInterface getDaoFactory() {
         return daoFactory;
     }
