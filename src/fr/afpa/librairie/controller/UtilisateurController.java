@@ -71,7 +71,7 @@ public class UtilisateurController extends ActivableCRUDController<Utilisateur> 
             return;
         }
 
-        listAction();
+        adminAction();
         // ajouter un message comme quoi la suppression s'est bien deroulée.
         alert("Information", "L'utilisateur a bien été désactivé !");
     }
@@ -92,7 +92,7 @@ public class UtilisateurController extends ActivableCRUDController<Utilisateur> 
             return;
         }
 
-        listAction();
+        adminAction();
         alert("Information", "L'activation a été prise en compte !");
     }
 
