@@ -48,11 +48,11 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
             + " FROM Rubrique"
             + " WHERE idRubrique = ?";
 
-   /* private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
+    private static final String SQL_FIND_BY_OUVRAGE = "SELECT"
             + " r.idRubrique, r.libelle, r.date_debut, r.date_fin, r.commentaire"
             + " FROM Rubrique AS r"
             + " JOIN MiseEnRubrique AS mer on r.idRubrique = mer.idRubrique"
-            + " WHERE mer.idOuvrage = ?";*/
+            + " WHERE mer.idOuvrage = ?";
 
     public RubriqueSqlDAO(DAOFactoryInterface factory) {
         super(factory);
@@ -329,7 +329,7 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
 
     }
 
-    /*@Override
+    @Override
     public List<Rubrique> findByOuvrage(Long idOuvrage) throws DAOException {
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
@@ -352,7 +352,7 @@ public class RubriqueSqlDAO extends AbstractSqlDAO<Rubrique> implements Rubrique
         }
 
         return rubriques;
-    }*/
+    }
 
 
 }
