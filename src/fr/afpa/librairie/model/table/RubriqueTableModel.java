@@ -19,7 +19,7 @@ public class RubriqueTableModel extends TableModel<Rubrique> {
             this.columnDisplayNames.put(RubriqueColumn.DATEDEBUT, "Date de début");
             this.columnDisplayNames.put(RubriqueColumn.DATEFIN, "Date de fin");
             this.columnDisplayNames.put(RubriqueColumn.COMMENTAIRE, "Commentaire");
-            this.columnDisplayNames.put(RubriqueColumn.OUVRAGE, "Ouvrage");
+            //this.columnDisplayNames.put(RubriqueColumn.OUVRAGE, "Ouvrage");
         }
         return this.columnDisplayNames;
     }
@@ -52,9 +52,9 @@ public class RubriqueTableModel extends TableModel<Rubrique> {
             case COMMENTAIRE:
                 columnValue = rubrique.getCommentaire();
                 break;
-            case OUVRAGE:
-                columnValue = getOuvrageObject(rubrique);
-                break;
+           // case OUVRAGE:
+           //     columnValue = getOuvrageObject(rubrique);
+           //     break;
             default:
 //                columnValue = getAddressObject(person, column);
                 break;
@@ -77,7 +77,7 @@ public class RubriqueTableModel extends TableModel<Rubrique> {
         return displayName;
     }
     
-    private String getOuvrageObject(Rubrique rubrique){
+   /* private String getOuvrageObject(Rubrique rubrique){
         StringBuilder sb = new StringBuilder();
         System.out.println("hello");
         int len = rubrique.getOuvrage().size();
@@ -93,5 +93,5 @@ public class RubriqueTableModel extends TableModel<Rubrique> {
         
         return sb.toString();
     }
-    
+    */
 }

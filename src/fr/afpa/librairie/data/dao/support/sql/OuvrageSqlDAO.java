@@ -545,8 +545,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         List<Genre> genres = factory.getGenreDAO().findByOuvrage(idOuvrage);
         ouvrage.setGenres(genres);
 
-        List<Rubrique> rubriques = factory.getRubriqueDAO().findByOuvrage(idOuvrage);
-        ouvrage.setRubriques(rubriques);
+       
 
         List<Tag> tags = factory.getTagDAO().findByOuvrage(idOuvrage);
         ouvrage.setTags(tags);

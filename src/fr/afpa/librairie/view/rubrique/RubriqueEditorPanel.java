@@ -40,11 +40,11 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
     private JDateField dateFinTF;
     
     
-    private JList<Ouvrage> ouvrages;
+    //private JList<Ouvrage> ouvrages;
     
     private JButton ajoutOuvrage;
     
-    private JScrollPane ouvrageSP;
+    //private JScrollPane ouvrageSP;
     private JScrollPane commentaireSP;
     
     
@@ -57,7 +57,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
     @Override
     protected void initBody(JPanel body) {
         
-        ouvrageSP = new JScrollPane();
+        //ouvrageSP = new JScrollPane();
         commentaireSP = new JScrollPane();
         
         libelleLB        = new JLabel();
@@ -71,7 +71,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
         dateDebutTF      = new JDateField(true);
         dateFinTF        = new JDateField(false);
         commentaireTF    = new JTextArea(10, 10);
-        ouvrages         = new JList<>();
+        //ouvrages         = new JList<>();
         ajoutOuvrage     = new JButton("+");
         ajoutOuvrage.setActionCommand(CRUDController.CREATE_MODAL_ACTION);
         
@@ -80,13 +80,13 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
         
         
         int cellHeight = 20;
-        ouvrages.setFixedCellHeight(cellHeight);
-        ouvrages.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        //ouvrages.setFixedCellHeight(cellHeight);
+        //ouvrages.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         
         Dimension spDimension = new Dimension(250, 80);
-        ouvrageSP.setViewportView(ouvrages);
-        ouvrageSP.setPreferredSize(spDimension);
-        ouvrages.setCellRenderer(new OuvrageListCellRenderer());
+       // ouvrageSP.setViewportView(ouvrages);
+       // ouvrageSP.setPreferredSize(spDimension);
+       // ouvrages.setCellRenderer(new OuvrageListCellRenderer());
         
         
 
@@ -128,11 +128,11 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
                                     .addComponent(dateDebutTF, GroupLayout.Alignment.LEADING)
                                     .addComponent(dateFinTF, GroupLayout.Alignment.LEADING)
                                     .addComponent(commentaireTF, GroupLayout.Alignment.LEADING)
-                                    .addComponent(ouvrages, GroupLayout.Alignment.LEADING))
+                                    //.addComponent(ouvrages, GroupLayout.Alignment.LEADING))
                                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                     .addComponent(ajoutOuvrage, GroupLayout.Alignment.TRAILING))))
                         .addGap(6, 6, 6))))
-        );
+        ));
 
         bodyPanelLayout.setVerticalGroup(
             bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -151,7 +151,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
                     .addComponent(commentaireTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(commentaireLB))
                 .addGroup(bodyPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(ouvrages, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                   // .addComponent(ouvrages, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(ouvrageLB)
                     .addComponent(ajoutOuvrage))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED))
@@ -177,12 +177,12 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
         dateFinTF.setValue(rubrique.getDateFin());
         commentaireTF.setText(rubrique.getCommentaire());
         
-        int i = 0;
-        int[] ou = new int[rubrique.getOuvrage().size()];
-        for (Ouvrage ouvrage : rubrique.getOuvrage()) {
-            ou[i] = this.ouvrageModel.indexOf(ouvrage);
-        }
-        this.ouvrages.setSelectedIndices(ou);
+        //int i = 0;
+        //int[] ou = new int[rubrique.getOuvrage().size()];
+       // for (Ouvrage ouvrage : rubrique.getOuvrage()) {
+       //     ou[i] = this.ouvrageModel.indexOf(ouvrage);
+        //}
+        //this.ouvrages.setSelectedIndices(ou);
     }
 
     @Override
@@ -191,7 +191,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
         dateDebutTF.setValue(null);
         dateFinTF.setValue(null);
         commentaireTF.setText("");
-        this.ouvrages.setSelectedValue(null, true);
+        //this.ouvrages.setSelectedValue(null, true);
     }
 
     @Override
@@ -212,7 +212,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
         
         rubrique.setCommentaire(commentaireTF.getText().trim());
         
-        rubrique.setOuvrage(ouvrages.getSelectedValuesList());
+       // rubrique.setOuvrage(ouvrages.getSelectedValuesList());
         
         
         return rubrique;
@@ -222,7 +222,7 @@ public class RubriqueEditorPanel extends EditorPanel<Rubrique> {
    public void setOuvrageModel(List<Ouvrage> ouvrages) {
         this.ouvrageModel = new ListAdapterListModel();
         this.ouvrageModel.addAll(ouvrages);
-        this.ouvrages.setModel(this.ouvrageModel);
+      //  this.ouvrages.setModel(this.ouvrageModel);
     }
 
     public JButton getAjoutOuvrage() {
