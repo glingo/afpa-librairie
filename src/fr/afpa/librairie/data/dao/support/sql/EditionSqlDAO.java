@@ -28,7 +28,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE = "UPDATE Edition"
-            + " SET isbn = ?"
+            + " SET isbn = ?,"
             + " idOuvrage = ?,"
             + " idLangue = ?,"
             + " idStatutEdition = ?,"
@@ -37,7 +37,7 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             + " couverture = ?,"
             + " titre = ?,"
             + " stock = ?"
-            + " WHERE idEdition = ?";
+            + " WHERE idEdition = ?;";
     
   
 
@@ -160,15 +160,18 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
             //recuperation de la connexion depuis la factory
             connexion = factory.getConnection();
             //requete prepare avec des conditions particulières.
+            
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
+                    
                     instance.getIsbn(), instance.getOuvrage().getId(),
                     instance.getLangue().getId(), instance.getStatut().getId(),
                     instance.getDatePublication(), instance.getPrixHt(), 
                     instance.getCouverture(), instance.getTitre(), 
                     instance.getTaxes(),
                     instance.getStock());
-
+            
             int statut = preparedStatement.executeUpdate();
+            
             /* Analyse du statut retourné par la requête d'insertion */
             //nbr de ligne 
             if (statut == 0) {
@@ -191,33 +194,55 @@ public class EditionSqlDAO extends AbstractSqlDAO<Edition> implements EditionDAO
 
     @Override
     public void update(Edition instance) throws DAOException {
+        
         SqlDAOFactory factory = getFactory();
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
-        ResultSet valeursAutoGenerees = null;
 
         try {
+
+            /* Récupération d'une connexion depuis la Factory */
             connexion = factory.getConnection();
-            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
-                    instance.getIsbn(), 
-                    instance.getOuvrage().getId(), instance.getLangue().getId(), 
-                    instance.getStatut().getId(), instance.getDatePublication(), 
-                    instance.getPrixHt(), instance.getCouverture(), 
-                    instance.getTaxes(),
-                    instance.getTitre(), instance.getStock());
+
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, false,
+                    instance.getIsbn(), instance.getOuvrage().getId(), instance.getLangue().getId(), instance.getStatut().getId(),
+                    instance.getDatePublication(), instance.getPrixHt(), instance.getCouverture(), instance.getTitre(), instance.getStock(), instance.getId());
 
             int statut = preparedStatement.executeUpdate();
-            /* Analyse du statut retourné par la requête d'insertion */
-            //nbr de ligne 
+
             if (statut == 0) {
                 throw new DAOException("Échec de la création de l'édition, aucune ligne ajoutée dans la table.");
             }
-
+            
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            close(valeursAutoGenerees, preparedStatement, connexion);
+            close(preparedStatement, connexion);
         }
+//        SqlDAOFactory factory = getFactory();
+//        Connection connexion = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet valeursAutoGenerees = null;
+//
+//        try {
+//            connexion = factory.getConnection();
+//            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+//                    instance.getId(), instance.getIsbn(), instance.getOuvrage().getId(), instance.getLangue().getId(), instance.getStatut().getId(),
+//                    instance.getDatePublication(), instance.getPrixHt(), instance.getCouverture(), instance.getTitre(), instance.getStock());
+//
+//
+//            int statut = preparedStatement.executeUpdate();
+//            /* Analyse du statut retourné par la requête d'insertion */
+//            //nbr de ligne 
+//            if (statut == 0) {
+//                throw new DAOException("Échec de la création de l'édition, aucune ligne ajoutée dans la table.");
+//            }
+//
+//        } catch (SQLException e) {
+//            throw new DAOException(e);
+//        } finally {
+//            close(valeursAutoGenerees, preparedStatement, connexion);
+//        }
 
     }
 

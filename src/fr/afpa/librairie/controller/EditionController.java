@@ -79,7 +79,7 @@ public class EditionController extends ActivableCRUDController<Edition> {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder l'édition");
         }
-        
+        adminAction();
         return false;
 
 //        listAction();
