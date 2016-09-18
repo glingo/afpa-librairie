@@ -262,37 +262,55 @@ public class OuvrageEditorPanel extends EditorPanel<Ouvrage> {
         sousTitre.setText(ouvrage.getSousTitre());
         resume.setText(ouvrage.getResume());
         
+        
+        
         if(ouvrage.getAuteur() != null) {
             this.auteur.setSelectedItem(ouvrage.getAuteur());
         }
         
-        int i = 0;
-        int[] ri = new int[ouvrage.getRubriques().size()];
-        for (Rubrique rubrique : ouvrage.getRubriques()) {
-            ri[i] = this.rubriqueModel.indexOf(rubrique);
+        if(ouvrage.getRubriques() != null){
+            this.rubriques.setSelectedValue(rubriques, true);
         }
-        this.rubriques.setSelectedIndices(ri);
         
-        i = 0;
-        int[] ti = new int[ouvrage.getThemes().size()];
-        for (Theme theme : ouvrage.getThemes()) {
-            ti[i] = this.themeModel.indexOf(theme);
+        if(ouvrage.getThemes() != null){
+            this.themes.setSelectedValue(themes, true);
         }
-        this.themes.setSelectedIndices(ti);
         
-        i = 0;
-        int[] ci = new int[ouvrage.getCoAuteurs().size()];
-        for (Auteur coAuteur : ouvrage.getCoAuteurs()) {
-            ci[i] = this.coAuteurModel.indexOf(coAuteur);
+        if(ouvrage.getCoAuteurs() != null){
+            this.coAuteurs.setSelectedValue(coAuteurs, true);
         }
-        this.coAuteurs.setSelectedIndices(ci);
         
-        i = 0;
-        int[] gi = new int[ouvrage.getGenres().size()];
-        for (Genre genre : ouvrage.getGenres()) {
-            gi[i] = this.genreModel.indexOf(genre);
+        if(ouvrage.getGenres() != null){
+            this.genres.setSelectedValue(genres, true);
         }
-        this.genres.setSelectedIndices(gi);
+        
+//        int i = 0;
+//        int[] ri = new int[ouvrage.getRubriques().size()];
+//        for (Rubrique rubrique : ouvrage.getRubriques()) {
+//            ri[i] = this.rubriqueModel.indexOf(rubrique);
+//        }
+//        this.rubriques.setSelectedIndices(ri);
+        
+//        int i = 0;
+//        int[] ti = new int[ouvrage.getThemes().size()];
+//        for (Theme theme : ouvrage.getThemes()) {
+//            ti[i] = this.themeModel.indexOf(theme);
+//        }
+//        this.themes.setSelectedIndices(ti);
+//        
+//        i = 0;
+//        int[] ci = new int[ouvrage.getCoAuteurs().size()];
+//        for (Auteur coAuteur : ouvrage.getCoAuteurs()) {
+//            ci[i] = this.coAuteurModel.indexOf(coAuteur);
+//        }
+//        this.coAuteurs.setSelectedIndices(ci);
+//        
+//        i = 0;
+//        int[] gi = new int[ouvrage.getGenres().size()];
+//        for (Genre genre : ouvrage.getGenres()) {
+//            gi[i] = this.genreModel.indexOf(genre);
+//        }
+//        this.genres.setSelectedIndices(gi);
         
         if(ouvrage.getTags() != null) {
             ouvrage.getTags().forEach((Tag usedTag)-> {
