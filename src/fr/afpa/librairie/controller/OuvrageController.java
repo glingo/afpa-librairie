@@ -75,6 +75,7 @@ public class OuvrageController extends CRUDController<Ouvrage> {
             danger("Une erreur est survenue !", "Impossible de sauvegarder cet ouvrage");
         }
         
+        adminAction();
         return false;
 //        listAction();
     }
@@ -96,7 +97,7 @@ public class OuvrageController extends CRUDController<Ouvrage> {
             return;
         }
         
-        listAction();
+        
         alert("Information", "L'ouvrage a bien été supprimé !");
     }
 
