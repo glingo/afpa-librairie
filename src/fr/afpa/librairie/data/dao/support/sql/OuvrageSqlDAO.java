@@ -14,8 +14,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO {
 
@@ -64,6 +67,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             + " FROM Ouvrage AS o"
             + " JOIN MiseEnRubrique AS mer ON mer.idOuvrage = o.idOuvrage"
             + " WHERE mer.idRubrique =?";
+    
     private static final String SQL_VIEW_RUBRIQUE = "SELECT"
             + " o.titre, r.libelle"
             + " FROM Ouvrage AS o"
@@ -71,7 +75,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             + " ON m.idOuvrage = o.idOuvrage"
             + " JOIN Rubrique AS r"
             + " ON r.idRubrique = m.idRubrique"
-            + " WHERE m.idRubrique = ?";
+            + " WHERE m.idRubrique = 1";
 
     public OuvrageSqlDAO(AbstractDAOFactory factory) {
         super(factory);
@@ -304,6 +308,30 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         }
     }
     
+    @Override
+    public void viewRubrique(Ouvrage instance) throws DAOException{
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        
+        
+        try {
+            Statement stmt = connexion.createStatement();
+            String query = SQL_VIEW_RUBRIQUE;
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            
+            rs.close();
+            stmt.close();
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }finally {
+            close(connexion);
+        }
+       
+        
+    }
 
     @Override
     public void create(Ouvrage instance) throws DAOException {

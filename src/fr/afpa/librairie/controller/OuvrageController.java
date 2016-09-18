@@ -103,6 +103,18 @@ public class OuvrageController extends CRUDController<Ouvrage> {
 
     @Override
     public void viewAction(Ouvrage value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         if(value == null){
+            return;
+        }
+        try{
+            getDaoFactory().getOuvrageDAO().viewRubrique(value);
+        }catch (DAOException ex){
+            LOG.severe(ex.getMessage());
+            danger("Une erreur est survenue !",
+                    "Impossible de voir quelque chose.");
+            return;
+        }
+        listAction();
+        alert("Information", "La rubrique a bien été supprimée !");
     }
 }

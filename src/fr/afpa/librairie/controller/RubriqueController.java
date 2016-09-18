@@ -78,7 +78,10 @@ public class RubriqueController extends CRUDController<Rubrique> {
         return false;
     }
 
-    
+    @Override
+    public void viewAction(Rubrique value) {
+       
+    }
 
     @Override
     public void deleteAction(Rubrique value) {
@@ -167,8 +170,6 @@ public class RubriqueController extends CRUDController<Rubrique> {
 ////        getEditorPanel().setBean(rubrique);
 ////        getFrame().setContent(getEditorPanel());
 ////    }
-    @Override
-    public void viewAction(Rubrique value) {
-    }
+
 
 }
