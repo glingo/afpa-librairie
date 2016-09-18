@@ -64,6 +64,14 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             + " FROM Ouvrage AS o"
             + " JOIN MiseEnRubrique AS mer ON mer.idOuvrage = o.idOuvrage"
             + " WHERE mer.idRubrique =?";
+    private static final String SQL_VIEW_RUBRIQUE = "SELECT"
+            + " o.titre, r.libelle"
+            + " FROM Ouvrage AS o"
+            + " JOIN MiseEnRubrique AS m"
+            + " ON m.idOuvrage = o.idOuvrage"
+            + " JOIN Rubrique AS r"
+            + " ON r.idRubrique = m.idRubrique"
+            + " WHERE m.idRubrique = ?";
 
     public OuvrageSqlDAO(AbstractDAOFactory factory) {
         super(factory);
