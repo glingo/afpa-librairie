@@ -98,7 +98,11 @@ public class EditionTableModel extends TableModel<Edition> {
 //    private String getEditeurObject(Edition edition){
 //        return edition.getEditeur().getLibelle();
 //    }
-//    
+//   
+    
+//    private String getTaxeObject(Edition edition){
+//        return edition.getTaxes().getLibelle();
+//    }
     private String getTaxeObject(Edition edition){
         StringBuilder sb = new StringBuilder();
         

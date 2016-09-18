@@ -47,7 +47,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
     private JFileChooser chooseFile;
     private String chooseTitle;
     private DefaultComboBoxModel<Langue> langueComboModel;
-    private DefaultComboBoxModel<Taxe> taxeComboModel;
+    private ListAdapterListModel<Taxe> taxeModel;
 
     private JLabel isbnLB;
     private JLabel datePublicationLB;
@@ -64,7 +64,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
     private JFloatField prixHt;
     private JTextField image;
     private JTextField titre;
-    private JComboBox<Taxe> taxe;
+    private JList<Taxe> taxe;
     private JIntegerField stock;
     private JButton modifierImage;
 
@@ -94,8 +94,15 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         titre = new JTextField(15);
         titre.setInputVerifier(new StrictInputVerifier());
 
-        taxe = new JComboBox<>();
-        taxe.setRenderer(new TaxeListCellRenderer());
+        taxe = new JList<>();
+        int cellHeight = 20;
+        taxe.setFixedCellHeight(cellHeight);
+       
+        
+        taxe.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        
+        taxe.setCellRenderer(new TaxeListCellRenderer());
 
         stock = new JIntegerField(true);
         //pas besoin de mettre la ligne au dessous parce qu'elle est deja presente dans la methode JIntegerField.
@@ -240,27 +247,27 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
                 .addContainerGap(165, Short.MAX_VALUE))
         );
     }
-    private void modifierImageActionPerformed(ActionEvent e) {
-        
-       
-        int result;
-
-        chooseFile = new JFileChooser();
-        chooseFile.setCurrentDirectory(new java.io.File("."));
-        chooseFile.setDialogTitle(chooseTitle);
-        chooseFile.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        // Permet d'afficher les fichiers et les répertoires
-        chooseFile.setAcceptAllFileFilterUsed(false);
-        //   
-        if (chooseFile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-
-            System.out.println("getSelectedFile() : "
-                    + chooseFile.getSelectedFile());
-
-        } else {
-            System.out.println("Pas de fichier séléctioné ");
-        }
-    }
+//    private void modifierImageActionPerformed(ActionEvent e) {
+//        
+//       
+//        int result;
+//
+//        chooseFile = new JFileChooser();
+//        chooseFile.setCurrentDirectory(new java.io.File("."));
+//        chooseFile.setDialogTitle(chooseTitle);
+//        chooseFile.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+//        // Permet d'afficher les fichiers et les répertoires
+//        chooseFile.setAcceptAllFileFilterUsed(false);
+//        //   
+//        if (chooseFile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+//
+//            System.out.println("getSelectedFile() : "
+//                    + chooseFile.getSelectedFile());
+//
+//        } else {
+//            System.out.println("Pas de fichier séléctioné ");
+//        }
+//    }
 
 
 @Override
@@ -290,7 +297,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         }
         
         if(edition.getTaxes() != null){
-            this.taxe.setSelectedItem(edition.getTaxes());
+            this.taxe.setSelectedValue(taxe, true);
         }
 
   
@@ -313,7 +320,10 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         edition.setTitre(titre.getText());
         edition.setStock((Integer) stock.getValue());
         edition.setLangue((Langue) langue.getSelectedItem());
-        edition.setTaxes((List<Taxe>) (Taxe) taxe.getSelectedItem());
+        
+        edition.setTaxes(taxe.getSelectedValuesList());
+        
+        
         
         
         
@@ -333,7 +343,7 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
         prixHt.setValue(null);
         image.setText("");
         titre.setText("");
-        taxe.setSelectedItem("");
+        this.taxe.setSelectedValue(null, true);
         stock.setValue(null);
     }
     
@@ -345,10 +355,10 @@ public class EditionEditorPanel extends EditorPanel<Edition> {
     }
     
     
-    public void setTaxeModel(List<Taxe> list){
-        this.taxeComboModel = new DefaultComboBoxModel(list.toArray());
-        this.taxeComboModel.setSelectedItem(null);
-        this.taxe.setModel(this.taxeComboModel);
+      public void setTaxeModel(List<Taxe> taxes) {
+        this.taxeModel = new ListAdapterListModel();
+        this.taxeModel.addAll(taxes);
+        this.taxe.setModel(this.taxeModel);
     }
 
 }

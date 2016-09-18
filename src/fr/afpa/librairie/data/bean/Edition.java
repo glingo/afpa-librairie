@@ -293,7 +293,7 @@ public class Edition {
      */
 
     
-    public List<Taxe> getTaxes() {
+     public List<Taxe> getTaxes() {
         return taxes;
     }
 
@@ -308,6 +308,8 @@ public class Edition {
 
         this.taxes.add(taxe);
     }
+
+   
     
     
     @Override
