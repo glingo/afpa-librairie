@@ -12,8 +12,6 @@ import fr.afpa.librairie.controller.PromotionController;
 import fr.afpa.librairie.controller.RubriqueController;
 import fr.afpa.librairie.controller.UtilisateurController;
 import fr.afpa.librairie.view.accueil.AccueilPanel;
-import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -250,11 +248,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     void renderSplashFrame(Graphics2D g, int frame) {
-        g.setComposite(AlphaComposite.Clear);
-        g.fillRect(120, 140, 200, 40);
-        g.setPaintMode();
-        g.setColor(Color.BLACK);
-        g.drawString(LOADING_MSG[(frame / 5) % 3] + " ...", 120, 150);
+//        g.setPaintMode();
+//        g.setColor(Color.BLACK);
+        g.drawString(LOADING_MSG[(frame / 5) % 3] + " ...", 500, 400);
     }
 
 //    public LeftMenuPanel getLeftMenuPanel() {
