@@ -17,8 +17,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO {
 
@@ -106,8 +104,11 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
         PreparedStatement preparedStatement = null;
 
         try {
+            
             detachTags(id);
+            
             for (Tag tag : tags) {
+                
                 /* Récupération d'une connexion depuis la Factory */
                 connexion = factory.getConnection();
 

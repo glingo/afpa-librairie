@@ -16,8 +16,9 @@ import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.panel.EditorPanel;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
@@ -258,65 +259,48 @@ public class OuvrageEditorPanel extends EditorPanel<Ouvrage> {
     public void bindValues() {
         Ouvrage ouvrage = getBean();
         
+        reset();
+        
         titre.setText(ouvrage.getTitre());
         sousTitre.setText(ouvrage.getSousTitre());
         resume.setText(ouvrage.getResume());
         
-        
+        if(ouvrage.getTags() != null) {
+            tag.setText(ouvrage.getTags().stream().map(Tag::getLibelle)
+                .collect(Collectors.joining(" ")));
+        }
         
         if(ouvrage.getAuteur() != null) {
             this.auteur.setSelectedItem(ouvrage.getAuteur());
         }
         
-        if(ouvrage.getRubriques() != null){
-            this.rubriques.setSelectedValue(rubriques, true);
+        int i = 0;
+        int[] ri = new int[ouvrage.getRubriques().size()];
+        for (Rubrique rubrique : ouvrage.getRubriques()) {
+            ri[i] = this.rubriqueModel.indexOf(rubrique);
         }
+        this.rubriques.setSelectedIndices(ri);
         
-        if(ouvrage.getThemes() != null){
-            this.themes.setSelectedValue(themes, true);
+        i = 0;
+        int[] ti = new int[ouvrage.getThemes().size()];
+        for (Theme theme : ouvrage.getThemes()) {
+            ti[i] = this.themeModel.indexOf(theme);
         }
-        
-        if(ouvrage.getCoAuteurs() != null){
-            this.coAuteurs.setSelectedValue(coAuteurs, true);
+        this.themes.setSelectedIndices(ti);
+
+        i = 0;
+        int[] ci = new int[ouvrage.getCoAuteurs().size()];
+        for (Auteur coAuteur : ouvrage.getCoAuteurs()) {
+            ci[i] = this.coAuteurModel.indexOf(coAuteur);
         }
-        
-        if(ouvrage.getGenres() != null){
-            this.genres.setSelectedValue(genres, true);
+        this.coAuteurs.setSelectedIndices(ci);
+
+        i = 0;
+        int[] gi = new int[ouvrage.getGenres().size()];
+        for (Genre genre : ouvrage.getGenres()) {
+            gi[i] = this.genreModel.indexOf(genre);
         }
-        
-//        int i = 0;
-//        int[] ri = new int[ouvrage.getRubriques().size()];
-//        for (Rubrique rubrique : ouvrage.getRubriques()) {
-//            ri[i] = this.rubriqueModel.indexOf(rubrique);
-//        }
-//        this.rubriques.setSelectedIndices(ri);
-        
-//        int i = 0;
-//        int[] ti = new int[ouvrage.getThemes().size()];
-//        for (Theme theme : ouvrage.getThemes()) {
-//            ti[i] = this.themeModel.indexOf(theme);
-//        }
-//        this.themes.setSelectedIndices(ti);
-//        
-//        i = 0;
-//        int[] ci = new int[ouvrage.getCoAuteurs().size()];
-//        for (Auteur coAuteur : ouvrage.getCoAuteurs()) {
-//            ci[i] = this.coAuteurModel.indexOf(coAuteur);
-//        }
-//        this.coAuteurs.setSelectedIndices(ci);
-//        
-//        i = 0;
-//        int[] gi = new int[ouvrage.getGenres().size()];
-//        for (Genre genre : ouvrage.getGenres()) {
-//            gi[i] = this.genreModel.indexOf(genre);
-//        }
-//        this.genres.setSelectedIndices(gi);
-        
-        if(ouvrage.getTags() != null) {
-            ouvrage.getTags().forEach((Tag usedTag)-> {
-                this.tag.setText(this.tag.getText() + " " + usedTag.getLibelle());
-            });
-        }
+        this.genres.setSelectedIndices(gi);
         
     }
 
@@ -337,9 +321,14 @@ public class OuvrageEditorPanel extends EditorPanel<Ouvrage> {
         List<Tag> lTags = new ArrayList<>();
         for (String tagValue : tag.getText().split(" ")) {
             if(!"".equals(tagValue)) {
-                lTags.add(new Tag(tagValue));
+                Tag newTag = new Tag(tagValue);
+                if(!lTags.contains(newTag)) {
+                    System.out.println("tag added : " + newTag);
+                    lTags.add(newTag);
+                }
             }
         }
+        
         ouvrage.setTags(lTags);
         
         return ouvrage;
