@@ -67,7 +67,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             + " FROM Ouvrage AS o"
             + " JOIN MiseEnRubrique AS mer ON mer.idOuvrage = o.idOuvrage"
             + " WHERE mer.idRubrique =?";
-    
+    //test ouvrages-rubrique
     private static final String SQL_VIEW_RUBRIQUE = "SELECT"
             + " o.titre, r.libelle"
             + " FROM Ouvrage AS o"
@@ -307,7 +307,7 @@ public class OuvrageSqlDAO extends AbstractSqlDAO<Ouvrage> implements OuvrageDAO
             close(preparedStatement, connexion);
         }
     }
-    
+    //test Ouvrages-Rubrique
     @Override
     public void viewRubrique(Ouvrage instance) throws DAOException{
         SqlDAOFactory factory = getFactory();
