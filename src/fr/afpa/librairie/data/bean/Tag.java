@@ -1,5 +1,7 @@
 package fr.afpa.librairie.data.bean;
 
+import java.util.Objects;
+
 /**
  * Enregistre les différentes info. relatives aux mots-clefs utilisés pour
  * résumer un ouvrage.
@@ -7,7 +9,7 @@ package fr.afpa.librairie.data.bean;
  */
 public class Tag {
 
-        /**
+    /**
      * Séquentiel de la table Tag généré automatiquement par la
      * BDD.
      */
@@ -47,6 +49,32 @@ public class Tag {
     public String toString() {
 //        return "Tag{" + "id=" + id + ", libelle=" + libelle + '}';
         return libelle;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.libelle);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Tag other = (Tag) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.libelle, other.libelle)) {
+            return false;
+        }
+        return true;
     }
 
 }

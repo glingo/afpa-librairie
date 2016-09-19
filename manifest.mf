@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-SplashScreen-Image: fr/afpa/librairie/resources/images/splash.gif
+SplashScreen-Image: fr/afpa/librairie/resources/images/splashscreen.png
 X-COMMENT: Main-Class will be added automatically by build
 
