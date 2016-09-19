@@ -7,9 +7,11 @@ import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.adresse.AdresseAdminPanel;
 import fr.afpa.librairie.view.adresse.AdresseEditorPanel;
-import fr.afpa.librairie.view.panel.EditorPanel;
+import java.sql.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 public class AdresseController extends CRUDController<Adresse> {
     
@@ -35,7 +37,7 @@ public class AdresseController extends CRUDController<Adresse> {
 
     @Override
     public AdresseEditorPanel getEditorPanel() {
-        return (AdresseEditorPanel) super.getEditorPanel(); //To change body of generated methods, choose Tools | Templates.
+        return (AdresseEditorPanel) super.getEditorPanel();
     }
     
     @Override
@@ -45,21 +47,37 @@ public class AdresseController extends CRUDController<Adresse> {
         // set la list des pays.
         List<Pays> pays = getDaoFactory().getPaysDAO().findAll();
         getEditorPanel().setPays(pays);
+        
+        PaysController paysCtrl = getFrame().getPaysController();
+        JButton newPays = getEditorPanel().getNewPays();
+        
+        if(!Arrays.asList(newPays.getActionListeners()).contains(paysCtrl)){
+            getEditorPanel().getNewPays().addActionListener(paysCtrl);
+            paysCtrl.getModal().onDispose(()-> {
+                loadEditorPanel();
+            });
+        }
+        
     }
 
     @Override
-    public void create(Adresse value) {
+    public boolean create(Adresse value) {
+          
+        if(value.getPays() == null) {
+            danger("Vous devez renseigner un pays pour cette adresse.");
+            return false;
+        }
         
         try {
             getDaoFactory().getAdresseDAO().save(value);
             alert("Information", "L'adresse a bien été sauvegardée !");
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
-            danger("Une erreur est survenue !", 
-                    "Impossible de sauvegarder cette adresse.");
+            danger("Impossible de sauvegarder cette adresse.");
         }
         
-//        listAction();
+        return false;
     }
 
     @Override

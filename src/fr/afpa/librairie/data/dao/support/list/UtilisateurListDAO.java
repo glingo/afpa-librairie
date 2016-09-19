@@ -51,4 +51,6 @@ public class UtilisateurListDAO extends AbstractListDAO<Utilisateur> implements 
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+
+
 }

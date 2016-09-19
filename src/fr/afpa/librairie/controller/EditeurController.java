@@ -1,13 +1,14 @@
 package fr.afpa.librairie.controller;
 
-import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Editeur;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.editeur.EditeurAdminPanel;
 import fr.afpa.librairie.view.editeur.EditeurEditorPanel;
+import java.util.Arrays;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 
 public class EditeurController extends CRUDController<Editeur> {
     
@@ -26,12 +27,16 @@ public class EditeurController extends CRUDController<Editeur> {
 
     @Override
     protected void loadEditorPanel() {
-        getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
-        getEditorPanel().getNewAdresse().addActionListener(getFrame().getAdresseController());
+        AdresseController adrController = getFrame().getAdresseController();
+        getEditorPanel().setAdresses(adrController.getAll());
         
-//        getModal().onDispose(()-> {
-//            getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
-//        });
+        JButton newAdr = getEditorPanel().getNewAdresse();
+        if(!Arrays.asList(newAdr.getActionListeners()).contains(adrController)){
+            newAdr.addActionListener(adrController);
+            adrController.getModal().onDispose(()-> {
+                loadEditorPanel();
+            });
+        }
     }
 
     @Override
@@ -47,17 +52,19 @@ public class EditeurController extends CRUDController<Editeur> {
     }
     
     @Override
-    public void create(Editeur value) {
+    public boolean create(Editeur value) {
         
         try {
             getDaoFactory().getEditeurDAO().save(value);
             alert("Information", "L'éditeur a bien été sauvegardé !");
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", 
                     "Impossible de réaliser la sauvegarde de l'éditeur.");
         }
-
+        
+        return false;
 //        listAction();
     }
 
@@ -90,10 +97,4 @@ public class EditeurController extends CRUDController<Editeur> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-//    @Override
-//    public void editAction(Editeur value) {
-//        getEditorPanel().setAdresses(getDaoFactory().getAdresseDAO().findAll());
-//        super.editAction(value);
-//    }
-    
 }

@@ -35,8 +35,7 @@ public class FooterEditorPanel extends FooterPanel {
     }
     
     protected void initActionCommands(){
-        annulerBT.setActionCommand("annuler");
-//        validerBT.setActionCommand(CRUDController.CREATE_THEN_LIST_ACTION);
+        annulerBT.setActionCommand(CRUDController.ADMIN_ACTION);
         validerBT.setActionCommand(CRUDController.CREATE_ACTION);
     }
 

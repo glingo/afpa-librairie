@@ -316,4 +316,6 @@ public class RoleSqlDAO extends AbstractSqlDAO<Role> implements RoleDAO {
         return role;
     }
 
+
+
 }

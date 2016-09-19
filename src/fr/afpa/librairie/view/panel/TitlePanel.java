@@ -9,11 +9,15 @@ import javax.swing.SwingConstants;
 
 public class TitlePanel extends JPanel {
     
-    private final String titleText;
+    private String titleText;
     private JLabel title;
+    
+    public TitlePanel() {
+        super();
+        initComponents();
+    }
 
     public TitlePanel(String titleText) {
-        super();
         this.titleText = titleText;
         initComponents();
     }

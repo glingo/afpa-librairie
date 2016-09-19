@@ -299,4 +299,6 @@ public class LangueSqlDAO extends AbstractSqlDAO<Langue> implements LangueDAO {
 
         return langue;
     }
+
+
 }

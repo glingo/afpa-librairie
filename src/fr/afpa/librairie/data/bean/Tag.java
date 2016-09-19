@@ -21,7 +21,10 @@ public class Tag {
         /**
      * Constructeur de la classe; accès sans utiliser de paramètres.
      */
-    public Tag() {
+    public Tag() {}
+    
+    public Tag(String libelle) {
+        this.libelle = libelle;
     }
 
     public Long getId() {

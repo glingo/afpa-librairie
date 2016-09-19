@@ -1,14 +1,21 @@
 package fr.afpa.librairie.controller;
 
 import fr.afpa.librairie.data.bean.Edition;
+import fr.afpa.librairie.data.bean.Langue;
+import fr.afpa.librairie.data.bean.Taxe;
 import fr.afpa.librairie.data.exception.DAOException;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.view.MainFrame;
 import fr.afpa.librairie.view.edition.EditionAdminPanel;
 import fr.afpa.librairie.view.edition.EditionEditorPanel;
+import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 public class EditionController extends ActivableCRUDController<Edition> {
+    
+
 
     private static final Logger LOG = Logger.getLogger(EditionController.class.getName());
 
@@ -32,27 +39,52 @@ public class EditionController extends ActivableCRUDController<Edition> {
         return listModel;
     }
     
+    
+    @Override
+    public EditionEditorPanel getEditorPanel() {
+        return (EditionEditorPanel) super.getEditorPanel(); 
+    }
+    
+    
     @Override
     protected void loadEditorPanel() {
-        // nothing to do.
+        List<Langue> langues = getDaoFactory().getLangueDAO().findAll();
+        
+        // load langue
+        getEditorPanel().setLangueModel(langues);
+        
+        
+        List<Taxe> taxes = getDaoFactory().getTaxeDao().findAll();
+        
+        getEditorPanel().setTaxeModel(taxes);
+        
+        
+
+
     }
+
+    
 
     //Si User = "save" alors EditionController ==> createAction
     @Override
-    public void create(Edition value) {
+    public boolean create(Edition value) {
 
         try {
             getDaoFactory().getEditionDAO().save(value);
             //appel de la methode EditionDAO. mais surtout appel de la requete SQL save contenu dans EditionDAO.afin de créer une nouvelle edition.
 
             alert("Information", "L'édition a bien été sauvegardée !");
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder l'édition");
         }
+        adminAction();
+        return false;
 
 //        listAction();
     }
+
 
     @Override
     public void deactivateAction(Edition edition) {
@@ -100,8 +132,8 @@ public class EditionController extends ActivableCRUDController<Edition> {
     }
 
     @Override
-    public void viewAction(Edition value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void viewAction(Edition edition) {
+       
     }
 
     @Override

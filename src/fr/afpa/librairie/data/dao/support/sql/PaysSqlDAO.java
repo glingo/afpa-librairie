@@ -183,7 +183,6 @@ public class PaysSqlDAO extends AbstractSqlDAO<Pays> implements PaysDAO {
         ResultSet resultSet = null;
         Pays pays = null;
 
-        System.out.println("find pays by id : " + id);
         try {
             connexion = factory.getConnection();
             preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_ID, 
@@ -253,5 +252,7 @@ public class PaysSqlDAO extends AbstractSqlDAO<Pays> implements PaysDAO {
 
         return pays;
     }
+
+
 
 }

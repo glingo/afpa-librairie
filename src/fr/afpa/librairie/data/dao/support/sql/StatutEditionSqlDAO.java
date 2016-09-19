@@ -269,4 +269,5 @@ public class StatutEditionSqlDAO extends AbstractSqlDAO<StatutEdition> implement
         return statut;
     }
 
+
 }

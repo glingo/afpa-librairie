@@ -10,7 +10,8 @@ import javax.swing.ListCellRenderer;
 
 public class GenreListCellRenderer extends JLabel implements ListCellRenderer<Genre> {
     protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
-   
+
+
     @Override
     public Component getListCellRendererComponent(JList<? extends Genre> list, Genre value, int index, boolean isSelected, boolean cellHasFocus) {
         JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);

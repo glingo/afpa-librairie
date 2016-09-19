@@ -275,4 +275,6 @@ public class StatutEntrepriseSqlDAO extends AbstractSqlDAO<StatutEntreprise> imp
         return statut;
     }
 
+
+
 }

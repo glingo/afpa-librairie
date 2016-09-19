@@ -40,7 +40,12 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
             + " idEditeur, libelle, idAdresse"
             + " FROM Editeur"
             + " WHERE libelle = ?";
-            
+    
+    private static final String SQL_FIND_BY_EDITION = "SELECT"
+            +" ed.idEditeur, ed.libelle"
+            +" FROM Editeur AS ed"
+            +" JOIN ModeleEdition AS mod ON mod.idEditeur = ed.idEditeur"
+            +" WHERE mod.idEdition = ?";
     
     public EditeurSqlDAO(DAOFactoryInterface factory) {
         super(factory);
@@ -230,5 +235,34 @@ public class EditeurSqlDAO extends AbstractSqlDAO<Editeur> implements EditeurDAO
         
         return editeur;
     }
+
+    @Override
+    public List<Editeur> findByEdition(Long idEdition) throws DAOException {
+ 
+        SqlDAOFactory factory = getFactory();
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Editeur> editeurs = new ArrayList<>();
+
+        try {
+            connexion = factory.getConnection();
+            preparedStatement = getPreparedStatement(connexion, SQL_FIND_BY_EDITION, false, idEdition);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                editeurs.add(map(resultSet));
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            close(resultSet, preparedStatement, connexion);
+        }
+
+        return editeurs;
+
+    }
+
     
 }

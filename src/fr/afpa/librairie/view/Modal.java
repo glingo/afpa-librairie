@@ -18,7 +18,7 @@ public class Modal extends JDialog {
     
     private Component currentContent;
     
-//    private Runnable onDispose;
+    private Runnable onDispose;
 
     public Modal(JFrame owner) {
         super(owner, Dialog.ModalityType.APPLICATION_MODAL);
@@ -36,20 +36,20 @@ public class Modal extends JDialog {
         }
     }
 
-//    @Override
-//    public void dispose() {
-//        super.dispose(); //To change body of generated methods, choose Tools | Templates.
-//        if(this.onDispose != null) {
-//            this.onDispose.run();
-//        }
-//    }
-//    
+    @Override
+    public void dispose() {
+        if(this.onDispose != null) {
+            this.onDispose.run();
+        }
+        super.dispose();
+    }
+
     public Component getContent() {
         return currentContent;
     }
 
-//    public void onDispose(Runnable onDispose) {
-//        this.onDispose = onDispose;
-//    }
+    public void onDispose(Runnable onDispose) {
+        this.onDispose = onDispose;
+    }
     
 }

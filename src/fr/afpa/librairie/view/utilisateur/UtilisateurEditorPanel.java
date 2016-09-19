@@ -1,5 +1,6 @@
 package fr.afpa.librairie.view.utilisateur;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Utilisateur;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.field.JDateField;
@@ -30,14 +31,10 @@ public class UtilisateurEditorPanel extends EditorPanel<Utilisateur> {
     private JDateField dateNaissance;
     private JPasswordField password;
 
-    public UtilisateurEditorPanel(ActionListener controller) {
-        super(new Utilisateur(), controller);
+    public UtilisateurEditorPanel(CRUDController<Utilisateur> controller) {
+        super(controller);
     }
     
-    public UtilisateurEditorPanel(Utilisateur bean, ActionListener controller) {
-        super(bean, controller);
-    }
-
     @Override
     protected void initBody(JPanel body) {
         nom = new JTextField(15);

@@ -1,5 +1,6 @@
 package fr.afpa.librairie.view.panel.footer;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.view.panel.FooterPanel;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -37,10 +38,10 @@ public class FooterAdminPanel extends FooterPanel {
         viewButton   = new JButton("Voir");
         updateButton = new JButton("Mettre à jour");
         
-        createButton.setActionCommand("create");
-        deleteButton.setActionCommand("delete");
-        viewButton.setActionCommand("view");
-        updateButton.setActionCommand("edit");
+        createButton.setActionCommand(CRUDController.CREATE_ACTION);
+        deleteButton.setActionCommand(CRUDController.DELETE_ACTION);
+        viewButton.setActionCommand(CRUDController.VIEW_ACTION);
+        updateButton.setActionCommand(CRUDController.EDIT_ACTION);
     }
 
 }

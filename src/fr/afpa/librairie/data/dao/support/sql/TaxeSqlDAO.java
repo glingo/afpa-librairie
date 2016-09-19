@@ -297,5 +297,7 @@ public class TaxeSqlDAO extends AbstractSqlDAO<Taxe> implements TaxeDAO{
         return taxes;
 
     }
+
+
     
 }

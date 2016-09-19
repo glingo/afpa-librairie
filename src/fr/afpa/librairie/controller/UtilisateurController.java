@@ -36,17 +36,19 @@ public class UtilisateurController extends ActivableCRUDController<Utilisateur> 
     }
     
     @Override
-    public void create(Utilisateur value) {
+    public boolean create(Utilisateur value) {
 
         try {
             getDaoFactory().getUtilisateurDAO().save(value);
             alert("Information", "L'utilisateur a bien été sauvegardé !");
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !",
                     "Impossible de sauvegarder cet utilisateur.");
         }
 
+        return false;
 //        listAction();
     }
 
@@ -69,7 +71,7 @@ public class UtilisateurController extends ActivableCRUDController<Utilisateur> 
             return;
         }
 
-        listAction();
+        adminAction();
         // ajouter un message comme quoi la suppression s'est bien deroulée.
         alert("Information", "L'utilisateur a bien été désactivé !");
     }
@@ -90,7 +92,7 @@ public class UtilisateurController extends ActivableCRUDController<Utilisateur> 
             return;
         }
 
-        listAction();
+        adminAction();
         alert("Information", "L'activation a été prise en compte !");
     }
 

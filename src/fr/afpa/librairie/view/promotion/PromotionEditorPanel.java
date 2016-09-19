@@ -1,10 +1,10 @@
 package fr.afpa.librairie.view.promotion;
 
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Promotion;
 import fr.afpa.librairie.view.field.JDateField;
 import fr.afpa.librairie.view.field.JPercentField;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -29,12 +29,8 @@ public class PromotionEditorPanel extends EditorPanel<Promotion> {
     private JLabel descriptionLabel;
     private JLabel commentaireLabel;
     
-    public PromotionEditorPanel(ActionListener controller) {
-        super(new Promotion(), controller);
-    }
-    
-    public PromotionEditorPanel(Promotion bean, ActionListener controller) {
-        super(bean, controller);
+    public PromotionEditorPanel(CRUDController<Promotion> controller) {
+        super(controller);
     }
 
     @Override

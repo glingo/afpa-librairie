@@ -1,6 +1,7 @@
 package fr.afpa.librairie.data.bean;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,6 +69,8 @@ public class Edition {
      * @see Taxe
      */
     private List<Taxe> taxes;
+    
+    //private Editeur editeur;
 
     /**
      * Constructeur de la classe; accès sans utiliser de paramètres.
@@ -263,7 +266,14 @@ public class Edition {
     public void setLangue(Langue langue) {
         this.langue = langue;
     }
-
+//    
+//    public Editeur getEditeur(){
+//        return editeur;
+//    }
+//    
+//    public void setEditeur(Editeur editeur){
+//        this.editeur = editeur;
+//    }
     /**
      * Retourne la/les taxe(s).
      *
@@ -272,9 +282,6 @@ public class Edition {
      * @see Taxe
      *
      */
-    public List<Taxe> getTaxes() {
-        return taxes;
-    }
 
     /**
      * Met à jour la/les taxe(s).
@@ -284,10 +291,27 @@ public class Edition {
      *
      * @see Taxe
      */
+
+    
+     public List<Taxe> getTaxes() {
+        return taxes;
+    }
+
     public void setTaxes(List<Taxe> taxes) {
         this.taxes = taxes;
     }
 
+    public void addTaxe(Taxe taxe) {
+        if (this.taxes == null) {
+            this.taxes = new ArrayList<>();
+        }
+
+        this.taxes.add(taxe);
+    }
+
+   
+    
+    
     @Override
     public String toString() {
         return "Edition{"

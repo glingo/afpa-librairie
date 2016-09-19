@@ -2,10 +2,12 @@ package fr.afpa.librairie.view;
 
 import fr.afpa.librairie.controller.AdresseController;
 import fr.afpa.librairie.controller.AuteurController;
+import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.controller.CommandeController;
 import fr.afpa.librairie.controller.EditeurController;
 import fr.afpa.librairie.controller.EditionController;
 import fr.afpa.librairie.controller.OuvrageController;
+import fr.afpa.librairie.controller.PaysController;
 import fr.afpa.librairie.controller.PromotionController;
 import fr.afpa.librairie.controller.RubriqueController;
 import fr.afpa.librairie.controller.UtilisateurController;
@@ -65,9 +67,10 @@ public class MainFrame extends javax.swing.JFrame {
     private final PromotionController promotionController = new PromotionController(this);
     private final EditionController editionController = new EditionController(this);
     private final AdresseController adresseController = new AdresseController(this);
+    private final PaysController paysController = new PaysController(this);
 
     private HeaderPanel headerPanel;
-    private LeftMenuPanel leftMenuPanel;
+//    private LeftMenuPanel leftMenuPanel;
     private Component currentContent;
 
     private GroupLayout layout;
@@ -105,12 +108,12 @@ public class MainFrame extends javax.swing.JFrame {
         initMenu(jMenuBar);
 
         headerPanel = new HeaderPanel();
-        leftMenuPanel = new LeftMenuPanel();
+//        leftMenuPanel = new LeftMenuPanel();
         currentContent = new AccueilPanel();
 
         initLayout();
         
-        leftMenuPanel.getRubriques().addListSelectionListener(rubriqueController);
+//        leftMenuPanel.getRubriques().addListSelectionListener(rubriqueController);
 
         pack();
     }
@@ -137,8 +140,8 @@ public class MainFrame extends javax.swing.JFrame {
                 layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//                        .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addComponent(headerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -150,7 +153,8 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(currentContent, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+//                                .addComponent(leftMenuPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        )
                         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
@@ -170,39 +174,53 @@ public class MainFrame extends javax.swing.JFrame {
 
         JMenuItem utilisateurAdmin = new JMenuItem("Utilisateurs");
         utilisateurAdmin.addActionListener(utilisateurController);
+        utilisateurAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(utilisateurAdmin);
 
         JMenuItem auteurAdmin = new JMenuItem("Auteurs");
         auteurAdmin.addActionListener(auteurController);
+        auteurAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(auteurAdmin);
 
         JMenuItem ouvrageAdmin = new JMenuItem("Ouvrages");
         ouvrageAdmin.addActionListener(ouvrageController);
+        ouvrageAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(ouvrageAdmin);
 
         JMenuItem rubriqueAdmin = new JMenuItem("Rubriques");
         rubriqueAdmin.addActionListener(rubriqueController);
+        rubriqueAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(rubriqueAdmin);
 
         JMenuItem commandeAdmin = new JMenuItem("Commandes");
         commandeAdmin.addActionListener(commandeController);
+        commandeAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(commandeAdmin);
 
         JMenuItem editeurAdmin = new JMenuItem("Editeurs");
         editeurAdmin.addActionListener(editeurController);
+        editeurAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(editeurAdmin);
 
         JMenuItem promotionAdmin = new JMenuItem("Promotions");
         promotionAdmin.addActionListener(promotionController);
+        promotionAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(promotionAdmin);
 
         JMenuItem editionAdmin = new JMenuItem("Editions");
         editionAdmin.addActionListener(editionController);
+        editionAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(editionAdmin);
         
         JMenuItem adresseAdmin = new JMenuItem("Adresses");
         adresseAdmin.addActionListener(adresseController);
+        adresseAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
         adminMenu.add(adresseAdmin);
+        
+        JMenuItem paysAdmin = new JMenuItem("Pays");
+        paysAdmin.addActionListener(paysController);
+        paysAdmin.setActionCommand(CRUDController.ADMIN_ACTION);
+        adminMenu.add(paysAdmin);
         
         jMenuBar.add(adminMenu);
     }
@@ -239,9 +257,9 @@ public class MainFrame extends javax.swing.JFrame {
         g.drawString(LOADING_MSG[(frame / 5) % 3] + " ...", 120, 150);
     }
 
-    public LeftMenuPanel getLeftMenuPanel() {
-        return leftMenuPanel;
-    }
+//    public LeftMenuPanel getLeftMenuPanel() {
+//        return leftMenuPanel;
+//    }
 
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
@@ -255,4 +273,13 @@ public class MainFrame extends javax.swing.JFrame {
         return adresseController;
     }
 
+    public PaysController getPaysController() {
+        return paysController;
+    }
+    
+    public OuvrageController getOuvrageController(){
+        return ouvrageController;
+    }
+    
+    
 }

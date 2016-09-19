@@ -112,18 +112,24 @@ public class OuvrageTableModel extends TableModel<Ouvrage> {
     private String getAuteurObject(Ouvrage ouvrage){
         StringBuilder sb = new StringBuilder();
         
-        sb.append(ouvrage.getAuteur().getNom()).append(", ");
+        sb.append(ouvrage.getAuteur().getNom());
         
         if(ouvrage.getCoAuteurs() != null) {
             int len = ouvrage.getCoAuteurs().size();
-            for(int i = 0; i<len ; i++){
-                Auteur auteur = ouvrage.getCoAuteurs().get(i);
-                sb.append(auteur.getNom());
+            if(len > 1) {
+                sb.append(", (");
+                for(int i = 0; i<len ; i++){
+                    Auteur auteur = ouvrage.getCoAuteurs().get(i);
+                    sb.append(auteur.getNom());
 
-                if(i < len - 1){
-                    sb.append(", ");
+                    if(i < len - 1){
+                        sb.append(", ");
+                    }
                 }
+
+                sb.append(")");
             }
+            
         }
         
         return sb.toString();

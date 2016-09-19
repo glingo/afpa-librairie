@@ -1,10 +1,8 @@
 package fr.afpa.librairie.view;
 
-import fr.afpa.librairie.data.bean.Auteur;
 import fr.afpa.librairie.data.bean.Rubrique;
 import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.list.ListModelSelection;
-import fr.afpa.librairie.model.list.renderer.RubriqueListCellRenderer;
 import java.awt.Dimension;
 import java.util.List;
 import javax.swing.DefaultListSelectionModel;
@@ -18,7 +16,7 @@ public class LeftMenuPanel extends JPanel {
 
     private final ListAdapterListModel<Rubrique> listModel = new ListAdapterListModel<>();
     private final ListSelectionModel selectionModel = new DefaultListSelectionModel();
-    private final ListModelSelection<Rubrique> listModelSelection = new ListModelSelection<>();
+    private final ListModelSelection listModelSelection = new ListModelSelection();
 //    private final ListCellRenderer cellRenderer = new RubriqueListCellRenderer();
     
     private JList rubriques;

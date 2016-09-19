@@ -1,5 +1,7 @@
 package fr.afpa.librairie.data.bean;
 
+import java.util.Objects;
+
 /**
  * Enregistre les différetes info. relatives au thèmes d'un ouvrage.
  */
@@ -47,4 +49,27 @@ public class Theme {
 //        return "Theme{" + "id=" + id + ", libelle=" + libelle + '}';
         return libelle;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Theme other = (Theme) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
 }

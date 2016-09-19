@@ -3,36 +3,32 @@ package fr.afpa.librairie.model.list.renderer;
 
 import fr.afpa.librairie.data.bean.Auteur;
 import java.awt.Component;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 
 public class AuteurListCellRenderer extends JLabel implements ListCellRenderer<Auteur> {
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1614367901813214864L;
-    //identifiant unique. cf : deserialize, serialize.
+   
+    protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
     
     @Override
     public Component getListCellRendererComponent(JList<? extends Auteur> list, Auteur value, int index, boolean isSelected, boolean cellHasFocus) {
-        String toString = toString(value);
-        setText(toString);
-        return this;
+        JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        renderer.setText(toString(value));
+        return renderer;
     }
 
-    private String toString(Auteur person) {
-        if (person == null) {
+    private String toString(Auteur auteur) {
+        if (auteur == null) {
             return "";
         }
-        StringBuilder personToStringBuilder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
-        personToStringBuilder.append(person.getNom());
-        personToStringBuilder.append(", ");
-        personToStringBuilder.append(person.getPrenom());
-        
+        sb.append(auteur.getNom())
+          .append(auteur.getPrenom() != null ? ", " + auteur.getPrenom() : "");
 
-        return personToStringBuilder.toString();
+        return sb.toString();
     }
 }

@@ -36,15 +36,18 @@ public class PromotionController extends CRUDController<Promotion> {
     }
 
     @Override
-    public void create(Promotion value) {
+    public boolean create(Promotion value) {
 
         try {
             getDaoFactory().getPromotionDAO().save(value);
-            alert("Information", "La promotion a bien été sauvegardée !");
+            alert("Information", "La promotion a bien été sauvegardée !");        
+            return true;
         } catch (DAOException ex) {
             LOG.severe(ex.getMessage());
             danger("Une erreur est survenue !", "Impossible de sauvegarder cette promotion. ");
         }
+        
+        return false;
 
 //        listAction();
     }

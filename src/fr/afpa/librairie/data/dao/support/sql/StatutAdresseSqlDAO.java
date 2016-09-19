@@ -277,4 +277,5 @@ public class StatutAdresseSqlDAO extends AbstractSqlDAO<StatutAdresse> implement
                
         return statut;
     }
+
 }

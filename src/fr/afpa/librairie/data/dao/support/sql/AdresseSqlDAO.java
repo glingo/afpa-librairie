@@ -72,7 +72,6 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
             }
 
             connexion = factory.getConnection();
-//numero, voie, codePostal, ville, complement, idStatutAdresse
             preparedStatement = getPreparedStatement(connexion, SQL_INSERT, true,
                     instance.getNumero(), 
                     instance.getVoie(),
@@ -112,7 +111,7 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
 
             connexion = factory.getConnection();
 
-            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, true,
+            preparedStatement = getPreparedStatement(connexion, SQL_UPDATE, false,
                     instance.getNumero(), 
                     instance.getVoie(),
                     instance.getCp(), 
@@ -275,5 +274,7 @@ public class AdresseSqlDAO extends AbstractSqlDAO<Adresse> implements AdresseDAO
     public Adresse findByCp(String cp) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
 
 }

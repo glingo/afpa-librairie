@@ -258,5 +258,6 @@ public class GenreSqlDAO extends AbstractSqlDAO<Genre> implements GenreDAO {
 
         return genres;
     }
+
     
 }

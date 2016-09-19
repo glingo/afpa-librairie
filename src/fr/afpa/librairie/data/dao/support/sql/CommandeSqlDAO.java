@@ -351,4 +351,5 @@ public class CommandeSqlDAO extends AbstractSqlDAO<Commande> implements Commande
 
         return commandes;
     }
+
 }

@@ -15,4 +15,6 @@ public interface OuvrageDAO extends DAOInterface<Ouvrage> {
 
     List<Ouvrage> findByRubrique(Long id);
     
+    void viewRubrique(Ouvrage instance) throws DAOException;
+    
 }

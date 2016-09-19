@@ -227,5 +227,6 @@ public class PromotionSqlDAO extends AbstractSqlDAO<Promotion> implements Promot
     public Promotion findByReduction(Float reduction) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+
 }

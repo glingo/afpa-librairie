@@ -3,11 +3,10 @@ package fr.afpa.librairie.view.editeur;
 import fr.afpa.librairie.controller.CRUDController;
 import fr.afpa.librairie.data.bean.Adresse;
 import fr.afpa.librairie.data.bean.Editeur;
+import fr.afpa.librairie.model.list.ListAdapterListModel;
 import fr.afpa.librairie.model.list.renderer.AdresseListCellRenderer;
 import fr.afpa.librairie.model.verifier.StrictInputVerifier;
 import fr.afpa.librairie.view.panel.EditorPanel;
-import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -28,23 +27,17 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
     private JComboBox<Adresse> adresse;
     private JButton newAdresse;
     
-    public EditeurEditorPanel(ActionListener controller) {
-        super(new Editeur(), controller);
+    public EditeurEditorPanel(CRUDController<Editeur> controller) {
+        super(controller);
     }
     
-    public EditeurEditorPanel(Editeur bean, ActionListener controller) {
-        super(bean, controller);
-    }
-
     @Override
     protected void initBody(JPanel body) {
         
         libelle = new JTextField();
         adresse = new JComboBox<>();
         newAdresse = new JButton("+");
-        
         newAdresse.setActionCommand(CRUDController.CREATE_MODAL_ACTION);
-//        newAdresse.addActionListener(getController());
         
         adresse.setRenderer(new AdresseListCellRenderer());
         
@@ -90,8 +83,10 @@ public class EditeurEditorPanel extends EditorPanel<Editeur> {
         );
     }
     
-    public void setAdresses(List<Adresse> list){
+    public void setAdresses(ListAdapterListModel<Adresse> list){
         adresseComboModel = new DefaultComboBoxModel(list.toArray());
+        adresseComboModel.insertElementAt(null, 0);
+        adresseComboModel.setSelectedItem(null);
         adresse.setModel(adresseComboModel);
     }
 
